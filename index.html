@@ -205,6 +205,72 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
  .frame-fixed{inset:7px}
  .frame-fixed .corner{width:clamp(66px,20vw,120px);height:clamp(66px,20vw,120px)}
 }
+
+/* === Requested additions only === */
+/* Compact module-link cards on Main page only; all contents stay intact. */
+#kitabGrid{gap:10px}
+#kitabGrid .card{min-height:210px;padding:15px}
+#kitabGrid .icon{width:42px;height:42px;margin:13px 0 9px;font-size:1.15rem}
+#kitabGrid .card h3{font-size:1rem;margin-bottom:5px}
+#kitabGrid .card p{font-size:.70rem;line-height:1.55}
+#kitabGrid .card-bottom{margin-top:11px;padding-top:9px}
+
+/* Main + module headers: draggable and minimizable. */
+.capsule-nav,.modal-capsule{touch-action:none}
+.capsule-nav.is-dragging,.modal-capsule.is-dragging{cursor:grabbing}
+.header-mini-btn{cursor:pointer!important}
+.capsule-nav.minimized{
+  width:46px!important;min-width:46px!important;height:46px!important;
+  padding:5px!important;border-radius:50%!important
+}
+.capsule-nav.minimized .nav-inner{height:36px!important;padding:0!important;justify-content:center!important}
+.capsule-nav.minimized .brand,.capsule-nav.minimized .nav-links,.capsule-nav.minimized .status{display:none!important}
+.modal-capsule.minimized{
+  width:46px!important;min-width:46px!important;height:46px!important;
+  padding:5px!important;border-radius:50%!important;justify-content:center!important;gap:0!important
+}
+.modal-capsule.minimized .modal-capsule-left,
+.modal-capsule.minimized #fsBtnModal,
+.modal-capsule.minimized #newTab,
+.modal-capsule.minimized #closeModal{display:none!important}
+.modal-capsule.minimized .modal-actions{gap:0!important}
+
+/* Module 01-09 viewer frame: same gold/classic framing, with the existing corner artwork in all 4 corners. */
+.modal-frame-wrap{
+  position:absolute!important;inset:0!important;
+  padding:9px!important;
+  border:2px solid rgba(179,129,44,.46)!important;
+  border-radius:0!important;
+  box-shadow:inset 0 0 0 1px rgba(227,195,119,.22)!important;
+  background-color:var(--cream)!important;
+  background-image:
+    var(--corner-img),var(--corner-img),var(--corner-img),var(--corner-img)!important;
+  background-repeat:no-repeat!important;
+  background-size:42px 42px!important;
+  background-position:top left,top right,bottom left,bottom right!important;
+}
+.modal-frame-wrap iframe{
+  border:1px solid rgba(179,129,44,.36)!important;
+  border-radius:8px!important;
+}
+
+
+/* Module 01-09: frame visible over the full-screen page, including all 4 existing corner artworks. */
+.module-frame-overlay{position:absolute;inset:0;z-index:4;pointer-events:none}
+.module-frame-overlay .mf-line{position:absolute;pointer-events:none}
+.module-frame-overlay .mf-line.outer{inset:14px;border:2px solid rgba(179,129,44,.52);border-radius:3px}
+.module-frame-overlay .mf-line.inner{inset:23px;border:1px solid rgba(179,129,44,.34);border-radius:2px}
+.module-frame-overlay .mf-corner{position:absolute;width:clamp(96px,11vw,190px);height:clamp(96px,11vw,190px);background-image:var(--corner-img);background-repeat:no-repeat;background-size:contain;background-position:top left;filter:drop-shadow(0 6px 14px rgba(120,80,20,.28))}
+.module-frame-overlay .mf-corner.tl{top:0;left:0}
+.module-frame-overlay .mf-corner.tr{top:0;right:0;transform:scaleX(-1)}
+.module-frame-overlay .mf-corner.bl{bottom:0;left:0;transform:scaleY(-1)}
+.module-frame-overlay .mf-corner.br{bottom:0;right:0;transform:scale(-1,-1)}
+@media(max-width:700px){
+ .module-frame-overlay .mf-line.outer{inset:7px}
+ .module-frame-overlay .mf-line.inner{inset:15px}
+ .module-frame-overlay .mf-corner{width:clamp(66px,20vw,120px);height:clamp(66px,20vw,120px)}
+}
+
 </style>
 </head>
 <body>
@@ -238,6 +304,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
       </nav>
       <div class="status"><span class="dot"></span><span id="clock">--:--:--</span></div>
       <button class="icon-btn fs-btn" id="fsBtnMain" title="Layar penuh">⛶</button>
+      <button class="icon-btn header-mini-btn" id="miniMain" title="Minimalkan header" aria-label="Minimalkan header">−</button>
       <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">≡</button>
     </div>
   </header>
@@ -289,11 +356,19 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="loader" id="loader"><div class="loader-bar"></div></div>
-  <div class="modal-frame-wrap"><iframe id="frame" title="Modul VAOZEE"></iframe></div>
+  <div class="modal-frame-wrap">
+  <div class="module-frame-overlay" aria-hidden="true">
+    <div class="mf-line outer"></div><div class="mf-line inner"></div>
+    <div class="mf-corner tl"></div><div class="mf-corner tr"></div>
+    <div class="mf-corner bl"></div><div class="mf-corner br"></div>
+  </div>
+  <iframe id="frame" title="Modul VAOZEE"></iframe>
+</div>
   <div class="modal-capsule-wrap">
     <div class="modal-capsule">
       <div class="modal-capsule-left"><span class="dot"></span><div class="modal-title" id="modalTitle">Modul</div></div>
       <div class="modal-actions">
+        <button class="icon-btn header-mini-btn" id="miniModal" title="Minimalkan header modul" aria-label="Minimalkan header modul">−</button>
         <button class="icon-btn fs-btn" id="fsBtnModal" title="Layar penuh">⛶</button>
         <a class="icon-btn" id="newTab" target="_blank" rel="noopener" title="Buka di tab baru">↗</a>
         <button class="icon-btn danger" id="closeModal" title="Tutup">×</button>
@@ -336,19 +411,29 @@ document.getElementById('umumGrid').innerHTML=umum.map(card).join('');
 
 /* ---- fullscreen module viewer ---- */
 const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), loader=document.getElementById('loader');
-function openModule(url,title){
+function openModule(url,title,fromHistory=false){
  loader.classList.remove('done');
  frame.src=url; modalTitle.textContent=title; newTab.href=url;
  modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+ /* Every module opens in browser fullscreen when launched by a user action. */
+ if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+   document.documentElement.requestFullscreen().catch(()=>{});
+ }
+ if(!fromHistory){
+   history.pushState({vaozeeModule:true,url:url,title:title},'',location.href.split('#')[0]+'#modul');
+ }
 }
-function closeModule(){
- modal.classList.remove('open');modal.setAttribute('aria-hidden','true');
- setTimeout(()=>frame.src='about:blank',220);document.body.style.overflow='';
+function closeModule(fromPopState=false){
+ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+ if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+ setTimeout(()=>frame.src='about:blank',220); document.body.style.overflow='';
+ if(!fromPopState && history.state && history.state.vaozeeModule) history.back();
 }
 frame.addEventListener('load',()=>loader.classList.add('done'));
 document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)}));
 document.getElementById('closeModal').onclick=closeModule;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModule()});
+window.addEventListener('popstate',e=>{ if(modal.classList.contains('open')) closeModule(true); });
 
 /* ---- search & filter ---- */
 const search=document.getElementById('search'), filters=[...document.querySelectorAll('.filter')], noResults=document.getElementById('noResults');
@@ -393,5 +478,70 @@ tick();setInterval(tick,1000);
 const io=new IntersectionObserver(entries=>entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:.12});
 document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 </script>
+
+<script>
+/* === Requested header interactions === */
+(function(){
+  function bindDrag(el){
+    if(!el || el.dataset.dragBound) return;
+    el.dataset.dragBound='1';
+    let active=false,sx=0,sy=0,ox=0,oy=0;
+    el.addEventListener('pointerdown',function(e){
+      if(e.target.closest('button,a,input,select,textarea')) return;
+      active=true;
+      const r=el.getBoundingClientRect();
+      sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top;
+      el.setPointerCapture?.(e.pointerId);
+      el.classList.add('is-dragging');
+      document.body.style.userSelect='none';
+    });
+    el.addEventListener('pointermove',function(e){
+      if(!active) return;
+      const x=Math.max(6,Math.min(innerWidth-el.offsetWidth-6,ox+e.clientX-sx));
+      const y=Math.max(6,Math.min(innerHeight-el.offsetHeight-6,oy+e.clientY-sy));
+      el.style.position='fixed';
+      el.style.left=x+'px'; el.style.top=y+'px';
+      el.style.right='auto'; el.style.margin='0';
+      e.preventDefault();
+    },{passive:false});
+    function stop(){active=false;el.classList.remove('is-dragging');document.body.style.userSelect=''}
+    el.addEventListener('pointerup',stop);
+    el.addEventListener('pointercancel',stop);
+  }
+
+  function init(){
+    const main=document.querySelector('.capsule-nav');
+    const modal=document.querySelector('.modal-capsule');
+    bindDrag(main); bindDrag(modal);
+
+    const a=document.getElementById('miniMain');
+    if(a && !a.dataset.bound){
+      a.dataset.bound='1';
+      a.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(!main)return;
+        main.classList.toggle('minimized');
+        a.textContent=main.classList.contains('minimized')?'＋':'−';
+        a.title=main.classList.contains('minimized')?'Pulihkan header':'Minimalkan header';
+      });
+    }
+    const b=document.getElementById('miniModal');
+    if(b && !b.dataset.bound){
+      b.dataset.bound='1';
+      b.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(!modal)return;
+        modal.classList.toggle('minimized');
+        b.textContent=modal.classList.contains('minimized')?'＋':'−';
+        b.title=modal.classList.contains('minimized')?'Pulihkan header modul':'Minimalkan header modul';
+      });
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+  else init();
+  new MutationObserver(init).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
 </body>
 </html>

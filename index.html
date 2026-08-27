@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAOZEE // Kumpulan Pelajaran Kitab Klasik</title>
+<meta name="description" content="Kumpulan pelajaran kitab klasik pesantren dan utilitas umum VAOZEE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f9ff; --surface:rgba(255,255,255,.82); --surface-solid:#fff;
+  --ink:#122033; --muted:#65748b; --line:#dfe8f4;
+  --primary:#246bfe; --primary-2:#63b3ff; --cyan:#16c8c8;
+  --violet:#7c5cff; --gold:#e6a93a; --shadow:0 18px 50px rgba(48,79,120,.12);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(circle at 8% 5%,rgba(99,179,255,.24),transparent 28rem),
+ radial-gradient(circle at 92% 15%,rgba(124,92,255,.16),transparent 30rem),
+ linear-gradient(180deg,#f8fbff 0%,#f1f6fc 100%);
+ color:var(--ink);font-family:Inter,system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.42;
+ background-image:linear-gradient(rgba(36,107,254,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(36,107,254,.035) 1px,transparent 1px);
+ background-size:34px 34px;mask-image:linear-gradient(to bottom,black,transparent 75%);z-index:-1}
+a{color:inherit}
+.container{width:min(1180px,calc(100% - 36px));margin:auto}
+.topbar{position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(223,232,244,.8);background:rgba(248,251,255,.78);backdrop-filter:blur(18px)}
+.topbar-inner{height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:white;font-weight:800;
+ background:linear-gradient(135deg,var(--primary),var(--violet));box-shadow:0 8px 22px rgba(36,107,254,.25)}
+.brand strong{font-family:"Plus Jakarta Sans";font-size:.95rem;letter-spacing:.04em}
+.brand small{display:block;color:var(--muted);font-size:.65rem;margin-top:2px}
+.nav{display:flex;gap:5px;align-items:center}
+.nav a{padding:9px 12px;border-radius:12px;text-decoration:none;color:var(--muted);font-size:.78rem;font-weight:600}
+.nav a:hover{background:#eaf2ff;color:var(--primary)}
+@media(max-width:700px){.nav a:nth-child(-n+2){display:none}}
+
+.hero{padding:74px 0 42px;text-align:center;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid #d9e7fb;border-radius:999px;background:rgba(255,255,255,.72);color:var(--primary);font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 8px 25px rgba(48,79,120,.06)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 5px rgba(22,200,200,.1)}
+h1{font-family:"Plus Jakarta Sans";font-size:clamp(2.35rem,6vw,5rem);line-height:1.02;letter-spacing:-.055em;margin:20px auto 18px;max-width:900px}
+h1 .gradient{background:linear-gradient(100deg,#1c5df1,#6c58f8 55%,#11aebd);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:720px;margin:0 auto;color:var(--muted);font-size:.98rem;line-height:1.8}
+.hero-actions{margin:28px auto 0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:white;border-radius:13px;padding:11px 16px;text-decoration:none;font-size:.78rem;font-weight:700;box-shadow:0 8px 20px rgba(48,79,120,.06);cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,var(--primary),#6b59f7);color:white;border-color:transparent;box-shadow:0 12px 25px rgba(36,107,254,.22)}
+.btn:hover{transform:translateY(-1px)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px auto 42px;max-width:760px}
+.stat{padding:17px;border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:18px}
+.stat b{display:block;font:800 1.55rem "Plus Jakarta Sans";color:var(--primary)}
+.stat span{font-size:.68rem;color:var(--muted);font-weight:600}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
+
+.section{padding:24px 0 18px}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:18px}
+.kicker{font-size:.68rem;color:var(--primary);font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.section h2{font:800 clamp(1.35rem,3vw,1.8rem) "Plus Jakarta Sans";margin:5px 0 0;letter-spacing:-.03em}
+.section-head p{margin:0;color:var(--muted);font-size:.72rem}
+@media(max-width:650px){.section-head{display:block}.section-head p{margin-top:8px}}
+
+.controls{display:flex;gap:9px;align-items:center;margin:0 0 20px;flex-wrap:wrap}
+.search{flex:1;min-width:230px;position:relative}
+.search input{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.86);border-radius:14px;padding:13px 15px 13px 40px;outline:none;font:500 .8rem Inter;box-shadow:0 8px 20px rgba(48,79,120,.05)}
+.search input:focus{border-color:#9dc4ff;box-shadow:0 0 0 4px rgba(36,107,254,.08)}
+.search span{position:absolute;left:14px;top:11px;color:#8a9ab0}
+.filters{display:flex;gap:6px}
+.filter{border:1px solid var(--line);background:white;color:var(--muted);padding:10px 12px;border-radius:12px;font-size:.7rem;font-weight:700;cursor:pointer}
+.filter.active,.filter:hover{background:#eaf2ff;border-color:#c8dcfb;color:var(--primary)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+.card{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:238px;padding:20px;
+ border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);text-decoration:none;
+ transition:.2s ease}
+.card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(99,179,255,.10),transparent 40%,rgba(124,92,255,.08));pointer-events:none}
+.card:hover{transform:translateY(-5px);border-color:#bfd6f7;box-shadow:0 24px 55px rgba(48,79,120,.16)}
+.card.hidden{display:none}
+.card-top,.card-body,.card-bottom{position:relative;z-index:1}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.num{font-size:.63rem;font-weight:800;color:var(--primary);letter-spacing:.08em}
+.badge{font-size:.58rem;font-weight:700;padding:5px 8px;border-radius:999px;background:#edf7ff;color:#2180b5;border:1px solid #d7edf9}
+.badge.common{background:#fff7e7;color:#a36b10;border-color:#f3dfb1}
+.icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;margin:20px 0 14px;font-size:1.28rem;
+ background:linear-gradient(135deg,#e9f3ff,#f0edff);border:1px solid #dce8f8}
+.card h3{font:800 1.03rem "Plus Jakarta Sans";margin:0 0 7px;letter-spacing:-.02em}
+.card p{font-size:.74rem;line-height:1.65;color:var(--muted);margin:0;flex:1}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed #d7e1ee;margin-top:18px;padding-top:12px}
+.path{font:600 .62rem ui-monospace,monospace;color:#7b8aa0}
+.open{font-size:.68rem;font-weight:800;color:var(--primary)}
+.arabic{font-family:Amiri,serif;font-size:1.45rem;color:#426a9d}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:26px 0}
+.footer{margin-top:52px;padding:28px 0 38px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:var(--muted);font-size:.7rem}
+.footer strong{color:var(--ink)}
+.footer a{color:var(--primary);text-decoration:none;font-weight:700}
+
+.modal{position:fixed;inset:0;z-index:100;background:rgba(13,28,49,.45);backdrop-filter:blur(12px);display:none}
+.modal.open{display:block}
+.modal-window{position:absolute;inset:20px;background:white;border-radius:22px;overflow:hidden;box-shadow:0 30px 90px rgba(8,25,50,.3);display:flex;flex-direction:column}
+.modal-bar{height:56px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 13px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.9)}
+.modal-title{font-size:.76rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modal-actions{display:flex;gap:6px}
+.icon-btn{width:34px;height:34px;border:1px solid var(--line);background:#f8fbff;border-radius:10px;cursor:pointer;text-decoration:none;display:grid;place-items:center;font-weight:800;color:var(--muted)}
+.icon-btn:hover{color:var(--primary);border-color:#bdd5f5}
+iframe{border:0;width:100%;flex:1;background:#fff}
+@media(max-width:600px){.modal-window{inset:8px;border-radius:16px}.modal-bar{height:52px}}
+.no-results{display:none;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;background:white}
+.no-results.show{display:block}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="brand" href="#">
+      <span class="logo">V</span>
+      <span><strong>VAOZEE // KITAB</strong><small>Pesantren Digital • Modern Learning Index</small></span>
+    </a>
+    <nav class="nav">
+      <a href="#kitab">Kitab Klasik</a><a href="#umum">Umum & Hiburan</a><a href="https://vaozee.github.io/io/" target="_blank" rel="noopener">VAOZEE IO ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+<section class="hero">
+  <div class="eyebrow"><i></i> DIGITAL PESANTREN • EDISI 2026</div>
+  <h1>Kumpulan <span class="gradient">Pelajaran Kitab Klasik</span> Pesantren</h1>
+  <p>Portal ringkas untuk membuka pelajaran nahwu, sharaf, falak, faraidh, serta berbagai alat bantu umum. Dibuat dengan antarmuka terang, bersih, responsif, dan bernuansa futuristic.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="#kitab">Jelajahi Pelajaran →</a>
+    <button class="btn" id="openRandom">Buka Acak ✦</button>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat"><b>9</b><span>Pelajaran Kitab Klasik</span></div>
+  <div class="stat"><b>6</b><span>Umum & Hiburan</span></div>
+  <div class="stat"><b>15</b><span>Total Modul Terhubung</span></div>
+</div>
+
+<section class="section" id="kitab">
+  <div class="section-head"><div><div class="kicker">01 // Inti Pembelajaran</div><h2>Kitab Klasik Pesantren</h2></div><p>Nahwu • Sharaf • Falak • Farā'iḍ</p></div>
+  <div class="controls">
+    <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Cari kitab atau pelajaran…"></label>
+    <div class="filters"><button class="filter active" data-filter="all">Semua</button><button class="filter" data-filter="nahwu">Nahwu</button><button class="filter" data-filter="sharaf">Sharaf</button><button class="filter" data-filter="lain">Lainnya</button></div>
+  </div>
+  <div class="grid" id="kitabGrid"></div>
+  <div class="no-results" id="noResults">Tidak ada modul yang cocok dengan pencarian.</div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section" id="umum">
+  <div class="section-head"><div><div class="kicker">02 // Pendukung</div><h2>Umum & Hiburan</h2></div><p>Utilitas • Waktu • Audio • Sistem</p></div>
+  <div class="grid" id="umumGrid"></div>
+</section>
+
+<footer class="footer">
+  <div><strong>@2026 by Achmad Fauzi</strong> · <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+  <div>VAOZEE // DIGITAL PESANTREN INDEX</div>
+</footer>
+</main>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-window">
+    <div class="modal-bar">
+      <div class="modal-title" id="modalTitle">Modul</div>
+      <div class="modal-actions">
+        <a class="icon-btn" id="newTab" target="_blank" rel="noopener" title="Buka di tab baru">↗</a>
+        <button class="icon-btn" id="closeModal" title="Tutup">×</button>
+      </div>
+    </div>
+    <iframe id="frame" title="Modul VAOZEE"></iframe>
+  </div>
+</div>
+
+<script>
+const kitab=[
+ {n:"01",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"ألف",badge:"NAHWU",url:"https://vaozee.github.io/alfiah/",desc:"Kumpulan ±1.002 bait nazham yang merangkum kaidah nahwu dan sharaf, disusun mengikuti urutan bab kitab."},
+ {n:"02",title:"Al-'Imrithi",cat:"nahwu",icon:"نحو",badge:"NAHWU",url:"https://vaozee.github.io/imrithi/",desc:"Modul nahwu lanjutan berbasis nazham Al-'Imrithi untuk memperkuat pemahaman kaidah bahasa Arab."},
+ {n:"03",title:"Al-Ajurumiyah",cat:"nahwu",icon:"جروم",badge:"NAHWU",url:"https://vaozee.github.io/ajurumiyah/",desc:"Pembelajaran matan Al-Ajurumiyah sebagai fondasi ilmu nahwu dengan tampilan belajar yang ringkas dan interaktif."},
+ {n:"04",title:"Ilmu Shorof",cat:"sharaf",icon:"صرف",badge:"SHARAF",url:"https://vaozee.github.io/shorof/",desc:"Pembelajaran ilmu sharaf, termasuk pola Tsulasi Mujarrad dan Tsulasi Mazid untuk memahami perubahan bentuk kata."},
+ {n:"05",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"مقص",badge:"SHARAF",url:"https://vaozee.github.io/maqsud/",desc:"Modul shorof lanjutan berbasis Nazham Al-Maqshūd, disusun sebagai materi kajian yang lebih mendalam."},
+ {n:"06",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"☾",badge:"FALAK",url:"https://vaozee.github.io/falak1/",desc:"Modul pembelajaran ilmu falak lanjutan untuk kajian hisab dan astronomi Islam."},
+ {n:"07",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"فرائض",badge:"FARĀ'IḌ",url:"https://vaozee.github.io/faroid/",desc:"Kajian kitab 'Uddatul Farīḍ dengan teks asli sebagai materi pembelajaran ilmu waris Islam."},
+ {n:"08",title:"Hisab Falakiyah",cat:"lain",icon:"☽",badge:"FALAK",url:"https://vaozee.github.io/falak/",desc:"Kalkulator astronomi Islam untuk kebutuhan hisab falakiyah dan berbagai perhitungan terkait."},
+ {n:"09",title:"Kalkulator Ahli Waris",cat:"lain",icon:"۞",badge:"FARAIDH",url:"https://vaozee.github.io/waris/",desc:"Kalkulator pembagian warisan Islam berbasis kaidah faraidh dengan hasil perhitungan yang terstruktur."}
+];
+const umum=[
+ {n:"10",title:"Kalkulator Pajak Indonesia",icon:"₿",badge:"UMUM",url:"https://vaozee.github.io/pajak/",desc:"Kumpulan perhitungan pajak Indonesia dalam satu alat bantu praktis."},
+ {n:"11",title:"Jam",icon:"◷",badge:"WAKTU",url:"https://vaozee.github.io/jam/",desc:"Utilitas waktu sederhana untuk kebutuhan sehari-hari."},
+ {n:"12",title:"Peta Potensi Air Tanah",icon:"💧",badge:"UTILITAS",url:"https://vaozee.github.io/air/",desc:"Peta potensi air tanah untuk membantu perencanaan lokasi sumur bor."},
+ {n:"13",title:"Nadaflow",icon:"♫",badge:"HIBURAN",url:"https://vaozee.github.io/musik/",desc:"Pemutar musik dan lirik dengan antarmuka sederhana."},
+ {n:"14",title:"VAOZEE IO",icon:"⌘",badge:"SISTEM",url:"https://vaozee.github.io/io/",desc:"Halaman indeks sistem VAOZEE dan pintu masuk menuju berbagai modul."},
+ {n:"15",title:"Suite Launcher",icon:"✦",badge:"LAUNCHER",url:"https://vaozee.github.io/promo/",desc:"Satu pintu untuk mengakses kumpulan aplikasi dan modul VAOZEE."}
+];
+function card(x){
+ return `<a href="${x.url}" class="card" data-url="${x.url}" data-title="${x.title}" data-cat="${x.cat||'umum'}">
+   <div class="card-top"><span class="num">MODUL ${x.n}</span><span class="badge">${x.badge}</span></div>
+   <div class="icon">${x.icon}</div>
+   <div class="card-body"><h3>${x.title}</h3><p>${x.desc}</p></div>
+   <div class="card-bottom"><span class="path">${new URL(x.url).pathname.replaceAll('/','')||'/'}</span><span class="open">Buka →</span></div>
+ </a>`;
+}
+document.getElementById('kitabGrid').innerHTML=kitab.map(card).join('');
+document.getElementById('umumGrid').innerHTML=umum.map(card).join('');
+
+const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab');
+function openModule(url,title){
+ frame.src=url; modalTitle.textContent=title; newTab.href=url; modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+}
+function closeModule(){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');setTimeout(()=>frame.src='about:blank',180);document.body.style.overflow='';}
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)}));
+document.getElementById('closeModal').onclick=closeModule;
+modal.addEventListener('click',e=>{if(e.target===modal)closeModule()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModule()});
+
+const search=document.getElementById('search'), filters=[...document.querySelectorAll('.filter')], noResults=document.getElementById('noResults');
+let active='all';
+function apply(){
+ const q=search.value.trim().toLowerCase();let visible=0;
+ document.querySelectorAll('#kitabGrid .card').forEach(c=>{
+   const ok=(active==='all'||c.dataset.cat===active)&&(!q||c.textContent.toLowerCase().includes(q));
+   c.classList.toggle('hidden',!ok);if(ok)visible++;
+ });
+ noResults.classList.toggle('show',visible===0);
+}
+search.addEventListener('input',apply);
+filters.forEach(b=>b.onclick=()=>{filters.forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b.dataset.filter;apply()});
+document.getElementById('openRandom').onclick=()=>{const all=[...document.querySelectorAll('.card')];const c=all[Math.floor(Math.random()*all.length)];openModule(c.dataset.url,c.dataset.title)};
+</script>
+</body>
+</html>

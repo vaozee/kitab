@@ -122,6 +122,33 @@ h1 .gradient{background:linear-gradient(100deg,#8a5f1f,#c9972c 45%,#e3c377 85%);
 @media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}}
 
+/* ---------- ringkas / compact view (jaga-jaga jika modul banyak) ---------- */
+.grid.compact{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.grid.compact .card{min-height:auto;flex-direction:row;align-items:center;gap:10px;padding:10px 34px 10px 12px}
+.grid.compact .card:before{display:none}
+.grid.compact .corner{display:none}
+.grid.compact .card-top{position:absolute;top:7px;right:8px;flex-direction:column;align-items:flex-end;gap:2px}
+.grid.compact .num{display:none}
+.grid.compact .badge{padding:3px 7px;font-size:.52rem}
+.grid.compact .icon{margin:0;width:32px;height:32px;font-size:.82rem;flex:none}
+.grid.compact .card-body{flex:1;min-width:0}
+.grid.compact .card-body p{display:none}
+.grid.compact .card h3{font-size:.8rem;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid.compact .card-bottom{display:none}
+.grid.compact .card:hover{transform:translateY(-2px)}
+/* Selektor #kitabGrid.compact di bawah ini sengaja punya spesifisitas lebih tinggi
+   agar mengalahkan aturan lama "#kitabGrid .card{...}" yang membuat bagian 01
+   tidak ikut mengecil saat mode ringkas dinyalakan. */
+#kitabGrid.compact .card{min-height:auto;flex-direction:row;align-items:center;gap:10px;padding:10px 34px 10px 12px}
+#kitabGrid.compact .icon{width:32px;height:32px;margin:0;font-size:.82rem}
+#kitabGrid.compact .card h3{font-size:.8rem;margin-bottom:0}
+#kitabGrid.compact .card p{display:none}
+#kitabGrid.compact .card-bottom{margin:0;padding:0;display:none}
+#compactToggle.active,#syncStatusBtn.active{background:rgba(179,129,44,.14);border-color:var(--gold-light);color:var(--gold-deep)}
+.sync-note{font-size:.6rem;color:var(--muted);font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sync-note .sdot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;transition:background .2s ease}
+.sync-note .sdot.err{background:var(--maroon)}
+
 .card{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:238px;padding:20px;
  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);backdrop-filter:blur(10px);box-shadow:var(--shadow);text-decoration:none;
  transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
@@ -271,6 +298,30 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
  .module-frame-overlay .mf-corner{width:clamp(66px,20vw,120px);height:clamp(66px,20vw,120px)}
 }
 
+/* === Automatic Kitab Module Manager === */
+#moduleManagerBtn{margin-left:auto}
+.module-manager-backdrop{position:fixed;inset:0;z-index:500;background:rgba(43,32,19,.38);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px}
+.module-manager-backdrop.open{display:flex}
+.module-manager{width:min(620px,100%);max-height:min(760px,92vh);overflow:auto;background:var(--surface-solid);border:1px solid rgba(227,195,119,.7);border-radius:24px;box-shadow:0 30px 90px rgba(43,32,19,.3);padding:22px}
+.module-manager-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.module-manager-head h3{font:600 1.35rem var(--disp);margin:0}
+.module-manager-head p{font-size:.72rem;color:var(--muted);margin:5px 0 0}
+.module-manager-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface-solid);cursor:pointer;font-size:1.1rem}
+.module-form{display:grid;gap:11px}
+.module-form label{display:grid;gap:6px;font-size:.68rem;font-weight:700;color:var(--gold-deep)}
+.module-form input,.module-form select,.module-form textarea{width:100%;border:1px solid var(--line);background:#fffdf6;border-radius:12px;padding:11px 12px;outline:none;font:500 .78rem Inter;color:var(--ink)}
+.module-form textarea{min-height:78px;resize:vertical}
+.module-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.module-manager-note{padding:10px 12px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.66rem;line-height:1.55}
+.module-manager-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:5px}
+.module-manager-actions .btn{border:1px solid var(--line)}
+.module-manager-list{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+.module-manager-list h4{font:600 1rem var(--disp);margin:0 0 10px}
+.module-saved-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.72rem}
+.module-saved-item span{min-width:0}
+.module-saved-item small{display:block;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.module-delete{border:1px solid rgba(124,44,50,.25);background:rgba(124,44,50,.06);color:var(--maroon);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.65rem;font-weight:700}
+@media(max-width:560px){.module-form-grid{grid-template-columns:1fr}#moduleManagerBtn{margin-left:0}}
 </style>
 </head>
 <body>
@@ -325,9 +376,9 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
     <button class="btn" id="openRandom">Buka Acak ✦</button>
   </div>
   <div class="stats">
-    <div class="stat"><b>9</b><span>Pelajaran Kitab Klasik</span></div>
-    <div class="stat"><b>6</b><span>Umum &amp; Hiburan</span></div>
-    <div class="stat"><b>15</b><span>Total Modul Terhubung</span></div>
+    <div class="stat"><b id="statKitab">9</b><span>Pelajaran Kitab Klasik</span></div>
+    <div class="stat"><b id="statUmum">6</b><span>Umum &amp; Hiburan</span></div>
+    <div class="stat"><b id="statTotal">15</b><span>Total Modul Terhubung</span></div>
   </div>
 </section>
 
@@ -336,6 +387,9 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   <div class="controls">
     <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Cari kitab atau pelajaran…"></label>
     <div class="filters"><button class="filter active" data-filter="all">Semua</button><button class="filter" data-filter="nahwu">Nahwu</button><button class="filter" data-filter="sharaf">Sharaf</button><button class="filter" data-filter="lain">Lainnya</button></div>
+    <button class="btn" id="compactToggle" type="button" title="Ringkas/lengkapkan tampilan kotak modul">🗜 Ringkas Tampilan</button>
+    <button class="btn" id="moduleManagerBtn" type="button">＋ Tambah Modul</button>
+    <span class="sync-note" id="syncNote"><span class="sdot" id="syncDot"></span><span id="syncText">Sinkron dgn Google Sheet</span></span>
   </div>
   <div class="grid" id="kitabGrid"></div>
   <div class="no-results" id="noResults">Tidak ada modul yang cocok dengan pencarian.</div>
@@ -353,6 +407,37 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   <div>VAOZEE // DIGITAL PESANTREN INDEX</div>
 </footer>
 </main>
+
+<div class="module-manager-backdrop" id="moduleManagerBackdrop" aria-hidden="true">
+  <div class="module-manager" role="dialog" aria-modal="true" aria-labelledby="moduleManagerTitle">
+    <div class="module-manager-head">
+      <div><h3 id="moduleManagerTitle">Tambah Modul</h3><p>Tambahkan link modul; setelah disimpan ke Google Sheet, kotaknya otomatis muncul di halaman utama semua pengunjung.</p></div>
+      <button class="module-manager-close" id="moduleManagerClose" type="button" aria-label="Tutup">×</button>
+    </div>
+    <form class="module-form" id="moduleForm">
+      <div class="module-form-grid">
+        <label>Nama Kitab / Modul<input id="moduleTitle" required maxlength="100" placeholder="Contoh: Fathul Mu'in"></label>
+        <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://vaozee.github.io/modul/"></label>
+      </div>
+      <div class="module-form-grid">
+        <label>Bagian<select id="moduleSection"><option value="kitab" selected>01 · Kitab Klasik</option><option value="umum">02 · Umum &amp; Hiburan</option></select></label>
+        <label id="moduleCatLabel">Kategori<input id="moduleCat" list="moduleCatOptions" value="lain" placeholder="nahwu / sharaf / lain / ketik sendiri" autocomplete="off">
+          <datalist id="moduleCatOptions"><option value="nahwu">Nahwu</option><option value="sharaf">Sharaf</option><option value="lain">Lainnya</option></datalist>
+        </label>
+      </div>
+      <div class="module-form-grid">
+        <label>Label<input id="moduleBadge" maxlength="20" value="KITAB"></label>
+        <label>Ikon / Arab<input id="moduleIcon" maxlength="12" value="كتاب"></label>
+      </div>
+      <div class="module-form-grid">
+        <label style="grid-column:1/-1">Deskripsi<input id="moduleDesc" maxlength="220" placeholder="Deskripsi singkat modul"></label>
+      </div>
+      <div class="module-manager-note" id="moduleManagerNote">Nomor modul dibuat otomatis. Kategori boleh dipilih dari daftar atau ketik sendiri; hanya kategori "nahwu"/"sharaf"/"lain" yang muncul di tombol filter, kategori lain tetap tampil di "Semua". Modul akan dikirim ke Google Sheet lewat Apps Script agar tampil otomatis untuk semua orang. Jika koneksi gagal, modul disimpan sementara hanya di browser ini.</div>
+      <div class="module-manager-actions"><button class="btn" type="button" id="moduleManagerCancel">Batal</button><button class="btn primary" type="submit">Simpan Modul</button></div>
+    </form>
+    <div class="module-manager-list" id="moduleSavedList"></div>
+  </div>
+</div>
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="loader" id="loader"><div class="loader-bar"></div></div>
@@ -409,12 +494,26 @@ function card(x){
 document.getElementById('kitabGrid').innerHTML=kitab.map(card).join('');
 document.getElementById('umumGrid').innerHTML=umum.map(card).join('');
 
+function updateModuleCounters(){
+ const kitabCount=document.querySelectorAll('#kitabGrid .card').length;
+ const umumCount=document.querySelectorAll('#umumGrid .card').length;
+ const sk=document.getElementById('statKitab'), su=document.getElementById('statUmum'), st=document.getElementById('statTotal');
+ if(sk)sk.textContent=kitabCount; if(su)su.textContent=umumCount; if(st)st.textContent=kitabCount+umumCount;
+}
+updateModuleCounters();
+
 /* ---- fullscreen module viewer ---- */
 const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), loader=document.getElementById('loader');
 function openModule(url,title,fromHistory=false){
  loader.classList.remove('done');
  frame.src=url; modalTitle.textContent=title; newTab.href=url;
  modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+ /* Header halaman modul juga diminimalkan otomatis tiap kali modul dibuka. */
+ const modalCapsule=document.querySelector('.modal-capsule'), miniModalBtn=document.getElementById('miniModal');
+ if(modalCapsule){
+   modalCapsule.classList.add('minimized');
+   if(miniModalBtn){miniModalBtn.textContent='＋';miniModalBtn.title='Pulihkan header modul'}
+ }
  /* Every module opens in browser fullscreen when launched by a user action. */
  if(!document.fullscreenElement && document.documentElement.requestFullscreen){
    document.documentElement.requestFullscreen().catch(()=>{});
@@ -515,6 +614,12 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     bindDrag(main); bindDrag(modal);
 
     const a=document.getElementById('miniMain');
+    if(main && !main.dataset.defaultMinApplied){
+      /* Header utama diminimalkan otomatis begitu halaman dibuka. */
+      main.dataset.defaultMinApplied='1';
+      main.classList.add('minimized');
+      if(a){a.textContent='＋';a.title='Pulihkan header'}
+    }
     if(a && !a.dataset.bound){
       a.dataset.bound='1';
       a.addEventListener('click',function(e){
@@ -541,7 +646,166 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   else init();
   new MutationObserver(init).observe(document.body,{childList:true,subtree:true});
 })();
+/* === Sinkronisasi Modul otomatis dari Google Sheet (Apps Script) + Manager === */
+(function(){
+  /* Ganti URL ini jika suatu saat Anda membuat deployment Apps Script baru dengan URL berbeda. */
+  const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyh0yU30E9nM-h0QQ3R2ty_lHq7dit6ONWUeI7RNSJJ2FywGkooWr17ZbeJvltYYiD5/exec';
+  const SYNC_INTERVAL_MS=45000; /* cek pembaruan Google Sheet tiap 45 detik */
+  const STORAGE_KEY='vaozee_kitab_modules_v1';           /* fallback lokal jika koneksi gagal */
+  const REMOTE_CACHE_KEY='vaozee_remote_modules_cache_v1'; /* cache modul dari Sheet, untuk tampilan instan */
+  const PASSWORD='fauziibra';
+
+  const kitabGrid=document.getElementById('kitabGrid'), umumGrid=document.getElementById('umumGrid');
+  const manager=document.getElementById('moduleManagerBackdrop'), form=document.getElementById('moduleForm');
+  const savedList=document.getElementById('moduleSavedList'), openBtn=document.getElementById('moduleManagerBtn');
+  const syncDot=document.getElementById('syncDot'), syncText=document.getElementById('syncText');
+  if(!kitabGrid||!umumGrid||!manager||!form||!openBtn)return;
+
+  function readLocal(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+  function writeLocal(x){localStorage.setItem(STORAGE_KEY,JSON.stringify(x))}
+  function readRemoteCache(){try{const x=JSON.parse(localStorage.getItem(REMOTE_CACHE_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+  function writeRemoteCache(x){localStorage.setItem(REMOTE_CACHE_KEY,JSON.stringify(x))}
+  function validUrl(url){try{const u=new URL(url);return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}}
+
+  let remoteItems=readRemoteCache();
+
+  function nextNumber(){const nums=[...kitab,...umum,...readLocal(),...remoteItems].map(x=>parseInt(x.n,10)).filter(Number.isFinite);return String(Math.max(0,...nums)+1).padStart(2,'0')}
+  function customCard(x,extraClass){return card(x).replace('class="card"','class="card '+extraClass+'"')}
+
+  function renderAll(){
+    kitabGrid.querySelectorAll('.custom-module-card,.remote-module-card').forEach(c=>c.remove());
+    umumGrid.querySelectorAll('.custom-module-card,.remote-module-card').forEach(c=>c.remove());
+    readLocal().forEach(x=>{const t=x.section==='umum'?umumGrid:kitabGrid;t.insertAdjacentHTML('beforeend',customCard(x,'custom-module-card'))});
+    remoteItems.forEach(x=>{const t=x.section==='umum'?umumGrid:kitabGrid;t.insertAdjacentHTML('beforeend',customCard(x,'remote-module-card'))});
+    document.querySelectorAll('.custom-module-card,.remote-module-card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)}));
+    apply();updateModuleCounters();
+  }
+
+  function setSyncState(state,msg){
+    if(!syncDot)return;
+    syncDot.classList.toggle('err',state==='err');
+    if(syncText)syncText.textContent=msg;
+  }
+
+  async function syncFromSheet(silent){
+    setSyncState('ok', silent?'Menyinkronkan…':'Menyinkronkan…');
+    try{
+      const res=await fetch(APPS_SCRIPT_URL+'?action=list',{method:'GET'});
+      const data=await res.json();
+      if(data&&data.ok&&Array.isArray(data.items)){
+        remoteItems=data.items.map(x=>({...x,n:String(x.n)}));
+        writeRemoteCache(remoteItems);
+        renderAll();
+        const now=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+        setSyncState('ok','Tersinkron pukul '+now);
+      }else{
+        setSyncState('err','Gagal membaca data Sheet');
+      }
+    }catch(err){
+      setSyncState('err','Offline / gagal sinkron');
+      if(!silent)console.warn('Sinkronisasi modul gagal:',err);
+    }
+  }
+
+  function listSaved(){
+    const localItems=readLocal();
+    const remoteRows=remoteItems.map(x=>`<div class="module-saved-item"><span><b>MODUL ${x.n} · ${x.title}</b><small>${x.url} · dari Google Sheet</small></span><button class="module-delete" type="button" data-n="${x.n}" data-remote="1">Hapus</button></div>`).join('');
+    const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>MODUL ${x.n} · ${x.title}</b><small>${x.url} · tersimpan lokal</small></span><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></div>`).join('');
+    savedList.innerHTML='<h4>Modul tersimpan</h4>'+((remoteRows+localRows)||'<div class="module-manager-note">Belum ada modul tambahan.</div>');
+    savedList.querySelectorAll('.module-delete').forEach(b=>{
+      b.onclick=async()=>{
+        const p=prompt('Masukkan password untuk menghapus modul:');
+        if(p!==PASSWORD){if(p!==null)alert('Password salah.');return}
+        if(b.dataset.remote){
+          try{
+            await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'delete',token:PASSWORD,n:b.dataset.n})});
+          }catch(e){alert('Gagal menghapus dari Google Sheet. Periksa koneksi lalu coba lagi.');return}
+          await syncFromSheet(true);
+        }else{
+          writeLocal(readLocal().filter(x=>x.n!==b.dataset.n));
+          renderAll();
+        }
+        listSaved();
+      };
+    });
+  }
+
+  openBtn.onclick=()=>{manager.classList.add('open');manager.setAttribute('aria-hidden','false');listSaved();document.getElementById('moduleTitle').focus()};
+  function close(){manager.classList.remove('open');manager.setAttribute('aria-hidden','true');form.reset();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display=''}
+  document.getElementById('moduleManagerClose').onclick=close;document.getElementById('moduleManagerCancel').onclick=close;
+  manager.addEventListener('click',e=>{if(e.target===manager)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&manager.classList.contains('open'))close()});
+
+  const sectionSelect=document.getElementById('moduleSection');
+  sectionSelect.addEventListener('change',function(){document.getElementById('moduleCatLabel').style.display=this.value==='umum'?'none':''});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const title=document.getElementById('moduleTitle').value.trim();
+    const url=validUrl(document.getElementById('moduleUrl').value.trim());
+    if(!title||!url){alert('URL harus berupa alamat http/https yang valid.');return}
+    const p=prompt('Masukkan password untuk menyimpan modul:');
+    if(p!==PASSWORD){if(p!==null)alert('Password salah. Modul tidak disimpan.');return}
+
+    const section=sectionSelect.value;
+    const payload={
+      action:'add',token:PASSWORD,section,title,url,
+      cat:document.getElementById('moduleCat').value,
+      icon:document.getElementById('moduleIcon').value.trim()||(section==='umum'?'✦':'كتاب'),
+      badge:document.getElementById('moduleBadge').value.trim()||(section==='umum'?'UMUM':'KITAB'),
+      desc:document.getElementById('moduleDesc').value.trim()||'Modul pembelajaran kitab klasik pesantren.'
+    };
+
+    const submitBtn=form.querySelector('button[type="submit"]');
+    submitBtn.disabled=true;submitBtn.textContent='Menyimpan…';
+    try{
+      const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+      const data=await res.json();
+      if(!data.ok)throw new Error(data.error||'Gagal menyimpan ke Google Sheet.');
+      await syncFromSheet(true);
+      alert('Modul berhasil disimpan ke Google Sheet dan tampil otomatis di halaman utama.');
+    }catch(err){
+      const items=readLocal();
+      items.push({n:nextNumber(),title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,desc:payload.desc,section});
+      writeLocal(items);renderAll();
+      alert('Tidak bisa terhubung ke Google Sheet, modul disimpan sementara hanya di browser ini.\n('+err.message+')');
+    }finally{
+      submitBtn.disabled=false;submitBtn.textContent='Simpan Modul';
+    }
+    form.reset();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display='';
+    listSaved();
+  });
+
+  renderAll();
+  syncFromSheet(true);
+  setInterval(()=>syncFromSheet(true),SYNC_INTERVAL_MS);
+  window.vaozeeSyncModules=()=>syncFromSheet(false); /* bisa dipanggil manual dari console jika perlu */
+})();
+
+/* === Tombol Ringkas Tampilan (compact view) === */
+(function(){
+  const KEY='vaozee_compact_view';
+  const btn=document.getElementById('compactToggle');
+  const grids=[document.getElementById('kitabGrid'),document.getElementById('umumGrid')];
+  if(!btn||!grids[0]||!grids[1])return;
+  function apply(on){
+    grids.forEach(g=>g.classList.toggle('compact',on));
+    btn.textContent=on?'▦ Tampilan Lengkap':'🗜 Ringkas Tampilan';
+    btn.classList.toggle('active',on);
+  }
+  apply(localStorage.getItem(KEY)==='1');
+  btn.addEventListener('click',()=>{
+    const on=!grids[0].classList.contains('compact');
+    localStorage.setItem(KEY,on?'1':'0');
+    apply(on);
+  });
+})();
 </script>
 
+<!-- VAOZEE_EMBEDDED_MODULES_START -->
+<script type="application/json" id="vaozee-embedded-modules">[]</script>
+<!-- VAOZEE_EMBEDDED_MODULES_END -->
 </body>
 </html>
+
+<script>document.addEventListener('DOMContentLoaded',updateModuleCounters);</script>

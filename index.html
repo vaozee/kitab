@@ -321,6 +321,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 .module-saved-item span{min-width:0}
 .module-saved-item small{display:block;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .module-delete{border:1px solid rgba(124,44,50,.25);background:rgba(124,44,50,.06);color:var(--maroon);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.65rem;font-weight:700}
+.module-edit{border:1px solid rgba(179,129,44,.35);background:rgba(179,129,44,.08);color:var(--gold-deep);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.65rem;font-weight:700}
 @media(max-width:560px){.module-form-grid{grid-template-columns:1fr}#moduleManagerBtn{margin-left:0}}
 </style>
 </head>
@@ -415,6 +416,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
       <button class="module-manager-close" id="moduleManagerClose" type="button" aria-label="Tutup">×</button>
     </div>
     <form class="module-form" id="moduleForm">
+      <input type="hidden" id="moduleEditTarget" value="">
       <div class="module-form-grid">
         <label>Nama Kitab / Modul<input id="moduleTitle" required maxlength="100" placeholder="Contoh: Fathul Mu'in"></label>
         <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://vaozee.github.io/modul/"></label>
@@ -432,8 +434,8 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
       <div class="module-form-grid">
         <label style="grid-column:1/-1">Deskripsi<input id="moduleDesc" maxlength="220" placeholder="Deskripsi singkat modul"></label>
       </div>
-      <div class="module-manager-note" id="moduleManagerNote">Nomor modul dibuat otomatis. Kategori boleh dipilih dari daftar atau ketik sendiri; hanya kategori "nahwu"/"sharaf"/"lain" yang muncul di tombol filter, kategori lain tetap tampil di "Semua". Modul akan dikirim ke Google Sheet lewat Apps Script agar tampil otomatis untuk semua orang. Jika koneksi gagal, modul disimpan sementara hanya di browser ini.</div>
-      <div class="module-manager-actions"><button class="btn" type="button" id="moduleManagerCancel">Batal</button><button class="btn primary" type="submit">Simpan Modul</button></div>
+      <div class="module-manager-note" id="moduleManagerNote">Nomor "MODUL XX" dibuat otomatis mengikuti urutan: 01-Kitab Klasik jadi acuan dasar, lalu 02-Umum melanjutkan nomornya — jadi kalau Kitab Klasik nambah, nomor Umum otomatis ikut bergeser. Kategori boleh dipilih dari daftar atau ketik sendiri. Setiap perubahan wajib password dan langsung tersimpan/tercatat di Google Sheet. Jika koneksi gagal, modul disimpan sementara hanya di browser ini.</div>
+      <div class="module-manager-actions"><button class="btn" type="button" id="moduleManagerCancel">Batal</button><button class="btn primary" type="submit" id="moduleSubmitBtn">Simpan Modul</button></div>
     </form>
     <div class="module-manager-list" id="moduleSavedList"></div>
   </div>
@@ -482,10 +484,11 @@ const umum=[
  {n:"14",title:"VAOZEE IO",icon:"⌘",badge:"SISTEM",url:"https://vaozee.github.io/io/",desc:"Halaman indeks sistem VAOZEE dan pintu masuk menuju berbagai modul."},
  {n:"15",title:"Suite Launcher",icon:"✦",badge:"LAUNCHER",url:"https://vaozee.github.io/promo/",desc:"Satu pintu untuk mengakses kumpulan aplikasi dan modul VAOZEE."}
 ];
-function card(x){
- return `<a href="${x.url}" class="card" data-url="${x.url}" data-title="${x.title}" data-cat="${x.cat||'umum'}">
+function card(x,dispN){
+ const shown=dispN||x.n;
+ return `<a href="${x.url}" class="card" data-url="${x.url}" data-title="${x.title}" data-cat="${x.cat||'umum'}" data-n="${x.n}">
    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-   <div class="card-top"><span class="num">MODUL ${x.n}</span><span class="badge">${x.badge}</span></div>
+   <div class="card-top"><span class="num">MODUL ${shown}</span><span class="badge">${x.badge}</span></div>
    <div class="icon">${x.icon}</div>
    <div class="card-body"><h3>${x.title}</h3><p>${x.desc}</p></div>
    <div class="card-bottom"><span class="path">${new URL(x.url).pathname.replaceAll('/','')||'/'}</span><span class="open">Buka →</span></div>
@@ -653,12 +656,22 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   const SYNC_INTERVAL_MS=45000; /* cek pembaruan Google Sheet tiap 45 detik */
   const STORAGE_KEY='vaozee_kitab_modules_v1';           /* fallback lokal jika koneksi gagal */
   const REMOTE_CACHE_KEY='vaozee_remote_modules_cache_v1'; /* cache modul dari Sheet, untuk tampilan instan */
-  const PASSWORD='fauziibra';
+
+  /* Password disimpan dalam format tersandi (dibalik lalu Base64), BUKAN teks polos,
+     supaya tidak langsung kelihatan/terlacak lewat "view source" atau pencarian teks biasa.
+     Catatan jujur: ini cuma penyamaran ringan, bukan keamanan sungguhan -- siapapun yang
+     paham JavaScript tetap bisa membongkarnya kalau benar-benar mau. Untuk proteksi nyata,
+     validasi password sebaiknya dilakukan di server (Apps Script) -- dan memang di sana
+     tetap dicocokkan ulang lewat TOKEN sebelum data ditulis ke Sheet. */
+  const PW_ENC='YXJiaWl6dWFm';
+  function getPassword(){return atob(PW_ENC).split('').reverse().join('')}
 
   const kitabGrid=document.getElementById('kitabGrid'), umumGrid=document.getElementById('umumGrid');
   const manager=document.getElementById('moduleManagerBackdrop'), form=document.getElementById('moduleForm');
   const savedList=document.getElementById('moduleSavedList'), openBtn=document.getElementById('moduleManagerBtn');
   const syncDot=document.getElementById('syncDot'), syncText=document.getElementById('syncText');
+  const editTargetInput=document.getElementById('moduleEditTarget'), submitBtn=document.getElementById('moduleSubmitBtn');
+  const managerTitle=document.getElementById('moduleManagerTitle'), managerDesc=managerTitle?managerTitle.nextElementSibling:null;
   if(!kitabGrid||!umumGrid||!manager||!form||!openBtn)return;
 
   function readLocal(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
@@ -669,15 +682,36 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 
   let remoteItems=readRemoteCache();
 
-  function nextNumber(){const nums=[...kitab,...umum,...readLocal(),...remoteItems].map(x=>parseInt(x.n,10)).filter(Number.isFinite);return String(Math.max(0,...nums)+1).padStart(2,'0')}
-  function customCard(x,extraClass){return card(x).replace('class="card"','class="card '+extraClass+'"')}
+  /* Modul "bawaan" (source==='bawaan') sengaja TIDAK dirender ulang di sini -- mereka sudah
+     tampil lewat array kitab[]/umum[] statis di HTML. Baris itu ada di Sheet hanya supaya
+     semua modul (termasuk bawaan) tetap tercatat/termonitor di satu tempat. */
+  function isBuiltin(x){return String(x.source||'').toLowerCase()==='bawaan'}
+
+  function byStableId(a,b){return (parseInt(a.n,10)||0)-(parseInt(b.n,10)||0)}
+
+  /* 01-Kitab Klasik jadi acuan dasar, lalu 02-Umum melanjutkan nomornya secara otomatis.
+     Ini dihitung ULANG setiap render, jadi kalau jumlah modul Kitab Klasik berubah,
+     semua nomor "MODUL XX" di Umum & Hiburan otomatis ikut bergeser. */
+  function computeLists(){
+    const local=readLocal();
+    const remoteKitab=remoteItems.filter(x=>x.section!=='umum'&&!isBuiltin(x)).sort(byStableId);
+    const remoteUmum =remoteItems.filter(x=>x.section==='umum'&&!isBuiltin(x)).sort(byStableId);
+    const localKitab=local.filter(x=>x.section!=='umum').sort(byStableId);
+    const localUmum =local.filter(x=>x.section==='umum').sort(byStableId);
+    return{
+      kitabList:[...kitab,...remoteKitab,...localKitab],
+      umumList:[...umum,...remoteUmum,...localUmum]
+    };
+  }
 
   function renderAll(){
-    kitabGrid.querySelectorAll('.custom-module-card,.remote-module-card').forEach(c=>c.remove());
-    umumGrid.querySelectorAll('.custom-module-card,.remote-module-card').forEach(c=>c.remove());
-    readLocal().forEach(x=>{const t=x.section==='umum'?umumGrid:kitabGrid;t.insertAdjacentHTML('beforeend',customCard(x,'custom-module-card'))});
-    remoteItems.forEach(x=>{const t=x.section==='umum'?umumGrid:kitabGrid;t.insertAdjacentHTML('beforeend',customCard(x,'remote-module-card'))});
-    document.querySelectorAll('.custom-module-card,.remote-module-card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)}));
+    const{kitabList,umumList}=computeLists();
+    const base=kitabList.length;
+    kitabGrid.innerHTML=kitabList.map((x,i)=>card(x,String(i+1).padStart(2,'0'))).join('');
+    umumGrid.innerHTML=umumList.map((x,i)=>card(x,String(base+i+1).padStart(2,'0'))).join('');
+    [...kitabGrid.querySelectorAll('.card'),...umumGrid.querySelectorAll('.card')].forEach(c=>{
+      c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)});
+    });
     apply();updateModuleCounters();
   }
 
@@ -688,7 +722,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   }
 
   async function syncFromSheet(silent){
-    setSyncState('ok', silent?'Menyinkronkan…':'Menyinkronkan…');
+    setSyncState('ok','Menyinkronkan…');
     try{
       const res=await fetch(APPS_SCRIPT_URL+'?action=list',{method:'GET'});
       const data=await res.json();
@@ -707,22 +741,62 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     }
   }
 
+  function fillForm(x){
+    document.getElementById('moduleTitle').value=x.title||'';
+    document.getElementById('moduleUrl').value=x.url||'';
+    document.getElementById('moduleSection').value=x.section==='umum'?'umum':'kitab';
+    document.getElementById('moduleCat').value=x.cat||'lain';
+    document.getElementById('moduleBadge').value=x.badge||'';
+    document.getElementById('moduleIcon').value=x.icon||'';
+    document.getElementById('moduleDesc').value=x.desc||'';
+    document.getElementById('moduleCatLabel').style.display=x.section==='umum'?'none':'';
+  }
+
+  function enterEditMode(kind,x){
+    editTargetInput.value=JSON.stringify({kind,n:String(x.n)});
+    fillForm(x);
+    if(managerTitle)managerTitle.textContent='Edit Modul';
+    if(managerDesc)managerDesc.textContent='Ubah data modul ini, lalu simpan (butuh password).';
+    if(submitBtn)submitBtn.textContent='Simpan Perubahan';
+    document.getElementById('moduleTitle').focus();
+    manager.scrollTop=0;
+  }
+
+  function exitEditMode(){
+    editTargetInput.value='';
+    if(managerTitle)managerTitle.textContent='Tambah Modul';
+    if(managerDesc)managerDesc.textContent='Tambahkan link modul; setelah disimpan ke Google Sheet, kotaknya otomatis muncul di halaman utama semua pengunjung.';
+    if(submitBtn)submitBtn.textContent='Simpan Modul';
+  }
+
   function listSaved(){
     const localItems=readLocal();
-    const remoteRows=remoteItems.map(x=>`<div class="module-saved-item"><span><b>MODUL ${x.n} · ${x.title}</b><small>${x.url} · dari Google Sheet</small></span><button class="module-delete" type="button" data-n="${x.n}" data-remote="1">Hapus</button></div>`).join('');
-    const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>MODUL ${x.n} · ${x.title}</b><small>${x.url} · tersimpan lokal</small></span><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></div>`).join('');
-    savedList.innerHTML='<h4>Modul tersimpan</h4>'+((remoteRows+localRows)||'<div class="module-manager-note">Belum ada modul tambahan.</div>');
+    const remoteEditable=remoteItems.filter(x=>!isBuiltin(x));
+    const remoteRows=remoteEditable.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.url} · dari Google Sheet</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}" data-remote="1">Edit</button><button class="module-delete" type="button" data-n="${x.n}" data-remote="1">Hapus</button></span></div>`).join('');
+    const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.url} · tersimpan lokal</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}">Edit</button><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></span></div>`).join('');
+    const builtinCount=remoteItems.filter(isBuiltin).length;
+    const builtinNote=builtinCount?`<div class="module-manager-note">+ ${builtinCount} modul bawaan tercatat di Google Sheet untuk monitoring (tidak bisa diedit dari sini, karena sumbernya file HTML).</div>`:'';
+    savedList.innerHTML='<h4>Modul tambahan tersimpan</h4>'+((remoteRows+localRows)||'<div class="module-manager-note">Belum ada modul tambahan.</div>')+builtinNote;
+
+    savedList.querySelectorAll('.module-edit').forEach(b=>{
+      b.onclick=()=>{
+        const src=b.dataset.remote?remoteEditable:localItems;
+        const item=src.find(x=>String(x.n)===b.dataset.n);
+        if(!item)return;
+        enterEditMode(b.dataset.remote?'remote':'local',item);
+      };
+    });
     savedList.querySelectorAll('.module-delete').forEach(b=>{
       b.onclick=async()=>{
         const p=prompt('Masukkan password untuk menghapus modul:');
-        if(p!==PASSWORD){if(p!==null)alert('Password salah.');return}
+        if(p!==getPassword()){if(p!==null)alert('Password salah.');return}
         if(b.dataset.remote){
           try{
-            await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'delete',token:PASSWORD,n:b.dataset.n})});
+            await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'delete',token:getPassword(),n:b.dataset.n})});
           }catch(e){alert('Gagal menghapus dari Google Sheet. Periksa koneksi lalu coba lagi.');return}
           await syncFromSheet(true);
         }else{
-          writeLocal(readLocal().filter(x=>x.n!==b.dataset.n));
+          writeLocal(readLocal().filter(x=>String(x.n)!==b.dataset.n));
           renderAll();
         }
         listSaved();
@@ -731,7 +805,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   }
 
   openBtn.onclick=()=>{manager.classList.add('open');manager.setAttribute('aria-hidden','false');listSaved();document.getElementById('moduleTitle').focus()};
-  function close(){manager.classList.remove('open');manager.setAttribute('aria-hidden','true');form.reset();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display=''}
+  function close(){manager.classList.remove('open');manager.setAttribute('aria-hidden','true');form.reset();exitEditMode();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display=''}
   document.getElementById('moduleManagerClose').onclick=close;document.getElementById('moduleManagerCancel').onclick=close;
   manager.addEventListener('click',e=>{if(e.target===manager)close()});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&manager.classList.contains('open'))close()});
@@ -744,35 +818,51 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     const title=document.getElementById('moduleTitle').value.trim();
     const url=validUrl(document.getElementById('moduleUrl').value.trim());
     if(!title||!url){alert('URL harus berupa alamat http/https yang valid.');return}
-    const p=prompt('Masukkan password untuk menyimpan modul:');
-    if(p!==PASSWORD){if(p!==null)alert('Password salah. Modul tidak disimpan.');return}
+
+    let editTarget=null;
+    try{editTarget=editTargetInput.value?JSON.parse(editTargetInput.value):null}catch(e){editTarget=null}
+    const isEdit=!!editTarget;
+
+    const p=prompt(isEdit?'Masukkan password untuk menyimpan perubahan modul:':'Masukkan password untuk menyimpan modul:');
+    if(p!==getPassword()){if(p!==null)alert('Password salah. Perubahan tidak disimpan.');return}
 
     const section=sectionSelect.value;
     const payload={
-      action:'add',token:PASSWORD,section,title,url,
+      action:isEdit?'edit':'add',token:getPassword(),section,title,url,
       cat:document.getElementById('moduleCat').value,
       icon:document.getElementById('moduleIcon').value.trim()||(section==='umum'?'✦':'كتاب'),
       badge:document.getElementById('moduleBadge').value.trim()||(section==='umum'?'UMUM':'KITAB'),
       desc:document.getElementById('moduleDesc').value.trim()||'Modul pembelajaran kitab klasik pesantren.'
     };
+    if(isEdit)payload.n=editTarget.n;
 
-    const submitBtn=form.querySelector('button[type="submit"]');
-    submitBtn.disabled=true;submitBtn.textContent='Menyimpan…';
+    submitBtn.disabled=true;submitBtn.textContent=isEdit?'Menyimpan perubahan…':'Menyimpan…';
     try{
-      const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
-      const data=await res.json();
-      if(!data.ok)throw new Error(data.error||'Gagal menyimpan ke Google Sheet.');
-      await syncFromSheet(true);
-      alert('Modul berhasil disimpan ke Google Sheet dan tampil otomatis di halaman utama.');
+      if(isEdit&&editTarget.kind==='local'){
+        const items=readLocal().map(x=>String(x.n)===String(editTarget.n)?{...x,section,title,url,cat:payload.cat,icon:payload.icon,badge:payload.badge,desc:payload.desc}:x);
+        writeLocal(items);renderAll();
+        alert('Perubahan modul lokal berhasil disimpan.');
+      }else{
+        const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
+        const data=await res.json();
+        if(!data.ok)throw new Error(data.error||'Gagal menyimpan ke Google Sheet.');
+        await syncFromSheet(true);
+        alert(isEdit?'Perubahan modul berhasil disimpan ke Google Sheet.':'Modul berhasil disimpan ke Google Sheet dan tampil otomatis di halaman utama.');
+      }
     }catch(err){
-      const items=readLocal();
-      items.push({n:nextNumber(),title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,desc:payload.desc,section});
-      writeLocal(items);renderAll();
-      alert('Tidak bisa terhubung ke Google Sheet, modul disimpan sementara hanya di browser ini.\n('+err.message+')');
+      if(isEdit){
+        alert('Gagal menyimpan perubahan ke Google Sheet.\n('+err.message+')\nCoba lagi setelah koneksi normal.');
+      }else{
+        const items=readLocal();
+        const localN='L'+Date.now();
+        items.push({n:localN,title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,desc:payload.desc,section});
+        writeLocal(items);renderAll();
+        alert('Tidak bisa terhubung ke Google Sheet, modul disimpan sementara hanya di browser ini.\n('+err.message+')');
+      }
     }finally{
-      submitBtn.disabled=false;submitBtn.textContent='Simpan Modul';
+      submitBtn.disabled=false;submitBtn.textContent=isEdit?'Simpan Perubahan':'Simpan Modul';
     }
-    form.reset();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display='';
+    form.reset();exitEditMode();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display='';
     listSaved();
   });
 

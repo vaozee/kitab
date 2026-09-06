@@ -280,6 +280,17 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   border:1px solid rgba(179,129,44,.36)!important;
   border-radius:8px!important;
 }
+/* === Mode Zoom Baca (cubit 2 jari) === */
+.modal-frame-wrap{overflow:hidden!important}
+.zoom-overlay{position:absolute;inset:9px;z-index:3;display:none;touch-action:none;cursor:grab;background:transparent}
+.modal-frame-wrap.zoom-mode #frame{pointer-events:none}
+.modal-frame-wrap.zoom-mode .zoom-overlay{display:block}
+#zoomToggle.active{color:var(--gold-deep)!important;border-color:var(--gold-light)!important;background:rgba(179,129,44,.16)!important}
+.zoom-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:9;
+ background:rgba(43,32,19,.78);color:#fdf6e6;font-size:.68rem;font-weight:600;padding:8px 15px;border-radius:999px;
+ pointer-events:none;opacity:0;transition:opacity .3s ease}
+.modal-frame-wrap.zoom-mode .zoom-hint{opacity:1}
+.modal.pdf-mode #zoomToggle{display:none!important}
 
 
 /* Module 01-09: frame visible over the full-screen page, including all 4 existing corner artworks. */
@@ -362,12 +373,115 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   gap:5px!important;
 }
 .modal-capsule:not(.minimized) #fsBtnModal,
-.modal-capsule:not(.minimized) #newTab{
-  display:none!important;
-}
-.modal-capsule:not(.minimized) #closeModal{
+.modal-capsule:not(.minimized) #newTab,
+.modal-capsule:not(.minimized) #closeModal,
+.modal-capsule:not(.minimized) #zoomToggle{
   display:grid!important;
 }
+
+/* === Chapter 03: PDF Reader === */
+.pdf-reader-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
+.pdf-reader-note{font-size:.62rem;color:var(--muted);font-weight:600;line-height:1.5}
+.pdf-reader-empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;background:var(--surface-solid)}
+.pdf-card{cursor:pointer;appearance:none;width:100%;text-align:left}
+.pdf-card .pdf-meta{font-size:.62rem;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf-card .open{cursor:pointer}
+.pdf-reader-hidden-input{display:none!important}
+.pdf-viewer-tools{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;padding:7px 10px;background:rgba(253,249,238,.92);border:1px solid rgba(227,195,119,.55);border-radius:999px;box-shadow:0 10px 30px rgba(90,64,20,.14)}
+.pdf-viewer-tools .icon-btn{width:34px;height:34px}
+.pdf-mode-label{font-size:.66rem;font-weight:800;color:var(--gold-deep);padding:0 5px;white-space:nowrap}
+.pdf-book-stage{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:8px 10px 8px;background:radial-gradient(circle at 50% 40%,#f7edd5 0%,#ead9b8 48%,#d7c098 100%);overflow:hidden}
+.pdf-book-stage.active{display:flex}
+.pdf-book{position:relative;width:min(96vw,1220px);height:min(91vh,900px);perspective:2400px;display:flex;align-items:stretch;justify-content:center;touch-action:none;user-select:none;transform:none!important}
+.pdf-book::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(100,70,30,.28),transparent);z-index:8;pointer-events:none}
+.pdf-page{position:relative;width:50%;height:100%;background:#fffdf7;box-shadow:0 18px 50px rgba(65,45,18,.28);overflow:hidden;backface-visibility:hidden;transform-style:preserve-3d;transform:none;transition:none}
+.pdf-page.pdf-under-turn{z-index:3}
+.pdf-page.pdf-static{z-index:4}
+.pdf-turn-layer{position:absolute;top:0;width:50%;height:100%;z-index:15;background:#fffdf7;overflow:hidden;transform-style:preserve-3d;will-change:transform;box-shadow:0 18px 50px rgba(65,45,18,.28);pointer-events:none}
+.pdf-turn-layer.forward{left:50%;transform-origin:left center;border-radius:2px 10px 10px 2px}
+.pdf-turn-layer.back{left:0;transform-origin:right center;border-radius:10px 2px 2px 10px}
+.pdf-turn-face{position:absolute;inset:0;width:100%;height:100%;display:block;background-color:#fffdf7;background-position:center;background-repeat:no-repeat;background-size:contain;backface-visibility:hidden;-webkit-backface-visibility:hidden}.pdf-turn-face.back{transform:rotateY(180deg)}
+.pdf-turn-layer::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(80,50,20,.16),transparent 16%,transparent 78%,rgba(80,50,20,.08));pointer-events:none}
+.pdf-book.is-dragging .pdf-page{transition:none!important}
+.pdf-page.turn-forward,.pdf-page.turn-back{animation:none!important;transform:none!important}
+@media (prefers-reduced-motion:reduce){.pdf-turn-layer{transition:none!important}}
+.pdf-page canvas{display:block;width:100%;height:100%;object-fit:contain;background:#fffdf7}
+.pdf-page.left{border-radius:10px 2px 2px 10px}
+.pdf-page.right{border-radius:2px 10px 10px 2px}
+.pdf-page.left::after,.pdf-page.right::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(90,55,18,.10),transparent 10%,transparent 88%,rgba(90,55,18,.08));mix-blend-mode:multiply}
+.pdf-page.turn-forward{transform-origin:left center;animation:pdfTurnForward .72s cubic-bezier(.2,.72,.15,1) both;z-index:12}
+.pdf-page.turn-back{transform-origin:right center;animation:pdfTurnBack .72s cubic-bezier(.2,.72,.15,1) both;z-index:12}
+@keyframes pdfTurnForward{0%{transform:rotateY(0deg);filter:brightness(1)}45%{filter:brightness(.88)}100%{transform:rotateY(-180deg);filter:brightness(.98)}}
+@keyframes pdfTurnBack{0%{transform:rotateY(0deg);filter:brightness(1)}45%{filter:brightness(.88)}100%{transform:rotateY(180deg);filter:brightness(.98)}}
+.pdf-book-caption{pointer-events:none;position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:.62rem;font-weight:700;color:var(--gold-deep);background:rgba(253,249,238,.86);padding:6px 12px;border-radius:999px;border:1px solid var(--line);z-index:20;white-space:nowrap}
+.pdf-book-hint{position:absolute;top:58px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--muted);font-weight:700;background:rgba(253,249,238,.82);padding:6px 10px;border-radius:999px;z-index:20}
+.pdf-reader-modal-tools{position:fixed;top:78px;left:50%;transform:translateX(-50%);z-index:8;display:none}
+.modal.pdf-mode .pdf-reader-modal-tools{display:flex}
+.modal.pdf-mode #frame{display:none!important}
+.modal.pdf-mode.book-active #frame{display:none}
+.modal.pdf-mode.book-active .modal-frame-wrap{
+  inset:10px!important;width:auto!important;height:auto!important;
+  background-color:var(--cream)!important;
+  background-image:var(--corner-img),var(--corner-img),var(--corner-img),var(--corner-img)!important;
+  background-repeat:no-repeat!important;background-size:42px 42px!important;
+  background-position:top left,top right,bottom left,bottom right!important;
+  border:2px solid rgba(179,129,44,.52)!important;border-radius:4px!important;
+  box-shadow:inset 0 0 0 1px rgba(227,195,119,.22),0 10px 34px rgba(0,0,0,.22)!important;
+  padding:8px!important;overflow:hidden!important
+}
+.modal.pdf-mode.book-active .pdf-book-stage{
+  inset:0!important;padding:4px!important;
+  background:radial-gradient(circle at 50% 42%,#f7edd5 0%,#ead9b8 50%,#d7c098 100%)!important;
+}
+.modal.pdf-mode.book-active .pdf-book{width:min(96vw,1220px);height:min(94vh,900px)}
+.modal.pdf-mode.book-active .module-frame-overlay{display:block;opacity:.72;pointer-events:none}
+@media(max-width:760px){
+  .pdf-book-stage{padding:70px 10px 18px}
+  .pdf-book{height:min(72vh,680px);width:98vw}
+  .pdf-page{box-shadow:0 10px 30px rgba(65,45,18,.22)}
+  .pdf-book::before{display:none}
+  .pdf-page.left{width:100%;border-radius:8px}
+  .pdf-page.right{display:none}
+  .pdf-book-caption{bottom:2px}
+  .pdf-book-hint{top:45px}
+}
+@media(prefers-reduced-motion:reduce){.pdf-page.turn-forward,.pdf-page.turn-back{animation:none}}
+
+
+/* PDF scroll viewer: fullscreen, native-browser-toolbar-free */
+.pdf-scroll-stage{position:absolute;inset:0;display:none;overflow:auto;background:#ececec;padding:10px 10px 24px;overscroll-behavior:contain}
+.pdf-scroll-stage.active{display:block}
+.pdf-scroll-pages{width:min(100%,980px);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px}
+.pdf-scroll-page-wrap{position:relative;display:block;max-width:100%;min-width:220px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.28);border-radius:2px;overflow:hidden}.pdf-scroll-page{display:block;width:100%;height:100%;background:#fff}
+.modal.pdf-mode.scroll-active #frame{display:none}
+.modal.pdf-mode.scroll-active .pdf-book-stage{display:none}
+.modal.pdf-mode.scroll-active .pdf-scroll-stage{display:block}.modal.pdf-mode.scroll-active .modal-capsule-wrap{top:8px}.modal.pdf-mode.scroll-active .pdf-reader-modal-tools{display:flex!important}
+
+/* PDF reader: immersive fullscreen + floating auto-hide header */
+.modal.pdf-mode{background:#000}
+.modal.pdf-mode .modal-frame-wrap{position:absolute;inset:0;width:100%;height:100%;max-width:none;margin:0;border-radius:0;border:0;box-shadow:none;padding:0;background:#111}
+.modal.pdf-mode #frame{width:100%;height:100%;border:0;display:block}
+.modal.pdf-mode .modal-capsule-wrap{top:12px;z-index:30;pointer-events:none;transition:opacity .45s ease,transform .45s ease}
+.modal.pdf-mode .modal-capsule{pointer-events:auto;width:auto;max-width:min(94vw,900px);background:rgba(20,20,20,.24);border-color:rgba(255,255,255,.16);box-shadow:0 8px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
+.modal.pdf-mode.pdf-header-hidden .modal-capsule-wrap{opacity:0;transform:translateY(-18px);pointer-events:none}
+/* PDF header: compact floating glass pill; title/extra controls are intentionally hidden */
+.modal.pdf-mode .modal-capsule{width:auto!important;max-width:none!important;min-height:0;padding:5px 7px 5px 9px!important;gap:6px!important;background:rgba(18,18,18,.22)!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 6px 24px rgba(0,0,0,.14)!important}
+.modal.pdf-mode .modal-capsule-left{display:none!important}
+.modal.pdf-mode .modal-actions{gap:5px!important}
+.modal.pdf-mode #miniModal,.modal.pdf-mode #fsBtnModal,.modal.pdf-mode #newTab{display:grid!important}
+.modal.pdf-mode .pdf-reader-modal-tools{position:static;transform:none;display:flex!important;gap:4px;padding:0;background:transparent;border:0;box-shadow:none}
+.modal.pdf-mode .pdf-mode-label{display:none!important}
+.modal.pdf-mode .pdf-reader-modal-tools .icon-btn,.modal.pdf-mode #closeModal{width:30px;height:30px;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.10);color:#fff;box-shadow:none}
+.modal.pdf-mode.scroll-active .modal-capsule{opacity:.78}
+.modal.pdf-mode.scroll-active .pdf-reader-modal-tools{display:flex!important}
+.modal.pdf-mode.scroll-active .pdf-scroll-stage{scrollbar-width:thin}
+
+.modal.pdf-mode.book-active .modal-frame-wrap{background:transparent}
+.modal.pdf-mode.book-active .pdf-book-stage{padding:8px;inset:0}
+.pdf-book{touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pdf-book-hint{transition:opacity .35s ease}
+.pdf-book.is-dragging .pdf-book-hint{opacity:0}
+@media(max-width:760px){.modal.pdf-mode .modal-capsule-wrap{top:8px;padding:0 8px}.modal.pdf-mode .modal-capsule{padding:5px 6px 5px 10px}.modal.pdf-mode.book-active .modal-frame-wrap{inset:5px!important;padding:4px!important;border-radius:4px!important;background-size:32px 32px!important}.modal.pdf-mode.book-active .pdf-book-stage{padding:2px}.modal.pdf-mode.book-active .pdf-book{width:100%;height:100%;max-height:none}}
 </style>
 </head>
 <body>
@@ -397,7 +511,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
         <span><strong>VAOZEE // KITAB</strong><small>Pesantren Digital</small></span>
       </a>
       <nav class="nav-links">
-        <a href="#kitab">Kitab Klasik</a><a href="#umum">Umum &amp; Hiburan</a>
+        <a href="#kitab">Kitab Klasik</a><a href="#umum">Umum &amp; Hiburan</a><a href="#pdf-reader">Pembaca PDF</a>
       </nav>
       <div class="status"><span class="dot"></span><span id="clock">--:--:--</span></div>
       <button class="icon-btn fs-btn" id="fsBtnMain" title="Layar penuh">⛶</button>
@@ -408,6 +522,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   <div class="nav-drop" id="navDrop">
     <a href="#kitab">Kitab Klasik</a>
     <a href="#umum">Umum &amp; Hiburan</a>
+    <a href="#pdf-reader">Pembaca PDF</a>
   </div>
 </div>
 
@@ -415,7 +530,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 <section class="hero">
   <div class="eyebrow"><i></i> DIGITAL PESANTREN · EDISI 2026</div>
   <h1>Kumpulan <span class="gradient">Pelajaran Kitab Klasik</span> Pesantren</h1>
-  <p>Portal ringkas untuk membuka pelajaran nahwu, sharaf, falak, faraidh, serta berbagai alat bantu umum — dirawat dalam sentuhan emas yang hangat dan kental nuansa klasik.</p>
+  <p>Portal ringkas untuk membuka modul nahwu, sharaf, falak, faraidh, serta berbagai alat bantu umum — Mohon koreksi jika ada tulisan typo ataupun terjemah kurang sesuai kirim ke vaozeei@gmail.com - by Achmad Fauzi, terima kasih.</p>
   <div class="rule"><span class="line"></span><span class="gem"></span><span class="line r"></span></div>
   <div class="hero-actions">
     <a class="btn primary" href="#kitab">Jelajahi Pelajaran →</a>
@@ -448,6 +563,22 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   <div class="grid" id="umumGrid"></div>
 </section>
 
+
+
+<section class="section" id="pdf-reader" data-reveal>
+  <div class="section-head"><div><div class="kicker">03 // Perpustakaan</div><h2>Pembaca PDF</h2></div><p>Folder Perangkat · Folder Sharing · Mode Buku</p></div>
+  <div class="pdf-reader-actions">
+    <button class="btn primary" type="button" id="pdfPickFiles">＋ Tambah PDF</button>
+    <button class="btn" type="button" id="pdfPickFolder">▣ Buka Folder</button>
+    <input class="pdf-reader-hidden-input" id="pdfFilesInput" type="file" accept="application/pdf,.pdf" multiple>
+    <input class="pdf-reader-hidden-input" id="pdfFolderInput" type="file" accept="application/pdf,.pdf" webkitdirectory directory multiple>
+    <span class="pdf-reader-note">Pilih beberapa PDF sekaligus atau satu folder. Folder sharing yang bisa dipilih browser akan tampil sebagai daftar judul PDF.</span>
+  </div>
+  <div class="grid" id="pdfGrid"></div>
+  <div class="pdf-reader-empty" id="pdfEmpty">Belum ada PDF. Tambahkan file PDF atau pilih folder perangkat untuk memulai.</div>
+</section>
+
+<div class="divider"><span class="dline"></span><span class="gem"></span><span class="dline"></span></div>
 <footer class="footer">
   <div><strong>© 2026 by Achmad Fauzi</strong> · <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
   <div>VAOZEE // DIGITAL PESANTREN INDEX</div>
@@ -464,7 +595,12 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
       <input type="hidden" id="moduleEditTarget" value="">
       <div class="module-form-grid">
         <label>Nama Kitab / Modul<input id="moduleTitle" required maxlength="100" placeholder="Contoh: Fathul Mu'in"></label>
-        <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://vaozee.github.io/modul/"></label>
+        <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://leezeei.github.io/modul/"></label>
+      </div>
+      <div class="module-form-grid">
+        <label style="grid-column:1/-1">File Offline (opsional)<input id="moduleLocalUrl" maxlength="180" placeholder="mis. alfiyah.html atau kitab/fathul-muin.html">
+          <small style="display:block;color:var(--muted);font-size:.62rem;margin-top:5px">Jika nama file mengikuti nama kitab, kolom ini boleh dikosongkan. Dashboard akan mencoba mencocokkan file lokal secara otomatis.</small>
+        </label>
       </div>
       <div class="module-form-grid">
         <label>Bagian<select id="moduleSection"><option value="kitab" selected>01 · Kitab Klasik</option><option value="umum">02 · Umum &amp; Hiburan</option></select></label>
@@ -494,13 +630,30 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
     <div class="mf-corner tl"></div><div class="mf-corner tr"></div>
     <div class="mf-corner bl"></div><div class="mf-corner br"></div>
   </div>
-  <iframe id="frame" title="Modul VAOZEE"></iframe>
+  <iframe id="frame" title="Modul VAOZEE" referrerpolicy="no-referrer"></iframe>
+  <div class="zoom-overlay" id="zoomOverlay" aria-hidden="true"></div>
+  <div class="zoom-hint">Cubit 2 jari untuk zoom · geser 1 jari untuk baca · ganda-tap / tombol 🔍 untuk keluar</div>
+  <div class="pdf-scroll-stage" id="pdfScrollStage" aria-hidden="true"><div class="pdf-scroll-pages" id="pdfScrollPages"></div></div>
+  <div class="pdf-book-stage" id="pdfBookStage" aria-hidden="true">
+    <div class="pdf-book-hint">Geser halaman dengan jari • Tap kanan: berikutnya • Tap kiri: sebelumnya</div>
+    <div class="pdf-book" id="pdfBook">
+      <div class="pdf-page left" id="pdfPageLeft"><canvas id="pdfCanvasLeft"></canvas></div>
+      <div class="pdf-page right" id="pdfPageRight"><canvas id="pdfCanvasRight"></canvas></div>
+      <div class="pdf-book-caption" id="pdfBookCaption">Halaman 1–2</div>
+    </div>
+  </div>
 </div>
   <div class="modal-capsule-wrap">
     <div class="modal-capsule">
       <div class="modal-capsule-left"><span class="dot"></span><div class="modal-title" id="modalTitle">Modul</div></div>
+      <div class="pdf-reader-modal-tools" id="pdfReaderTools">
+        <span class="pdf-mode-label" id="pdfModeLabel">Baca PDF</span>
+        <button class="icon-btn" id="pdfScrollMode" title="Mode scroll biasa">↕</button>
+        <button class="icon-btn" id="pdfBookMode" title="Mode buku halaman per halaman">▤</button>
+      </div>
       <div class="modal-actions">
         <button class="icon-btn header-mini-btn" id="miniModal" title="Minimalkan header modul" aria-label="Minimalkan header modul">−</button>
+        <button class="icon-btn" id="zoomToggle" title="Mode Zoom Baca (cubit 2 jari)">🔍</button>
         <button class="icon-btn fs-btn" id="fsBtnModal" title="Layar penuh">⛶</button>
         <a class="icon-btn" id="newTab" target="_blank" rel="noopener" title="Buka di tab baru">↗</a>
         <button class="icon-btn danger" id="closeModal" title="Tutup">×</button>
@@ -511,32 +664,96 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 
 <script>
 const kitab=[
- {n:"01",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"ألف",badge:"NAHWU",url:"https://vaozee.github.io/alfiah/",desc:"Kumpulan ±1.002 bait nazham yang merangkum kaidah nahwu dan sharaf, disusun mengikuti urutan bab kitab."},
- {n:"02",title:"Al-'Imrithi",cat:"nahwu",icon:"نحو",badge:"NAHWU",url:"https://vaozee.github.io/imrithi/",desc:"Modul nahwu lanjutan berbasis nazham Al-'Imrithi untuk memperkuat pemahaman kaidah bahasa Arab."},
- {n:"03",title:"Al-Ajurumiyah",cat:"nahwu",icon:"جروم",badge:"NAHWU",url:"https://vaozee.github.io/ajurumiyah/",desc:"Pembelajaran matan Al-Ajurumiyah sebagai fondasi ilmu nahwu dengan tampilan belajar yang ringkas dan interaktif."},
- {n:"04",title:"Ilmu Shorof",cat:"sharaf",icon:"صرف",badge:"SHARAF",url:"https://vaozee.github.io/shorof/",desc:"Pembelajaran ilmu sharaf, termasuk pola Tsulasi Mujarrad dan Tsulasi Mazid untuk memahami perubahan bentuk kata."},
- {n:"05",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"مقص",badge:"SHARAF",url:"https://vaozee.github.io/maqsud/",desc:"Modul shorof lanjutan berbasis Nazham Al-Maqshūd, disusun sebagai materi kajian yang lebih mendalam."},
- {n:"06",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"☾",badge:"FALAK",url:"https://vaozee.github.io/falak1/",desc:"Modul pembelajaran ilmu falak lanjutan untuk kajian hisab dan astronomi Islam."},
- {n:"07",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"فرائض",badge:"FARĀ'IḌ",url:"https://vaozee.github.io/faroid/",desc:"Kajian kitab 'Uddatul Farīḍ dengan teks asli sebagai materi pembelajaran ilmu waris Islam."},
- {n:"08",title:"Hisab Falakiyah",cat:"lain",icon:"☽",badge:"FALAK",url:"https://vaozee.github.io/falak/",desc:"Kalkulator astronomi Islam untuk kebutuhan hisab falakiyah dan berbagai perhitungan terkait."},
- {n:"09",title:"Kalkulator Ahli Waris",cat:"lain",icon:"۞",badge:"FARAIDH",url:"https://vaozee.github.io/waris/",desc:"Kalkulator pembagian warisan Islam berbasis kaidah faraidh dengan hasil perhitungan yang terstruktur."}
+ {n:"01",title:"Arba'un Nawawi",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Arba'un Nawawi."},
+ {n:"02",title:"Nadhom Alfiyah",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nadhom Alfiyah."},
+ {n:"03",title:"Ilmu Usul Fiqih",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ilmu Usul Fiqih."},
+ {n:"04",title:"Qowaidul I'lal",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Qowaidul I'lal."},
+ {n:"05",title:"Bulughul Marom",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Bulughul Marom."},
+ {n:"06",title:"Safinatun Naja",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Safinatun Naja."},
+ {n:"07",title:"Mabādi' Al-Awwaliyyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Mabādi' Al-Awwaliyyah."},
+ {n:"08",title:"Aqidatul Awam",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Aqidatul Awam."},
+ {n:"09",title:"Risalatul Mahidl",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Risalatul Mahidl."},
+ {n:"10",title:"Nashoihul 'Ibaad",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nashoihul 'Ibaad."},
+ {n:"11",title:"Ta'limul Muta'alim",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ta'limul Muta'alim."},
+ {n:"12",title:"Balaghah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Balaghah."},
+ {n:"13",title:"Jawahirul Kalamiyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Jawahirul Kalamiyah."},
+ {n:"14",title:"Al-Waraqāt",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Al-Waraqāt."},
+ {n:"15",title:"Mukhtashar Abi Syuja'",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Mukhtashar Abi Syuja'."},
+ {n:"16",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/alfiah/",desc:"Modul kitab klasik: Alfiyah Ibnu Malik."},
+ {n:"17",title:"Al-'Imrithi",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/imrithi/",desc:"Modul kitab klasik: Al-'Imrithi."},
+ {n:"18",title:"Al-Ajurumiyah",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/ajurumiyah/",desc:"Modul kitab klasik: Al-Ajurumiyah."},
+ {n:"19",title:"Ilmu Shorof",cat:"sharaf",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/shorof/",desc:"Modul kitab klasik: Ilmu Shorof."},
+ {n:"20",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/maqsud/",desc:"Modul kitab klasik: Nazham Al-Maqshūd."},
+ {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/falak1/",desc:"Modul kitab klasik: Ilmu Falak Lanjutan."},
+ {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/faroid/",desc:"Modul kitab klasik: Pelajaran Farā'iḍ."},
+ {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/falak/",desc:"Modul kitab klasik: Hisab Falakiyah."},
+ {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/waris/",desc:"Modul kitab klasik: Kalkulator Ahli Waris."},
 ];
 const umum=[
- {n:"10",title:"Kalkulator Pajak Indonesia",icon:"₿",badge:"UMUM",url:"https://vaozee.github.io/pajak/",desc:"Kumpulan perhitungan pajak Indonesia dalam satu alat bantu praktis."},
- {n:"11",title:"Jam",icon:"◷",badge:"WAKTU",url:"https://vaozee.github.io/jam/",desc:"Utilitas waktu sederhana untuk kebutuhan sehari-hari."},
- {n:"12",title:"Peta Potensi Air Tanah",icon:"💧",badge:"UTILITAS",url:"https://vaozee.github.io/air/",desc:"Peta potensi air tanah untuk membantu perencanaan lokasi sumur bor."},
- {n:"13",title:"Nadaflow",icon:"♫",badge:"HIBURAN",url:"https://vaozee.github.io/musik/",desc:"Pemutar musik dan lirik dengan antarmuka sederhana."},
- {n:"14",title:"VAOZEE IO",icon:"⌘",badge:"SISTEM",url:"https://vaozee.github.io/io/",desc:"Halaman indeks sistem VAOZEE dan pintu masuk menuju berbagai modul."},
- {n:"15",title:"Suite Launcher",icon:"✦",badge:"LAUNCHER",url:"https://vaozee.github.io/promo/",desc:"Satu pintu untuk mengakses kumpulan aplikasi dan modul VAOZEE."}
+ {n:"01",title:"POLIBUN",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: POLIBUN."},
+ {n:"02",title:"Sawit Monitor",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Sawit Monitor."},
+ {n:"03",title:"KopSUS",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: KopSUS."},
+ {n:"04",title:"Pantau Api",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Pantau Api."},
+ {n:"05",title:"ISPO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: ISPO."},
+ {n:"06",title:"HR-GA",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: HR-GA."},
+ {n:"07",title:"WarRoom Plantation",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: WarRoom Plantation."},
+ {n:"08",title:"Test MT",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Test MT."},
+ {n:"09",title:"Administrasi",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Administrasi."},
+ {n:"10",title:"BPJS TK",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJS TK."},
+ {n:"11",title:"BPJSKES",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJSKES."},
+ {n:"12",title:"RTH",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: RTH."},
+ {n:"13",title:"Kalkulator Pajak Indonesia",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/pajak/",desc:"Aplikasi dan utilitas: Kalkulator Pajak Indonesia."},
+ {n:"14",title:"Jadwal Sholat",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Jadwal Sholat."},
+ {n:"15",title:"Peta Potensi Air Tanah",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/air/",desc:"Aplikasi dan utilitas: Peta Potensi Air Tanah."},
+ {n:"16",title:"Nadaflow",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/musik/",desc:"Aplikasi dan utilitas: Nadaflow."},
+ {n:"17",title:"VAOZEE IO",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/io/",desc:"Aplikasi dan utilitas: VAOZEE IO."},
+ {n:"18",title:"Suite Launcher",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/promo/",desc:"Aplikasi dan utilitas: Suite Launcher."},
 ];
+function escAttr(v){
+ return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+/* Helper global: kartu awal dirender sebelum blok sinkronisasi (IIFE) dijalankan.
+   Versi sebelumnya memanggil validUrl()/localUrlFor() yang hanya berada di dalam IIFE,
+   sehingga terjadi ReferenceError dan seluruh kartu menjadi blank. */
+function dashboardValidUrl(url){
+ try{const u=new URL(String(url||''));return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}
+}
+const DASHBOARD_OFFLINE_FILES={
+  "Arba'un Nawawi":"arba-un-nawawi.html", "Nadhom Alfiyah":"nadhom-alfiyah.html",
+  "POLIBUN":"polibun.html", "Sawit Monitor":"sawit-monitor.html", "KopSUS":"kopsus.html",
+  "Pantau Api":"pantau-api.html", "ISPO":"ispo.html", "HR-GA":"hr-ga.html",
+  "WarRoom Plantation":"warroom-plantation.html", "Test MT":"test-mt.html", "Administrasi":"administrasi.html",
+  "BPJS TK":"bpjs-tk.html", "BPJSKES":"bpjskes.html", "Ilmu Usul Fiqih":"ilmu-usul-fiqih.html",
+  "Qowaidul I'lal":"qowaidul-i-lal.html", "Bulughul Marom":"bulughul-marom.html", "Safinatun Naja":"safinatun-naja.html",
+  "Mabādi' Al-Awwaliyyah":"mabadi-al-awwaliyyah.html", "Aqidatul Awam":"aqidatul-awam.html",
+  "Risalatul Mahidl":"risalatul-mahidl.html", "Nashoihul 'Ibaad":"nashoihul-ibaad.html",
+  "Ta'limul Muta'alim":"ta-limul-muta-alim.html", "Balaghah":"balaghah.html", "Jawahirul Kalamiyah":"jawahirul-kalamiyah.html",
+  "RTH":"rth.html", "Al-Waraqāt":"al-waraqat.html", "Mukhtashar Abi Syuja'":"mukhtashar-abi-syuja.html",
+  "Alfiyah Ibnu Malik":"alfiyah-ibnu-malik.html", "Al-'Imrithi":"al-imrithi.html", "Al-Ajurumiyah":"al-ajurumiyah.html",
+  "Ilmu Shorof":"ilmu-shorof.html", "Nazham Al-Maqshūd":"nazham-al-maqshud.html",
+  "Ilmu Falak Lanjutan":"ilmu-falak-lanjutan.html", "Pelajaran Farā'iḍ":"pelajaran-fara-id.html",
+  "Hisab Falakiyah":"hisab-falakiyah.html", "Kalkulator Ahli Waris":"kalkulator-ahli-waris.html",
+  "Kalkulator Pajak Indonesia":"kalkulator-pajak-indonesia.html", "Jadwal Sholat":"jadwal-sholat.html",
+  "Peta Potensi Air Tanah":"peta-potensi-air-tanah.html", "Nadaflow":"nadaflow.html", "VAOZEE IO":"vaozee-io.html",
+  "Suite Launcher":"suite-launcher.html"
+};
+function dashboardLocalFile(x){
+ const mapped=DASHBOARD_OFFLINE_FILES[String(x.title||'')]; if(mapped)return mapped;
+ const slug=String(x.title||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ return slug?slug+'.html':'';
+}
 function card(x,dispN){
  const shown=dispN||x.n;
- return `<a href="${x.url}" class="card" data-url="${x.url}" data-title="${x.title}" data-cat="${x.cat||'umum'}" data-n="${x.n}">
+ const online=dashboardValidUrl(x.onlineUrl||x.url||'');
+ const local=x.localUrl||dashboardLocalFile(x);
+ const href=online||local||'#';
+ const sourceLabel=online?'ONLINE':'OFFLINE';
+ return `<a href="${escAttr(href)}" class="card" data-url="${escAttr(online)}" data-local-url="${escAttr(local)}" data-title="${escAttr(x.title)}" data-cat="${escAttr(x.cat||'umum')}" data-n="${escAttr(x.n)}" data-source="${sourceLabel}">
    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
    <div class="card-top"><span class="num">MODUL ${shown}</span><span class="badge">${x.badge}</span></div>
    <div class="icon">${x.icon}</div>
    <div class="card-body"><h3>${x.title}</h3><p>${x.desc}</p></div>
-   <div class="card-bottom"><span class="path">${new URL(x.url).pathname.replaceAll('/','')||'/'}</span><span class="open">Buka →</span></div>
+   <div class="card-bottom"><span class="path">${online?(new URL(online).pathname.replaceAll('/','')||'/'):local}</span><span class="open">${online&&local?'Online / Offline →':'Buka →'}</span></div>
  </a>`;
 }
 document.getElementById('kitabGrid').innerHTML=kitab.map(card).join('');
@@ -552,32 +769,90 @@ updateModuleCounters();
 
 /* ---- fullscreen module viewer ---- */
 const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), loader=document.getElementById('loader');
-function openModule(url,title,fromHistory=false){
+function openModule(url,title,fromHistory=false,localUrl=''){
+ const onlineUrl=dashboardValidUrl(url);
+ const offlineUrl=localUrl||'';
  loader.classList.remove('done');
- frame.src=url; modalTitle.textContent=title; newTab.href=url;
- modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
- /* Header halaman modul juga diminimalkan otomatis tiap kali modul dibuka. */
- const modalCapsule=document.querySelector('.modal-capsule'), miniModalBtn=document.getElementById('miniModal');
- if(modalCapsule){
-   modalCapsule.classList.add('minimized');
-   if(miniModalBtn){miniModalBtn.textContent='＋';miniModalBtn.title='Pulihkan header modul'}
+
+ if(!onlineUrl && !offlineUrl){
+   alert('File modul untuk "'+title+'" tidak ditemukan di link online maupun file offline (pastikan file HTML-nya ada satu folder dengan dashboard ini).');
+   return;
  }
- /* Every module opens in browser fullscreen when launched by a user action. */
- if(!document.fullscreenElement && document.documentElement.requestFullscreen){
-   document.documentElement.requestFullscreen().catch(()=>{});
+
+ /* Menampilkan modul di iframe TANPA menggabungkan HTML apapun -- file HTML lain
+    tetap berdiri sendiri, hanya "ditonton" lewat src iframe (relatif ke folder ini
+    untuk file offline, atau URL penuh untuk yang online). */
+ function show(target,usedOnline){
+   /* Batalkan timer "kosongkan iframe" tertunda dari closeModule() sebelumnya --
+      kalau tidak, modul yang baru saja dibuka bisa tiba-tiba dikosongkan lagi. */
+   clearTimeout(frame._closeBlankTimer);
+   /* Paksa reload walau URL-nya sama persis dengan yang sedang tampil sekarang.
+      Browser tidak akan navigasi ulang kalau iframe.src di-set ke nilai yang sama,
+      sehingga membuka modul yang sama dua kali hanya menampilkan state/halaman
+      lama dari kunjungan sebelumnya (bukan versi terbaru/awal). */
+   let resolvedTarget=target;
+   try{resolvedTarget=new URL(target,location.href).href}catch(e){}
+   if(frame.src===resolvedTarget){
+     frame.src='about:blank';
+     requestAnimationFrame(()=>{frame.src=target});
+   }else{
+     frame.src=target;
+   }
+   frame.dataset.fallbackLocal=usedOnline?offlineUrl:'';
+   frame.dataset.loaded='';
+   if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
+   modalTitle.textContent=title;
+   newTab.href=target;
+   modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+
+   const modalCapsule=document.querySelector('.modal-capsule'), miniModalBtn=document.getElementById('miniModal');
+   if(modalCapsule){
+     modalCapsule.classList.add('minimized');
+     if(miniModalBtn){miniModalBtn.textContent='＋';miniModalBtn.title='Pulihkan header modul'}
+   }
+   if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+     document.documentElement.requestFullscreen().catch(()=>{});
+   }
+   if(!fromHistory){
+     history.pushState({vaozeeModule:true,url:target,title:title},'',location.href.split('#')[0]+'#modul');
+   }
+   /* Jaga-jaga: kalau iframe online ternyata gagal benar-benar dimuat (mis. situs mati
+      di tengah jalan), tetap otomatis pindah ke file offline setelah beberapa detik. */
+   if(usedOnline && offlineUrl){
+     clearTimeout(frame._fallbackTimer);
+     frame._fallbackTimer=setTimeout(()=>{if(!frame.dataset.loaded){frame.src=offlineUrl;frame.dataset.fallbackLocal=''}},5000);
+   }
  }
- if(!fromHistory){
-   history.pushState({vaozeeModule:true,url:url,title:title},'',location.href.split('#')[0]+'#modul');
- }
+
+ /* Tidak ada versi online yang valid sama sekali -> langsung pakai file offline lokal. */
+ if(!onlineUrl){show(offlineUrl,false);return}
+ /* Tidak ada file offline sama sekali (belum ada di folder) -> langsung pakai online. */
+ if(!offlineUrl){show(onlineUrl,true);return}
+
+ /* Bila kedua sumber tersedia, online diprioritaskan. Jika browser menolak iframe
+    atau koneksi sedang mati, fallback lokal tetap tersedia. Tombol ↗ di header viewer
+    menjadi jalur langsung untuk situs yang memang melarang embedding iframe. */
+ if(navigator.onLine===false){show(offlineUrl,false);return}
+ show(onlineUrl,true);
 }
+
 function closeModule(fromPopState=false){
  modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
  if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
- setTimeout(()=>frame.src='about:blank',220); document.body.style.overflow='';
+ clearTimeout(frame._closeBlankTimer);
+ frame._closeBlankTimer=setTimeout(()=>{frame.src='about:blank'},220);
+ document.body.style.overflow='';
+ if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
  if(!fromPopState && history.state && history.state.vaozeeModule) history.back();
 }
-frame.addEventListener('load',()=>loader.classList.add('done'));
-document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)}));
+frame.addEventListener('load',()=>{loader.classList.add('done');frame.dataset.loaded='1';clearTimeout(frame._fallbackTimer)});
+frame.addEventListener('error',()=>{
+  const local=frame.dataset.fallbackLocal;
+  if(local && frame.src!==new URL(local,location.href).href){
+    frame.src=local;
+  }
+});
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)}));
 document.getElementById('closeModal').onclick=closeModule;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModule()});
 window.addEventListener('popstate',e=>{ if(modal.classList.contains('open')) closeModule(true); });
@@ -595,7 +870,7 @@ function apply(){
 }
 search.addEventListener('input',apply);
 filters.forEach(b=>b.onclick=()=>{filters.forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b.dataset.filter;apply()});
-document.getElementById('openRandom').onclick=()=>{const all=[...document.querySelectorAll('.card')];const c=all[Math.floor(Math.random()*all.length)];openModule(c.dataset.url,c.dataset.title)};
+document.getElementById('openRandom').onclick=()=>{const all=[...document.querySelectorAll('.card')];const c=all[Math.floor(Math.random()*all.length)];openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)};
 
 /* ---- fullscreen toggle (header utama & header modul) ---- */
 function toggleFullscreen(){
@@ -694,6 +969,75 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   else init();
   new MutationObserver(init).observe(document.body,{childList:true,subtree:true});
 })();
+
+/* === Mode Zoom Baca -- cubit 2 jari di atas iframe modul ===
+   Catatan teknis: touch/pointer yang jatuh persis di atas <iframe> TIDAK PERNAH
+   sampai ke dokumen induk (berlaku untuk semua iframe, apalagi yang online/beda
+   origin) -- jadi gestur cubit tidak bisa "didengar" langsung dari iframe-nya.
+   Solusinya: lapisan transparan (zoomOverlay) di atas iframe yang hanya aktif
+   ketika Mode Zoom dinyalakan lewat tombol 🔍. Saat aktif: cubit 2 jari = zoom,
+   geser 1 jari = baca ke segala arah, tombol 🔍 lagi / dobel-tap = keluar/reset. */
+(function(){
+  const toggle=document.getElementById('zoomToggle');
+  const wrap=document.querySelector('.modal-frame-wrap');
+  const overlay=document.getElementById('zoomOverlay');
+  const frameEl=document.getElementById('frame');
+  if(!toggle||!wrap||!overlay||!frameEl)return;
+
+  let scale=1, tx=0, ty=0;
+  const pointers=new Map();
+  let pinchStartDist=0, pinchStartScale=1, panStart=null;
+
+  function apply(){ frameEl.style.transformOrigin='0 0'; frameEl.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`; }
+  function clampPan(){
+    const r=wrap.getBoundingClientRect();
+    const maxX=Math.max(0,r.width*(scale-1)), maxY=Math.max(0,r.height*(scale-1));
+    tx=Math.min(0,Math.max(-maxX,tx)); ty=Math.min(0,Math.max(-maxY,ty));
+  }
+  function reset(){ scale=1; tx=0; ty=0; frameEl.style.transform=''; frameEl.style.transformOrigin=''; }
+  window.vaozeeResetZoomMode=function(){ wrap.classList.remove('zoom-mode'); toggle.classList.remove('active'); toggle.title='Mode Zoom Baca (cubit 2 jari)'; pointers.clear(); panStart=null; reset(); };
+
+  toggle.addEventListener('click',()=>{
+    const on=!wrap.classList.contains('zoom-mode');
+    if(on){ wrap.classList.add('zoom-mode'); toggle.classList.add('active'); toggle.title='Keluar Mode Zoom'; }
+    else{ window.vaozeeResetZoomMode(); }
+  });
+
+  const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+
+  overlay.addEventListener('pointerdown',e=>{
+    overlay.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===2){
+      const [a,b]=[...pointers.values()];
+      pinchStartDist=dist(a,b)||1; pinchStartScale=scale;
+    }else if(pointers.size===1){
+      panStart={x:e.clientX-tx,y:e.clientY-ty};
+    }
+  });
+  overlay.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId))return;
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===2){
+      const [a,b]=[...pointers.values()];
+      const d=dist(a,b)||1;
+      scale=Math.min(4,Math.max(1,pinchStartScale*(d/pinchStartDist)));
+      clampPan(); apply();
+    }else if(pointers.size===1 && panStart && scale>1){
+      tx=e.clientX-panStart.x; ty=e.clientY-panStart.y;
+      clampPan(); apply();
+    }
+    e.preventDefault();
+  },{passive:false});
+  function endPtr(e){
+    pointers.delete(e.pointerId);
+    if(pointers.size===1){ const [p]=[...pointers.values()]; panStart={x:p.x-tx,y:p.y-ty}; }
+    else panStart=null;
+  }
+  overlay.addEventListener('pointerup',endPtr);
+  overlay.addEventListener('pointercancel',endPtr);
+  overlay.addEventListener('dblclick',()=>{ window.vaozeeResetZoomMode(); });
+})();
 /* === Sinkronisasi Modul otomatis dari Google Sheet (Apps Script) + Manager === */
 (function(){
   /* Ganti URL ini jika suatu saat Anda membuat deployment Apps Script baru dengan URL berbeda. */
@@ -725,28 +1069,170 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   function writeRemoteCache(x){localStorage.setItem(REMOTE_CACHE_KEY,JSON.stringify(x))}
   function validUrl(url){try{const u=new URL(url);return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}}
 
+  /*
+   * OFFLINE MODULE MAP
+   * ---------------------------------------------
+   * Isi hanya jika nama file offline berbeda dari nama kitab.
+   * Contoh:
+   *   'Alfiyah Ibnu Malik':'alfiyah-ibnu-malik-nahwu__15_.html'
+   *
+   * File relatif terhadap dashboard.html, sehingga tetap bekerja
+   * ketika folder dipindah ke komputer lain maupun ketika di-hosting.
+   */
+  const LOCAL_MODULE_FILES={
+    "Arba'un Nawawi":"arba-un-nawawi.html",
+    "Nadhom Alfiyah":"nadhom-alfiyah.html",
+    "POLIBUN":"polibun.html",
+    "Sawit Monitor":"sawit-monitor.html",
+    "KopSUS":"kopsus.html",
+    "Pantau Api":"pantau-api.html",
+    "ISPO":"ispo.html",
+    "HR-GA":"hr-ga.html",
+    "WarRoom Plantation":"warroom-plantation.html",
+    "Test MT":"test-mt.html",
+    "Administrasi":"administrasi.html",
+    "BPJS TK":"bpjs-tk.html",
+    "BPJSKES":"bpjskes.html",
+    "Ilmu Usul Fiqih":"ilmu-usul-fiqih.html",
+    "Qowaidul I'lal":"qowaidul-i-lal.html",
+    "Bulughul Marom":"bulughul-marom.html",
+    "Safinatun Naja":"safinatun-naja.html",
+    "Mabādi' Al-Awwaliyyah":"mabadi-al-awwaliyyah.html",
+    "Aqidatul Awam":"aqidatul-awam.html",
+    "Risalatul Mahidl":"risalatul-mahidl.html",
+    "Nashoihul 'Ibaad":"nashoihul-ibaad.html",
+    "Ta'limul Muta'alim":"ta-limul-muta-alim.html",
+    "Balaghah":"balaghah.html",
+    "Jawahirul Kalamiyah":"jawahirul-kalamiyah.html",
+    "RTH":"rth.html",
+    "Al-Waraqāt":"al-waraqat.html",
+    "Mukhtashar Abi Syuja'":"mukhtashar-abi-syuja.html",
+    "Alfiyah Ibnu Malik":"alfiyah-ibnu-malik.html",
+    "Al-'Imrithi":"al-imrithi.html",
+    "Al-Ajurumiyah":"al-ajurumiyah.html",
+    "Ilmu Shorof":"ilmu-shorof.html",
+    "Nazham Al-Maqshūd":"nazham-al-maqshud.html",
+    "Ilmu Falak Lanjutan":"ilmu-falak-lanjutan.html",
+    "Pelajaran Farā'iḍ":"pelajaran-fara-id.html",
+    "Hisab Falakiyah":"hisab-falakiyah.html",
+    "Kalkulator Ahli Waris":"kalkulator-ahli-waris.html",
+    "Kalkulator Pajak Indonesia":"kalkulator-pajak-indonesia.html",
+    "Jadwal Sholat":"jadwal-sholat.html",
+    "Peta Potensi Air Tanah":"peta-potensi-air-tanah.html",
+    "Nadaflow":"nadaflow.html",
+    "VAOZEE IO":"vaozee-io.html",
+    "Suite Launcher":"suite-launcher.html"
+  };
+
   let remoteItems=readRemoteCache();
 
-  /* Modul "bawaan" (source==='bawaan') sengaja TIDAK dirender ulang di sini -- mereka sudah
-     tampil lewat array kitab[]/umum[] statis di HTML. Baris itu ada di Sheet hanya supaya
-     semua modul (termasuk bawaan) tetap tercatat/termonitor di satu tempat. */
-  function isBuiltin(x){return String(x.source||'').toLowerCase()==='bawaan'}
+  function normalizeTitle(v){
+    return String(v||'')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[’']/g,'')
+      .replace(/[^a-z0-9]+/g,' ')
+      .trim();
+  }
+  function sameTitle(a,b){return normalizeTitle(a)===normalizeTitle(b)}
 
+  function slugifyTitle(v){
+    return normalizeTitle(v).replace(/\s+/g,'-');
+  }
+
+  function localCandidates(x){
+    const out=[];
+    const mapped=LOCAL_MODULE_FILES[x.title];
+    if(mapped)out.push(mapped);
+
+    if(x.localUrl)out.push(x.localUrl);
+
+    /* Jika URL online menunjuk langsung ke file HTML, pakai nama file yang sama
+       sebagai kandidat offline. */
+    try{
+      const u=new URL(x.url||'');
+      const path=u.pathname.split('/').filter(Boolean);
+      const last=path[path.length-1]||'';
+      if(/\.html?$/i.test(last))out.push(last);
+    }catch(e){}
+
+    const slug=slugifyTitle(x.title);
+    if(slug)out.push(slug+'.html');
+    out.push(String(x.title||'').trim()+'.html');
+
+    return [...new Set(out.filter(Boolean))];
+  }
+
+  function localUrlFor(x){
+    const candidates=localCandidates(x);
+    return candidates[0]||'';
+  }
+
+  function findRemoteForTitle(title){
+    return remoteItems.find(x=>sameTitle(x.title,title)&&!isBuiltin(x))||null;
+  }
+
+  /*
+   * Prioritas sumber:
+   * 1. Link Google Sheet/online jika nama kitab sama.
+   * 2. File lokal jika link online tidak tersedia/tidak dapat dipakai.
+   *
+   * Dengan cara ini file offline hanya menjadi fallback, bukan sumber utama.
+   */
+  function mergeModule(base, remote, local){
+    const r=remote||null, l=local||null;
+    const chosen=r||l||base;
+    if(!chosen)return null;
+
+    const merged={
+      ...(base||{}),
+      ...(l||{}),
+      ...(r||{}),
+      title:(r&&r.title)||(l&&l.title)||(base&&base.title)||'',
+      url:(r&&r.url)||(base&&base.url)||'',
+      localUrl:(l&&l.localUrl)||(base&&base.localUrl)||(r&&r.localUrl)||'',
+      section:(r&&r.section)||(l&&l.section)||(base&&base.section)||'kitab'
+    };
+    merged.onlineUrl=(r&&validUrl(r.url))||(base&&validUrl(base.url))||'';
+    merged.localUrl=merged.localUrl||localUrlFor(merged);
+    return merged;
+  }
+
+  function allBaseModules(){
+    const bases=[...kitab.map(x=>({...x,section:'kitab'})),...umum.map(x=>({...x,section:'umum'}))];
+    const locals=readLocal();
+    const titles=new Map();
+
+    /* Base HTML + local tambahan digabung berdasarkan nama kitab/modul. */
+    bases.forEach(b=>titles.set(normalizeTitle(b.title),b));
+    locals.forEach(l=>{
+      const k=normalizeTitle(l.title);
+      if(!titles.has(k))titles.set(k,l);
+      else titles.set(k,{...titles.get(k),...l});
+    });
+
+    /* Data dari Sheet menang atas base HTML dan local bila judul sama. */
+    remoteItems.filter(x=>!isBuiltin(x)).forEach(r=>{
+      const k=normalizeTitle(r.title);
+      if(titles.has(k))titles.set(k,{...titles.get(k),...r});
+      else titles.set(k,r);
+    });
+
+    return [...titles.values()].map(x=>{
+      const r=findRemoteForTitle(x.title);
+      const l=locals.find(y=>sameTitle(y.title,x.title));
+      return mergeModule(x,r,l);
+    });
+  }
+
+  function isBuiltin(x){return String(x.source||'').toLowerCase()==='bawaan'}
   function byStableId(a,b){return (parseInt(a.n,10)||0)-(parseInt(b.n,10)||0)}
 
-  /* 01-Kitab Klasik jadi acuan dasar, lalu 02-Umum melanjutkan nomornya secara otomatis.
-     Ini dihitung ULANG setiap render, jadi kalau jumlah modul Kitab Klasik berubah,
-     semua nomor "MODUL XX" di Umum & Hiburan otomatis ikut bergeser. */
   function computeLists(){
-    const local=readLocal();
-    const remoteKitab=remoteItems.filter(x=>x.section!=='umum'&&!isBuiltin(x)).sort(byStableId);
-    const remoteUmum =remoteItems.filter(x=>x.section==='umum'&&!isBuiltin(x)).sort(byStableId);
-    const localKitab=local.filter(x=>x.section!=='umum').sort(byStableId);
-    const localUmum =local.filter(x=>x.section==='umum').sort(byStableId);
-    return{
-      kitabList:[...kitab,...remoteKitab,...localKitab],
-      umumList:[...umum,...remoteUmum,...localUmum]
-    };
+    const merged=allBaseModules();
+    const kitabList=merged.filter(x=>x.section!=='umum').sort(byStableId);
+    const umumList=merged.filter(x=>x.section==='umum').sort(byStableId);
+    return{kitabList,umumList};
   }
 
   function renderAll(){
@@ -755,7 +1241,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     kitabGrid.innerHTML=kitabList.map((x,i)=>card(x,String(i+1).padStart(2,'0'))).join('');
     umumGrid.innerHTML=umumList.map((x,i)=>card(x,String(base+i+1).padStart(2,'0'))).join('');
     [...kitabGrid.querySelectorAll('.card'),...umumGrid.querySelectorAll('.card')].forEach(c=>{
-      c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title)});
+      c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)});
     });
     apply();updateModuleCounters();
   }
@@ -789,6 +1275,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   function fillForm(x){
     document.getElementById('moduleTitle').value=x.title||'';
     document.getElementById('moduleUrl').value=x.url||'';
+    document.getElementById('moduleLocalUrl').value=x.localUrl||localUrlFor(x)||'';
     document.getElementById('moduleSection').value=x.section==='umum'?'umum':'kitab';
     document.getElementById('moduleCat').value=x.cat||'lain';
     document.getElementById('moduleBadge').value=x.badge||'';
@@ -818,7 +1305,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     const localItems=readLocal();
     const remoteEditable=remoteItems.filter(x=>!isBuiltin(x));
     const remoteRows=remoteEditable.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.url} · dari Google Sheet</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}" data-remote="1">Edit</button><button class="module-delete" type="button" data-n="${x.n}" data-remote="1">Hapus</button></span></div>`).join('');
-    const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.url} · tersimpan lokal</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}">Edit</button><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></span></div>`).join('');
+    const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.localUrl||localUrlFor(x)} · tersimpan lokal</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}">Edit</button><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></span></div>`).join('');
     const builtinCount=remoteItems.filter(isBuiltin).length;
     const builtinNote=builtinCount?`<div class="module-manager-note">+ ${builtinCount} modul bawaan tercatat di Google Sheet untuk monitoring (tidak bisa diedit dari sini, karena sumbernya file HTML).</div>`:'';
     savedList.innerHTML='<h4>Modul tambahan tersimpan</h4>'+((remoteRows+localRows)||'<div class="module-manager-note">Belum ada modul tambahan.</div>')+builtinNote;
@@ -861,8 +1348,10 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   form.addEventListener('submit',async e=>{
     e.preventDefault();
     const title=document.getElementById('moduleTitle').value.trim();
-    const url=validUrl(document.getElementById('moduleUrl').value.trim());
-    if(!title||!url){alert('URL harus berupa alamat http/https yang valid.');return}
+    const rawUrl=document.getElementById('moduleUrl').value.trim();
+    const url=validUrl(rawUrl);
+    const localUrl=document.getElementById('moduleLocalUrl').value.trim();
+    if(!title||(!url&&!localUrl)){alert('Isi URL online yang valid atau File Offline yang valid.');return}
 
     let editTarget=null;
     try{editTarget=editTargetInput.value?JSON.parse(editTargetInput.value):null}catch(e){editTarget=null}
@@ -873,7 +1362,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 
     const section=sectionSelect.value;
     const payload={
-      action:isEdit?'edit':'add',token:getPassword(),section,title,url,
+      action:isEdit?'edit':'add',token:getPassword(),section,title,url,localUrl:localUrl,
       cat:document.getElementById('moduleCat').value,
       icon:document.getElementById('moduleIcon').value.trim()||(section==='umum'?'✦':'كتاب'),
       badge:document.getElementById('moduleBadge').value.trim()||(section==='umum'?'UMUM':'KITAB'),
@@ -884,7 +1373,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     submitBtn.disabled=true;submitBtn.textContent=isEdit?'Menyimpan perubahan…':'Menyimpan…';
     try{
       if(isEdit&&editTarget.kind==='local'){
-        const items=readLocal().map(x=>String(x.n)===String(editTarget.n)?{...x,section,title,url,cat:payload.cat,icon:payload.icon,badge:payload.badge,desc:payload.desc}:x);
+        const items=readLocal().map(x=>String(x.n)===String(editTarget.n)?{...x,section,title,url,localUrl:payload.localUrl,cat:payload.cat,icon:payload.icon,badge:payload.badge,desc:payload.desc}:x);
         writeLocal(items);renderAll();
         alert('Perubahan modul lokal berhasil disimpan.');
       }else{
@@ -900,7 +1389,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
       }else{
         const items=readLocal();
         const localN='L'+Date.now();
-        items.push({n:localN,title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,desc:payload.desc,section});
+        items.push({n:localN,title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,localUrl:payload.localUrl,desc:payload.desc,section});
         writeLocal(items);renderAll();
         alert('Tidak bisa terhubung ke Google Sheet, modul disimpan sementara hanya di browser ini.\n('+err.message+')');
       }
@@ -921,8 +1410,8 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 (function(){
   const KEY='vaozee_compact_view';
   const btn=document.getElementById('compactToggle');
-  const grids=[document.getElementById('kitabGrid'),document.getElementById('umumGrid')];
-  if(!btn||!grids[0]||!grids[1])return;
+  const grids=[document.getElementById('kitabGrid'),document.getElementById('umumGrid'),document.getElementById('pdfGrid')].filter(Boolean);
+  if(!btn||grids.length<2)return;
   function apply(on){
     grids.forEach(g=>g.classList.toggle('compact',on));
     btn.textContent=on?'▦ Tampilan Lengkap':'🗜 Ringkas Tampilan';
@@ -934,6 +1423,405 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     localStorage.setItem(KEY,on?'1':'0');
     apply(on);
   });
+})();
+</script>
+
+
+<script>
+/* === Chapter 03: VAOZEE PDF Reader === */
+(function(){
+  const grid=document.getElementById('pdfGrid'), empty=document.getElementById('pdfEmpty');
+  const filesInput=document.getElementById('pdfFilesInput'), folderInput=document.getElementById('pdfFolderInput');
+  const pickFiles=document.getElementById('pdfPickFiles'), pickFolder=document.getElementById('pdfPickFolder');
+  const modal=document.getElementById('modal'), frame=document.getElementById('frame'), titleEl=document.getElementById('modalTitle');
+  const stage=document.getElementById('pdfBookStage'), canvasL=document.getElementById('pdfCanvasLeft'), canvasR=document.getElementById('pdfCanvasRight');
+  const pageL=document.getElementById('pdfPageLeft'), pageR=document.getElementById('pdfPageRight'), caption=document.getElementById('pdfBookCaption');
+  const scrollBtn=document.getElementById('pdfScrollMode'), bookBtn=document.getElementById('pdfBookMode'), label=document.getElementById('pdfModeLabel');
+  if(!grid||!empty||!modal)return;
+
+  const STORAGE='vaozee_pdf_reader_v1';
+  let pdfEntries=[];
+  let activePdf=null, activeDoc=null, activeSpread=1, pdfLibPromise=null, gesture=null, suppressBookClickUntil=0;
+
+  function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function updateEmpty(){empty.style.display=pdfEntries.length?'none':'block'}
+  function saveMeta(){try{localStorage.setItem(STORAGE,JSON.stringify(pdfEntries.map(x=>({id:x.id,name:x.name,path:x.path||''}))))}catch(e){}}
+  function idFor(file){return (file.webkitRelativePath||file.name)+'|'+file.size+'|'+file.lastModified}
+
+  function addFiles(list){
+    const incoming=[...list].filter(f=>f && (f.type==='application/pdf'||/\.pdf$/i.test(f.name)));
+    incoming.forEach(file=>{
+      const id=idFor(file);
+      if(pdfEntries.some(x=>x.id===id))return;
+      pdfEntries.push({id,name:file.name,path:file.webkitRelativePath||file.name,file});
+    });
+    pdfEntries.sort((a,b)=>a.name.localeCompare(b.name,'id'));
+    renderCards();saveMeta();
+  }
+
+  function renderCards(){
+    grid.innerHTML=pdfEntries.map((x,i)=>`<button class="card pdf-card" type="button" data-pdf-id="${esc(x.id)}">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="card-top"><span class="num">PDF ${String(i+1).padStart(2,'0')}</span><span class="badge">PDF</span></div>
+      <div class="icon">PDF</div>
+      <div class="card-body"><h3>${esc(x.name.replace(/\.pdf$/i,''))}</h3><p>Pembaca PDF VAOZEE dengan mode scroll biasa atau mode buku halaman per halaman.</p><div class="pdf-meta">${esc(x.path||x.name)}</div></div>
+      <div class="card-bottom"><span class="path">${esc(x.name)}</span><span class="open">Buka PDF →</span></div>
+    </button>`).join('');
+    grid.querySelectorAll('.pdf-card').forEach(btn=>btn.addEventListener('click',()=>{
+      const x=pdfEntries.find(y=>y.id===btn.dataset.pdfId); if(x)openPdf(x);
+    }));
+    updateEmpty();
+  }
+
+  pickFiles&&pickFiles.addEventListener('click',()=>filesInput.click());
+  pickFolder&&pickFolder.addEventListener('click',async()=>{
+    if(window.showDirectoryPicker){
+      try{
+        const dir=await window.showDirectoryPicker({mode:'read'}), arr=[];
+        async function walk(handle,path=''){
+          for await(const [name,entry] of handle.entries()){
+            if(entry.kind==='file' && /\.pdf$/i.test(name)){
+              const f=await entry.getFile(); Object.defineProperty(f,'webkitRelativePath',{value:path+name}); arr.push(f);
+            }else if(entry.kind==='directory') await walk(entry,path+name+'/');
+          }
+        }
+        await walk(dir); addFiles(arr); return;
+      }catch(e){if(e.name==='AbortError')return}
+    }
+    folderInput.click();
+  });
+  filesInput&&filesInput.addEventListener('change',()=>{addFiles(filesInput.files);filesInput.value=''});
+  folderInput&&folderInput.addEventListener('change',()=>{addFiles(folderInput.files);folderInput.value=''});
+
+  let pdfHeaderTimer=null;
+  function schedulePdfHeaderHide(){
+    clearTimeout(pdfHeaderTimer);
+    if(!modal.classList.contains('pdf-mode'))return;
+    pdfHeaderTimer=setTimeout(()=>modal.classList.add('pdf-header-hidden'),2600);
+  }
+  function revealPdfHeader(){
+    if(!modal.classList.contains('pdf-mode'))return;
+    modal.classList.remove('pdf-header-hidden');
+    schedulePdfHeaderHide();
+  }
+  modal.addEventListener('pointermove',e=>{if(e.clientY<90)revealPdfHeader(); else if(modal.classList.contains('pdf-header-hidden')===false)schedulePdfHeaderHide()},{passive:true});
+  modal.addEventListener('pointerdown',e=>{if(e.clientY<90)revealPdfHeader()},{passive:true});
+  modal.addEventListener('touchstart',revealPdfHeader,{passive:true});
+
+  function openPdf(x){
+    activePdf=x; activeSpread=1; activeDoc=null;
+    const url=URL.createObjectURL(x.file);
+    frame.dataset.pdfBlob=url; frame.src='about:blank';
+    titleEl.textContent=x.name.replace(/\.pdf$/i,'');
+    modal.classList.add('open','pdf-mode'); modal.classList.remove('book-active','pdf-header-hidden'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    stage.classList.remove('active'); stage.setAttribute('aria-hidden','true');
+    // Masuk fullscreen langsung dari gesture klik kartu PDF, seperti iframe viewer.
+    const fsTarget=modal;
+    if(!document.fullscreenElement && fsTarget.requestFullscreen){fsTarget.requestFullscreen().catch(()=>{});}
+    schedulePdfHeaderHide();
+    label.textContent='Baca PDF · '+x.name.replace(/\.pdf$/i,'');
+    activateScroll();
+    if(!history.state||!history.state.vaozeePdf)history.pushState({vaozeePdf:true,title:x.name},'',location.href.split('#')[0]+'#pdf');
+  }
+
+  function closePdfCleanup(){
+    if(!modal.classList.contains('pdf-mode'))return;
+    modal.classList.remove('pdf-mode','book-active','scroll-active'); stage.classList.remove('active'); document.getElementById('pdfScrollStage')?.classList.remove('active'); document.getElementById('pdfScrollPages').innerHTML='';
+    if(frame.dataset.pdfBlob){URL.revokeObjectURL(frame.dataset.pdfBlob);delete frame.dataset.pdfBlob}
+    activePdf=null;activeDoc=null;frame.src='about:blank';
+    modal.classList.remove('pdf-header-hidden');
+    if(document.fullscreenElement && document.exitFullscreen){document.exitFullscreen().catch(()=>{});}
+  }
+
+  function loadPdfJs(){
+    if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+    if(pdfLibPromise)return pdfLibPromise;
+    pdfLibPromise=new Promise((resolve,reject)=>{
+      const sc=document.createElement('script');
+      sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; sc.async=true;
+      sc.onload=()=>{if(!window.pdfjsLib){reject(new Error('PDF.js tidak tersedia'));return} window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';resolve(window.pdfjsLib)};
+      sc.onerror=()=>reject(new Error('Gagal memuat PDF.js. Mode buku membutuhkan koneksi internet sekali untuk library pembaca.'));
+      document.head.appendChild(sc);
+    });
+    return pdfLibPromise;
+  }
+
+  async function renderPage(page,canvas){
+    const wrap=canvas.parentElement, rect=wrap.getBoundingClientRect();
+    const base=page.getViewport({scale:1});
+    const scale=Math.min((Math.max(120,rect.width)-8)/base.width,(Math.max(120,rect.height)-8)/base.height);
+    const vp=page.getViewport({scale:Math.max(.25,scale*window.devicePixelRatio)});
+    canvas.width=Math.floor(vp.width);canvas.height=Math.floor(vp.height);canvas.style.width='100%';canvas.style.height='100%';
+    await page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport:vp}).promise;
+  }
+
+  async function renderScrollPage(pageNum){
+    const wrap=document.createElement('div'); wrap.className='pdf-scroll-page-wrap'; wrap.dataset.page=pageNum;
+    const canvas=document.createElement('canvas'); canvas.className='pdf-scroll-page'; wrap.appendChild(canvas);
+    return wrap;
+  }
+
+  let scrollObserver=null, scrollRenderBusy=new Set();
+  async function renderOneScrollPage(wrap){
+    if(!activeDoc||!wrap||wrap.dataset.rendered==='1'||scrollRenderBusy.has(wrap.dataset.page))return;
+    scrollRenderBusy.add(wrap.dataset.page);
+    try{
+      const page=await activeDoc.getPage(Number(wrap.dataset.page));
+      const c=wrap.querySelector('canvas');
+      const base=page.getViewport({scale:1});
+      const maxW=Math.min(window.innerWidth-36,980);
+      const scale=maxW/base.width;
+      wrap.style.width=Math.min(maxW,base.width*scale)+'px';
+      wrap.style.aspectRatio=base.width+'/'+base.height;
+      const vp=page.getViewport({scale:Math.max(.45,scale*window.devicePixelRatio)});
+      c.width=Math.floor(vp.width); c.height=Math.floor(vp.height); c.style.width='100%'; c.style.height='100%';
+      await page.render({canvasContext:c.getContext('2d',{alpha:false}),viewport:vp}).promise;
+      wrap.dataset.rendered='1';
+    }finally{scrollRenderBusy.delete(wrap.dataset.page)}
+  }
+
+  async function renderScrollDoc(doc){
+    const wrap=document.getElementById('pdfScrollPages'); if(!wrap)return;
+    if(scrollObserver)scrollObserver.disconnect();
+    wrap.innerHTML='';
+    for(let i=1;i<=doc.numPages;i++)wrap.appendChild(await renderScrollPage(i));
+    scrollObserver=new IntersectionObserver(entries=>{
+      entries.filter(e=>e.isIntersecting).forEach(e=>renderOneScrollPage(e.target));
+    },{root:document.getElementById('pdfScrollStage'),rootMargin:'900px 0px'});
+    wrap.querySelectorAll('.pdf-scroll-page-wrap').forEach(el=>scrollObserver.observe(el));
+  }
+
+  function canvasToDataURL(canvas){
+    try{return canvas.toDataURL('image/jpeg',.94)}catch(e){return ''}
+  }
+
+  function removeTurnLayer(){
+    const el=document.getElementById('pdfTurnLayer');
+    if(el)el.remove();
+    document.getElementById('pdfBook')?.classList.remove('is-dragging');
+  }
+
+  async function showSpread(spread,dir){
+    if(!activeDoc)return;
+    const total=activeDoc.numPages, maxStart=total%2?Math.max(1,total):Math.max(1,total-1);
+    spread=Math.max(1,Math.min(maxStart,spread));
+    if(spread%2===0)spread--;
+    removeTurnLayer();
+    pageL.className='pdf-page left pdf-static'; pageR.className='pdf-page right pdf-static';
+    const p1=await activeDoc.getPage(spread); await renderPage(p1,canvasL);
+    if(spread+1<=total){const p2=await activeDoc.getPage(spread+1);await renderPage(p2,canvasR)}
+    else{canvasR.width=1;canvasR.height=1}
+    caption.textContent=spread+1<=total?`Halaman ${spread}–${spread+1} / ${total}`:`Halaman ${spread} / ${total}`;
+    activeSpread=spread;
+  }
+
+  async function renderTurnImage(pageNum, width, height){
+    const page=await activeDoc.getPage(pageNum);
+    const base=page.getViewport({scale:1});
+    const scale=Math.min((Math.max(120,width)-8)/base.width,(Math.max(120,height)-8)/base.height);
+    const vp=page.getViewport({scale:Math.max(.25,scale*window.devicePixelRatio)});
+    const c=document.createElement('canvas');
+    c.width=Math.floor(vp.width); c.height=Math.floor(vp.height);
+    await page.render({canvasContext:c.getContext('2d',{alpha:false}),viewport:vp}).promise;
+    return canvasToDataURL(c);
+  }
+
+  async function makeTurnLayer(dir){
+    if(!activeDoc)return null;
+    const total=activeDoc.numPages;
+    const target=dir==='forward'?activeSpread+2:activeSpread-2;
+    if(target<1 || target>total)return null;
+    const book=document.getElementById('pdfBook');
+    const r=book.getBoundingClientRect();
+    const halfW=Math.max(180,r.width/2), h=Math.max(240,r.height);
+    const layer=document.createElement('div');
+    layer.id='pdfTurnLayer';
+    layer.className='pdf-turn-layer '+(dir==='forward'?'forward':'back');
+    const front=document.createElement('div'); front.className='pdf-turn-face front';
+    const back=document.createElement('div'); back.className='pdf-turn-face back';
+    const src=dir==='forward'?canvasR:canvasL;
+    const frontUrl=canvasToDataURL(src);
+    const backUrl=await renderTurnImage(target,halfW,h);
+    if(!frontUrl||!backUrl)return null;
+    front.style.backgroundImage=`url("${frontUrl}")`;
+    back.style.backgroundImage=`url("${backUrl}")`;
+    layer.append(front,back); book.appendChild(layer);
+    return layer;
+  }
+
+  function prepareGesture(dir,g){
+    if(!g||g.preparing)return;
+    if(dir==='forward' && activeSpread+2>activeDoc.numPages)return;
+    if(dir==='back' && activeSpread-2<1)return;
+    g.dir=dir;
+    g.preparing=makeTurnLayer(dir).then(layer=>{
+      g.layer=layer;
+      if(!layer)return;
+      g.layer.style.transform=`rotateY(${turnAngle(g, g.lastX ?? g.startX)}deg)`;
+    }).catch(()=>null);
+  }
+
+  function turnAngle(g,clientX){
+    const signed=g.dir==='forward'?g.startX-clientX:clientX-g.startX;
+    g.progress=Math.max(0,Math.min(1,signed/(g.r.width*.58)));
+    const eased=1-Math.pow(1-g.progress,1.12);
+    return (g.dir==='forward'?-180:180)*eased;
+  }
+
+  function applyGesturePosition(g,clientX){
+    g.lastX=clientX;
+    if(!g.dir){
+      const dx=clientX-g.startX;
+      if(Math.abs(dx)<10)return;
+      g.dir=dx<0?'forward':'back';
+      prepareGesture(g.dir,g);
+      return;
+    }
+    if(!g.layer)return;
+    g.layer.style.transform=`rotateY(${turnAngle(g,clientX)}deg)`;
+  }
+
+  function releasePointer(g,e){
+    try{g.book.releasePointerCapture?.(g.pointerId ?? e?.pointerId)}catch(_){}
+  }
+
+  async function finishTapTurn(dir){
+    if(!activeDoc)return;
+    if(dir==='forward' && activeSpread+2>activeDoc.numPages)return;
+    if(dir==='back' && activeSpread-2<1)return;
+    const book=document.getElementById('pdfBook');
+    const r=book.getBoundingClientRect();
+    const g={startX:dir==='forward'?r.right:r.left,lastX:dir==='forward'?r.left:r.right,r,book,dir,progress:1};
+    const layer=await makeTurnLayer(dir);
+    if(!layer){await showSpread(dir==='forward'?activeSpread+2:activeSpread-2);return;}
+    layer.style.transform='rotateY(0deg)';
+    requestAnimationFrame(()=>{
+      layer.style.transition='transform 820ms cubic-bezier(.18,.74,.14,1)';
+      layer.style.transform=`rotateY(${dir==='forward'?-180:180}deg)`;
+    });
+    await new Promise(res=>setTimeout(res,850));
+    layer.remove();
+    await showSpread(dir==='forward'?activeSpread+2:activeSpread-2);
+  }
+
+  function beginBookGesture(e){
+    if(!activeDoc || gesture || (e.pointerType==='mouse'&&e.button!==0))return;
+    const book=document.getElementById('pdfBook'), r=book.getBoundingClientRect();
+    e.preventDefault();
+    gesture={startX:e.clientX,startY:e.clientY,lastX:e.clientX,lastY:e.clientY,lastT:performance.now(),progress:0,layer:null,preparing:null,book,r,pointerId:e.pointerId,dir:null,velocity:0,moved:false};
+    book.classList.add('is-dragging');
+    try{book.setPointerCapture?.(e.pointerId)}catch(_){}
+  }
+
+  function updateBookGesture(clientX,clientY){
+    if(!gesture)return;
+    const g=gesture;
+    const dx=clientX-g.startX, dy=clientY-g.startY;
+    const now=performance.now();
+    g.velocity=(clientX-g.lastX)/Math.max(1,now-g.lastT);
+    g.lastT=now;
+    g.lastX=clientX; g.lastY=clientY;
+    if(Math.abs(dx)>10 || Math.abs(dy)>10)g.moved=true;
+    // Membalik halaman harus dominan horizontal agar scroll/tap tidak salah terbaca.
+    if(Math.abs(dx)<10 || Math.abs(dx)<Math.abs(dy)*.72)return;
+    applyGesturePosition(g,clientX);
+  }
+
+  async function endBookGesture(e){
+    if(!gesture)return;
+    const g=gesture;
+    const dx=g.lastX-g.startX;
+    const dy=g.lastY-g.startY;
+    const isTap=Math.abs(dx)<14 && Math.abs(dy)<14;
+
+    if(isTap){
+      suppressBookClickUntil=Date.now()+650;
+      gesture=null;
+      g.book.classList.remove('is-dragging');
+      releasePointer(g,e);
+      const rect=g.book.getBoundingClientRect();
+      const dir=e.clientX>=rect.left+rect.width/2?'forward':'back';
+      // Tap kiri = halaman sebelumnya, tap kanan = halaman berikutnya.
+      finishTapTurn(dir);
+      return;
+    }
+
+    if(!g.dir && Math.abs(dx)>=10 && Math.abs(dx)>=Math.abs(dy)*.72){
+      g.dir=dx<0?'forward':'back';
+      prepareGesture(g.dir,g);
+    }
+    if(g.preparing&&!g.layer)await g.preparing;
+    if(!g.layer){
+      gesture=null;g.book.classList.remove('is-dragging');releasePointer(g,e);return;
+    }
+    turnAngle(g,g.lastX);
+    const commit=g.progress>.13 || Math.abs(g.velocity||0)>.18;
+    const finalAngle=commit?(g.dir==='forward'?-180:180):0;
+    const layer=g.layer;
+    layer.style.transition='transform 980ms cubic-bezier(.18,.74,.14,1)';
+    layer.style.transform=`rotateY(${finalAngle}deg)`;
+    gesture=null; g.book.classList.remove('is-dragging'); releasePointer(g,e);
+    await new Promise(res=>setTimeout(res,1000));
+    layer.remove();
+    if(commit)await showSpread(g.dir==='forward'?activeSpread+2:activeSpread-2);
+    else await showSpread(activeSpread);
+  }
+
+  function bindBookTouch(){
+    const book=document.getElementById('pdfBook'); if(!book)return;
+    book.addEventListener('pointerdown',beginBookGesture,{passive:false});
+    book.addEventListener('pointermove',e=>{if(gesture){e.preventDefault();updateBookGesture(e.clientX,e.clientY)}},{passive:false});
+    book.addEventListener('pointerup',endBookGesture,{passive:false});
+    book.addEventListener('pointercancel',endBookGesture,{passive:false});
+    // Dukungan sentuhan lama pada perangkat yang tidak mengirim pointer event secara konsisten.
+    book.addEventListener('click',e=>{
+      if(Date.now()<suppressBookClickUntil || !activeDoc || gesture || e.target.closest('button,a'))return;
+      const rect=book.getBoundingClientRect();
+      if(e.clientX<rect.left || e.clientX>rect.right)return;
+      finishTapTurn(e.clientX>=rect.left+rect.width/2?'forward':'back');
+    });
+  }
+
+  async function activateBook(){
+    if(!activePdf)return;
+    try{
+      const lib=await loadPdfJs();
+      const ab=await activePdf.file.arrayBuffer();
+      activeDoc=await lib.getDocument({data:ab}).promise;
+      modal.classList.remove('scroll-active'); document.getElementById('pdfScrollStage')?.classList.remove('active'); modal.classList.add('book-active'); stage.classList.add('active'); stage.setAttribute('aria-hidden','false');
+      await showSpread(1);
+      label.textContent='Mode Buku · '+activePdf.name.replace(/\.pdf$/i,'');
+    }catch(e){
+      alert(e.message||'Mode buku tidak dapat dibuka.'); activateScroll();
+    }
+  }
+  async function activateScroll(){
+    if(!activePdf)return;
+    modal.classList.remove('book-active'); stage.classList.remove('active'); stage.setAttribute('aria-hidden','true');
+    modal.classList.add('scroll-active');
+    const scrollStage=document.getElementById('pdfScrollStage'); scrollStage?.classList.add('active'); scrollStage?.setAttribute('aria-hidden','false');
+    label.textContent='Mode Scroll · '+activePdf.name.replace(/\.pdf$/i,'');
+    try{
+      if(!activeDoc){const lib=await loadPdfJs(); const ab=await activePdf.file.arrayBuffer(); activeDoc=await lib.getDocument({data:ab}).promise;}
+      await renderScrollDoc(activeDoc);
+    }catch(e){alert(e.message||'PDF tidak dapat dirender.');}
+  }
+
+  scrollBtn&&scrollBtn.addEventListener('click',activateScroll);
+  bookBtn&&bookBtn.addEventListener('click',activateBook);
+  document.addEventListener('keydown',e=>{
+    if(!modal.classList.contains('pdf-mode')||!modal.classList.contains('book-active'))return;
+    revealPdfHeader();
+    if(e.key==='ArrowRight'){e.preventDefault();showSpread(activeSpread+2,'forward')}
+    if(e.key==='ArrowLeft'){e.preventDefault();showSpread(activeSpread-2,'back')}
+  });
+  window.addEventListener('resize',()=>{if(activeDoc&&modal.classList.contains('book-active'))showSpread(activeSpread); else if(activeDoc&&modal.classList.contains('scroll-active'))renderScrollDoc(activeDoc)});
+  window.addEventListener('popstate',()=>{if(modal.classList.contains('pdf-mode')){closePdfCleanup();modal.classList.remove('open');document.body.style.overflow=''}});
+  const close=document.getElementById('closeModal');
+  close&&close.addEventListener('click',()=>{if(modal.classList.contains('pdf-mode')){closePdfCleanup();}});
+
+  bindBookTouch();
+  renderCards();
 })();
 </script>
 

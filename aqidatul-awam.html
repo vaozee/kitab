@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>'Aqīdah Al-'Awām — Syair Akidah Ahlus Sunnah untuk Pemula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #eef3f8;
+    --bg-panel: #ffffff;
+    --bg-soft: #f4f8fc;
+    --ink: #10233d;
+    --ink-soft: #43597a;
+    --line: #cfdcee;
+    --accent: #0e7cc4;
+    --accent-2: #14b8a6;
+    --accent-3: #7c5cff;
+    --gold: #c9922a;
+    --glow: 0 0 0 1px rgba(14,124,196,0.08), 0 8px 28px rgba(16,35,61,0.08);
+    --radius: 16px;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --arabic: 'Amiri', 'Scheherazade New', serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; font-family:var(--sans); color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 90% -10%, rgba(20,184,166,0.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(124,92,255,0.10), transparent 55%),
+      var(--bg);
+    line-height:1.65;
+  }
+  .grid-overlay{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(rgba(14,124,196,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,124,196,0.05) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(1400px 900px at 50% 0%, black, transparent 75%);
+  }
+  header.hero{
+    position:relative; z-index:1; padding:64px 24px 48px; text-align:center;
+    background: linear-gradient(180deg, rgba(14,124,196,0.08), transparent 70%);
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--mono);
+    font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
+    background:rgba(14,124,196,0.08); border:1px solid rgba(14,124,196,0.25);
+    padding:6px 14px; border-radius:999px;
+  }
+  .eyebrow::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 8px var(--accent-2); }
+  h1.title{
+    margin:22px 0 6px; font-size:clamp(28px,5vw,48px); font-weight:700;
+    background:linear-gradient(90deg, var(--ink), var(--accent) 55%, var(--accent-3));
+    -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-.01em;
+  }
+  .arabic-title{ font-family:var(--arabic); font-size:clamp(26px,4.4vw,40px); color:var(--ink); margin:8px 0 18px; direction:rtl; }
+  .subtitle{ color:var(--ink-soft); max-width:680px; margin:0 auto; font-size:15.5px; }
+  .meta-row{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:22px; }
+  .meta-chip{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); background:var(--bg-panel); border:1px solid var(--line); padding:6px 12px; border-radius:8px; }
+
+  .layout{
+    position:relative; z-index:1; max-width:1240px; margin:0 auto; padding:32px 20px 80px;
+    display:grid; grid-template-columns:260px 1fr; gap:28px; align-items:start;
+  }
+  @media (max-width:920px){ .layout{ grid-template-columns:1fr; } }
+
+  nav.toc{
+    position:sticky; top:20px; background:var(--bg-panel); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--glow); padding:18px 16px;
+    max-height:calc(100vh - 40px); overflow-y:auto;
+  }
+  nav.toc h3{ font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:4px 0 10px 4px; }
+  nav.toc .part-label{ font-size:12px; font-weight:600; color:var(--ink-soft); margin:14px 0 6px 4px; text-transform:uppercase; letter-spacing:.06em; }
+  nav.toc ol{ list-style:none; margin:0 0 6px; padding:0; }
+  nav.toc a{ display:block; padding:6px 8px; border-radius:8px; color:var(--ink-soft); text-decoration:none; font-size:13.5px; transition:.15s; }
+  nav.toc a:hover{ background:var(--bg-soft); color:var(--accent); }
+  nav.toc .sec-num{ font-family:var(--mono); color:var(--accent); margin-right:6px; }
+
+  main{ min-width:0; }
+
+  section.block{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--glow); padding:28px 26px 30px; margin-bottom:26px; scroll-margin-top:20px;
+    position:relative; overflow:hidden;
+  }
+  section.block::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  }
+  .part-title{
+    font-size:13px; font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase;
+    color:#fff; background:linear-gradient(90deg, var(--accent), var(--accent-3));
+    display:inline-block; padding:10px 18px; border-radius:10px; margin-bottom:18px;
+  }
+  h2.part-heading{ font-size:26px; margin:0 0 22px; padding-bottom:14px; border-bottom:2px dashed var(--line); }
+
+  .sec-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .sec-badge{ font-family:var(--mono); font-size:12px; color:#fff; background:var(--accent); padding:3px 10px; border-radius:6px; white-space:nowrap; }
+  h3.sec-title{ margin:0; font-size:20px; color:var(--ink); }
+  .sec-title-arabic{ font-family:var(--arabic); direction:rtl; font-size:20px; color:var(--accent-3); }
+
+  .lede{ color:var(--ink-soft); margin:10px 0 18px; font-size:14.8px; }
+
+  .arabic-panel{
+    direction:rtl; text-align:center; font-family:var(--arabic); font-size:clamp(20px,2.6vw,26px);
+    line-height:2.1; color:var(--ink); background:linear-gradient(180deg, var(--bg-soft), #fff);
+    border:1px solid var(--line); border-right:4px solid var(--accent); border-radius:12px;
+    padding:18px 22px; margin:14px 0;
+  }
+  .kaidah-panel{
+    direction:rtl; text-align:center; font-family:var(--arabic); font-size:clamp(22px,3vw,30px); color:var(--ink);
+    background: linear-gradient(120deg, rgba(14,124,196,0.06), rgba(124,92,255,0.06));
+    border:1px solid rgba(14,124,196,0.3); border-radius:14px; padding:22px 24px; margin:16px 0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.5);
+  }
+  .ayat-source{ font-family:var(--mono); font-size:12px; color:var(--gold); text-align:center; margin-top:6px; }
+  .translation{ background:var(--bg-soft); border-left:3px solid var(--accent-2); padding:12px 16px; border-radius:0 10px 10px 0; margin:12px 0; font-style:italic; color:#1b3350; }
+  .label-row{ display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-2); margin:16px 0 6px; }
+  .label-row::before{ content:"//"; color:var(--line); }
+  .explain{ background:#fbfcff; border:1px dashed var(--line); border-radius:12px; padding:16px 18px; margin:8px 0 14px; font-size:14.5px; color:#2a3f5c; }
+  .explain strong{ color:var(--accent); }
+  .explain ul{ margin:8px 0 0; padding-left:20px; }
+  .explain li{ margin:4px 0; }
+  .examples{ margin:10px 0 4px; }
+  .examples li{ margin:6px 0; font-size:14.5px; }
+  .examples li::marker{ color:var(--accent-2); font-weight:700; }
+  table.def-table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:14.5px; }
+  table.def-table th, table.def-table td{ border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top; }
+  table.def-table th{ background:var(--bg-soft); font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); }
+  table.def-table td.term{ font-weight:700; color:var(--accent-3); white-space:nowrap; }
+  .divider{ display:flex; align-items:center; gap:10px; margin:26px 0; color:var(--line); }
+  .divider::before, .divider::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .divider span{ font-family:var(--mono); font-size:11px; color:var(--ink-soft); }
+  .callout{ background:linear-gradient(120deg, rgba(201,146,42,0.08), rgba(201,146,42,0.02)); border:1px solid rgba(201,146,42,0.35); border-radius:12px; padding:16px 18px; margin:16px 0; }
+  .callout .tag{ font-family:var(--mono); font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:.1em; }
+  .callout p{ margin:6px 0 0; font-size:14.5px; }
+  .tanbih{ background:linear-gradient(120deg, rgba(124,92,255,0.08), rgba(124,92,255,0.02)); border:1px solid rgba(124,92,255,0.35); border-radius:12px; padding:16px 18px; margin:16px 0; }
+  .tanbih .tag{ font-family:var(--mono); font-size:11px; color:var(--accent-3); text-transform:uppercase; letter-spacing:.1em; }
+  .kaidah-block{ padding-top:20px; border-top:1px solid var(--line); }
+  .kaidah-block:first-of-type{ border-top:none; padding-top:0; }
+  .kaidah-number{
+    display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
+    border-radius:10px; font-family:var(--mono); font-weight:700; font-size:14px;
+    background:linear-gradient(135deg, var(--accent), var(--accent-3)); color:#fff; margin-right:10px;
+  }
+  h3.kaidah-title{ display:flex; align-items:center; margin:0 0 10px; font-size:18px; }
+  .sifat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0; }
+  .sifat-chip{
+    background:var(--bg-soft); border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+    font-size:13.5px; text-align:center;
+  }
+  .sifat-chip b{ display:block; color:var(--accent); font-family:var(--mono); font-size:11px; margin-bottom:3px; }
+  footer.site-footer{
+    position:relative; z-index:1; text-align:center; padding:34px 20px 50px; color:var(--ink-soft);
+    font-family:var(--mono); font-size:12.5px; border-top:1px solid var(--line); margin-top:10px;
+  }
+  footer.site-footer a{ color:var(--accent); text-decoration:none; }
+  .back-top{
+    position:fixed; bottom:22px; right:22px; z-index:5; background:var(--accent); color:#fff;
+    border:none; border-radius:50%; width:44px; height:44px; font-size:18px; cursor:pointer;
+    box-shadow:0 8px 20px rgba(14,124,196,0.4);
+  }
+  @media print{ nav.toc, .back-top{ display:none; } .layout{ display:block; } }
+</style>
+</head>
+<body>
+<div class="grid-overlay"></div>
+
+<header class="hero">
+  <span class="eyebrow">Ilmu Tauhid / Akidah Ahlus Sunnah wal Jama'ah — Modul Belajar</span>
+  <h1 class="title">'Aqīdah Al-'Awām</h1>
+  <div class="arabic-title">عَقِيْدَةُ الْعَوَامّ</div>
+  <p class="subtitle">Syair dasar akidah untuk pemula karya Syaikh Ahmad Al-Marzuqi Al-Maliki — disusun ulang dengan teks Arab, terjemah, dan penjelasan tambahan yang lebih rinci untuk kebutuhan belajar-mengajar.</p>
+  <div class="meta-row">
+    <span class="meta-chip">Bab I · Sifat-sifat Allah Ta'ala</span>
+    <span class="meta-chip">Bab II · Sifat Para Nabi &amp; Rasul</span>
+    <span class="meta-chip">Ahlus Sunnah wal Jama'ah — Manhaj Asy'ari</span>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc">
+    <h3>Daftar Isi</h3>
+    <div class="part-label">Pengantar</div>
+    <ol>
+      <li><a href="#kisah"><span class="sec-num">00</span>Kisah Penulisan Syair</a></li>
+      <li><a href="#muqaddimah"><span class="sec-num">01</span>Muqaddimah</a></li>
+    </ol>
+    <div class="part-label">Bab I — Sifat Allah</div>
+    <ol>
+      <li><a href="#wajib1"><span class="sec-num">1</span>Wujud</a></li>
+      <li><a href="#wajib2"><span class="sec-num">2</span>Qidam</a></li>
+      <li><a href="#wajib3"><span class="sec-num">3</span>Baqa'</a></li>
+      <li><a href="#wajib4"><span class="sec-num">4</span>Mukhalafatu lil Hawadits</a></li>
+      <li><a href="#wajib5"><span class="sec-num">5</span>Qiyamuhu Binafsih</a></li>
+      <li><a href="#wajib6"><span class="sec-num">6</span>Wahdaniyyah</a></li>
+      <li><a href="#wajib7"><span class="sec-num">7–13</span>Tujuh Sifat Ma'ani</a></li>
+      <li><a href="#wajib14"><span class="sec-num">14–20</span>Sifat Ma'nawiyyah</a></li>
+      <li><a href="#kategori"><span class="sec-num">§</span>Empat Kategori Sifat</a></li>
+      <li><a href="#jaiz-allah"><span class="sec-num">§</span>Sifat Jaiz bagi Allah</a></li>
+    </ol>
+    <div class="part-label">Bab II — Nabi &amp; Rasul</div>
+    <ol>
+      <li><a href="#rasul-intro"><span class="sec-num">§</span>Kedudukan Iman kepada Rasul</a></li>
+      <li><a href="#fathanah"><span class="sec-num">1</span>Fathanah</a></li>
+      <li><a href="#shidq"><span class="sec-num">2</span>Shidq</a></li>
+      <li><a href="#tabligh"><span class="sec-num">3</span>Tabligh</a></li>
+      <li><a href="#amanah"><span class="sec-num">4</span>Amanah</a></li>
+      <li><a href="#mustahil-rasul"><span class="sec-num">§</span>Sifat Mustahil bagi Rasul</a></li>
+      <li><a href="#jaiz-rasul"><span class="sec-num">§</span>Sifat Jaiz bagi Rasul</a></li>
+      <li><a href="#jumlah-rasul"><span class="sec-num">§</span>25 Nabi &amp; Rasul</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- ================= KISAH PENULISAN ================= -->
+  <section class="block" id="kisah">
+    <span class="part-title">Pengantar</span>
+    <h2 class="part-heading">Kisah di Balik Penulisan Syair Ini</h2>
+    <div class="explain">
+      <strong>Ringkasan riwayat yang masyhur dinukil dari penulis syair ini (Syaikh Ahmad Al-Marzuqi rahimahullah):</strong> dikisahkan bahwa beliau bermimpi bertemu Rasulullah ﷺ beserta para sahabat yang mengelilingi beliau. Dalam mimpi itu, Rasulullah ﷺ memintanya untuk melantunkan sebuah syair tauhid — yang dijanjikan, siapa saja yang menghafalnya akan masuk surga dan meraih segala kebaikan yang sesuai dengan Al-Qur'an dan Sunnah. Para sahabat lalu membimbingnya memulai dengan lafadz basmalah, dan syair itu terus mengalir hingga akhir, sementara Rasulullah ﷺ menyimaknya. Ketika terbangun, penulis mendapati seluruh bait syair itu telah tersimpan sempurna dalam ingatannya dari awal hingga akhir.
+    </div>
+    <div class="callout">
+      <span class="tag">Nilai Pedagogis</span>
+      <p>Terlepas dari riwayat di atas, nilai penting dari kisah ini bagi pengajar adalah menegaskan tujuan penyusunan syair: menjadikan pokok-pokok akidah — yang sering dianggap berat dan filosofis — menjadi mudah dihafal, diingat, dan diajarkan kepada awam (orang kebanyakan, termasuk anak-anak dan pemula) melalui bentuk nazham (syair bersajak). Inilah sebabnya kitab ini menjadi salah satu materi pertama yang diajarkan di banyak pesantren dan madrasah di dunia Islam.</p>
+    </div>
+  </section>
+
+  <!-- ================= MUQADDIMAH ================= -->
+  <section class="block" id="muqaddimah">
+    <span class="part-title">Pembukaan</span>
+    <h2 class="part-heading">Muqaddimah — Basmalah, Hamdalah, dan Shalawat</h2>
+
+    <div class="kaidah-panel">أَبْدَأُ بِسْمِ اللهِ وَالرَّحْمٰنِ ۞ وَبِالرَّحِيْمِ دَائِمِ الْإِحْسَانِ</div>
+    <div class="translation">"Aku memulai dengan nama Allah, Yang Maha Pengasih, dan Yang Maha Penyayang, yang kebaikan-Nya tiada pernah putus."</div>
+    <div class="explain">
+      <strong>Penjelasan:</strong> Penulis membuka syairnya dengan basmalah karena tiga alasan utama yang biasa diajarkan dalam tradisi keilmuan Islam:
+      <ul>
+        <li><strong>Mengikuti tertib mushaf Al-Qur'an</strong> — Al-Qur'an sendiri dibuka dengan basmalah pada tiap surat (kecuali At-Taubah).</li>
+        <li><strong>Mengamalkan hadits</strong>: <em>"Setiap perkara penting yang tidak dimulai dengan bismillahirrahmanirrahim, maka ia terputus (kurang berkah dan kebaikannya)."</em></li>
+        <li><strong>Mengikuti kebiasaan Nabi ﷺ</strong> yang selalu membuka surat dan tulisannya dengan basmalah, sebagaimana dalam surat beliau kepada Heraklius dan raja-raja lainnya.</li>
+      </ul>
+    </div>
+
+    <div class="kaidah-panel">فَالْحَمْدُ لِلَّهِ الْقَدِيْمِ الْأَوَّلِ ۞ وَالْآخِرِ الْبَاقِيْ بِلاَ تَحَوُّلِ</div>
+    <div class="translation">"Maka segala puji bagi Allah, Yang Maha Awal (tanpa permulaan), Yang Maha Akhir, Yang Kekal tanpa perubahan."</div>
+    <div class="explain">
+      Setelah basmalah, penulis melanjutkan dengan hamdalah (pujian kepada Allah), mengamalkan hadits: <em>"Setiap perkara penting yang tidak dimulai dengan pujian kepada Allah, maka ia terputus."</em> Di samping itu, memuji Allah juga merupakan wujud syukur atas nikmat-Nya — termasuk nikmat bisa menyusun syair ini sendiri.
+    </div>
+
+    <div class="kaidah-panel">ثُمَّ الصَّلاَةُ وَالسَّلاَمُ سَرْمَدَا ۞ عَلَى النَّبِيِّ خَيْرِ مَنْ قَدْ وَحَّدَا<br>وَآلِهِ وَصَحْبِهِ وَمَنْ تَبِعْ ۞ سَبِيْلَ دِيْنِ الْحَقِّ غَيْرَ مُبْتَدِعْ</div>
+    <div class="translation">"Kemudian, shalawat dan salam yang terus-menerus, atas Nabi, sebaik-baik orang yang mentauhidkan Allah; juga atas keluarga, sahabat, dan siapa saja yang mengikuti jalan agama yang benar tanpa berbuat bid'ah."</div>
+    <div class="explain">
+      Bagian ketiga muqaddimah ini adalah shalawat kepada Nabi Muhammad ﷺ, mengamalkan hadits (meski sanadnya dinilai dha'if oleh sebagian muhaddits namun diamalkan dalam bab keutamaan/fadha'il): <em>"Setiap perkara penting yang tidak dimulai dengan pujian kepada Allah dan shalawat kepadaku, maka ia terputus dan kosong dari keberkahan."</em> Imam Syafi'i rahimahullah juga menyukai agar seseorang mendahulukan pembicaraan dan setiap urusan pentingnya dengan memuji Allah dan bershalawat kepada Rasulullah ﷺ.
+    </div>
+    <div class="callout">
+      <span class="tag">Struktur Tiga Lapis</span>
+      <p>Perhatikan pola pedagogis muqaddimah kitab-kitab klasik: <strong>Basmalah → Hamdalah → Shalawat</strong>. Pola tiga lapis ini hampir selalu ditemukan di awal kitab-kitab turats (klasik) dan baik diajarkan secara eksplisit kepada santri sebagai adab menulis karya ilmiah dalam tradisi Islam.</p>
+    </div>
+  </section>
+
+  <!-- ================= BAB I: SIFAT ALLAH ================= -->
+  <section class="block" id="bab1">
+    <span class="part-title">Bab Pertama</span>
+    <h2 class="part-heading">Sifat-sifat Allah Ta'ala</h2>
+    <div class="lede">
+      Bab ini membahas tiga kategori sifat yang wajib diketahui oleh setiap mukallaf (orang yang telah dibebani syariat) terkait Allah Ta'ala: <strong>(1) Wajib</strong> — sifat yang mustahil bagi akal membayangkan ketiadaannya pada Allah; <strong>(2) Mustahil</strong> — sifat yang mustahil bagi akal membayangkan keberadaannya pada Allah (yaitu lawan dari yang wajib); dan <strong>(3) Jaiz</strong> — sesuatu yang secara akal boleh ada atau tiada pada Allah, yaitu kehendak bebas-Nya dalam berbuat atau tidak berbuat sesuatu.
+    </div>
+
+    <div class="kaidah-panel">بَعْدُ فَاعْلَمْ بِوُجُوْبِ الْمَعْرِفَة ۞ مِنْ وَاجِبٍ لِلَّهِ عِشْرِيْنَ صِفَة</div>
+    <div class="translation">"Setelah itu ketahuilah, wajib bagi setiap orang mengenal 20 sifat yang wajib bagi Allah."</div>
+
+    <div class="divider"><span>Enam Sifat Pertama</span></div>
+    <div class="kaidah-panel">فَاللَّهُ مَوْجُوْدٌ قَدِيْمٌ بَاقِ ۞ مُخَالِفٌ لِلْخَلْقِ بِالْإِطْلاَقِ<br>وَقَائِمٌ غَنِيٌّ وَاحِدٌ وَحَيّ ۞ قَادِرٌ مُرِيْدٌ عَالِمٌ بِكُلِّ شَيْ</div>
+    <div class="translation">"Maka Allah itu Maha Ada, Maha Awal (tanpa permulaan), Maha Kekal, berbeda mutlak dengan seluruh makhluk-Nya; Maha Berdiri sendiri, Maha Kaya (tanpa butuh), Maha Esa, dan Maha Hidup; Maha Kuasa, Maha Berkehendak, dan Maha Mengetahui segala sesuatu."</div>
+
+    <div class="sec-head" id="wajib1"><span class="sec-badge">1</span><h3 class="sec-title">Wujud (Ada)</h3></div>
+    <div class="explain">
+      Wujud berarti tetapnya (tsubut) sesuatu. Keberadaan Allah bersifat pasti karena dzat-Nya sendiri, bukan karena sebab lain — artinya, tidak ada apa pun selain-Nya yang menyebabkan wujud-Nya. Ini berbeda dengan wujud makhluk (termasuk manusia), yang keberadaannya karena diciptakan (perbuatan) Allah.
+    </div>
+    <div class="ayat-source">إِنَّنِي أَنَا اللَّهُ لَا إِلَٰهَ إِلَّا أَنَا فَاعْبُدْنِي — QS. Thaha: 14</div>
+    <div class="translation">"Sesungguhnya Aku ini adalah Allah, tidak ada Tuhan selain Aku, maka sembahlah Aku."</div>
+    <div class="explain">
+      <strong>Dalil aqli (akal) klasik yang biasa diajarkan:</strong> seorang Arab badui pernah ditanya tentang bukti adanya Allah, ia menjawab kira-kira: "Jejak kotoran menunjukkan adanya unta, jejak kaki menunjukkan adanya orang yang berjalan — maka langit dengan bintang-bintangnya, bumi dengan lembah dan lautannya yang bergelombang, bukankah semua itu menunjukkan adanya Pencipta Yang Maha Bijaksana, Maha Kuasa, lagi Maha Mengetahui?" Analogi sederhana ini sangat efektif diajarkan kepada pemula karena mengaitkan konsep abstrak (wujud Allah) dengan pengalaman inderawi sehari-hari.
+    </div>
+
+    <div class="sec-head" id="wajib2"><span class="sec-badge">2</span><h3 class="sec-title">Qidam (Tanpa Permulaan)</h3></div>
+    <div class="explain">Qidam berarti tidak adanya permulaan bagi wujud Allah. Karena Dia adalah sumber (mashdar) dari alam semesta dan pencipta segala yang ada, maka mustahil ada sesuatu yang mendahului-Nya — sebab jika ada yang mendahului-Nya, berarti Dialah yang diciptakan, bukan Sang Pencipta.</div>
+    <div class="ayat-source">هُوَ الْأَوَّلُ وَالْآخِرُ وَالظَّاهِرُ وَالْبَاطِنُ ۖ وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ — QS. Al-Hadid: 3</div>
+    <div class="translation">"Dialah Yang Awal dan Yang Akhir, Yang Zahir dan Yang Batin, dan Dia Maha Mengetahui segala sesuatu."</div>
+
+    <div class="sec-head" id="wajib3"><span class="sec-badge">3</span><h3 class="sec-title">Baqa' (Kekal)</h3></div>
+    <div class="explain">Baqa' berarti wujud Allah tidak akan pernah berakhir — Dia terus-menerus ada tanpa batas dan kekal tanpa akhir.</div>
+    <div class="ayat-source">كُلُّ مَنْ عَلَيْهَا فَانٍ ۝ وَيَبْقَىٰ وَجْهُ رَبِّكَ ذُو الْجَلَالِ وَالْإِكْرَامِ — QS. Ar-Rahman: 26–27</div>
+    <div class="translation">"Semua yang ada di bumi akan binasa, dan tetap kekal Dzat Tuhanmu yang mempunyai kebesaran dan kemuliaan."</div>
+
+    <div class="sec-head" id="wajib4"><span class="sec-badge">4</span><h3 class="sec-title">Mukhalafatu lil Hawadits (Berbeda dengan Makhluk)</h3></div>
+    <div class="explain">Sifat ini menegaskan bahwa tidak ada satu pun makhluk yang serupa dengan Allah — baik dalam dzat, sifat, maupun perbuatan-Nya. Sifat ini menjadi pondasi utama untuk menolak segala bentuk penyerupaan (tasybih) Allah dengan makhluk-Nya.</div>
+    <div class="ayat-source">لَيْسَ كَمِثْلِهِ شَيْءٌ ۖ وَهُوَ السَّمِيعُ الْبَصِيرُ — QS. Asy-Syura: 11</div>
+    <div class="translation">"Tidak ada sesuatu pun yang serupa dengan Dia, dan Dia Maha Mendengar lagi Maha Melihat."</div>
+
+    <div class="sec-head" id="wajib5"><span class="sec-badge">5</span><h3 class="sec-title">Qiyamuhu Binafsih (Berdiri Sendiri)</h3></div>
+    <div class="explain">Sifat ini berarti Allah tidak membutuhkan tempat untuk bersemayam, tidak membutuhkan sesuatu yang mengadakan-Nya, dan sama sekali tidak butuh kepada apa pun selain diri-Nya.</div>
+    <div class="ayat-source">يَا أَيُّهَا النَّاسُ أَنتُمُ الْفُقَرَاءُ إِلَى اللَّهِ ۖ وَاللَّهُ هُوَ الْغَنِيُّ الْحَمِيدُ — QS. Fathir: 15</div>
+    <div class="translation">"Hai manusia, kamulah yang berkehendak kepada Allah; dan Allah, Dialah Yang Maha Kaya (tidak memerlukan sesuatu) lagi Maha Terpuji."</div>
+
+    <div class="sec-head" id="wajib6"><span class="sec-badge">6</span><h3 class="sec-title">Wahdaniyyah (Keesaan)</h3></div>
+    <div class="explain">
+      Wahdaniyyah berarti tidak adanya keberagaman/kemajemukan pada Allah dalam tiga hal:
+      <ul>
+        <li><strong>Esa dalam Dzat</strong> — Dzat-Nya tidak tersusun dari bagian-bagian, dan Dia tidak memiliki sekutu dalam kerajaan-Nya.</li>
+        <li><strong>Esa dalam Sifat</strong> — tidak ada satu pun yang memiliki sifat yang benar-benar menyerupai sifat-sifat-Nya.</li>
+        <li><strong>Esa dalam Af'al (perbuatan)</strong> — tidak ada satu pun selain-Nya yang benar-benar memiliki daya cipta; Dialah satu-satunya Pencipta dan pengatur segala sesuatu.</li>
+      </ul>
+    </div>
+    <div class="ayat-source">قُلْ هُوَ اللَّهُ أَحَدٌ — QS. Al-Ikhlas: 1</div>
+    <div class="translation">"Katakanlah: Dialah Allah, Yang Maha Esa."</div>
+    <div class="ayat-source">لَوْ كَانَ فِيهِمَا آلِهَةٌ إِلَّا اللَّهُ لَفَسَدَتَا — QS. Al-Anbiya: 22</div>
+    <div class="translation">"Sekiranya di langit dan di bumi ada tuhan-tuhan selain Allah, tentulah keduanya sudah rusak binasa."</div>
+    <div class="explain">Ayat terakhir ini dikenal sebagai <em>dalil tamanu'</em> (dalil saling meniadakan) — argumen rasional klasik bahwa jika ada dua tuhan atau lebih yang masing-masing memiliki kehendak berbeda, maka alam semesta akan mengalami kekacauan (fasad) karena benturan kehendak, sedangkan kenyataannya alam berjalan teratur.</div>
+
+    <div class="divider"><span>Tujuh Sifat Ma'ani</span></div>
+    <div class="sec-head" id="wajib7"><span class="sec-badge">7–13</span><h3 class="sec-title">Qudrah, Iradah, 'Ilm, Hayat, Sama', Bashar, Kalam</h3></div>
+    <div class="kaidah-panel">سَمِيْعٌ الْبَصِيْرُ وَالْمُتَكَلِّمُ ۞ لَهُ صِفَاتٌ سَبْعَةٌ تَنْتَظِمُ<br>قُدْرَةٌ إِرَادَةٌ سَمْعٌ بَصَرْ ۞ حَيَاةٌ الْعِلْمُ كَلاَمٌ اسْتَمَرْ</div>
+    <div class="translation">"Maha Hidup, Maha Mengetahui, Maha Kuasa, Maha Berkehendak, Maha Mendengar, Maha Melihat, dan Maha Berbicara — Dia memiliki tujuh sifat: Kuasa, Kehendak, Pendengaran, Penglihatan, Kehidupan, Ilmu, dan Kalam (firman) yang terus-menerus."</div>
+    <div class="sifat-grid">
+      <div class="sifat-chip"><b>QUDRAH</b>Kuasa — mewujudkan &amp; meniadakan</div>
+      <div class="sifat-chip"><b>IRADAH</b>Kehendak — menentukan segala kemungkinan</div>
+      <div class="sifat-chip"><b>'ILM</b>Ilmu — mengetahui segala sesuatu</div>
+      <div class="sifat-chip"><b>HAYAT</b>Hidup — dasar bagi sifat lainnya</div>
+      <div class="sifat-chip"><b>SAMA'</b>Mendengar — segala yang terdengar</div>
+      <div class="sifat-chip"><b>BASHAR</b>Melihat — segala yang terlihat</div>
+      <div class="sifat-chip"><b>KALAM</b>Berfirman — tanpa huruf/suara</div>
+    </div>
+    <div class="explain">
+      <ul>
+        <li><strong>Qudrah</strong> — sifat azali (tanpa permulaan) yang tetap pada Dzat-Nya, dengannya Dia mewujudkan atau meniadakan sesuatu. <span class="ayat-source" style="display:block;margin-top:4px">إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ — QS. An-Nur: 45 ("Sesungguhnya Allah Maha Kuasa atas segala sesuatu.")</span></li>
+        <li><strong>Iradah</strong> — sifat yang dengannya Allah menentukan salah satu dari berbagai kemungkinan yang ada (misalnya: menjadikan seseorang tinggi atau pendek, tampan atau tidak, di tempat ini atau itu) sesuai kehendak dan hikmah-Nya. <span class="ayat-source" style="display:block;margin-top:4px">إِنَّمَا أَمْرُهُ إِذَا أَرَادَ شَيْئًا أَن يَقُولَ لَهُ كُن فَيَكُونُ — QS. Yasin: 82</span></li>
+        <li><strong>'Ilm</strong> — sifat yang dengannya Allah mengetahui segala sesuatu, tanpa dibatasi ruang, waktu, atau apa pun. <span class="ayat-source" style="display:block;margin-top:4px">وَاللَّهُ بِكُلِّ شَيْءٍ عَلِيمٌ — QS. Al-Mujadalah: 7</span></li>
+        <li><strong>Hayat</strong> — sifat kehidupan yang menjadi syarat berlakunya sifat-sifat Qudrah, Iradah, Ilmu, Sama', Bashar, dan Kalam — sebab jika Allah tidak hidup, mustahil sifat-sifat itu tetap pada-Nya. <span class="ayat-source" style="display:block;margin-top:4px">وَتَوَكَّلْ عَلَى الْحَيِّ الَّذِي لَا يَمُوتُ — QS. Al-Furqan: 58</span></li>
+        <li><strong>Sama' dan Bashar</strong> — Allah mendengar segala sesuatu, sekalipun langkah kaki semut hitam di atas batu licin pada malam yang gelap gulita; dan Dia melihat segala sesuatu dengan penglihatan yang mencakup segala yang bisa terlihat. <span class="ayat-source" style="display:block;margin-top:4px">وَاللَّهُ سَمِيعٌ بَصِيرٌ — QS. Al-Mujadalah: 1</span></li>
+        <li><strong>Kalam</strong> — firman Allah yang azali, bukan berupa huruf maupun suara sebagaimana perkataan makhluk, namun menunjukkan segala yang diketahui-Nya. <span class="ayat-source" style="display:block;margin-top:4px">وَكَلَّمَ اللَّهُ مُوسَىٰ تَكْلِيمًا — QS. An-Nisa: 164</span></li>
+      </ul>
+    </div>
+
+    <div class="divider"><span>Sifat Ma'nawiyyah</span></div>
+    <div class="sec-head" id="wajib14"><span class="sec-badge">14–20</span><h3 class="sec-title">Tujuh Sifat Turunan (Kaunuhu ...)</h3></div>
+    <div class="explain">
+      Jika Qudrah, Iradah, Ilmu, Hidup, Pendengaran, Penglihatan, dan Kalam adalah wajib bagi Allah, maka secara logis wajib pula tujuh sifat yang mengikutinya, yaitu bahwa Allah itu:
+    </div>
+    <div class="sifat-grid">
+      <div class="sifat-chip"><b>14</b>Qadiran — Maha Berkuasa</div>
+      <div class="sifat-chip"><b>15</b>Muridan — Maha Berkehendak</div>
+      <div class="sifat-chip"><b>16</b>'Aliman — Maha Mengetahui</div>
+      <div class="sifat-chip"><b>17</b>Hayyan — Maha Hidup</div>
+      <div class="sifat-chip"><b>18</b>Sami'an — Maha Mendengar</div>
+      <div class="sifat-chip"><b>19</b>Bashiran — Maha Melihat</div>
+      <div class="sifat-chip"><b>20</b>Mutakalliman — Maha Berfirman</div>
+    </div>
+    <div class="callout">
+      <span class="tag">Beda Sifat Ma'ani &amp; Ma'nawiyyah</span>
+      <p>Poin ini sering membingungkan pemula: Sifat Ma'ani (7–13) adalah <em>sifat itu sendiri</em> yang berdiri pada Dzat Allah (misal: Qudrah/Kekuasaan), sedangkan Sifat Ma'nawiyyah (14–20) adalah <em>keadaan yang mengikuti/lahir dari</em> sifat ma'ani tersebut (misal: Qadiran/Yang Maha Kuasa — status "berkuasa" yang otomatis melekat karena adanya sifat Kuasa). Analoginya seperti "panas" (sifat ma'ani) dan "yang panas" (sifat ma'nawiyyah yang mengikutinya) — keduanya berbeda dari segi konsep namun tidak dapat dipisahkan.</p>
+    </div>
+
+    <div class="divider"><span>Klasifikasi</span></div>
+    <div class="sec-head" id="kategori"><span class="sec-badge">§</span><h3 class="sec-title">Empat Kategori 20 Sifat Wajib</h3></div>
+    <table class="def-table">
+      <tr><th>Kategori</th><th>Jumlah</th><th>Penjelasan</th><th>Daftar</th></tr>
+      <tr>
+        <td class="term">Sifat Nafsiyyah</td><td>1</td>
+        <td>Sifat yang berkaitan dengan Dzat itu sendiri — akal tidak bisa membayangkan dzat tanpanya.</td>
+        <td>Wujud</td>
+      </tr>
+      <tr>
+        <td class="term">Sifat Salbiyyah</td><td>5</td>
+        <td>Sifat yang menegaskan (menafikan) segala hal yang tidak layak bagi keagungan Allah.</td>
+        <td>Qidam, Baqa', Mukhalafatu lil Hawadits, Qiyamuhu Binafsih, Wahdaniyyah</td>
+      </tr>
+      <tr>
+        <td class="term">Sifat Ma'ani</td><td>7</td>
+        <td>Sifat yang menetapkan makna-makna yang tetap pada Dzat-Nya sesuai kesempurnaan-Nya.</td>
+        <td>Qudrah, Iradah, 'Ilm, Hayat, Sama', Bashar, Kalam</td>
+      </tr>
+      <tr>
+        <td class="term">Sifat Ma'nawiyyah</td><td>7</td>
+        <td>Sifat yang mengikuti/lahir dari tujuh Sifat Ma'ani di atas.</td>
+        <td>Qadiran, Muridan, 'Aliman, Hayyan, Sami'an, Bashiran, Mutakalliman</td>
+      </tr>
+    </table>
+    <div class="explain">
+      <strong>Mengapa Sifat Ma'nawiyyah tetap disebutkan terpisah</strong> padahal sudah tercakup dalam Sifat Ma'ani? Para ulama menjelaskan dua hikmah utama: <em>(1)</em> menyebutkan akidah secara terperinci, karena bahaya kebodohan dalam perkara ini sangat besar; dan <em>(2)</em> sebagai bantahan terhadap kelompok Mu'tazilah, yang mengingkari keberadaan sifat-sifat ini pada Allah (mereka hanya mengakui Dzat semata tanpa sifat yang berdiri pada-Nya).
+    </div>
+
+    <div class="divider"><span>Sifat Jaiz</span></div>
+    <div class="sec-head" id="jaiz-allah"><span class="sec-badge">§</span><h3 class="sec-title">Sifat Jaiz bagi Allah</h3></div>
+    <div class="kaidah-panel">وَجَائِزٌ بِفَضْلِهِ وَعَدْلِهِ ۞ تَرْكٌ لِكُلِّ مُمْكِنٍ كَفِعْلِهِ</div>
+    <div class="translation">"Dan boleh (jaiz) bagi Allah, dengan karunia dan keadilan-Nya, meninggalkan segala yang mungkin, sebagaimana boleh pula melakukannya."</div>
+    <div class="explain">
+      Sifat Jaiz bagi Allah hanya satu: <strong>Fi'lu kulli mumkinin aw tarkuhu</strong> — bebas berbuat atau tidak berbuat terhadap segala sesuatu yang mungkin (mumkin). Artinya, tidak ada satu pun yang wajib atas Allah, karena Dia-lah Yang Maha Berkehendak Mutlak; tidak ada seorang pun yang memiliki hak memilih atas-Nya, karena segala urusan — baik dan buruk — berada di tangan-Nya. Dia memberi dan menahan, memuliakan dan merendahkan, memberi manfaat dan mudarat, mengampuni dan menghukum, sesuai kehendak-Nya semata.
+    </div>
+    <div class="ayat-source">وَرَبُّكَ يَخْلُقُ مَا يَشَاءُ وَيَخْتَارُ ۗ مَا كَانَ لَهُمُ الْخِيَرَةُ — QS. Al-Qashash: 68</div>
+    <div class="translation">"Dan Tuhanmu menciptakan apa yang Dia kehendaki dan memilihnya. Sekali-kali tidak ada pilihan bagi mereka."</div>
+    <div class="callout">
+      <span class="tag">Titik Penting</span>
+      <p>Konsep Sifat Jaiz ini adalah pembeda mendasar antara Pencipta dan makhluk: tidak ada satu pun "kewajiban" bagi Allah dalam pengertian dipaksa atau terikat oleh sesuatu di luar diri-Nya. Segala yang Allah tetapkan atas diri-Nya sendiri (seperti rahmat-Nya bagi orang beriman) adalah karena karunia dan janji-Nya, bukan karena keharusan yang datang dari luar.</p>
+    </div>
+  </section>
+
+  <!-- ================= BAB II: NABI & RASUL ================= -->
+  <section class="block" id="bab2">
+    <span class="part-title">Bab Kedua</span>
+    <h2 class="part-heading">Sifat-sifat Para Nabi dan Rasul</h2>
+    <div class="sec-head" id="rasul-intro">
+      <h3 class="sec-title">Kedudukan Iman kepada Para Rasul</h3>
+    </div>
+    <div class="explain">
+      Sebagaimana wajib mengenal sifat-sifat Allah, wajib pula bagi setiap mukallaf mengenal sifat-sifat yang wajib, mustahil, dan jaiz bagi para Nabi dan Rasul 'alaihimus shalatu was salam.
+    </div>
+    <div class="ayat-source">آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ — QS. Al-Baqarah: 285</div>
+    <div class="translation">"Rasul telah beriman kepada apa yang diturunkan kepadanya dari Tuhannya, demikian pula orang-orang yang beriman. Semuanya beriman kepada Allah, malaikat-malaikat-Nya, kitab-kitab-Nya, dan rasul-rasul-Nya. Kami tidak membeda-bedakan seorang pun di antara rasul-rasul-Nya."</div>
+
+    <div class="kaidah-panel">أَرْسَلَ أَنْبِيَا ذَوِيْ فَطَانَة ۞ بِالصِّدْقِ وَالتَّبْلِيْغِ وَالْأَمَانَة</div>
+    <div class="translation">"Allah mengutus para Nabi yang memiliki kecerdasan, kejujuran, penyampaian (risalah), dan sifat amanah (dapat dipercaya)."</div>
+    <div class="lede">Bait ini menyebutkan empat sifat wajib bagi para Nabi dan Rasul, yang menjadi syarat mutlak kelayakan mereka memikul risalah dari Allah:</div>
+
+    <div class="sec-head" id="fathanah"><span class="sec-badge">1</span><h3 class="sec-title">Fathanah (Kecerdasan)</h3></div>
+    <div class="explain">
+      Para Nabi wajib memiliki kecerdasan yang unggul. Buktinya, seandainya mereka tidak cerdas, mustahil mereka mampu berdebat dan mematahkan argumen para penentangnya — padahal Al-Qur'an banyak menceritakan bagaimana para Nabi berhasil mengalahkan hujjah kaum mereka.
+    </div>
+    <div class="ayat-source">وَتِلْكَ حُجَّتُنَا آتَيْنَاهَا إِبْرَاهِيمَ عَلَىٰ قَوْمِهِ — QS. Al-An'am: 83</div>
+    <div class="translation">"Dan itulah hujjah Kami yang Kami berikan kepada Ibrahim untuk menghadapi kaumnya."</div>
+    <div class="explain">Selain itu, umat diperintahkan untuk mengikuti (ittiba') para Nabi — dan mustahil seseorang diperintahkan untuk mengikuti orang yang tidak cerdas.</div>
+
+    <div class="sec-head" id="shidq"><span class="sec-badge">2</span><h3 class="sec-title">Shidq (Jujur/Benar)</h3></div>
+    <div class="explain">Para Nabi wajib bersifat jujur dalam segala perkataan mereka, baik tentang wahyu maupun kabar-kabar lainnya. Seandainya dusta mungkin terjadi pada mereka, niscaya kabar yang disampaikan Allah tentang mereka menjadi tidak dapat dipercaya — dan ini mustahil.</div>
+    <div class="ayat-source">وَاذْكُرْ فِي الْكِتَابِ إِسْمَاعِيلَ ۚ إِنَّهُ كَانَ صَادِقَ الْوَعْدِ وَكَانَ رَسُولًا نَّبِيًّا — QS. Maryam: 54</div>
+    <div class="translation">"Dan ceritakanlah kisah Ismail di dalam Al-Qur'an. Sesungguhnya ia adalah seorang yang benar janjinya, dan dia adalah seorang rasul dan nabi."</div>
+
+    <div class="sec-head" id="tabligh"><span class="sec-badge">3</span><h3 class="sec-title">Tabligh (Menyampaikan)</h3></div>
+    <div class="explain">Para Nabi wajib menyampaikan seluruh wahyu yang diterima kepada umatnya tanpa menyembunyikan sedikit pun, karena jika mereka menyembunyikan sebagian syariat, maka orang yang lalai menjalankan syariat itu memiliki alasan untuk berdalih tidak sampainya risalah kepadanya — dan Allah telah menegaskan bahwa alasan semacam itu tertutup bagi manusia setelah diutusnya para rasul.</div>
+    <div class="ayat-source">يَا أَيُّهَا الرَّسُولُ بَلِّغْ مَا أُنزِلَ إِلَيْكَ مِن رَّبِّكَ ۖ وَإِن لَّمْ تَفْعَلْ فَمَا بَلَّغْتَ رِسَالَتَهُ — QS. Al-Ma'idah: 67</div>
+    <div class="translation">"Hai Rasul, sampaikanlah apa yang diturunkan kepadamu dari Tuhanmu. Dan jika tidak kamu kerjakan (apa yang diperintahkan itu, berarti) kamu tidak menyampaikan amanat-Nya."</div>
+
+    <div class="sec-head" id="amanah"><span class="sec-badge">4</span><h3 class="sec-title">Amanah (Dapat Dipercaya)</h3></div>
+    <div class="explain">Para Nabi wajib bersifat amanah — terpelihara dari segala bentuk pengkhianatan, baik pada perkara lahir maupun batin. Seandainya mereka melakukan hal yang haram atau makruh, maka perbuatan itu justru menjadi seolah-olah "ketaatan" bagi umatnya (karena umat diperintahkan mengikuti perbuatan Nabi) — dan ini mustahil terjadi.</div>
+    <div class="ayat-source">إِنِّي لَكُمْ رَسُولٌ أَمِينٌ — QS. Asy-Syu'ara: 107</div>
+    <div class="translation">"Sesungguhnya aku adalah seorang rasul kepercayaan (yang diutus) kepadamu."</div>
+
+    <div class="divider"><span>Sifat Mustahil &amp; Jaiz</span></div>
+    <div class="sec-head" id="mustahil-rasul"><span class="sec-badge">§</span><h3 class="sec-title">Sifat Mustahil bagi Para Rasul</h3></div>
+    <div class="explain">
+      Sebagaimana kaidah umum dalam ilmu tauhid, setiap sifat wajib memiliki lawannya yang mustahil. Maka mustahil bagi para Nabi dan Rasul bersifat:
+      <ul>
+        <li><strong>Baladah</strong> (bodoh/dungu) — lawan dari Fathanah</li>
+        <li><strong>Kidzib</strong> (dusta) — lawan dari Shidq</li>
+        <li><strong>Kitman</strong> (menyembunyikan wahyu) — lawan dari Tabligh</li>
+        <li><strong>Khianat</strong> (berkhianat) — lawan dari Amanah</li>
+      </ul>
+      Empat sifat mustahil ini menegaskan bahwa para Nabi terjaga (ma'shum) dari segala hal yang mencederai kredibilitas mereka sebagai pembawa risalah Allah.
+    </div>
+
+    <div class="sec-head" id="jaiz-rasul"><span class="sec-badge">§</span><h3 class="sec-title">Sifat Jaiz bagi Para Rasul</h3></div>
+    <div class="explain">
+      Sifat jaiz bagi para Rasul adalah <em>al-a'radh al-basyariyyah</em> — sifat-sifat kemanusiaan yang wajar, seperti makan, minum, tidur, menikah, sakit yang tidak menjijikkan, dan sejenisnya — selama tidak mengurangi derajat kenabian atau menodai kesempurnaan risalah mereka. Sifat ini penting diajarkan agar seorang muslim memahami bahwa para Nabi tetaplah manusia biasa dalam aspek fisik-biologis, namun istimewa dan terjaga (ma'shum) dalam aspek risalah dan penyampaian wahyu.
+    </div>
+    <div class="ayat-source">وَمَا أَرْسَلْنَا قَبْلَكَ مِنَ الْمُرْسَلِينَ إِلَّا إِنَّهُمْ لَيَأْكُلُونَ الطَّعَامَ وَيَمْشُونَ فِي الْأَسْوَاقِ — QS. Al-Furqan: 20</div>
+    <div class="translation">"Dan Kami tidak mengutus rasul-rasul sebelummu, melainkan mereka sungguh memakan makanan dan berjalan di pasar-pasar."</div>
+
+    <div class="sec-head" id="jumlah-rasul"><span class="sec-badge">§</span><h3 class="sec-title">25 Nabi dan Rasul yang Disebut dalam Al-Qur'an</h3></div>
+    <div class="explain">
+      Meski jumlah keseluruhan Nabi dan Rasul yang diutus Allah tidak diketahui secara pasti (sebagian riwayat menyebut jumlah yang sangat banyak), terdapat 25 Nabi yang disebutkan namanya secara eksplisit dalam Al-Qur'an dan wajib diketahui secara ringkas oleh setiap muslim sebagai bagian dari rukun iman:
+    </div>
+    <div class="sifat-grid" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr))">
+      <div class="sifat-chip">Adam</div><div class="sifat-chip">Idris</div><div class="sifat-chip">Nuh</div>
+      <div class="sifat-chip">Hud</div><div class="sifat-chip">Shalih</div><div class="sifat-chip">Ibrahim</div>
+      <div class="sifat-chip">Luth</div><div class="sifat-chip">Isma'il</div><div class="sifat-chip">Ishaq</div>
+      <div class="sifat-chip">Ya'qub</div><div class="sifat-chip">Yusuf</div><div class="sifat-chip">Ayyub</div>
+      <div class="sifat-chip">Syu'aib</div><div class="sifat-chip">Harun</div><div class="sifat-chip">Musa</div>
+      <div class="sifat-chip">Ilyasa'</div><div class="sifat-chip">Dzulkifli</div><div class="sifat-chip">Daud</div>
+      <div class="sifat-chip">Sulaiman</div><div class="sifat-chip">Ilyas</div><div class="sifat-chip">Yunus</div>
+      <div class="sifat-chip">Zakariya</div><div class="sifat-chip">Yahya</div><div class="sifat-chip">'Isa</div>
+      <div class="sifat-chip">Muhammad ﷺ</div>
+    </div>
+    <div class="callout">
+      <span class="tag">Catatan Penutup Bab</span>
+      <p>Dari 25 Nabi tersebut, lima di antaranya digelari <strong>Ulul 'Azmi</strong> (para Rasul bergelar keteguhan tekad tertinggi): Nuh, Ibrahim, Musa, 'Isa, dan Muhammad ﷺ — karena kesabaran luar biasa yang mereka tunjukkan dalam menghadapi ujian dakwah. Bab berikutnya dalam kitab ini (di luar cakupan modul ini) biasanya melanjutkan pembahasan pada rukun iman lainnya: iman kepada Malaikat, Kitab-kitab Allah, dan Hari Akhir, yang disusun dengan pola yang sama — sifat wajib, mustahil, dan jaiz.</p>
+    </div>
+
+    <div class="divider" style="margin-top:34px"><span style="font-family:var(--arabic);font-size:20px">وَاللهُ أَعْلَمُ</span></div>
+    <p style="text-align:center;color:var(--ink-soft);font-size:13.5px">— Selesai. Semoga bermanfaat sebagai bahan ajar dan bahan kajian mandiri. —</p>
+  </section>
+
+  </main>
+</div>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<footer class="site-footer">
+  &copy; 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a>
+</footer>
+
+</body>
+</html>

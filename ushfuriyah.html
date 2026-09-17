@@ -1,0 +1,2060 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitab Al-Mawa'izh Al-'Ushfuriyyah — Materi Belajar Mengajar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Amiri&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream: #fbf6ec;
+    --cream-2: #f4ecd8;
+    --paper: #fffdf8;
+    --ink: #2c2416;
+    --ink-soft: #5a4d38;
+    --gold: #b8860b;
+    --gold-deep: #8a6508;
+    --green: #2f5e4e;
+    --green-soft: #4f7d6c;
+    --border: #e2d3ad;
+    --shadow: rgba(120, 95, 40, 0.12);
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    color: var(--ink);
+    font-family: 'Merriweather', Georgia, serif;
+    line-height:1.75;
+  }
+
+  .arabic{
+    font-family: 'Scheherazade New', 'Amiri', serif;
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: plaintext;
+  }
+
+  header.hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(184,134,11,0.10), transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(47,94,78,0.10), transparent 45%),
+      linear-gradient(135deg, #fdf9ef 0%, #f3e7c9 100%);
+    border-bottom: 3px solid var(--gold);
+    padding: 48px 24px 40px;
+    text-align:center;
+    position: relative;
+  }
+  header.hero::before, header.hero::after{
+    content:"❧";
+    color: var(--gold-deep);
+    font-size: 1.4rem;
+    display:inline-block;
+    margin: 0 10px;
+    vertical-align: middle;
+  }
+  header.hero h1.arabic{
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    color: var(--green);
+    margin: 10px 0 6px;
+    direction: rtl;
+    text-align:center;
+  }
+  header.hero h2{
+    font-family:'Merriweather', serif;
+    font-weight:700;
+    font-size: clamp(1.1rem, 2.6vw, 1.5rem);
+    color: var(--gold-deep);
+    margin: 0 0 18px;
+    letter-spacing:.3px;
+  }
+  header.hero p.subtitle{
+    max-width: 720px;
+    margin: 0 auto;
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+  }
+  .author-line{
+    margin-top: 18px;
+    font-size: 1rem;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .author-line span.arabic{
+    display:block;
+    font-size:1.5rem;
+    color: var(--green);
+    margin-top:4px;
+  }
+
+  /* Floating Table of Contents */
+  .toc-fab{
+    position: fixed;
+    bottom: 26px;
+    right: 26px;
+    z-index: 1001;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-soft) 100%);
+    color: #fdf9ef;
+    border: 2px solid rgba(255,255,255,0.35);
+    box-shadow: 0 8px 22px rgba(47,94,78,0.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .toc-fab:hover{ transform: scale(1.06); box-shadow: 0 10px 26px rgba(47,94,78,0.55); }
+  .toc-fab:active{ transform: scale(0.96); }
+
+  .toc-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(44,36,22,0.45);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+  .toc-overlay.is-open{ opacity: 1; pointer-events: auto; }
+
+  .toc-panel{
+    position: fixed;
+    bottom: 92px;
+    right: 26px;
+    z-index: 1000;
+    width: min(320px, calc(100vw - 40px));
+    max-height: min(70vh, 560px);
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(44,36,22,0.28);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(12px) scale(0.97);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .22s ease, opacity .22s ease;
+  }
+  .toc-panel.is-open{
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .toc-panel-header{
+    background: linear-gradient(120deg, var(--green) 0%, var(--green-soft) 100%);
+    color: #fdf9ef;
+    padding: 14px 18px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-shrink: 0;
+  }
+  .toc-panel-header .arabic{ font-size: 1.15rem; }
+  .toc-panel-header span:last-child{ font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.9; }
+  .toc-panel-body{
+    overflow-y: auto;
+    padding: 8px 8px 14px;
+  }
+  .toc-link{
+    display: block;
+    padding: 9px 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.92rem;
+    border-radius: 8px;
+    transition: background .15s ease, color .15s ease;
+  }
+  .toc-link:hover{ background: var(--cream-2); color: var(--gold-deep); }
+  .toc-link.is-active{ background: #eef6f1; color: var(--green); font-weight: 700; }
+
+  @media (max-width: 640px){
+    .toc-fab{ bottom: 18px; right: 18px; width: 50px; height: 50px; }
+    .toc-panel{ right: 14px; bottom: 78px; }
+  }
+
+
+  main{
+    max-width: 980px;
+    margin: 36px auto 60px;
+    padding: 0 20px;
+  }
+
+  section.intro{
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-left: 6px solid var(--green);
+    border-radius: 12px;
+    padding: 26px 28px;
+    margin-bottom: 36px;
+    box-shadow: 0 6px 18px var(--shadow);
+  }
+  section.intro h3{
+    color: var(--green); margin-top:0;
+  }
+  section.intro ul{padding-left: 20px;}
+  section.intro li{margin-bottom:6px;}
+
+  .hadith-card{
+    background: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    box-shadow: 0 8px 22px var(--shadow);
+  }
+  .hadith-head{
+    background: linear-gradient(120deg, var(--green) 0%, var(--green-soft) 100%);
+    color: #fdf9ef;
+    padding: 16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .hadith-head .badge{
+    font-family:'Merriweather', serif;
+    font-weight:700;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .hadith-head .title-ar{
+    font-family:'Scheherazade New', serif;
+    font-size:1.4rem;
+    direction: rtl;
+  }
+
+  .block{
+    padding: 22px 26px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .block:last-child{border-bottom:none;}
+
+  .block h4{
+    margin: 0 0 12px;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: var(--gold-deep);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .block h4::before{
+    content:"";
+    width:18px; height:2px;
+    background: var(--gold-deep);
+    display:inline-block;
+  }
+
+  .arab-text{
+    font-family: 'Scheherazade New', 'Amiri', serif;
+    direction: rtl;
+    text-align: right;
+    unicode-bidi: plaintext;
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    color: var(--ink);
+    line-height: 2.1;
+    background: #fdf7e8;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .arab-text .rawi{
+    font-family: 'Scheherazade New', 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    display:block;
+    direction: rtl;
+    text-align:right;
+    margin-top: 10px;
+  }
+
+  .translation p{
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+
+  .explanation p{margin:0 0 12px;}
+  .explanation .sub{
+    color: var(--green);
+    font-weight:700;
+    margin-bottom:4px;
+    display:block;
+  }
+  .teaching-box{
+    background: #eef6f1;
+    border: 1px solid #cfe4d8;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-top: 10px;
+  }
+  .teaching-box h5{
+    margin:0 0 8px;
+    color: var(--green);
+    font-size: 0.95rem;
+  }
+  .teaching-box ul{margin:0; padding-left:20px;}
+  .teaching-box li{margin-bottom:6px; font-size:0.95rem;}
+
+  .placeholder-card{
+    background: repeating-linear-gradient(135deg, #fbf6ec, #fbf6ec 10px, #f6eed6 10px, #f6eed6 20px);
+    border: 1px dashed var(--gold);
+    border-radius: 14px;
+    padding: 22px 26px;
+    margin-bottom: 18px;
+    color: var(--ink-soft);
+  }
+  .placeholder-card .badge{
+    font-weight:700;
+    color: var(--gold-deep);
+    display:inline-block;
+    margin-bottom: 6px;
+  }
+  .placeholder-list{
+    columns:2;
+    column-gap: 30px;
+    font-size:0.92rem;
+  }
+  .placeholder-list li{margin-bottom:5px;}
+
+  .note-box{
+    background: #fff8ec;
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 10px 0 40px;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+  .note-box strong{color: var(--gold-deep);}
+
+  footer{
+    text-align:center;
+    padding: 26px 16px 34px;
+    background: linear-gradient(135deg, #f3e7c9, #fdf9ef);
+    border-top: 3px solid var(--gold);
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+  footer strong{color: var(--green);}
+
+  @media (max-width: 640px){
+    .placeholder-list{columns:1;}
+    .hadith-head{flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1 class="arabic">المواعظ العصفورية</h1>
+  <h2>Al-Mawa'izh Al-'Ushfuriyyah — Kitab Ushfuriyah</h2>
+  <p class="subtitle">Kumpulan 40 Hadits Nabi ﷺ disertai faedah sejarah, hikayah sufi, dan mutiara adab — media pembelajaran santri &amp; peserta didik madrasah diniyah.</p>
+  <div class="author-line">
+    Karya asli:
+    <span class="arabic">الشيخ محمد بن أبي بكر العصفوري</span>
+    Syekh Muhammad bin Abu Bakar al-'Ushfuri
+  </div>
+</header>
+
+<!-- Floating Table of Contents (collapsible) -->
+<button id="tocToggle" class="toc-fab" aria-label="Buka daftar isi" aria-expanded="false">
+  <svg id="tocIconOpen" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="14" y2="18"></line></svg>
+  <svg id="tocIconClose" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="6" y1="18" x2="18" y2="6"></line></svg>
+</button>
+
+<div id="tocOverlay" class="toc-overlay"></div>
+
+<nav id="tocPanel" class="toc-panel" aria-hidden="true">
+  <div class="toc-panel-header">
+    <span class="arabic">الفهرس</span>
+    <span>Daftar Isi</span>
+  </div>
+  <div class="toc-panel-body">
+    <a href="#muqaddimah" class="toc-link">Muqaddimah &amp; Profil Kitab</a>
+    <a href="#hadits-1" class="toc-link">Hadits ke-1</a>
+    <a href="#hadits-2" class="toc-link">Hadits ke-2</a>
+    <a href="#hadits-3" class="toc-link">Hadits ke-3</a>
+    <a href="#hadits-4" class="toc-link">Hadits ke-4</a>
+    <a href="#hadits-5" class="toc-link">Hadits ke-5</a>
+    <a href="#hadits-6" class="toc-link">Hadits ke-6</a>
+    <a href="#hadits-7" class="toc-link">Hadits ke-7</a>
+    <a href="#hadits-8" class="toc-link">Hadits ke-8</a>
+    <a href="#hadits-9" class="toc-link">Hadits ke-9</a>
+    <a href="#hadits-10" class="toc-link">Hadits ke-10</a>
+    <a href="#hadits-11" class="toc-link">Hadits ke-11</a>
+    <a href="#hadits-12" class="toc-link">Hadits ke-12</a>
+    <a href="#hadits-13" class="toc-link">Hadits ke-13</a>
+    <a href="#hadits-14" class="toc-link">Hadits ke-14</a>
+    <a href="#hadits-15" class="toc-link">Hadits ke-15</a>
+    <a href="#hadits-16" class="toc-link">Hadits ke-16</a>
+    <a href="#hadits-17" class="toc-link">Hadits ke-17</a>
+    <a href="#hadits-18" class="toc-link">Hadits ke-18</a>
+    <a href="#hadits-19" class="toc-link">Hadits ke-19</a>
+    <a href="#hadits-20" class="toc-link">Hadits ke-20</a>
+    <a href="#hadits-21" class="toc-link">Hadits ke-21</a>
+    <a href="#hadits-22" class="toc-link">Hadits ke-22</a>
+    <a href="#hadits-23" class="toc-link">Hadits ke-23</a>
+    <a href="#hadits-24" class="toc-link">Hadits ke-24</a>
+    <a href="#hadits-25" class="toc-link">Hadits ke-25</a>
+    <a href="#hadits-26" class="toc-link">Hadits ke-26</a>
+    <a href="#hadits-27" class="toc-link">Hadits ke-27</a>
+    <a href="#hadits-28" class="toc-link">Hadits ke-28</a>
+    <a href="#hadits-29" class="toc-link">Hadits ke-29</a>
+    <a href="#hadits-30" class="toc-link">Hadits ke-30</a>
+    <a href="#hadits-31" class="toc-link">Hadits ke-31</a>
+    <a href="#hadits-32" class="toc-link">Hadits ke-32</a>
+    <a href="#hadits-33" class="toc-link">Hadits ke-33</a>
+    <a href="#hadits-34" class="toc-link">Hadits ke-34</a>
+    <a href="#hadits-35" class="toc-link">Hadits ke-35</a>
+    <a href="#hadits-36" class="toc-link">Hadits ke-36</a>
+    <a href="#hadits-37" class="toc-link">Hadits ke-37</a>
+    <a href="#hadits-38" class="toc-link">Hadits ke-38</a>
+    <a href="#hadits-39" class="toc-link">Hadits ke-39</a>
+    <a href="#hadits-40" class="toc-link">Hadits ke-40 (Penutup)</a>
+    <a href="#cara-pakai" class="toc-link">Panduan Penggunaan untuk Pengajar</a>
+  </div>
+</nav>
+
+<main>
+
+  <section class="intro" id="muqaddimah">
+    <h3>Muqaddimah &amp; Profil Kitab</h3>
+    <p><strong>Al-Mawa'izh Al-'Ushfuriyyah</strong> (kata "Ushfuriyah" berasal dari <em>'ushfur</em>, burung pipit/emprit) adalah kitab klasik yang berisi 40 hadits Nabi ﷺ, masing-masing dilengkapi sanad, kisah teladan, dan hikmah tasawuf. Kitab ini disusun oleh <strong>Syekh Muhammad bin Abu Bakar al-'Ushfuri</strong>. Riwayat hidup penulis tidak banyak tercatat dalam literatur lain; dalam muqaddimah kitabnya sendiri, ia menuturkan secara ringkas perjalanan tobatnya dari kelalaian menuju usaha mengumpulkan sabda-sabda Nabi ﷺ yang ia terima dari para gurunya, lalu ditambahkannya kisah-kisah penggugah hati sebagai penjelasan.</p>
+    <p>Kitab ini populer dikaji di pesantren salaf dan madrasah diniyah di Nusantara, terutama karena jumlah halamannya yang ringkas sehingga sering dikhatamkan dalam waktu singkat (misalnya selama bulan Ramadhan).</p>
+    <ul>
+      <li><strong>Judul asli:</strong> <span class="arabic">المواعظ العصفورية مشتمل على أربعين من الأحاديث النبوية مع فوائد تاريخية وحكايات صوفية وملح أدبية</span></li>
+      <li><strong>Pengarang:</strong> Syekh Muhammad bin Abu Bakar al-'Ushfuri</li>
+      <li><strong>Isi:</strong> 40 hadits Nabi ﷺ, masing-masing disertai kisah/hikayah dan faedah</li>
+      <li><strong>Bidang kajian:</strong> Hadits, tasawuf, tazkiyatun nufus (penyucian jiwa)</li>
+      <li><strong>Kegunaan:</strong> Materi akhlak &amp; motivasi ibadah bagi santri pemula hingga menengah</li>
+    </ul>
+  </section>
+
+  <!-- ==================== HADITS 1 ==================== -->
+  <article class="hadith-card" id="hadits-1">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-1</span>
+      <span class="title-ar">الحديث الأوّل</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَبْدِ اللهِ بْنِ عُمَرَ رَضِيَ اللهُ تَعَالَى عَنْهُمَا قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ:
+        «الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ، ارْحَمُوا مَنْ فِي الْأَرْضِ يَرْحَمْكُمْ مَنْ فِي السَّمَاءِ»
+        <span class="rawi">(رواه عبد الله بن عمر رضي الله تعالى عنهما)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abdullah bin Umar radhiyallahu 'anhuma, ia berkata: Rasulullah ﷺ bersabda: "Orang-orang yang mengasihi akan dikasihi oleh Allah Yang Maha Pengasih. Kasihilah makhluk yang ada di bumi, niscaya (penduduk) yang di langit akan mengasihi kalian."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits pembuka kitab ini menegaskan asas utama akhlak dalam Islam: kasih sayang. Barangsiapa menebar kasih sayang kepada sesama makhluk di bumi — manusia maupun hewan — maka Allah dan para malaikat di langit akan membalasnya dengan kasih sayang pula.</p>
+      <p><span class="sub">2. Kisah Pendukung — Berkat Burung Pipit</span>Diceritakan bahwa Sayyidina Umar radhiyallahu 'anhu suatu ketika melihat seorang anak kecil memainkan seekor burung pipit (mprit) di jalanan Madinah. Merasa iba, Umar membeli burung itu lalu melepaskannya. Sepeninggal wafatnya, sejumlah ulama memimpikan Umar dan bertanya tentang keadaannya. Umar mengabarkan bahwa ia diampuni Allah bukan karena kedermawanan, keadilan, atau kezuhudannya semata, melainkan karena di alam kubur dua malaikat yang menakutkan hendak menanyainya, namun terdengar seruan gaib: "Tinggalkan hamba-Ku, jangan takuti dia, sebab Aku telah mengasihinya karena ia pernah mengasihi seekor burung kecil di dunia."</p>
+      <p><span class="sub">3. Kisah Pendukung — Niat Baik Seorang Abid Bani Israil</span>Dikisahkan pula seorang ahli ibadah (abid) dari kalangan Bani Israil yang melewati timbunan pasir di masa paceklik. Dalam hatinya ia berkata, "Andai pasir ini adalah gandum, niscaya akan kubagikan agar orang-orang kenyang." Allah lalu mewahyukan kepada seorang nabi pada masa itu bahwa Dia telah mencatat pahala sedekah baginya, sekalipun ucapan itu hanya angan-angan dalam hati — karena landasannya adalah kasih sayang kepada sesama hamba Allah.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Kitab ini sengaja dibuka dengan tema kasih sayang universal (kepada manusia maupun hewan) sebagai fondasi sebelum masuk ke hadits-hadits berikutnya tentang tobat, ilmu, dan tauhid — menunjukkan bahwa akhlak mendahului ilmu dan ibadah ritual.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri menyebutkan bentuk kasih sayang kepada makhluk hidup (manusia, hewan, tumbuhan) di sekitar mereka.</li>
+          <li>Diskusikan kisah Umar dan burung pipit: mengapa amal sekecil itu bisa mengantarkan pada ampunan Allah?</li>
+          <li>Tekankan bahwa niat baik yang tulus pun dinilai Allah, sebagaimana kisah abid Bani Israil — meski hanya angan dalam hati.</li>
+          <li>Refleksi: minta santri menuliskan satu tindakan kasih sayang nyata yang bisa mereka lakukan minggu ini kepada manusia maupun hewan.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 2 ==================== -->
+  <article class="hadith-card" id="hadits-2">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-2</span>
+      <span class="title-ar">الحديث الثّاني</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ:
+        «الْفَاجِرُ الرَّاجِي رَحْمَةَ اللهِ تَعَالَى أَقْرَبُ إِلَى اللهِ تَعَالَى مِنَ الْعَابِدِ الْمُقَنِّطِ»
+        <span class="rawi">(رواه الحاكم عن ابن مسعود رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Rasulullah ﷺ bersabda: "Orang yang gemar bermaksiat namun tetap mengharap rahmat Allah, lebih dekat kepada Allah Ta'ala dibanding ahli ibadah yang berputus asa dari rahmat-Nya." (HR. Al-Hakim, dari Ibnu Mas'ud radhiyallahu 'anhu)</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini bukan bermaksud membenarkan maksiat, melainkan menegaskan bahaya <em>berputus asa dari rahmat Allah</em> (al-qunuth). Sikap pesimis terhadap ampunan Allah termasuk dosa besar dalam pandangan sebagian ulama, karena mengingkari keluasan rahmat-Nya.</p>
+      <p><span class="sub">2. Kisah Pendukung dalam Kitab</span>Pengarang kitab menyertakan riwayat dari Zaid bin Aslam, dari Sayyidina Umar radhiyallahu 'anhu, tentang seorang laki-laki di umat terdahulu yang tekun beribadah namun gemar memvonis orang lain pasti masuk neraka — sikap yang justru mendatangkan murka Allah karena merasa berhak menentukan nasib akhirat orang lain.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menanamkan keseimbangan antara <em>khauf</em> (takut akan dosa) dan <em>raja'</em> (harap akan rahmat), serta melatih santri untuk tidak mudah men-judge/memvonis keadaan akhirat orang lain.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Bahas perbedaan antara "berharap rahmat sambil terus berusaha bertobat" vs "berputus asa" vs "meremehkan dosa".</li>
+          <li>Diskusikan sikap tidak boleh memvonis orang lain pasti masuk neraka/surga (bukan wewenang manusia).</li>
+          <li>Kaitkan dengan ayat QS. Az-Zumar: 53 tentang larangan berputus asa dari rahmat Allah.</li>
+          <li>Latihan reflektif: minta santri menuliskan satu sikap pesimis yang perlu diganti dengan husnuzhan kepada Allah.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 3 ==================== -->
+  <article class="hadith-card" id="hadits-3">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-3</span>
+      <span class="title-ar">الحديث الثّالث</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ:
+        «إِنَّ اللهَ تَعَالَى يَنْظُرُ إِلَى وَجْهِ الشَّيْخِ صَبَاحًا وَمَسَاءً وَيَقُولُ: يَا عَبْدِي، قَدْ كَبُرَ سِنُّكَ، وَرَقَّ جِلْدُكَ، وَدَقَّ عَظْمُكَ، وَاقْتَرَبَ أَجَلُكَ، وَحَانَ قُدُومُكَ إِلَيَّ، فَاسْتَحْيِ مِنِّي، فَإِنِّي أَسْتَحْيِي مِنْ شَيْبَتِكَ أَنْ أُعَذِّبَكَ فِي النَّارِ»
+        <span class="rawi">(رُوِيَ عن أنس بن مالك رضي الله عنه، خادم رسول الله صلى الله عليه وسلم)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Anas bin Malik radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Sesungguhnya Allah Ta'ala memandang wajah orang yang telah beruban (lanjut usia) pada waktu pagi dan petang, lalu berfirman: 'Wahai hamba-Ku, sungguh telah tua usiamu, telah menipis kulitmu, telah rapuh tulangmu, telah dekat ajalmu, dan telah tiba waktunya engkau kembali kepada-Ku. Maka malulah kepada-Ku, karena sesungguhnya Aku malu terhadap uban(mu) untuk menyiksamu di dalam neraka.'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan kemuliaan yang Allah berikan kepada orang lanjut usia (lansia/manula). Uban dan ketuaan bukanlah aib, melainkan tanda kemuliaan di sisi Allah, bahkan menjadi sebab harapan besar akan ampunan-Nya di akhir hayat.</p>
+      <p><span class="sub">2. Kaitan dengan Adab kepada Orang Tua</span>Dalam kitab ini, hadits tentang kemuliaan uban/lansia juga dirangkai dengan kisah teladan Sayyidina Ali karramallahu wajhah yang sangat menghormati dan lemah lembut kepada seorang laki-laki tua non-muslim (Nasrani), sebagai bukti bahwa penghormatan kepada orang tua berlaku universal, tidak dibatasi sekat agama, sebagai bagian dari akhlak mulia seorang muslim.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan pentingnya adab dan penghormatan kepada orang yang lebih tua — baik guru, kakek-nenek, maupun sesepuh di masyarakat — sebagai wujud pengamalan langsung dari hadits ini.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri menyebutkan bentuk konkret memuliakan orang tua/lansia di lingkungan sehari-hari (mendahulukan duduk, membantu jalan, mendengarkan nasihat).</li>
+          <li>Diskusikan makna "malu" dalam hadits ini sebagai sifat kasih sayang Allah, bukan malu dalam arti manusiawi.</li>
+          <li>Kaitkan dengan kisah Sayyidina Ali dan orang tua Nasrani sebagai teladan akhlak lintas golongan.</li>
+          <li>Refleksi: minta santri menulis satu bentuk bakti nyata kepada orang tua/kakek-nenek minggu ini.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 4 ==================== -->
+  <article class="hadith-card" id="hadits-4">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-4</span>
+      <span class="title-ar">الحديث الرّابع</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        أَخْبَرَنَا إِبْرَاهِيمُ عَنْ عَلْقَمَةَ عَنْ عَبْدِ اللهِ بْنِ مَسْعُودٍ رَضِيَ اللهُ عَنْهُمْ أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ:
+        «مَنْ تَعَلَّمَ بَابًا مِنَ الْعِلْمِ يَنْتَفِعُ بِهِ فِي آخِرَتِهِ وَدُنْيَاهُ، أَعْطَاهُ اللهُ خَيْرًا لَهُ مِنْ عُمُرِ الدُّنْيَا سَبْعَةِ آلَافِ سَنَةٍ، صِيَامِ نَهَارِهَا وَقِيَامِ لَيَالِيهَا، مَقْبُولًا غَيْرَ مَرْدُودٍ»
+        <span class="rawi">(رواية إبراهيم، عن علقمة، عن عبد الله بن مسعود رضي الله عنهم)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Diriwayatkan dari Ibrahim, dari Alqamah, dari Abdullah bin Mas'ud radhiyallahu 'anhum, bahwa Rasulullah ﷺ bersabda: "Barangsiapa mempelajari satu bab dari ilmu yang bermanfaat baginya di dunia dan akhiratnya, maka Allah akan memberinya (pahala) yang lebih baik daripada umur dunia selama tujuh ribu tahun, yang siang harinya diisi puasa dan malam harinya diisi shalat malam, (amal itu) diterima, tidak tertolak."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan betapa besar keutamaan menuntut ilmu yang bermanfaat, sampai pahalanya digambarkan melebihi ibadah puasa dan qiyamul lail selama ribuan tahun. Ini bukan berarti ilmu menggantikan ibadah, tetapi menunjukkan betapa Allah sangat memuliakan proses belajar yang ikhlas dan bermanfaat.</p>
+      <p><span class="sub">2. Rangkaian Hadits</span>Pengarang kitab menghimpun tiga hadits sekaligus dalam bab ini — semuanya bersumber dari jalur periwayatan Ibrahim, Alqamah, dan Ibnu Mas'ud — yang saling menguatkan tema keutamaan ilmu. Salah satu hadits lanjutannya menyinggung kedudukan mulia Sayyidina Ali karramallahu wajhah sebagai "pintu ilmu" Rasulullah ﷺ, yang kemudian dikisahkan menjawab pertanyaan rumit dari sepuluh kelompok penanya (kaum Khawarij) dengan jawaban yang seragam meski ditanya terpisah — menunjukkan keluasan ilmunya.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat memakai hadits ini untuk memotivasi semangat belajar santri, dengan menegaskan bahwa ilmu yang dicari haruslah ilmu yang bermanfaat (nafi') untuk dunia dan akhirat, bukan sekadar mengejar gelar atau pengakuan.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Minta santri menyebutkan satu "bab ilmu" yang sedang mereka pelajari dan manfaatnya untuk dunia-akhirat.</li>
+          <li>Diskusikan perbedaan niat mencari ilmu karena Allah vs mencari ilmu karena pengakuan/gengsi.</li>
+          <li>Ceritakan kisah Sayyidina Ali dan kaum Khawarij sebagai ilustrasi keluasan ilmu yang berkah.</li>
+          <li>Latihan: santri menuliskan target satu ilmu baru yang ingin dipelajari bulan ini beserta niatnya.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 5 ==================== -->
+  <article class="hadith-card" id="hadits-5">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-5</span>
+      <span class="title-ar">الحديث الخامس</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي ذَرٍّ الْغِفَارِيِّ رَضِيَ اللهُ تَعَالَى عَنْهُ أَنَّهُ قَالَ: قُلْتُ يَا رَسُولَ اللهِ عَلِّمْنِي عَمَلًا يُقَرِّبُنِي إِلَى الْجَنَّةِ وَيُبَاعِدُنِي مِنَ النَّارِ. قَالَ: «إِذَا عَمِلْتَ سَيِّئَةً فَاتْبِعْهَا حَسَنَةً». قَالَ: قُلْتُ أَمِنَ الْحَسَنَاتِ قَوْلُ لَا إِلَهَ إِلَّا اللهُ؟ قَالَ: «نَعَمْ، هِيَ أَحْسَنُ الْحَسَنَاتِ»
+        <span class="rawi">(رواه أبو ذر الغفاري رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Dzar al-Ghifari radhiyallahu 'anhu, ia berkata: "Aku berkata kepada Rasulullah ﷺ, 'Wahai Rasulullah, ajarilah aku suatu amal yang dapat mendekatkanku ke surga dan menjauhkanku dari neraka.' Beliau menjawab: 'Apabila engkau melakukan keburukan, maka susullah dengan kebaikan.' Aku bertanya, 'Apakah termasuk kebaikan itu ucapan Laa ilaaha illallah?' Beliau menjawab: 'Ya, itu adalah sebaik-baik kebaikan.'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan dua hal: (a) metode menghapus dosa adalah dengan menyusulkan kebaikan setelah keburukan, dan (b) kalimat tauhid <em>Laa ilaaha illallah</em> adalah sebaik-baik kebaikan yang bisa diucapkan seorang hamba.</p>
+      <p><span class="sub">2. Kisah Pendukung — Tameng Tujuh Batu</span>Dikisahkan seorang laki-laki yang wukuf di Arafah sambil memegang tujuh batu, dan ia menjadikan ketujuh batu itu sebagai saksi atas dua kalimat syahadatnya. Di alam mimpi (gambaran hari Kiamat), ketika ia hendak diseret ke neraka, ketujuh batu itu satu per satu menghalangi setiap pintu neraka sehingga para malaikat tak sanggup mengangkatnya. Ketika ia dibawa ke surga, pintunya sempat tertutup, namun begitu kesaksian "Laa ilaaha illallah" datang, pintu-pintu surga pun terbuka untuknya.</p>
+      <p><span class="sub">3. Kisah Pendukung — Hikmah Penciptaan Neraka</span>Nabi Musa 'alaihissalam pernah bertanya kepada Allah mengapa makhluk yang telah diberi nikmat justru dimasukkan ke neraka. Allah memerintahkannya menanam dan memanen tanaman, lalu bertanya apakah ada yang tersisa. Musa menjawab hanya tersisa bagian yang tidak baik/tidak berbuah. Allah menjelaskan bahwa Dia memasukkan ke neraka orang yang "tidak memiliki kebaikan sama sekali" — yaitu mereka yang enggan mengucapkan kalimat tauhid.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menanamkan kebiasaan memperbanyak zikir tauhid sebagai penebus dosa harian, sekaligus menegaskan bahwa kalimat tauhid adalah bekal paling mendasar dan paling berharga bagi setiap muslim.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri mempraktikkan kebiasaan "sesudah khilaf, segera berbuat baik" — misalnya sesudah bertengkar, segera minta maaf atau berbuat baik ke orang tersebut.</li>
+          <li>Hafalkan bersama kalimat tauhid dan maknanya secara mendalam, bukan sekadar hafal lafaznya.</li>
+          <li>Diskusikan kisah tujuh batu: apa makna simbolis "batu-batu menjadi saksi" bagi amal seorang hamba?</li>
+          <li>Refleksi: mengapa kalimat sesederhana "Laa ilaaha illallah" disebut sebaik-baik kebaikan?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 6 ==================== -->
+  <article class="hadith-card" id="hadits-6">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-6</span>
+      <span class="title-ar">الحديث السّادس</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي نَصْرٍ الْوَاسِطِيِّ قَالَ: سَمِعْتُ أَبَا رَجَاءٍ الْعَطَارِدِيَّ يُحَدِّثُ عَنْ أَبِي بَكْرٍ الصِّدِّيقِ رَضِيَ اللهُ عَنْهُ أَنَّ أَعْرَابِيًّا أَتَى إِلَى النَّبِيِّ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ فَقَالَ: بَلَغَنِي عَنْكَ أَنَّكَ تَقُولُ مِنَ الْجُمُعَةِ إِلَى الْجُمُعَةِ وَمِنَ الصَّلَاةِ إِلَى الصَّلَاةِ كَفَّارَةٌ لِمَا بَيْنَهُنَّ لِمَنِ اجْتَنَبَ الْكَبَائِرَ. قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «نَعَمْ»، ثُمَّ زَادَ فَقَالَ: «الْغُسْلُ يَوْمَ الْجُمُعَةِ كَفَّارَةٌ، وَالْمَشْيُ إِلَى الْجُمُعَةِ كَفَّارَةٌ، وَكُلُّ قَدَمٍ مِنْهَا كَعَمَلِ عِشْرِينَ سَنَةً، فَإِذَا فَرَغَ مِنَ الْجُمُعَةِ أُجِيزَ بِعَمَلِ مِائَتَيْ سَنَةٍ»
+        <span class="rawi">(رواه أبو بكر الصديق رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Nashr al-Wasithi, ia berkata: aku mendengar Abu Raja' al-'Athoridi menceritakan dari Abu Bakar ash-Shiddiq radhiyallahu 'anhu bahwa seorang Baduwi mendatangi Nabi ﷺ dan berkata: "Telah sampai kepadaku bahwa engkau bersabda, dari satu Jumat ke Jumat berikutnya dan dari satu shalat ke shalat berikutnya adalah penebus dosa di antara keduanya bagi yang menjauhi dosa besar." Rasulullah ﷺ menjawab: "Benar." Lalu beliau menambahkan: "Mandi pada hari Jumat adalah penebus dosa, berjalan menuju shalat Jumat adalah penebus dosa — setiap langkahnya senilai amal 20 tahun. Maka apabila seseorang telah selesai shalat Jumat, ia diganjar dengan (pahala) amal 200 tahun."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan keutamaan luar biasa shalat Jumat: mandi Jumat, berjalan menujunya, hingga menuntaskannya, semua bernilai pahala berlipat yang menjadi penebus dosa-dosa kecil.</p>
+      <p><span class="sub">2. Kisah Pendukung — Sebab Abu Bakar Masuk Islam</span>Dikisahkan Abu Bakar, seorang pedagang pada masa jahiliah, bermimpi matahari dan bulan berada di pangkuannya. Seorang pendeta Nasrani menakwilkan mimpi itu sebagai pertanda akan datangnya seorang nabi akhir zaman bernama Muhammad al-Amin, dan Abu Bakar kelak akan menjadi wazir sekaligus khalifah sepeninggalnya. Setelah bertemu Nabi ﷺ dan diingatkan tentang mukjizat berupa takwil mimpi itu, Abu Bakar pun bersyahadat.</p>
+      <p><span class="sub">3. Kisah Pendukung — Adik yang Bertobat dan Kakak yang Ingkar</span>Dua bersaudara penyembah api (Majusi) menguji apakah api yang mereka sembah akan melukai atau memuliakan mereka. Ternyata api membakar tangan sang adik, sehingga ia sadar dan bertobat kepada Islam melalui bimbingan Malik bin Dinar — sementara sang kakak tetap enggan karena takut cemoohan keluarganya. Kisah berlanjut dengan ujian kemiskinan yang dihadapi sang adik dengan penuh tawakal dan doa "bihurmatil Jumu'ah" (dengan kemuliaan hari Jumat), hingga Allah mencukupinya dengan rezeki tak terduga.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menanamkan semangat mempersiapkan diri menyambut shalat Jumat (mandi, berjalan kaki jika memungkinkan, datang lebih awal) sebagai ibadah bernilai tinggi, serta pentingnya tawakal dan doa di hari Jumat.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan adab-adab menyambut shalat Jumat: mandi, memakai wangi-wangian, datang lebih awal, tidak berbicara saat khutbah.</li>
+          <li>Ceritakan kisah dua bersaudara Majusi sebagai ilustrasi bahaya mengutamakan pandangan manusia di atas kebenaran.</li>
+          <li>Ajarkan doa "bihurmatil Jumu'ah" sebagai amalan di hari Jumat untuk memohon kemudahan rezeki dan ampunan.</li>
+          <li>Refleksi: minta santri menceritakan pengalaman shalat Jumat mereka dan apa yang bisa diperbaiki.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 7 ==================== -->
+  <article class="hadith-card" id="hadits-7">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-7</span>
+      <span class="title-ar">الحديث السّابع</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَبْدِ الصَّمَدِ بْنِ مُغَفَّلٍ قَالَ: سَمِعْتُ أَنَّ وَهْبَ بْنَ مُنَبِّهٍ رَضِيَ اللهُ تَعَالَى عَنْهُ يَقُولُ: قَرَأْتُ فِي آخِرِ زَبُورِ دَاوُدَ صَلَوَاتُ اللهِ عَلَيْهِ ثَلَاثِينَ سَطْرًا: قَالَ يَا دَاوُدُ! هَلْ تَدْرِي أَيَّ الْمُؤْمِنِ أَحَبُّ إِلَيَّ أَنْ أُطِيلَ حَيَاتَهُ؟ قَالَ: لَا. قَالَ: الَّذِي إِذَا قَالَ لَا إِلَهَ إِلَّا اللهُ اقْشَعَرَّ جِلْدُهُ وَارْتَعَدَتْ مَفَاصِلُهُ...
+        <span class="rawi">(رواية وهب بن منبه رضي الله تعالى عنه؛ وحديث آخر عن أنس بن مالك رضي الله عنه رواه علي رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abdush Shamad bin Mughaffal, ia berkata: aku mendengar Wahab bin Munabbih radhiyallahu 'anhu berkata: "Aku membaca di akhir Kitab Zabur Nabi Dawud 'alaihissalam tiga puluh baris: Allah berfirman, 'Wahai Dawud, tahukah engkau mukmin manakah yang paling Aku sukai untuk Aku panjangkan hidupnya?' Dawud menjawab, 'Tidak.' Allah menjelaskan, 'Yaitu mukmin yang ketika mengucapkan <em>Laa ilaaha illallah</em>, kulitnya merinding dan sendi-sendinya bergetar...'" Dalam sanad yang sama, diriwayatkan pula dari Anas bin Malik radhiyallahu 'anhu bahwa Rasulullah ﷺ bersabda: "Barangsiapa mengucapkan <em>Laa ilaaha illallah</em> dengan memanjangkan bacaannya, maka gugurlah baginya 4000 dosa besar." Hadits ini diriwayatkan oleh Ali radhiyallahu 'anhu.</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan bahwa keimanan sejati ditandai oleh rasa takut dan gentar kepada Allah setiap kali mengingat-Nya, bukan sekadar pengakuan lisan semata. Allah lebih menyukai hamba yang hatinya bergetar mendengar kalimat tauhid.</p>
+      <p><span class="sub">2. Kisah Pendukung — Penyakit Rasa Takut</span>Diceritakan Hazim bin Walid radhiyallahu 'anhu jatuh sakit, namun tabib yang memeriksanya tidak menemukan penyakit fisik. Ketika ditanya, Hazim menjelaskan bahwa "penyakit"-nya adalah rasa takut kepada Allah — takut amalnya dihisab, dan takut kehilangan keimanan sebelum ajal tiba.</p>
+      <p><span class="sub">3. Kisah Pendukung — Tobatnya Raja yang Sombong</span>Seorang raja yang menyombongkan diri terhadap Allah ditawan setelah kalah perang, lalu dimasukkan ke bejana besar yang dibakar. Ia berseru meminta tolong kepada berhala-berhalanya, namun api justru makin membesar. Dalam keputusasaan, ia akhirnya berseru dua kalimat syahadat — seketika Allah mengirim hujan memadamkan api dan angin menerbangkan bejana itu ke suatu kaum yang belum mengenal Allah, hingga akhirnya mereka semua masuk Islam setelah mendengar kisahnya.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menekankan bahwa rasa takut (khauf) kepada Allah bukanlah gangguan mental, melainkan tanda keimanan yang hidup — sekaligus menegaskan bahwa pintu tobat selalu terbuka bahkan bagi orang yang paling sombong sekalipun.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan perbedaan antara "takut sehat" (khauf yang mendekatkan diri kepada Allah) dan rasa cemas berlebihan yang mengganggu keseharian.</li>
+          <li>Ceritakan kisah raja sombong sebagai ilustrasi bahwa tobat yang tulus, sekalipun di saat-saat terakhir, tetap diterima Allah.</li>
+          <li>Latih santri merenungkan makna kalimat tauhid setiap kali mengucapkannya, bukan sekadar lisan.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 8 ==================== -->
+  <article class="hadith-card" id="hadits-8">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-8</span>
+      <span class="title-ar">الحديث الثّامن</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَلِيِّ بْنِ أَبِي طَالِبٍ كَرَّمَ اللهُ وَجْهَهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «يَجْلِسُ عَلَى كُلِّ بَابٍ مِنَ الْمَسْجِدِ يَوْمَ الْجُمُعَةِ سَبْعُونَ مَلَكًا يَكْتُبُونَ النَّاسَ بِأَسْمَائِهِمْ، حَتَّى يَكُونَ آخِرَ مَنْ يَكْتُبُ رَجُلٌ جَاءَ حِينَ جَلَسَ الْإِمَامُ عَلَى الْمِنْبَرِ...»
+        <span class="rawi">(رواه علي بن أبي طالب كرم الله وجهه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ali bin Abi Thalib karramallahu wajhah, ia berkata: Rasulullah ﷺ bersabda: "Pada hari Jumat, di setiap pintu masjid duduk 70 malaikat yang mencatat nama-nama jamaah, hingga orang terakhir yang dicatat adalah laki-laki yang datang ketika imam sudah duduk di mimbar — namun ia tidak menyakiti siapa pun di majelisnya dan tidak berkata kecuali kebaikan. Itulah gambaran bagian paling minimal dari pahala Jumat: diampuninya keburukan-keburukan yang ia lakukan di antara dua Jumat..." (hadits selengkapnya).</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan bahwa setiap langkah menuju shalat Jumat dicatat dan diganjar, bahkan bagi yang datang di saat-saat akhir sekalipun, asalkan menjaga adab dan tidak menyakiti sesama jamaah.</p>
+      <p><span class="sub">2. Kisah Pendukung — Para Malaikat Menunaikan Ibadah Jumat</span>Dikisahkan asal-usul Ka'bah dan Baitul Makmur: setelah para malaikat memohon ampun karena pernah mempertanyakan penciptaan manusia, Allah memerintahkan mereka membangun rumah (Ka'bah) yang kelak diangkat menjadi Baitul Makmur di langit. Setiap Jumat, Jibril mengumandangkan azan, Israfil berkhutbah, dan Mikail mengimami para malaikat — lalu Allah bersaksi mengampuni siapa saja dari umat Muhammad ﷺ yang menghadiri shalat Jumat, sebagai keistimewaan khusus umat ini.</p>
+      <p><span class="sub">3. Kisah Pendukung — Haji Empat Kali dalam Sebulan</span>Diriwayatkan Maisarah bin Khunais mengucap salam kepada penghuni kubur, lalu salah satu ruh menjawab dan mengabarkan bahwa penduduk dunia sesungguhnya bisa "berhaji" empat kali sebulan — yaitu dengan menghadiri shalat Jumat setiap pekannya, karena nilainya setara haji yang mabrur.</p>
+      <p><span class="sub">4. Kisah Pendukung — "Ku Beri Kau Hari Jumat, Hai Muhammad!"</span>Dikisahkan Allah memberikan hari-hari mulia kepada para nabi terdahulu (Sabtu untuk Musa, Ahad untuk Isa, dsb.), namun hari Jumat dan surga khusus dianugerahkan kepada Nabi Muhammad ﷺ dan umatnya sebagai keridhaan istimewa dari Allah.</p>
+      <p><span class="sub">5. Nilai Pendidikan</span>Guru dapat menanamkan semangat datang lebih awal ke masjid pada hari Jumat, serta rasa syukur atas keistimewaan umat Muhammad ﷺ dibanding umat-umat terdahulu.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan mengapa hari Jumat disebut "sayyidul ayyam" (penghulu hari-hari) dalam Islam.</li>
+          <li>Bandingkan pahala datang di awal waktu vs di akhir waktu shalat Jumat — tekankan bahwa yang datang akhir pun tetap mendapat bagian pahala asalkan menjaga adab.</li>
+          <li>Ceritakan kisah Baitul Makmur untuk memperkaya wawasan santri tentang alam gaib.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 9 ==================== -->
+  <article class="hadith-card" id="hadits-9">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-9</span>
+      <span class="title-ar">الحديث التّاسع</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللهُ تَعَالَى عَنْهُ أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: يَقُولُ اللهُ: «يَا ابْنَ آدَمَ! اسْتَحْيِ مِنِّي عِنْدَ مَعْصِيَتِكَ وَأَنَا أَسْتَحْيِي مِنْكَ يَوْمَ الْعَرْضِ الْأَكْبَرِ فَلَا أُعَذِّبُكَ. يَا ابْنَ آدَمَ! تُبْ إِلَيَّ أُكْرِمْكَ كَرَامَةَ الْأَنْبِيَاءِ...»
+        <span class="rawi">(رواه معاذ بن جبل رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Mu'adz bin Jabal radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: Allah berfirman: "Wahai anak Adam, malulah kepada-Ku ketika bermaksiat, niscaya Aku pun malu kepadamu di hari pelaporan amal yang besar sehingga tidak Kusiksa engkau. Wahai anak Adam, bertobatlah kepada-Ku, niscaya Aku muliakan engkau sebagaimana kemuliaan para nabi... Wahai anak Adam, sesungguhnya Akulah Yang Memberi Rezeki dan engkau yang diberi rezeki, maka janganlah engkau tinggalkan ketaatan kepada-Ku karena alasan mencari rezeki..." (hadits selengkapnya).</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits qudsi ini memuat lima nasihat Allah kepada anak cucu Adam: (1) rasa malu saat bermaksiat, (2) pentingnya tobat, (3) jangan memalingkan hati dari Allah, (4) amal harus dilandasi keyakinan pada janji-ancaman Allah, dan (5) jangan meninggalkan ketaatan karena mengejar rezeki — karena Allah-lah yang menjamin rezeki setiap hamba.</p>
+      <p><span class="sub">2. Kisah Pendukung — Rezeki Tidak Akan Kemana</span>Diilustrasikan seekor burung hijau yang rezekinya adalah sisa daging di sela gigi seekor ikan besar di laut — sebuah gambaran bahwa Allah mengatur rezeki setiap makhluk dengan cara yang menakjubkan, sehingga manusia tidak perlu mengorbankan ketaatan demi mengejar rezeki.</p>
+      <p><span class="sub">3. Kisah Pendukung — Disuapi Roti oleh Burung Gagak</span>Dikisahkan sebab tobatnya Ibrahim bin Adham: ketika berburu, seekor gagak menyambar rotinya lalu terbang ke gunung. Ia mengejarnya dan menemukan seorang pedagang yang dirampok dan diikat, yang selama tujuh hari disuapi roti oleh burung gagak tersebut. Menyaksikan bukti nyata jaminan rezeki Allah ini, Ibrahim bin Adham pun bertobat total, melepas kemewahannya, dan menjadi seorang zahid.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menanamkan sikap tawakal dalam mencari rezeki tanpa meninggalkan ibadah, serta pentingnya introspeksi diri (rasa malu) sebagai pengendali dari perbuatan maksiat.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan lima nasihat Allah dalam hadits ini satu per satu, minta santri memberi contoh penerapannya.</li>
+          <li>Ceritakan kisah Ibrahim bin Adham sebagai teladan tobat yang dipicu oleh perenungan terhadap tanda-tanda kekuasaan Allah.</li>
+          <li>Refleksi: bagaimana cara menyeimbangkan ikhtiar mencari rezeki dengan tawakal kepada Allah?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 10 ==================== -->
+  <article class="hadith-card" id="hadits-10">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-10</span>
+      <span class="title-ar">الحديث العاشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ كُلَيْبِ بْنِ حَازِمٍ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «يَا قَوْمِ! اطْلُبُوا الْجَنَّةَ بِجُهْدِكُمْ وَاهْرُبُوا مِنَ النَّارِ بِجُهْدِكُمْ، فَإِنَّ الْجَنَّةَ لَا يَنَامُ طَالِبُهَا وَإِنَّ النَّارَ لَا يَنَامُ هَارِبُهَا، وَإِنَّ الْجَنَّةَ مَحْفُوفَةٌ بِالْمَكَارِهِ وَإِنَّ النَّارَ مَحْفُوفَةٌ بِاللَّذَّاتِ وَالشَّهَوَاتِ»
+        <span class="rawi">(رواه كليب بن حازم رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Kulaib bin Hazim radhiyallahu 'anhu, ia berkata: aku mendengar Rasulullah ﷺ bersabda: "Wahai kaumku! Carilah surga dengan sekuat tenaga kalian, dan larilah dari neraka dengan sekuat tenaga kalian. Sesungguhnya orang yang mencari surga tidak boleh lengah, dan orang yang menghindari neraka pun tidak boleh lengah. Sesungguhnya surga dikelilingi oleh hal-hal yang tidak disukai (hawa nafsu), dan neraka dikelilingi oleh kelezatan dan syahwat."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini adalah salah satu kaidah besar dalam Islam: jalan menuju surga penuh rintangan berupa hal-hal yang tidak disukai nafsu (ibadah, kesabaran, kedisiplinan), sedangkan jalan menuju neraka justru dihiasi kenikmatan sesaat yang menggoda.</p>
+      <p><span class="sub">2. Penjelasan Tambahan tentang Surga</span>Kitab ini mengutip beberapa ayat dan hadits qudsi tentang kenikmatan surga yang "tak pernah dilihat mata, didengar telinga, atau terlintas dalam hati manusia," termasuk gambaran pohon surga yang bayangannya tak akan habis dilewati pengendara meski berkendara 100 tahun.</p>
+      <p><span class="sub">3. Kisah Pendukung — Tangisan Rasulullah ﷺ dan Para Sahabat</span>Ketika turun ayat tentang Jahannam sebagai ancaman bagi para pengikut setan, Rasulullah ﷺ menangis, diikuti para sahabat. Diceritakan pula bagaimana Sayyidah Fatimah radhiyallahu 'anha, yang hidup sederhana dengan pakaian bertambal, jatuh pingsan mendengar gambaran dahsyatnya pintu-pintu Jahannam — hingga Abu Bakar, Ali, Salman, dan Bilal radhiyallahu 'anhum masing-masing mengungkapkan penyesalan dan ketakutan mereka terhadap siksa neraka.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menggunakan hadits ini untuk melatih kesabaran santri dalam menjalankan ibadah yang terasa berat, dengan mengingatkan bahwa balasannya adalah surga yang kekal.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan contoh konkret "hal tidak disukai" di jalan menuju surga (bangun subuh, menahan amarah, puasa) vs "kelezatan" di jalan menuju neraka (malas, ghibah, riba).</li>
+          <li>Bacakan kisah tangisan para sahabat sebagai sarana melembutkan hati santri terhadap ancaman neraka.</li>
+          <li>Refleksi: santri menuliskan satu godaan yang paling sering membuat mereka lengah dari ibadah.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 11 ==================== -->
+  <article class="hadith-card" id="hadits-11">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-11</span>
+      <span class="title-ar">الحديث الحادي عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَلِيٍّ رَضِيَ اللهُ تَعَالَى عَنْهُ أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «الصَّدَقَةُ إِذَا خَرَجَتْ مِنْ يَدِ صَاحِبِهَا تَقَعُ فِي يَدِ اللهِ قَبْلَ أَنْ تَدْخُلَ فِي يَدِ السَّائِلِ، فَتَتَكَلَّمُ بِخَمْسِ كَلِمَاتٍ: أَوَّلُهَا تَقُولُ كُنْتُ صَغِيرًا فَكَبَّرْتَنِي، وَكُنْتُ قَلِيلًا فَكَثَّرْتَنِي...»
+        <span class="rawi">(رواه علي رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ali radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Sedekah, ketika keluar dari tangan pemiliknya, ia jatuh terlebih dahulu ke 'tangan' Allah sebelum sampai ke tangan peminta. Lalu ia berkata dengan lima kalimat: pertama, 'Dulu aku kecil, lalu engkau membesarkanku; dulu aku sedikit, lalu engkau memperbanyakku...'" (hadits selengkapnya).</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menggambarkan secara puitis bagaimana Allah "menerima" dan "merawat" sedekah seorang hamba sebelum diberikan pahalanya secara berlipat ganda, sebagai bentuk penghormatan Allah terhadap amal kebaikan hamba-Nya.</p>
+      <p><span class="sub">2. Kisah Pendukung — Ali dan Enam Dirham</span>Sayyidah Fatimah radhiyallahu 'anha memberikan 6 dirham hasil memintal wol kepada Ali untuk membeli makanan. Di jalan, Ali menyedekahkan seluruh uang itu kepada seorang peminta yang menyeru "siapa mau menghutangi Allah". Tanpa uang, Ali kemudian membeli unta secara kredit seharga 100 dirham dan langsung menjualnya tunai seharga 300 dirham kepada pembeli lain. Rasulullah ﷺ kemudian mengabarkan bahwa kedua Baduwi itu sebenarnya adalah Malaikat Jibril dan Israfil (riwayat lain: Mikail), sebagai balasan berlipat atas sedekahnya.</p>
+      <p><span class="sub">3. Dalil-dalil Keutamaan Sedekah</span>Kitab ini merangkai beberapa ayat Al-Qur'an yang menunjukkan tahapan pelipatgandaan pahala sedekah — dari dua kali lipat, sepuluh kali lipat, tujuh ratus kali lipat, hingga tanpa batas hitungan bagi orang-orang yang sabar — serta menyebutkan tujuh keutamaan sedekah: melepaskan dari kesulitan, sebagai obat, penjaga harta, peredam murka Allah, perekat kasih sayang, pelembut hati, dan penambah keberkahan usia.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menanamkan kebiasaan bersedekah sejak dini kepada santri, betapapun kecil nilainya, karena Allah menilai keikhlasan bukan jumlahnya.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri membuat "kotak infak" kelas sebagai praktik nyata sedekah rutin.</li>
+          <li>Diskusikan kisah Ali dan 6 dirham: apa pelajaran tentang tawakal penuh saat bersedekah?</li>
+          <li>Hafalkan tujuh keutamaan sedekah dan minta santri menjelaskan masing-masing dengan bahasa sendiri.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 12 ==================== -->
+  <article class="hadith-card" id="hadits-12">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-12</span>
+      <span class="title-ar">الحديث الثاني عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عِكْرِمَةَ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: سُئِلَ ابْنُ عَبَّاسٍ رَضِيَ اللهُ تَعَالَى عَنْهُمَا عَنْ قَوْلِهِ تَعَالَى: وَنَزَعْنَا مَا فِي صُدُورِهِمْ مِنْ غِلٍّ. قَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «إِذَا كَانَ يَوْمُ الْقِيَامَةِ يُؤْتَى بِسَرِيرٍ مِنْ يَاقُوتَةٍ حَمْرَاءَ عِشْرِينَ مِيلًا فِي عِشْرِينَ، لَيْسَ فِيهِ صَدْعٌ وَلَا فَصْلٌ، مُعَلَّقٌ بِقُدْرَةِ اللهِ الْجَبَّارِ جَلَّ جَلَالُهُ، فَيَجْلِسُ عَلَيْهِ أَبُو بَكْرٍ الصِّدِّيقُ...» ... «لَا يَبْقَى فِي النَّارِ مَنْ كَانَ فِي قَلْبِهِ مِثْقَالُ حَبَّةٍ مِنْ خَرْدَلٍ مِنَ الْإِيمَانِ إِلَّا يَخْرُجُ مِنْهَا بِشَفَاعَتِي»
+        <span class="rawi">(رواه عكرمة رضي الله عنه عن ابن عباس رضي الله عنهما؛ وحديث آخر رواه أبو موسى الأشعري رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ikrimah radhiyallahu 'anhu, ia berkata: Ibnu Abbas radhiyallahu 'anhuma ditanya tentang firman Allah, "Dan Kami cabut segala macam dendam yang ada di hati mereka" (QS. Al-Hijr: 47). Nabi ﷺ bersabda: "Ketika Hari Kiamat tiba, akan didatangkan ranjang dari intan merah berukuran 20 mil × 20 mil, tanpa retak maupun sambungan, digantung dengan kekuasaan Allah Yang Maha Perkasa — lalu Abu Bakar ash-Shiddiq duduk di atasnya..." (demikian pula ranjang kuning untuk Umar, hijau untuk Utsman, putih untuk Ali) "...Tidak akan tersisa di neraka seorang pun yang di hatinya masih ada iman seberat biji sawi, melainkan ia akan keluar darinya berkat syafaatku."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menafsirkan ayat tentang hilangnya dendam di hati penghuni surga, digambarkan lewat empat Khulafaur Rasyidin (Abu Bakar, Umar, Utsman, Ali) yang duduk di ranjang permata sambil menyuguhkan minuman kepada penduduk surga — simbol persaudaraan yang telah bersih dari segala rasa dengki, sekalipun dahulu di dunia sempat terjadi perselisihan politik di antara para pengikut mereka.</p>
+      <p><span class="sub">2. Kisah Pendukung — Muslim yang Diselamatkan Syafaat Nabi</span>Diriwayatkan dari Abu Musa al-Asy'ari bahwa sebagian ahli kiblat (muslim berdosa besar) turut berada di neraka bersama orang-orang kafir. Ketika orang kafir mencela mereka ("bukankah Islam kalian tidak berguna?"), Allah murka dan mengampuni mereka berkat sisa iman yang mereka miliki, lalu mengeluarkan mereka dari neraka — sehingga saat itulah orang-orang kafir berandai-andai dahulu mereka juga masuk Islam (QS. Al-Hijr: 2).</p>
+      <p><span class="sub">3. Kisah Pendukung — Panjang: Syafaat Nabi ﷺ bagi Umatnya</span>Kitab ini memuat kisah panjang riwayat Ibnu Abbas: umat Nabi Muhammad ﷺ yang berdosa besar sempat "disembunyikan" dahulu di jurang-jurang padang mahsyar agar Nabi ﷺ masuk surga tanpa mengetahui sebagian umatnya masih tertahan. Ketika Malaikat Malik hendak memasukkan mereka ke neraka, mereka mengaku sebagai ahli Al-Qur'an, ahli puasa Ramadhan, ahli haji, ahli zakat, dan ahli shalat lima waktu — namun tetap harus merasakan sedikit siksa sesuai kadar dosa (ada yang terbakar sampai mata kaki, lutut, hingga dada), sebelum akhirnya berteriak memanggil Nabi ﷺ. Nabi ﷺ pun segera menaiki Buraq, bersujud di sisi 'Arsy memohon kepada Allah, dan diizinkan memberi syafaat sehingga seluruh ahli kiblat itu dikeluarkan dari neraka — hanya orang-orang kafir yang tertinggal, lalu menyesal ("Andai dulu kami muslim, niscaya kami pun dikeluarkan").</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menekankan dua hal seimbang: (a) dosa besar tetap membawa konsekuensi siksa sesuai kadarnya — bukan berarti bebas berbuat dosa karena mengandalkan syafaat, namun (b) rahmat dan syafaat Nabi ﷺ adalah harapan besar bagi setiap muslim yang masih memiliki iman, betapapun kecilnya.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Tekankan bahwa syafaat bukan alasan untuk menyepelekan dosa — kisah ini justru menggambarkan siksa yang tetap dirasakan sesuai kadar dosa sebelum syafaat diberikan.</li>
+          <li>Diskusikan makna ukhuwah di kalangan sahabat (Abu Bakar, Umar, Utsman, Ali) sebagai teladan persaudaraan meski pernah ada perbedaan pandangan politik semasa hidup.</li>
+          <li>Ajak santri merenungkan kalimat "iman seberat biji sawi" — betapa berharganya menjaga iman sekecil apa pun di hati.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 13 ==================== -->
+  <article class="hadith-card" id="hadits-13">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-13</span>
+      <span class="title-ar">الحديث الثالث عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ رَضِيَ اللهُ عَنْهُ: دَخَلَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ مُصَلَّاهُ فَرَأَى أُنَاسًا يُكْثِرُونَ الْكَلَامَ فَقَالَ: «أَمَا إِنَّكُمْ لَوْ أَكْثَرْتُمْ ذِكْرَ هَاذِمِ اللَّذَّاتِ لَشَغَلَكُمْ عَمَّا أَرَى، فَأَكْثِرُوا ذِكْرَهُ» يَعْنِي الْمَوْتَ. «فَإِنَّهُ لَمْ يَأْتِ عَلَى الْقُبُورِ يَوْمٌ إِلَّا وَتَتَكَلَّمُ بِسِتِّ كَلِمَاتٍ، فَتَقُولُ: أَنَا بَيْتُ الْغُرْبَةِ، وَأَنَا بَيْتُ الْوَحْدَةِ، وَأَنَا بَيْتُ الْوَحْشَةِ، وَأَنَا بَيْتُ الظُّلْمَةِ، وَأَنَا بَيْتُ التُّرَابِ، وَأَنَا بَيْتُ الدُّودِ. فَإِذَا دُفِنَ الْعَبْدُ الْمُؤْمِنُ قَالَ لَهُ الْقَبْرُ: مَرْحَبًا وَأَهْلًا وَسَهْلًا... فَيُوَسَّعُ لَهُ الْقَبْرُ مَدَّ بَصَرِهِ وَيُفْتَحُ لَهُ بَابٌ إِلَى الْجَنَّةِ. وَإِذَا دُفِنَ الْعَبْدُ الْكَافِرُ قَالَ لَهُ الْقَبْرُ: لَا مَرْحَبًا وَلَا أَهْلًا وَلَا سَهْلًا... فَيَلْتَئِمُ الْقَبْرُ عَلَيْهِ حَتَّى تَخْتَلِفَ أَضْلَاعُهُ» ... قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «إِنَّمَا الْقَبْرُ رَوْضَةٌ مِنْ رِيَاضِ الْجَنَّةِ أَوْ حُفْرَةٌ مِنْ حُفَرِ النِّيرَانِ»
+        <span class="rawi">(رواه أبو سعيد الخدري رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Sa'id al-Khudri radhiyallahu 'anhu: Rasulullah ﷺ memasuki tempat shalatnya, lalu beliau melihat orang-orang yang banyak berbicara (hal-hal sia-sia), maka beliau bersabda: "Ketahuilah, seandainya kalian memperbanyak mengingat 'sang pemutus segala kelezatan' (maut), niscaya ia akan menyibukkan kalian dari apa yang aku lihat ini. Maka perbanyaklah mengingatnya" — yakni kematian. "Sesungguhnya tidak ada satu hari pun yang berlalu atas kuburan melainkan ia berbicara enam kalimat: 'Akulah rumah keterasingan, akulah rumah kesendirian, akulah rumah kesunyian, akulah rumah kegelapan, akulah rumah debu, dan akulah rumah ulat.' Maka apabila seorang hamba yang beriman dikuburkan, kuburan berkata kepadanya: 'Selamat datang...' — lalu kuburan itu diluaskan baginya sejauh mata memandang dan dibukakan baginya pintu menuju surga. Namun apabila seorang hamba yang kafir dikuburkan, kuburan berkata kepadanya: 'Tidak ada selamat datang...' — lalu kuburan itu mengimpit tubuhnya hingga tulang-tulang rusuknya berselisih (berhimpitan)." Rasulullah ﷺ bersabda: "Sesungguhnya kubur itu hanyalah salah satu taman dari taman-taman surga, atau salah satu lubang dari lubang-lubang neraka."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan pentingnya mengingat kematian (dzikrul maut) sebagai pengendali dari perbuatan sia-sia dan banyak bicara yang tidak bermanfaat. Alam kubur digambarkan sebagai fase pertama kehidupan akhirat — bisa menjadi taman surga bagi orang beriman, atau lubang siksa bagi orang kafir.</p>
+      <p><span class="sub">2. Kisah Pendukung — Tangisan Utsman bin Affan</span>Diriwayatkan bahwa Utsman bin Affan radhiyallahu 'anhu tidak menangis saat disebutkan neraka atau hari Kiamat, namun selalu menangis saat disebutkan alam kubur. Ketika ditanya sebabnya, beliau menjawab bahwa di neraka dan padang mahsyar seseorang masih bersama banyak manusia lainnya, sedangkan di dalam kubur seseorang benar-benar sendirian. Beliau juga berpesan: "Sebaik-baik manusia adalah yang meninggalkan dunia sebelum dunia meninggalkannya, meridhai Tuhannya sebelum bertemu dengan-Nya, dan memakmurkan kuburnya sebelum ia memasukinya."</p>
+      <p><span class="sub">3. Kisah Pendukung — "Wahai Ayah..." (Hasan al-Bashri dan Gadis Kecil)</span>Dikisahkan Hasan al-Bashri melihat jenazah seorang lelaki diantar ke pemakaman, diiringi seorang anak perempuan kecil yang menangis dengan rambut terurai. Setelah pemakaman, Hasan mengikuti gadis itu berziarah ke makam ayahnya. Ia mendengar sang gadis memeluk kubur ayahnya sambil merintih syair penuh haru: menanyakan siapa yang kini menemaninya di kegelapan kubur, siapa yang menghamparkan tempat tidurnya, siapa yang menyuapinya makan — pertanyaan yang menggambarkan betapa sunyi dan sendirinya seseorang di alam kubur tanpa bekal amal. Hasan al-Bashri kemudian membimbingnya untuk mengganti kalimat itu dengan renungan tentang amal: apakah jasadnya masih menghadap kiblat, apakah kain kafannya utuh, apakah imannya terjawab saat ditanya malaikat, apakah kuburnya diluaskan atau disempitkan.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menggunakan kisah-kisah ini untuk melembutkan hati santri, menumbuhkan kesadaran akan pentingnya bekal amal sebelum kematian, serta menjadikan ziarah kubur sebagai sarana muhasabah, bukan sekadar ritual.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri merenungkan enam "kalimat kubur" satu per satu dan maknanya bagi kehidupan sehari-hari.</li>
+          <li>Diskusikan kisah Utsman: mengapa kesendirian di alam kubur lebih menakutkan daripada keramaian di neraka/mahsyar?</li>
+          <li>Bacakan kisah Hasan al-Bashri dan gadis kecil sebagai sarana melembutkan hati, lalu arahkan renungan pada pertanyaan reflektif: "sudahkah aku mempersiapkan bekal untuk kuburku?"</li>
+          <li>Ajarkan adab berbicara secukupnya (tidak berlebihan dalam obrolan sia-sia) sebagai pengamalan langsung hadits ini.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 14 ==================== -->
+  <article class="hadith-card" id="hadits-14">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-14</span>
+      <span class="title-ar">الحديث الرابع عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ عَنْهُ قَالَ: الْتَقَى رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ مَعَ جِبْرَائِيلَ عَلَيْهِ السَّلَامُ فَقَالَ: «هَلْ عَلَى أُمَّتِي حِسَابٌ؟» فَقَالَ: «نَعَمْ، عَلَيْهِمْ حِسَابٌ غَيْرَ أَبِي بَكْرٍ رَضِيَ اللهُ تَعَالَى عَنْهُ، لَيْسَ عَلَيْهِ حِسَابٌ، يُقَالُ لَهُ: يَا أَبَا بَكْرٍ ادْخُلِ الْجَنَّةَ». قَالَ: «لَا أَدْخُلُ الْجَنَّةَ حَتَّى يَدْخُلَ مَعِي مَنْ أَحَبَّنِي فِي دَارِ الدُّنْيَا»
+        <span class="rawi">(رواه أنس بن مالك رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Anas bin Malik radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bertemu dengan Malaikat Jibril 'alaihissalam, lalu beliau bertanya: "Apakah umatku akan dihisab?" Jibril menjawab: "Ya, mereka semua akan dihisab, kecuali Abu Bakar radhiyallahu 'anhu — ia tidak akan dihisab, dan akan dikatakan kepadanya: 'Wahai Abu Bakar, masuklah ke dalam surga.'" Abu Bakar menjawab: "Aku tidak akan masuk surga sehingga orang-orang yang mencintaiku di dunia turut masuk bersamaku."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan keistimewaan Abu Bakar ash-Shiddiq radhiyallahu 'anhu yang dijamin masuk surga tanpa hisab, namun ia menunjukkan sikap mulia dengan menangguhkan kenikmatannya sendiri demi orang-orang yang mencintainya — sebuah teladan kasih sayang dan kepedulian seorang pemimpin kepada pengikutnya bahkan hingga di akhirat.</p>
+      <p><span class="sub">2. Kisah Pendukung — Anjing Pembela Abu Bakar dan Umar</span>Diriwayatkan dua sahabat datang kepada Nabi ﷺ dengan betis berlumuran darah, mengaku digigit anjing milik seorang munafik. Nabi ﷺ hendak memerintahkan anjing itu dibunuh, namun anjing tersebut tiba-tiba berbicara dengan fasih: "Jangan bunuh aku, sesungguhnya aku beriman kepada Allah dan Rasul-Nya. Aku diperintahkan untuk menggigit siapa saja yang mencaci maki Abu Bakar dan Umar." Mendengar itu, kedua sahabat yang digigit langsung bertobat kepada Allah dan Rasul-Nya atas ucapan buruk yang pernah mereka lontarkan terhadap kedua sahabat mulia tersebut.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan dua pelajaran: (a) keutamaan mencintai Abu Bakar dan Umar sebagai bagian dari mencintai sahabat-sahabat pilihan Nabi ﷺ, dan (b) larangan keras mencaci-maki para sahabat, karena kehormatan mereka dijaga langsung oleh Allah dengan cara-cara yang di luar nalar manusia.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan keteladanan Abu Bakar: kenapa seorang yang sudah dijamin surga masih memikirkan orang lain terlebih dahulu?</li>
+          <li>Ajarkan adab mencintai dan menghormati para sahabat Nabi ﷺ, serta larangan mencela mereka.</li>
+          <li>Ajak santri merenungkan makna ukhuwah: cinta sejati adalah yang membawa serta orang yang dicintai menuju kebaikan bersama.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 15 ==================== -->
+  <article class="hadith-card" id="hadits-15">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-15</span>
+      <span class="title-ar">الحديث الخامس عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ سُفْيَانَ عَمَّنْ سَمِعَ مِنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ تَعَالَى عَنْهُ يَقُولُ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «إِنَّ أَعْمَالَ الْأَحْيَاءِ تُعْرَضُ عَلَى عَشَائِرِهِمْ وَعَلَى آبَائِهِمْ مِنَ الْأَمْوَاتِ، فَإِنْ كَانَ خَيْرًا حَمِدُوا اللهَ تَعَالَى وَاسْتَبْشَرُوا، وَإِنْ يَرَوْا غَيْرَ ذَلِكَ قَالُوا: اللَّهُمَّ لَا تُمِتْهُمْ حَتَّى تَهْدِيَهُمْ هِدَايَةً». فَقَالَ عَلَيْهِ السَّلَامُ: «يُؤْذَى الْمَيِّتُ فِي قَبْرِهِ كَمَا يُؤْذَى فِي حَيَاتِهِ». قِيلَ: مَا إِيذَاءُ الْمَيِّتِ؟ قَالَ عَلَيْهِ السَّلَامُ: «إِنَّ الْمَيِّتَ لَا يُذْنِبُ ذَنْبًا وَلَا يُنَازِعُ وَلَا يُخَاصِمُ أَحَدًا وَلَا يُؤْذِي جَارًا، إِلَّا أَنَّكَ إِنْ نَازَعْتَ أَحَدًا يَشْتُمُكَ وَوَالِدَيْكَ، فَيُؤْذَيَانِ عِنْدَ الْإِسَاءَةِ، وَكَذَلِكَ يَفْرَحَانِ عِنْدَ الْإِحْسَانِ فِي حَقِّهِمَا»
+        <span class="rawi">(رواه أنس بن مالك رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Sufyan, dari orang yang mendengar dari Anas bin Malik radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Sesungguhnya amal-amal orang yang masih hidup diperlihatkan kepada kerabat dan orang tua mereka yang telah wafat. Apabila berupa amal baik, mereka memuji Allah Ta'ala dan bergembira; namun apabila sebaliknya, mereka berkata: 'Ya Allah, janganlah Engkau matikan mereka sebelum Engkau memberi mereka petunjuk.'" Beliau ﷺ bersabda: "Mayit dapat tersakiti di dalam kuburnya sebagaimana ia tersakiti semasa hidupnya." Ditanyakan: "Apa yang menyakiti mayit?" Beliau ﷺ menjawab: "Sesungguhnya mayit tidak lagi berbuat dosa, tidak bertikai, dan tidak menyakiti tetangga — hanya saja, apabila engkau bertikai dengan seseorang lalu ia mencacimu dan mencaci kedua orang tuamu, maka kedua orang tuamu tersakiti oleh perlakuan buruk itu; demikian pula mereka akan bergembira atas kebaikan yang engkau lakukan yang menjadi hak mereka."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini mengajarkan bahwa orang yang telah wafat masih merasakan dampak dari perbuatan keturunan dan kerabatnya yang masih hidup — bergembira atas amal saleh mereka, dan tersakiti oleh perbuatan buruk atau aib yang mereka timbulkan.</p>
+      <p><span class="sub">2. Kisah Pendukung — Pemuda Asing di Alam Kubur</span>Tsabit al-Bannani rahimahullah rutin berziarah kubur setiap malam Jumat. Dalam sebuah mimpi, ia melihat penghuni kubur keluar dengan pakaian indah dan wajah berseri, masing-masing mendapat hidangan istimewa — kecuali seorang pemuda yang wajahnya pucat, berambut kusut, dan bersedih karena tidak mendapat apa pun. Pemuda itu mengaku "asing" karena tidak ada seorang pun yang mendoakan atau bersedekah untuknya — ibunya, satu-satunya keluarganya, telah menikah lagi dan melupakannya sepenuhnya sejak ia dimakamkan. Tsabit lalu menemui sang ibu, menyampaikan pesan pemuda itu lengkap dengan bukti berupa 100 mitsqal perak warisan yang masih tersimpan di sakunya — bukti yang membuat sang ibu percaya dan segera menyerahkan uang itu untuk disedekahkan atas nama anaknya. Pada ziarah Jumat berikutnya, Tsabit bermimpi kembali melihat pemuda itu kini berpakaian indah dan berbahagia, mengucapkan terima kasih penuh doa kepadanya.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan pentingnya mendoakan dan bersedekah atas nama orang tua serta kerabat yang telah wafat secara rutin (terutama pada malam Jumat), dan menjadikan kisah ini sebagai pengingat agar tidak melupakan leluhur yang telah tiada.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri membiasakan mendoakan orang tua/kerabat yang telah wafat setiap selesai shalat, terutama pada malam Jumat.</li>
+          <li>Diskusikan kisah pemuda "asing" di alam kubur: bagaimana perasaan kita bila kelak dilupakan oleh keluarga sendiri?</li>
+          <li>Tekankan bahwa menjaga nama baik diri sendiri juga berarti menjaga kehormatan dan ketenangan orang tua di alam kubur.</li>
+          <li>Latihan: susun daftar nama kerabat yang telah wafat untuk didoakan bersama secara rutin di kelas/majelis.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 16 ==================== -->
+  <article class="hadith-card" id="hadits-16">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-16</span>
+      <span class="title-ar">الحديث السادس عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَلِيِّ بْنِ أَبِي طَالِبٍ كَرَّمَ اللهُ وَجْهَهُ أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «مَنْ قَرَأَ قُلْ هُوَ اللهُ أَحَدٌ إِلَى آخِرِهَا بَعْدَ صَلَاةِ الْفَجْرِ عَشْرَ مَرَّاتٍ لَمْ يَصِلْ إِلَيْهِ ذَنْبٌ فِي ذَلِكَ الْيَوْمِ وَإِنْ جَهَدَ الشَّيْطَانُ». وَعَنْ أُبَيِّ بْنِ كَعْبٍ رَضِيَ اللهُ تَعَالَى عَنْهُ عَنِ النَّبِيِّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ قَالَ: «مَنْ قَرَأَ سُورَةَ الْإِخْلَاصِ مَرَّةً وَاحِدَةً أُعْطِيَ مِنَ الْأَجْرِ كَمِثْلِ أَجْرِ مِائَةِ شَهِيدٍ». وَعَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «مَنْ قَرَأَ قُلْ هُوَ اللهُ أَحَدٌ مَرَّةً وَاحِدَةً فَكَأَنَّمَا قَرَأَ ثُلُثَ الْقُرْآنِ، وَمَنْ قَرَأَهَا مَرَّتَيْنِ فَكَأَنَّمَا قَرَأَ ثُلُثَيِ الْقُرْآنِ، وَمَنْ قَرَأَهَا ثَلَاثَ مَرَّاتٍ فَكَأَنَّمَا قَرَأَ الْقُرْآنَ كُلَّهُ، وَمَنْ قَرَأَهَا إِحْدَى عَشْرَةَ مَرَّةً بَنَى اللهُ تَعَالَى لَهُ بَيْتًا فِي الْجَنَّةِ مِنْ يَاقُوتَةٍ حَمْرَاءَ»
+        <span class="rawi">(رواه علي بن أبي طالب، وأبي بن كعب، وأنس بن مالك رضي الله تعالى عنهم)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ali bin Abi Thalib karramallahu wajhah, ia berkata: Rasulullah ﷺ bersabda: "Barangsiapa membaca 'Qul huwallaahu ahad' hingga akhir setelah shalat Subuh sebanyak sepuluh kali, maka tidak akan ada dosa yang menimpanya pada hari itu, sekalipun setan bersungguh-sungguh menggodanya." Dari Ubay bin Ka'ab radhiyallahu 'anhu, dari Nabi ﷺ, beliau bersabda: "Barangsiapa membaca Surat Al-Ikhlas satu kali, ia diberi pahala setara pahala seratus orang yang mati syahid." Dari Anas bin Malik radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Barangsiapa membaca 'Qul huwallaahu ahad' satu kali, seolah ia membaca sepertiga Al-Qur'an; dua kali, seolah membaca dua pertiga Al-Qur'an; tiga kali, seolah membaca seluruh Al-Qur'an; dan barangsiapa membacanya sebelas kali, Allah akan membangunkan baginya sebuah rumah di surga dari permata merah."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan keagungan Surat Al-Ikhlas yang berisi inti tauhid — kemurnian keesaan Allah — sehingga pahalanya disetarakan dengan sepertiga Al-Qur'an, karena isi Al-Qur'an secara umum berputar pada tiga pokok: tauhid, hukum, dan kisah/akhlak, dan surat ini merangkum pokok tauhid secara sempurna.</p>
+      <p><span class="sub">2. Sebab Turunnya Ayat</span>Kaum kafir Quraisy (di antaranya Amir bin Thufail dan Zaid bin Qais) mendatangi Nabi ﷺ dan meminta beliau menjelaskan "bahan" Tuhannya — apakah dari emas, perak, besi, atau tembaga, sebagaimana berhala-berhala mereka. Allah kemudian menurunkan Surat Al-Ikhlas sebagai jawaban tegas: Allah Maha Esa, tempat bergantung segala sesuatu, tidak beranak dan tidak diperanakkan, serta tiada satu pun yang setara dengan-Nya.</p>
+      <p><span class="sub">3. Kisah Pendukung — Tobatnya Suraqah bin Malik</span>Ketika Nabi ﷺ hijrah ke Madinah, kaum Quraisy menjanjikan hadiah 100 ekor unta bagi siapa yang berhasil membawa beliau kembali. Suraqah bin Malik mengejar dan hendak membunuhnya, namun setiap kali ia menghunus pedang, kaki kudanya justru terperosok ke dalam tanah atas doa Nabi ﷺ. Setelah dua kali diselamatkan berkat permohonan ampun dan janji tidak mengulangi, Suraqah bertanya tentang hakikat Tuhan Nabi ﷺ — dan pada momen itulah ayat Surat Al-Ikhlas serta lanjutan Surat Asy-Syura ayat 11 diturunkan sebagai jawaban. Suraqah pun akhirnya memeluk Islam dengan baik.</p>
+      <p><span class="sub">4. Kisah Pendukung — Jenazah Berhutang yang Diampuni</span>Nabi ﷺ awalnya enggan menshalati jenazah yang masih memiliki utang 4 dirham. Malaikat Jibril kemudian turun mengabarkan bahwa Allah telah melunasi utang tersebut dan memerintahkan Nabi ﷺ menshalatinya, karena semasa hidup ia rutin membaca Surat Al-Ikhlas 100 kali setiap hari — sebuah karomah besar atas kebiasaan membaca surat yang memuat sifat-sifat dan pujian kepada Allah.</p>
+      <p><span class="sub">5. Nilai Pendidikan</span>Guru dapat membiasakan santri membaca Surat Al-Ikhlas 10 kali setelah shalat Subuh sebagai amalan harian, sekaligus menanamkan pemahaman tauhid yang murni sejak dini melalui tadabur makna surat ini.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajarkan makna kata "Ash-Shamad" (Dzat tempat bergantung segala sesuatu, tidak butuh apa pun) secara mendalam, bukan sekadar hafalan.</li>
+          <li>Praktikkan bersama membaca Al-Ikhlas 10 kali setelah shalat Subuh sebagai rutinitas kelas/pesantren.</li>
+          <li>Ceritakan kisah Suraqah sebagai teladan bahwa hidayah bisa datang bahkan kepada orang yang semula berniat jahat.</li>
+          <li>Diskusikan mengapa surat sependek ini bisa setara pahalanya dengan sepertiga Al-Qur'an — kaitkan dengan tiga pokok kandungan Al-Qur'an.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 17 ==================== -->
+  <article class="hadith-card" id="hadits-17">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-17</span>
+      <span class="title-ar">الحديث السابع عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي أُمَامَةَ الْبَاهِلِيِّ رَضِيَ اللهُ تَعَالَى عَنْهُ أَنَّ رَسُولَ اللهِ عَلَيْهِ السَّلَامُ قَالَ: «إِذَا مَرِضَ الْعَبْدُ الْمُؤْمِنُ أَمَرَ اللهُ تَعَالَى الْمَلَائِكَةَ أَنِ اكْتُبُوا لِعَبْدِي أَحْسَنَ مَا كَانَ يَعْمَلُ فِي الصِّحَّةِ وَالرَّخَاءِ». وَفِي خَبَرٍ آخَرَ: «إِذَا مَرِضَ الْعَبْدُ الْمُؤْمِنُ وَالْأَمَةُ الْمُؤْمِنَةُ بَعَثَ اللهُ تَعَالَى إِلَيْهِ أَرْبَعَةً مِنَ الْمَلَائِكَةِ قَبْلَ الْمَرَضِ...» حَتَّى قَالَ عَلَيْهِ السَّلَامُ: «حُمَّى يَوْمٍ وَلَيْلَةٍ كَفَّارَةُ سَنَةٍ»
+        <span class="rawi">(رواه أبو أمامة الباهلي رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Umamah al-Bahili radhiyallahu 'anhu, bahwa Rasulullah ﷺ bersabda: "Apabila seorang hamba yang mukmin sakit, Allah memerintahkan para malaikat: 'Tuliskanlah untuk hamba-Ku amal terbaik yang biasa ia kerjakan di saat sehat dan lapang.'" Dalam riwayat lain disebutkan: "Apabila seorang hamba mukmin (laki-laki atau perempuan) jatuh sakit, Allah mengutus empat malaikat kepadanya sebelum sakit itu tiba..." — malaikat pertama mencabut tenaganya, malaikat kedua mencabut selera makannya, malaikat ketiga mencabut cahaya wajahnya (hingga pucat), dan malaikat keempat mencabut seluruh dosanya hingga ia suci dari dosa. Ketika Allah hendak menyembuhkannya, tiga malaikat pertama diperintahkan mengembalikan apa yang telah mereka ambil — namun malaikat keempat tidak diperintahkan mengembalikan dosa-dosa itu, karena "tidak pantas bagi kemuliaan-Ku mengembalikan dosanya setelah Aku membuatnya lelah karena sakit," dan dosa-dosa itu diperintahkan dibuang ke laut. Rasulullah ﷺ bersabda: "Demam sehari semalam adalah penebus dosa setahun."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini memberikan penghiburan besar bagi orang yang sakit: pahala amalnya tetap dicatat sebagaimana saat sehat, dan sakit yang dideritanya justru menjadi sarana pengampunan dosa — bukan semata musibah tanpa makna.</p>
+      <p><span class="sub">2. Kisah Pendukung — Pemuda Fasik Bani Israil yang Diampuni</span>Seorang pemuda fasik di kalangan Bani Israil terus-menerus diusir dari satu wilayah ke wilayah lain atas perintah Allah kepada Nabi Musa 'alaihissalam, hingga akhirnya ia terdampar sendirian di padang belantara tanpa siapa pun. Dalam sakit sekaratnya, ia meratap membayangkan seandainya ibu, ayah, istri, dan anak-anaknya ada di sisinya untuk mendoakannya — namun ia tetap berserah, memohon agar Allah tidak memutus rahmat-Nya meski telah memutusnya dari keluarga. Allah kemudian mengutus bidadari berwujud ibu dan istrinya, para anak berwujud putra-putrinya, serta malaikat berwujud ayahnya, untuk menemani dan menangisinya di saat-saat terakhir — sebagai tanda rahmat-Nya kepada seorang hamba yang sekarat dalam keterasingan, meski riwayat hidupnya penuh maksiat.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menanamkan sikap sabar dan husnuzhan kepada Allah ketika sakit — bahwa Allah tidak pernah melupakan hamba-Nya bahkan di saat-saat paling lemah dan terasing sekalipun, dan pintu rahmat-Nya selalu terbuka bagi siapa saja yang berserah diri.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajarkan santri untuk tetap husnuzhan dan bersabar saat sakit, karena Allah tetap mencatat pahala amal terbaiknya.</li>
+          <li>Diskusikan kisah pemuda fasik Bani Israil: bagaimana rahmat Allah tetap menjangkau seseorang meski riwayat hidupnya penuh dosa, asalkan ia berserah di akhir hayatnya.</li>
+          <li>Ajak santri menjenguk teman/kerabat yang sakit dan mendoakan kesembuhannya sebagai wujud kepedulian sosial.</li>
+          <li>Refleksi: bagaimana cara memaknai sakit sebagai ujian sekaligus rahmat, bukan semata musibah?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 18 ==================== -->
+  <article class="hadith-card" id="hadits-18">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-18</span>
+      <span class="title-ar">الحديث الثامن عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «أَيُّ الْخَلْقِ أَعْجَبُ إِيمَانًا؟» قَالُوا: الْمَلَائِكَةُ. قَالَ: «الْمَلَائِكَةُ كَيْفَ لَا يُؤْمِنُونَ وَهُمْ يَرَوْنَ عَظَمَةَ رَبِّهِمْ؟». قَالُوا: إِذَنِ النَّبِيُّونَ. قَالَ: «النَّبِيُّونَ يُوحَى إِلَيْهِمْ فَكَيْفَ لَا يُؤْمِنُونَ؟». قَالُوا: إِذَنْ نَحْنُ. قَالَ: «كَيْفَ لَا تُؤْمِنُونَ وَأَنَا بَيْنَ أَظْهُرِكُمْ؟». ثُمَّ قَالَ: «وَلَكِنْ أَعْجَبُ النَّاسِ إِيمَانًا قَوْمٌ يَجِيئُونَ مِنْ بَعْدِكُمْ، يَجِدُونَ كِتَابًا يُؤْمِنُونَ بِمَا فِيهِ وَيَتَّبِعُونَهُ، فَأُولَئِكَ أَعْجَبُ النَّاسِ إِيمَانًا»
+        <span class="rawi">(رواه أنس بن مالك رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Anas bin Malik radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Makhluk manakah yang paling mengagumkan imannya?" Para sahabat menjawab: "Para malaikat." Beliau bersabda: "Bagaimana para malaikat tidak beriman, sedangkan mereka menyaksikan keagungan Tuhan mereka?" Mereka menjawab: "Kalau begitu, para nabi." Beliau bersabda: "Bagaimana para nabi tidak beriman, sedangkan wahyu diturunkan kepada mereka?" Mereka menjawab: "Kalau begitu, kami." Beliau bersabda: "Bagaimana kalian tidak beriman, sedangkan aku berada di tengah-tengah kalian?" Kemudian beliau bersabda: "Namun manusia yang paling mengagumkan imannya adalah suatu kaum yang datang sesudah kalian — mereka mendapati sebuah kitab, lalu beriman kepada isinya dan mengikutinya. Merekalah manusia yang paling mengagumkan imannya."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menempatkan derajat iman berdasarkan tingkat kesulitan meyakini sesuatu yang tidak terlihat langsung (iman bil ghaib). Malaikat menyaksikan langsung keagungan Allah, para nabi menerima wahyu langsung, dan para sahabat menyaksikan langsung Nabi ﷺ — sehingga keimanan mereka "wajar" karena didukung penyaksian langsung. Namun umat yang datang setelahnya, yang hanya mendapati Al-Qur'an dan hadits tanpa pernah bertemu Nabi ﷺ secara langsung, lalu tetap beriman dan mengikutinya, dinilai memiliki iman yang justru lebih mengagumkan — karena keimanan mereka murni bersandar pada keyakinan terhadap yang gaib.</p>
+      <p><span class="sub">2. Nilai Pendidikan</span>Hadits ini sangat relevan untuk menguatkan keyakinan santri di zaman sekarang — bahwa sekalipun mereka tidak pernah melihat Nabi ﷺ secara langsung, iman mereka kepada Al-Qur'an dan sunnah justru termasuk golongan iman yang paling istimewa di sisi Allah. Ini menjadi motivasi besar untuk terus berpegang teguh pada kitab suci dan ajaran Nabi ﷺ meski di tengah zaman yang penuh keraguan dan godaan.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri merenungkan: mengapa iman kepada yang gaib (tanpa melihat langsung) dinilai lebih tinggi derajatnya?</li>
+          <li>Tekankan bahwa sebagai umat yang hidup jauh setelah masa Nabi ﷺ, santri termasuk golongan yang disebut "paling mengagumkan imannya" dalam hadits ini — sebuah kehormatan besar yang patut disyukuri.</li>
+          <li>Diskusikan cara memperkuat iman bil ghaib di tengah tantangan zaman modern (keraguan, hoaks, godaan materialisme).</li>
+          <li>Refleksi: tuliskan satu bentuk keyakinan gaib (takdir, hari akhir, malaikat) yang perlu diperkuat dalam diri masing-masing.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 19 ==================== -->
+  <article class="hadith-card" id="hadits-19">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-19</span>
+      <span class="title-ar">الحديث التاسع عشر</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَلِيِّ بْنِ أَبِي طَالِبٍ كَرَّمَ اللهُ وَجْهَهُ قَالَ: بَيْنَمَا نَحْنُ مَعَ رَسُولِ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ فِي أَوَّلِ الْإِسْلَامِ إِذْ وَرَدَ عَلَيْنَا رَجُلٌ عَلَى نَاقَةٍ... فَقَالَ: أَيُّكُمْ مُحَمَّدٌ؟ فَأَوْمَأْنَا إِلَى النَّبِيِّ عَلَيْهِ السَّلَامُ. فَقَالَ: يَا مُحَمَّدُ، أَتَعْرِضُ عَلَيَّ مَا أَمَرَكَ بِهِ رَبُّكَ، أَمْ أَعْرِضُ عَلَيْكَ مَا أَمَرَنِي بِهِ صَنَمِي؟ فَقَالَ لَهُ النَّبِيُّ عَلَيْهِ السَّلَامُ: بَلْ أُخْبِرُكَ بِمَا أَمَرَنِي بِهِ رَبِّي... فَقَالَ: يَا مُحَمَّدُ، أَنَا غَسَّانُ بْنُ مَالِكٍ الْعَامِرِيُّ، وَكَانَ لَنَا صَنَمٌ نَذْبَحُ عِنْدَهُ... فَلَمَّا رَفَعْتُ يَدِي مِنَ الْعَتِيرَةِ سَمِعْتُ صَوْتًا عَالِيًا مِنْ جَوْفِ الصَّنَمِ يَقُولُ بِلِسَانٍ فَصِيحٍ: «يَا غَسَّانَ بْنَ مَالِكٍ الْعَامِرِيِّ، جَاءَ الْحَقُّ نَبِيًّا هَاشِمِيًّا بِتِهَامَةَ، لِنَاصِرِيهِ السَّلَامَةُ وَلِخَاذِلِيهِ النَّدَامَةُ، هَادِيًا وَدَاعِيًا إِلَى يَوْمِ الْقِيَامَةِ». ثُمَّ ارْتَفَعَ مِنَ الْأَرْضِ وَسَقَطَ عَلَى وَجْهِهِ، فَكَبَّرَ رَسُولُ اللهِ وَكَبَّرَ أَصْحَابُهُ مَعَهُ
+        <span class="rawi">(رواه علي بن أبي طالب كرم الله وجهه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ali bin Abi Thalib karramallahu wajhah, ia berkata: "Ketika kami bersama Rasulullah ﷺ di awal masa Islam, datanglah seorang laki-laki menunggang unta... ia bertanya: 'Siapa di antara kalian yang bernama Muhammad?' Kami menunjuk kepada Nabi ﷺ. Ia berkata: 'Wahai Muhammad, apakah engkau yang akan menjelaskan perintah Tuhanmu kepadaku, atau aku yang akan menjelaskan perintah berhalaku kepadamu?' Nabi ﷺ menjawab: 'Aku saja yang akan menjelaskan kepadamu apa yang diperintahkan Tuhanku...' Laki-laki itu berkata: 'Wahai Muhammad, aku Ghassan bin Malik al-'Amiri. Kami memiliki berhala tempat kami menyembelih persembahan... Ketika aku mengangkat tanganku dari sembelihan, aku mendengar suara keras dari dalam berhala itu berkata dengan fasih: Wahai Ghassan bin Malik al-'Amiri, telah datang kebenaran berupa seorang nabi dari Bani Hasyim di tanah Tihamah — bagi penolongnya keselamatan, dan bagi penghinanya penyesalan, sebagai pemberi petunjuk dan penyeru hingga hari Kiamat.' Kemudian berhala itu terangkat dari tanah lalu jatuh tersungkur. Rasulullah ﷺ pun bertakbir, diikuti para sahabatnya."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini mengisahkan tanda-tanda kenabian yang muncul melalui kejadian-kejadian ajaib di masa jahiliah — berhala-berhala yang justru "bersaksi" tentang kebenaran kenabian Muhammad ﷺ, sebagai bukti bahwa seluruh alam, bahkan benda mati yang disembah kaum musyrik, tunduk pada kebenaran wahyu.</p>
+      <p><span class="sub">2. Kisah Pendukung — Urutan Orang-orang Pertama Masuk Islam</span>Ali menyebutkan urutan orang yang pertama masuk Islam setelah turunnya wahyu: Khadijah, Abu Bakar, Ali, Zaid bin Haritsah, seorang budak wanita bernama Qamariyah, Hamzah, Utsman, Zuhair, Abu Ubaidah bin al-Jarrah, Thalhah, dan Zubair — yang semula menyembunyikan keislaman mereka hingga Nabi ﷺ diperintahkan menyerukan dakwah secara terbuka dari atas Bukit Abu Qubais.</p>
+      <p><span class="sub">3. Kisah Pendukung — Berhala Walid bin Harits yang Berdusta</span>Walid bin Harits menyembah dua berhala mewahnya selama tiga hari tiga malam tanpa makan dan minum, memohon agar berhala itu berbicara tentang Muhammad ﷺ. Setan yang merasuki berhala itu berdusta, mengatakan bahwa Muhammad ﷺ bukan nabi — membuat kaum kafir Quraisy semakin yakin untuk menentang dakwah.</p>
+      <p><span class="sub">4. Kisah Pendukung — Jin Penolong dan Berhala Habal yang Berkata Jujur</span>Seorang jin muslim (kelak diberi nama Abdullah bin Abhar oleh Nabi ﷺ) membunuh setan bernama Musfir yang telah menghina Nabi ﷺ dari dalam mulut berhala. Ketika kaum kafir kembali memohon kepada berhala Habal untuk mencaci Nabi ﷺ, berhala itu justru berkata jujur bahwa Muhammad ﷺ adalah nabi yang benar dan agamanya haq — hingga Abu Jahal marah dan menghancurkan berhala tersebut.</p>
+      <p><span class="sub">5. Nilai Pendidikan</span>Guru dapat menggunakan kisah-kisah ajaib ini untuk menguatkan keyakinan santri terhadap kebenaran risalah Nabi ﷺ, sekaligus menunjukkan kesia-siaan menyembah berhala yang bahkan tidak bisa mengendalikan ucapannya sendiri.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan makna "tanda-tanda kenabian" (dalail an-nubuwwah) dan fungsinya menguatkan keimanan.</li>
+          <li>Ceritakan urutan masuk Islamnya para sahabat sebagai pengantar sejarah dakwah periode Makkah.</li>
+          <li>Ajak santri merenungkan: mengapa dakwah tetap perlu keberanian meski di tengah tekanan dan penolakan besar (seperti dialami Nabi ﷺ dari kaum Quraisy)?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 20 ==================== -->
+  <article class="hadith-card" id="hadits-20">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-20</span>
+      <span class="title-ar">الحديث العشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَبْدِ اللهِ بْنِ مَسْعُودٍ رَضِيَ اللهُ تَعَالَى عَنْهُ أَنَّ النَّبِيَّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ قَالَ: «اسْتَحْيُوا مِنَ اللهِ حَقَّ الْحَيَاءِ». قَالَ: فَقُلْنَا يَا نَبِيَّ اللهِ، إِنَّا نَسْتَحِي وَالْحَمْدُ لِلهِ. قَالَ: «لَيْسَ ذَلِكَ، وَلَكِنْ مَنِ اسْتَحْيَا مِنَ اللهِ حَقَّ الْحَيَاءِ فَلْيَحْفَظِ الرَّأْسَ وَمَا حَوَى، وَالْبَطْنَ وَمَا وَعَى، وَلْيَذْكُرِ الْمَوْتَ وَالْبِلَى، وَمَنْ أَرَادَ الْآخِرَةَ تَرَكَ زِينَةَ الْحَيَاةِ الدُّنْيَا وَآثَرَ الْآخِرَةَ عَلَى الْأُولَى، فَمَنْ فَعَلَ ذَلِكَ فَقَدِ اسْتَحْيَا مِنَ اللهِ تَعَالَى حَقَّ الْحَيَاءِ». ثُمَّ قَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «اَلْحَيَاءُ مِنَ الْإِيمَانِ»
+        <span class="rawi">(رواه عبد الله بن مسعود رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abdullah bin Mas'ud radhiyallahu 'anhu, bahwa Nabi ﷺ bersabda: "Malulah kalian kepada Allah dengan sebenar-benar malu." Kami bertanya: "Wahai Nabi Allah, sesungguhnya kami sudah malu, alhamdulillah." Beliau bersabda: "Bukan itu (yang dimaksud), tetapi barangsiapa yang malu kepada Allah dengan sebenar-benar malu, hendaklah ia menjaga kepala dan apa yang ada di dalamnya, menjaga perut dan apa yang dikandungnya, hendaklah ia mengingat kematian dan kehancuran (jasad), dan barangsiapa menginginkan akhirat hendaklah ia meninggalkan perhiasan kehidupan dunia serta mengutamakan akhirat daripada dunia. Barangsiapa melakukan itu semua, sungguh ia telah malu kepada Allah Ta'ala dengan sebenar-benar malu." Kemudian Nabi ﷺ bersabda: "Malu adalah sebagian dari iman."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini meluruskan pemahaman tentang rasa malu (haya') yang sejati — bukan sekadar malu secara sosial, melainkan malu yang mengendalikan pikiran (kepala), perut (dari yang haram), serta senantiasa mengingat kematian dan lebih mengutamakan akhirat daripada gemerlap dunia.</p>
+      <p><span class="sub">2. Kisah Pendukung — Wanita yang Takut Persaksian di Hari Kiamat</span>Seorang wanita datang kepada Nabi ﷺ mengaku telah berbuat dosa besar dan memohon "obat" atasnya. Nabi ﷺ menyuruhnya bertobat. Wanita itu lalu mengemukakan kekhawatiran berturut-turut: bumi yang menjadi saksi dosanya, langit yang menyaksikannya, malaikat pencatat amal yang telah menulis dosanya, hingga anggota tubuhnya sendiri (lidah, tangan, kaki) yang akan bersaksi di hari Kiamat. Nabi ﷺ menjawab setiap kekhawatirannya satu per satu dengan dalil Al-Qur'an: bumi akan diganti dengan bumi yang lain (QS. Ibrahim: 48), langit akan digulung (QS. Al-Anbiya: 104), kebaikan menghapus keburukan (QS. Hud: 114), dan Allah akan membuat para malaikat pencatat "lupa" akan dosa hamba yang telah bertobat dengan sungguh-sungguh, serta memerintahkan seluruh anggota tubuh dan bumi untuk merahasiakan aib hamba tersebut selamanya. Namun wanita itu tetap mengingatkan bahwa yang paling berat bukanlah persaksian itu sendiri, melainkan rasa malu di hadapan Allah pada hari Kiamat — digambarkan sebagai keringat yang membasahi tubuh pendosa hingga ke lutut, pusar, bahkan lehernya.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan bahwa rasa malu sejati adalah pengendali perilaku (menjaga pikiran dan nafsu perut), bukan sekadar perasaan sosial. Kisah wanita ini juga menjadi pengingat besar bahwa tobat yang tulus benar-benar menghapus dosa di sisi Allah, namun rasa malu di hadapan-Nya kelak tetap menjadi ujian tersendiri yang harus terus diwaspadai.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Bedakan antara "malu sosial" (segan pada orang lain) dan "malu kepada Allah" (mengendalikan pikiran dan perbuatan meski sendirian).</li>
+          <li>Diskusikan dialog wanita dan Nabi ﷺ sebagai contoh dialog reflektif tentang tobat dan keadilan Allah.</li>
+          <li>Ajak santri merenungkan: bagian tubuh mana yang paling sering perlu "dijaga" agar rasa malu kepada Allah benar-benar terwujud (mata, lisan, pikiran)?</li>
+          <li>Tekankan optimisme: tobat yang tulus benar-benar dihapus dosanya, bukan sekadar ditutupi.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 21 ==================== -->
+  <article class="hadith-card" id="hadits-21">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-21</span>
+      <span class="title-ar">الحديث الحادي والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ تَعَالَى عَنْهُمَا أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «مَنْ أَدْخَلَ عَلَى قَلْبِ أَخِيهِ الْمُسْلِمِ فَرَحًا وَسُرُورًا فِي دَارِ الدُّنْيَا خَلَقَ اللهُ تَعَالَى مِنْ ذَلِكَ مَلَكًا يَدْفَعُ عَنْهُ الْآفَاتِ، فَإِذَا كَانَ يَوْمُ الْقِيَامَةِ جَاءَ مَعَهُ قَرِينًا، فَإِذَا أَمَرَ بِهِ هَوْلٌ يُفْزِعُهُ قَالَ لَا تَخَفْ. فَيَقُولُ: مَنْ أَنْتَ؟ فَيَقُولُ: أَنَا الْفَرَحُ وَالسُّرُورُ الَّذِي أَدْخَلْتَهُ عَلَى أَخِيكَ الْمُسْلِمِ فِي دَارِ الدُّنْيَا». وَفِي حَدِيثٍ آخَرَ عَنِ النَّبِيِّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «إِدْخَالُ السُّرُورِ فِي قَلْبِ مُؤْمِنٍ خَيْرٌ مِنْ عِبَادَةِ سِتِّينَ سَنَةً»
+        <span class="rawi">(رواه ابن عباس رضي الله تعالى عنهما)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ibnu Abbas radhiyallahu 'anhuma, ia berkata: Rasulullah ﷺ bersabda: "Barangsiapa memasukkan kebahagiaan dan kegembiraan ke dalam hati saudaranya sesama muslim di dunia, Allah akan menciptakan darinya seorang malaikat yang akan menolak berbagai bencana darinya. Maka ketika hari Kiamat tiba, malaikat itu akan datang menemaninya; dan ketika ia diperintahkan menghadapi suatu kengerian yang menakutkannya, malaikat itu berkata: 'Jangan takut.' Ia bertanya: 'Siapa kamu?' Malaikat itu menjawab: 'Aku adalah kebahagiaan dan kegembiraan yang dahulu engkau masukkan ke dalam hati saudaramu sesama muslim di dunia.'" Dalam hadits lain dari Nabi ﷺ disebutkan: "Memasukkan kegembiraan ke dalam hati seorang mukmin lebih baik daripada ibadah enam puluh tahun."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menunjukkan betapa besar nilai membahagiakan sesama muslim — sebuah amal sosial sederhana yang justru diganjar melebihi ibadah puasa dan qiyamul lail selama enam puluh tahun. Kebahagiaan yang ditanamkan di hati seseorang bahkan "menjelma" menjadi malaikat penolong yang akan menemani dan menenangkannya di hari Kiamat.</p>
+      <p><span class="sub">2. Makna Praktis</span>Idkhalus surur (menanamkan kegembiraan) bisa dilakukan dengan berbagai cara sederhana: ucapan yang menyenangkan, memberi hadiah kecil, senyuman tulus, atau perhatian kepada orang yang sedang kesulitan. Islam sangat menghargai kebaikan sekecil apa pun yang menyentuh hati sesama.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat membiasakan santri melakukan hal-hal kecil yang membahagiakan orang lain setiap hari — menyapa dengan ramah, membantu teman yang kesulitan, memberi kejutan kecil untuk keluarga — sebagai amal ringan namun berpahala besar.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri membuat daftar hal-hal sederhana yang bisa membahagiakan orang di sekitar mereka (keluarga, teman, guru) hari ini.</li>
+          <li>Diskusikan mengapa amal sesederhana "membahagiakan orang lain" bisa bernilai lebih dari 60 tahun ibadah.</li>
+          <li>Praktikkan di kelas: setiap santri memberi satu pujian tulus atau ucapan baik kepada temannya.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 22 ==================== -->
+  <article class="hadith-card" id="hadits-22">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-22</span>
+      <span class="title-ar">الحديث الثاني والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ سَعِيدِ بْنِ الْمُسَيِّبِ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: خَرَجَ عَلِيُّ بْنُ أَبِي طَالِبٍ كَرَّمَ اللهُ وَجْهَهُ ذَاتَ يَوْمٍ مِنَ الْبَيْتِ فَاسْتَقْبَلَهُ سَلْمَانُ الْفَارِسِيُّ رَضِيَ اللهُ تَعَالَى عَنْهُ، فَقَالَ لَهُ عَلِيٌّ: كَيْفَ أَصْبَحْتَ يَا أَبَا عَبْدِ اللهِ؟ قَالَ: أَصْبَحْتُ يَا أَمِيرَ الْمُؤْمِنِينَ بَيْنَ غُمُومٍ أَرْبَعَةٍ... فَقَالَ عَلِيٌّ: أَبْشِرْ، فَإِنَّ لَكَ فِي كُلِّ خَصْلَةٍ دَرَجَةً، فَإِنِّي كُنْتُ دَخَلْتُ عَلَى رَسُولِ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ ذَاتَ يَوْمٍ... فَقَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «أَبْشِرْ يَا عَلِيُّ، فَإِنَّ غَمَّ الْعِيَالِ سِتْرٌ مِنَ النَّارِ، وَغَمَّ طَاعَةِ الْخَالِقِ أَمَانٌ مِنَ الْعَذَابِ، وَغَمَّ الْعَاقِبَةِ جِهَادٌ وَهُوَ أَفْضَلُ مِنْ عِبَادَةِ سِتِّينَ سَنَةً، وَغَمَّ مَلَكِ الْمَوْتِ كَفَّارَةُ الذُّنُوبِ كُلِّهَا. وَاعْلَمْ يَا عَلِيُّ أَنَّ أَرْزَاقَ الْعِبَادِ عَلَى اللهِ تَعَالَى»
+        <span class="rawi">(رواه سعيد بن المسيب رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Sa'id bin al-Musayyab radhiyallahu 'anhu, ia berkata: Pada suatu hari Ali bin Abi Thalib karramallahu wajhah keluar dari rumahnya, lalu berjumpa dengan Salman al-Farisi radhiyallahu 'anhu. Ali bertanya: "Bagaimana kabarmu pagi ini, wahai Abu Abdillah?" Salman menjawab: "Wahai Amirul Mukminin, pagi ini aku berada di antara empat kesusahan..." (kesusahan keluarga yang meminta makan, kesusahan taat kepada Sang Pencipta, kesusahan godaan setan, dan kesusahan menghadapi Malaikat Maut). Ali berkata: "Berbahagialah, karena pada tiap kesusahan itu ada derajat bagimu. Sesungguhnya aku pernah menemui Rasulullah ﷺ pada suatu hari..." (dan mengalami keempat kesusahan yang sama). Nabi ﷺ pun bersabda: "Berbahagialah wahai Ali, sesungguhnya kesusahan karena keluarga adalah penghalang dari api neraka, kesusahan karena taat kepada Sang Pencipta adalah keamanan dari siksa, kesusahan karena memikirkan akhir hayat adalah jihad yang lebih utama daripada ibadah enam puluh tahun, dan kesusahan menghadapi Malaikat Maut adalah penebus seluruh dosa. Ketahuilah wahai Ali, sesungguhnya rezeki para hamba berada dalam jaminan Allah Ta'ala."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini memberikan penghiburan besar: empat jenis "kesusahan" yang lazim dialami setiap mukmin — beban keluarga, kesungguhan taat, kekhawatiran akan akhir hayat, dan ketakutan menghadapi kematian — ternyata semuanya justru bernilai pahala besar di sisi Allah, bukan sekadar beban tanpa makna.</p>
+      <p><span class="sub">2. Lanjutan Dialog — Rezeki dan Amal Hati</span>Nabi ﷺ menambahkan bahwa rezeki setiap hamba sudah dijamin Allah, sehingga kesusahan memikirkannya tidak menambah atau mengurangi apa pun kecuali pahala bagi yang bersabar. Nabi ﷺ juga mengajarkan Ali tiga amalan hati: bersyukur atas nikmat Islam, mengucap <em>laa hawla wa laa quwwata illa billah</em> sebagai wujud taat, dan meninggalkan sifat marah sebagai kunci meraih ridha Allah dan surga.</p>
+      <p><span class="sub">3. Kisah Pendukung — Kebahagiaan Anak sebagai Penebus Dosa</span>Seorang laki-laki mengadu kepada Nabi ﷺ bahwa ia telah berbuat maksiat namun malu menceritakan detailnya. Nabi ﷺ menegurnya karena malu kepada manusia namun tidak malu kepada Allah yang melihatnya, sehingga laki-laki itu pergi dengan sedih. Malaikat Jibril lalu turun mengingatkan Nabi ﷺ agar tidak membuat putus asa seorang pendosa yang sebenarnya memiliki penebus dosa: setiap kali ia pulang ke rumah dan disambut anak kecilnya dengan gembira karena diberi makanan atau hadiah kecil, kebahagiaan anak itu menjadi penebus dosanya.</p>
+      <p><span class="sub">4. Nilai Pendidikan</span>Guru dapat menekankan bahwa kesulitan hidup sehari-hari (mencari nafkah, mendidik anak, mempertahankan ketaatan) bukanlah semata beban, melainkan ladang pahala jika dijalani dengan sabar dan tawakal. Kisah kedua juga mengajarkan bahwa membahagiakan anak adalah amal ringan namun bernilai besar sebagai penebus dosa.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan empat jenis "kesusahan" dalam hadits ini dan kaitkan dengan pengalaman nyata santri atau keluarga mereka.</li>
+          <li>Tekankan bahwa rezeki sudah dijamin Allah, sehingga fokus utama adalah usaha dan ketaatan, bukan kekhawatiran berlebihan.</li>
+          <li>Ajarkan tiga amalan hati dari hadits ini: syukur, tahlil (laa hawla wa laa quwwata illa billah), dan meninggalkan marah.</li>
+          <li>Ajak santri mempraktikkan kisah kedua: membahagiakan adik/keponakan/anak kecil di rumah sebagai amal ringan penebus dosa.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 23 ==================== -->
+  <article class="hadith-card" id="hadits-23">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-23</span>
+      <span class="title-ar">الحديث الثالث والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ
+        <span class="rawi">(سورة البقرة، الآية 255)</span>
+        <br><br>
+        عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ تَعَالَى عَنْهُ أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «مَا مِنْ عَبْدٍ مِنْ أُمَّتِي إِذَا أَصْبَحَ فَقَرَأَ اثْنَتَيْ عَشْرَةَ مَرَّةً آيَةَ الْكُرْسِيِّ ثُمَّ تَوَضَّأَ وَصَلَّى الْفَجْرَ، حَفِظَهُ اللهُ مِنْ شَرِّ الشَّيْطَانِ، وَكَانَ بِمَنْزِلَةِ مَنْ قَرَأَ جَمِيعَ الْقُرْآنِ ثَلَاثَ مَرَّاتٍ، وَتُوِّجَ يَوْمَ الْقِيَامَةِ بِتَاجٍ مِنْ نُورٍ يُضِيءُ لِأَهْلِ الدُّنْيَا كُلِّهَا». فَقُلْتُ: يَا رَسُولَ اللهِ، فِي كُلِّ يَوْمٍ؟ قَالَ: «لَا، بَلْ فِي كُلِّ يَوْمِ جُمُعَةٍ، فَإِنَّهَا تُجْزِيكَ مِنْ دَهْرِكَ فِي جُمُعَةٍ مَرَّةً»
+        <span class="rawi">(رواه أنس بن مالك رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p><strong>Ayat Kursi (QS. Al-Baqarah: 255):</strong> "Allah, tidak ada Tuhan (yang berhak disembah) melainkan Dia Yang Maha Hidup, Maha Berdiri Sendiri (mengurus makhluk-Nya); tidak mengantuk dan tidak tidur. Milik-Nya apa yang di langit dan di bumi. Tiada yang dapat memberi syafaat di sisi-Nya tanpa izin-Nya. Dia mengetahui apa yang di hadapan dan di belakang mereka, dan mereka tidak mengetahui apa pun dari ilmu-Nya melainkan apa yang Dia kehendaki. Kursi-Nya meliputi langit dan bumi, dan Dia tidak merasa berat memelihara keduanya. Dialah Yang Maha Tinggi lagi Maha Besar."</p>
+      <p>Dari Anas bin Malik radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Tiada seorang hamba dari umatku yang di waktu pagi membaca Ayat Kursi sebanyak dua belas kali, lalu berwudhu dan melaksanakan shalat Subuh, melainkan Allah akan menjaganya dari keburukan setan, dan ia (pahalanya) setara dengan orang yang mengkhatamkan seluruh Al-Qur'an tiga kali, serta akan dimahkotai pada hari Kiamat dengan mahkota cahaya yang menerangi seluruh penduduk dunia." Aku (Anas) bertanya: "Wahai Rasulullah, apakah ini dilakukan setiap hari?" Beliau menjawab: "Tidak, cukup setiap hari Jumat saja, karena itu sudah mencukupimu untuk sepekan."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Keagungan Ayat Kursi</span>Ayat ini disebut Rasulullah ﷺ sebagai ayat teragung dalam Al-Qur'an (diriwayatkan dari Ubay bin Ka'ab dalam Shahih Muslim), karena memuat sepuluh sifat keagungan Allah sekaligus: keesaan-Nya, sifat hidup dan berdiri sendiri, kekuasaan mutlak atas langit dan bumi, ilmu yang meliputi segala sesuatu, serta luasnya kekuasaan-Nya yang tak terbatas oleh apa pun.</p>
+      <p><span class="sub">2. Kisah Pendukung — Keimanan Umat Terdahulu</span>Kitab ini mengisahkan bagaimana umat-umat terdahulu memiliki hati yang lemah dan pemahaman yang dangkal, sehingga tidak mau membenarkan para rasul kecuali dengan menyaksikan mukjizat secara langsung — seperti kaum Musa yang meminta melihat Allah secara nyata, atau bertanya apakah Tuhan mereka tidur. Allah lalu memerintahkan Musa mengisi dua botol air dan membuatnya tertidur hingga kedua botol itu jatuh dan pecah, sebagai perumpamaan bahwa jika Allah "tidur" niscaya seluruh alam akan hancur. Sebaliknya, umat Nabi Muhammad ﷺ dipuji Allah sebagai "umat terbaik" karena membenarkan kerasulan beliau tanpa menuntut mukjizat maupun bukti nyata, meski hidup ratusan tahun setelah masa kenabian.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat mengajak santri menghafal Ayat Kursi beserta maknanya secara mendalam, membiasakan membacanya setiap pagi hari Jumat sebagai amalan ringan nan besar pahalanya, serta menumbuhkan rasa syukur karena termasuk umat yang beriman tanpa perlu menyaksikan mukjizat secara langsung.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajak santri menghafal Ayat Kursi per penggalan makna (bukan sekadar lafaz), lalu jelaskan sepuluh sifat keagungan Allah yang terkandung di dalamnya.</li>
+          <li>Biasakan membaca Ayat Kursi 12 kali setiap pagi hari Jumat sebagai amalan rutin di kelas/majelis.</li>
+          <li>Ceritakan kisah kaum Musa sebagai pembanding: betapa istimewanya iman umat Muhammad ﷺ yang percaya tanpa menuntut bukti fisik.</li>
+          <li>Diskusikan makna "kursi Allah meliputi langit dan bumi" sebagai gambaran keluasan kekuasaan-Nya, bukan makna fisik yang menyerupai makhluk.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 24 ==================== -->
+  <article class="hadith-card" id="hadits-24">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-24</span>
+      <span class="title-ar">الحديث الرابع والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ تَعَالَى عَنْهُ عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ أَنَّهُ قَالَ: «إِذَا كَانَ يَوْمُ الْقِيَامَةِ نَادَى مُنَادٍ: أَيْنَ الْمُرَاؤُونَ؟ وَأَيْنَ الْمُخْلِصُونَ؟ قُومُوا وَهَاتُوا أَعْمَالَكُمْ وَخُذُوا أُجُورَكُمْ مِنْ سَيِّدِكُمْ». قَالَ النَّبِيُّ عَلَيْهِ السَّلَامُ: «لَا نَصِيبَ لِلْمُرَائِينَ مِنْ أَعْمَالِهِمْ شَيْئًا إِلَّا حَسْرَةً وَنَدَامَةً وَشَقَاوَةً». ثُمَّ قَالَ النَّبِيُّ عَلَيْهِ السَّلَامُ: «يَا ابْنَ آدَمَ، الْإِخْلَاصَ الْإِخْلَاصَ». وَقَالَ النَّبِيُّ عَلَيْهِ السَّلَامُ: «إِنَّ أَخْوَفَ مَا أَخَافُ عَلَى أُمَّتِي الشِّرْكُ الْأَصْغَرُ». قَالُوا: يَا رَسُولَ اللهِ، وَمَا الشِّرْكُ الْأَصْغَرُ؟ قَالَ النَّبِيُّ عَلَيْهِ السَّلَامُ: «الرِّيَاءُ. يَقُولُ اللهُ تَعَالَى لَهُمْ يَوْمَ يُجَازِي الْعِبَادَ بِأَعْمَالِهِمْ: اذْهَبُوا إِلَى الَّذِينَ كُنْتُمْ تُرَاؤُونَ لَهُمْ، هَلْ تَجِدُونَ فِيهِمْ خَيْرًا؟»
+        <span class="rawi">(رواه أنس بن مالك رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Anas bin Malik radhiyallahu 'anhu, dari Nabi ﷺ, beliau bersabda: "Ketika hari Kiamat tiba, seorang penyeru akan memanggil: 'Manakah orang-orang yang riya? Dan manakah orang-orang yang ikhlas? Berdirilah, laporkan amal-amal kalian, dan ambillah pahala kalian dari Tuan kalian.'" Nabi ﷺ bersabda: "Tidak ada bagian sedikit pun bagi orang-orang yang riya dari amal-amal mereka, kecuali penyesalan, kekecewaan, dan kesengsaraan." Kemudian Nabi ﷺ bersabda: "Wahai anak Adam, ikhlaslah, ikhlaslah!" Nabi ﷺ juga bersabda: "Sesungguhnya yang paling aku khawatirkan atas umatku adalah syirik kecil." Para sahabat bertanya: "Wahai Rasulullah, apa itu syirik kecil?" Nabi ﷺ menjawab: "Riya. Allah Ta'ala akan berkata kepada mereka pada hari pembalasan amal: 'Pergilah kepada orang-orang yang dahulu kalian pamerkan amal untuk mereka, apakah kalian mendapati kebaikan pada mereka?'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan betapa fatalnya riya (beramal untuk dilihat/dipuji manusia) — amal yang tampak baik di dunia justru sia-sia di akhirat jika dilandasi riya, karena pahalanya "dititipkan" kepada orang yang dituju, bukan kepada Allah.</p>
+      <p><span class="sub">2. Riya sebagai "Syirik Kecil"</span>Nabi ﷺ secara khusus mengkhawatirkan riya sebagai bentuk syirik kecil yang paling ditakutkan menimpa umatnya — bukan syirik besar (menyembah selain Allah), melainkan syirik yang lebih halus: mencampuradukkan niat ibadah dengan keinginan dipuji atau dilihat manusia.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan pentingnya menjaga niat (ikhlas) dalam setiap amal — baik ibadah maupun kebaikan sosial — serta melatih santri untuk introspeksi diri: apakah amal yang dilakukan murni karena Allah, atau ada unsur ingin dilihat/dipuji orang lain?</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan perbedaan antara beramal secara terang-terangan untuk memberi teladan (boleh, jika niat tetap ikhlas) vs riya (niat utamanya ingin dipuji).</li>
+          <li>Ajak santri merenungkan: "Jika tidak ada seorang pun yang melihat, apakah aku akan tetap melakukan amal ini?"</li>
+          <li>Latihan muhasabah: santri menuliskan satu amal yang pernah mereka lakukan dan introspeksi niat di baliknya.</li>
+          <li>Tekankan bahwa mengulang kalimat "ikhlaslah, ikhlaslah" oleh Nabi ﷺ menunjukkan betapa pentingnya menjaga kemurnian niat sepanjang hidup, bukan hanya sesekali.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 25 ==================== -->
+  <article class="hadith-card" id="hadits-25">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-25</span>
+      <span class="title-ar">الحديث الخامس والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَبْدِ الصَّمَدِ بْنِ الْحَسَنِ قَالَ: كُنْتُ عِنْدَ سُفْيَانَ الثَّوْرِيِّ رَضِيَ اللهُ تَعَالَى عَنْهُ أَسْمَعُ مِنْهُ الْحَدِيثَ... حَدَّثَنَا مَنْصُورٌ عَنْ إِبْرَاهِيمَ عَنْ عَلْقَمَةَ عَنْ عَبْدِ اللهِ بْنِ مَسْعُودٍ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «إِنَّ اللهَ تَعَالَى لَمَّا خَلَقَ الْجَنَّاتِ عَدْنٍ دَعَا جِبْرَائِيلَ عَلَيْهِ السَّلَامُ فَقَالَ لَهُ: انْطَلِقْ فَانْظُرْ إِلَى مَا خَلَقْتُ لِعِبَادِي وَأَوْلِيَائِي»... فَسُئِلَ النَّبِيُّ عَلَيْهِ السَّلَامُ عَنْ بِنَاءِ الْجَنَّةِ كَيْفَ بِنَاؤُهَا؟ فَقَالَ: «لَبِنَةٌ مِنْ فِضَّةٍ وَلَبِنَةٌ مِنْ ذَهَبٍ، وَمِلَاطُهَا الْمِسْكُ الْأَذْفَرُ، وَتُرَابُهَا الزَّعْفَرَانُ، وَحَصْبَاؤُهَا اللُّؤْلُؤُ وَالْيَاقُوتُ»
+        <span class="rawi">(رواية منصور، عن إبراهيم، عن علقمة، عن عبد الله بن مسعود رضي الله تعالى عنهم)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abdush Shamad bin al-Hasan, ia berkata: "Aku berada di dekat Sufyan ats-Tsauri radhiyallahu 'anhu mendengarkan hadits darinya..." Diriwayatkan dari Manshur, dari Ibrahim, dari Alqamah, dari Abdullah bin Mas'ud, ia berkata: Rasulullah ﷺ bersabda: "Sesungguhnya ketika Allah menciptakan surga 'Adn, Dia memanggil Jibril 'alaihissalam dan berkata kepadanya: 'Pergilah dan lihatlah apa yang telah Aku ciptakan untuk hamba-hamba dan kekasih-Ku...'" Nabi ﷺ ditanya tentang bagaimana bangunan surga, beliau menjawab: "Satu bata dari perak dan satu bata dari emas, semen perekatnya adalah minyak kasturi yang harum semerbak, tanahnya adalah za'faran, dan kerikilnya adalah mutiara serta permata."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menggambarkan keindahan surga sebagai balasan bagi orang yang mampu melawan hawa nafsunya dan lebih mengutamakan ridha Allah. Sanadnya diriwayatkan melalui jalur yang sangat terpercaya (Ibrahim an-Nakha'i, Alqamah, Ibnu Mas'ud — para ulama besar generasi awal).</p>
+      <p><span class="sub">2. Kisah Pendukung — Bidadari untuk Pencari Ridha Allah</span>Dikisahkan Jibril menjumpai seorang bidadari surga yang cahaya senyumnya menerangi surga 'Adn, hingga Jibril bersujud mengira cahaya itu dari Allah. Bidadari itu menjelaskan bahwa dirinya diciptakan khusus untuk "orang-orang yang lebih memilih keridhaan Allah daripada hawa nafsunya" — menegaskan tema utama hadits ini.</p>
+      <p><span class="sub">3. Kisah Pendukung — Dialog tentang Kenikmatan Surga</span>Seorang Ahli Kitab bertanya kepada Nabi ﷺ apakah penduduk surga makan dan minum. Nabi ﷺ membenarkan, dan menjelaskan bahwa hajat mereka (yang di dunia berupa buang air) di surga berubah menjadi keringat harum semisal minyak kasturi — karena surga bersih dari segala kotoran. Digambarkan pula bahwa penduduk surga terbagi 120 shaf, 80 di antaranya dari umat Nabi Muhammad ﷺ.</p>
+      <p><span class="sub">4. Kisah Pendukung — Orang Terakhir dan Pertama Masuk Surga</span>Nabi Musa 'alaihissalam bertanya kepada Allah tentang bagian surga bagi orang yang paling terakhir masuk surga. Allah menjawab bahwa ia akan diberi bagian seluas dua kerajaan dunia, lalu dilipatgandakan hingga seluas wilayah Khurasan, Irak, Yaman, dan Syam sekaligus — sebagai gambaran bahwa bahkan penghuni surga "kelas terakhir" pun mendapat anugerah luar biasa besar, apalagi yang datang lebih dahulu.</p>
+      <p><span class="sub">5. Nilai Pendidikan</span>Guru dapat menggunakan gambaran surga yang indah ini untuk memotivasi santri bersabar melawan hawa nafsu dan godaan dunia, dengan menegaskan bahwa balasannya jauh melampaui kenikmatan dunia mana pun.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan makna "melawan hawa nafsu" dalam konteks sehari-hari santri: menahan marah, menahan malas belajar, menahan godaan gadget berlebihan.</li>
+          <li>Gunakan gambaran keindahan surga sebagai motivasi visual — ajak santri membayangkan dan mendeskripsikan surga dengan kata-kata sendiri.</li>
+          <li>Tekankan pesan dari kisah bidadari: keridhaan Allah harus didahulukan di atas keinginan pribadi (hawa nafsu).</li>
+          <li>Refleksi: bahkan penduduk surga "paling akhir" pun mendapat anugerah luar biasa besar — tanamkan optimisme dalam beribadah, tidak perlu merasa "kurang" dibanding orang lain.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 26 ==================== -->
+  <article class="hadith-card" id="hadits-26">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-26</span>
+      <span class="title-ar">الحديث السادس والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَائِشَةَ رَضِيَ اللهُ تَعَالَى عَنْهَا قَالَتْ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «السَّخِيُّ قَرِيبٌ مِنَ النَّاسِ، وَقَرِيبٌ مِنَ الْجَنَّةِ، بَعِيدٌ مِنَ النَّارِ، وَالْبَخِيلُ بَعِيدٌ مِنَ اللهِ، بَعِيدٌ مِنَ الْخَلْقِ، بَعِيدٌ مِنَ الْجَنَّةِ، قَرِيبٌ مِنَ النَّارِ، وَالْجَاهِلُ السَّخِيُّ أَحَبُّ إِلَى اللهِ تَعَالَى مِنْ عَالِمٍ بَخِيلٍ». قَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «السَّخَاءُ شَجَرَةٌ فِي الْجَنَّةِ أَغْصَانُهَا مُتَدَلِّيَاتٌ فِي الدُّنْيَا، مَنْ أَخَذَ بِغُصْنٍ مِنْهَا قَادَهُ إِلَى الْجَنَّةِ، وَالْبُخْلُ شَجَرَةٌ فِي النَّارِ أَغْصَانُهَا مُتَدَلِّيَاتٌ فِي الدُّنْيَا، فَمَنْ أَخَذَ بِغُصْنٍ مِنْهَا قَادَهُ إِلَى النَّارِ»
+        <span class="rawi">(رواه عائشة رضي الله تعالى عنها)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Aisyah radhiyallahu 'anha, ia berkata: Rasulullah ﷺ bersabda: "Orang yang dermawan itu dekat dengan manusia, dekat dengan surga, dan jauh dari neraka. Sedangkan orang yang pelit itu jauh dari Allah, jauh dari manusia, jauh dari surga, dan dekat dengan neraka. Orang bodoh yang dermawan lebih dicintai Allah Ta'ala daripada orang berilmu yang pelit." Nabi ﷺ bersabda: "Kedermawanan adalah sebuah pohon di surga yang dahan-dahannya menjulur ke dunia; barangsiapa memegang salah satu dahannya, ia akan dituntun menuju surga. Kekikiran adalah sebuah pohon di neraka yang dahan-dahannya menjulur ke dunia; barangsiapa memegang salah satu dahannya, ia akan dituntun menuju neraka."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan kedudukan mulia sifat dermawan — bahkan dinilai lebih utama daripada ilmu tanpa kedermawanan. Perumpamaan "pohon" menggambarkan bahwa kedermawanan dan kekikiran bukan sekadar sifat, melainkan jalan yang secara langsung terhubung ke surga atau neraka.</p>
+      <p><span class="sub">2. Kisah Pendukung — Majusi yang Beruntung (Bahrom)</span>Abdullah bin Mubarak bermimpi diperintah Nabi ﷺ menemui seorang Majusi bernama Bahrom dan menyampaikan bahwa Allah meridhainya. Setelah ditelusuri, ternyata amal-amal yang disebut Bahrom sebagai "kebaikan" (riba, menikahkan anak sesama saudara, pesta besar Majusi) semuanya justru haram. Amal yang benar-benar diridhai Allah ternyata bukan miliknya sendiri, melainkan kesaksiannya atas seorang wanita muslimah miskin yang enggan meminta bantuan kepadanya (seorang Majusi) meski anak-anaknya kelaparan, karena rasa malunya kepada Allah. Tergerak oleh keteguhan iman wanita itu, Bahrom lalu diam-diam mengantarkan makanan berlimpah untuknya — dan amal dermawan diam-diam inilah yang membuatnya diridhai Allah, hingga dengan berita gembira itu ia bersyahadat dan wafat dalam keislaman.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan bahwa kedermawanan sejati adalah yang dilakukan tanpa pamrih dan bahkan tanpa disadari sebagai "amal besar" oleh pelakunya, sebagaimana Bahrom yang tidak menyadari bahwa pemberian diam-diamnya itulah yang paling bernilai di sisi Allah.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan kisah Bahrom: mengapa amal-amal yang ia banggakan (riba, dll.) justru tidak diterima, sedangkan pemberian kecil yang ia anggap biasa saja justru menjadi sebab hidayahnya?</li>
+          <li>Ajak santri praktik nyata: menyisihkan sebagian uang jajan untuk sedekah rutin.</li>
+          <li>Tekankan bahwa kedermawanan tidak harus menunggu kaya — "pegang dahannya" bisa dimulai dari hal kecil.</li>
+          <li>Refleksi: bagaimana cara menumbuhkan sifat dermawan tanpa mengharap pujian (ikhlas), mengaitkan dengan tema Hadits ke-24.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 27 ==================== -->
+  <article class="hadith-card" id="hadits-27">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-27</span>
+      <span class="title-ar">الحديث السابع والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عِكْرِمَةَ مَوْلَى ابْنِ عَبَّاسٍ رَضِيَ اللهُ تَعَالَى عَنْهُمَا قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «إِذَا كَانَ يَوْمُ الْقِيَامَةِ سَتَرَ اللهُ تَعَالَى بَيْنَ عَبْدٍ وَبَيْنَ كُلِّ النَّاسِ، فَيَدْفَعُ إِلَيْهِ كِتَابَ حَسَنَاتِهِ فَيَقْرَؤُهُ، فَيَقُولُ اللهُ تَعَالَى: مَا تَرَى؟ فَيَقُولُ: أَرَى حَسَنَاتٍ كَثِيرَةً. فَيَقُولُ اللهُ تَعَالَى: هَلْ نَقَصَ مِنْهَا شَيْءٌ؟ فَيَقُولُ: لَا. ثُمَّ يُدْفَعُ إِلَيْهِ كِتَابُ سَيِّئَاتِهِ فَيَقْرَؤُهُ... ثُمَّ يُدْفَعُ إِلَيْهِ رُقْعَةٌ فَيَقْرَؤُهَا فَيَقُولُ اللهُ تَعَالَى: مَا تَرَى؟ فَيَقُولُ: أَرَى حَسَنَاتٍ كَثِيرَةً. فَيَقُولُ اللهُ تَعَالَى: أَتَعْرِفُهَا؟ فَيَقُولُ: لَا. فَيَقُولُ اللهُ تَعَالَى لَهُ: هَذَا مِمَّا ظَلَمُوكَ وَآذَوْكَ وَأَخَذُوا مَالَكَ مِنْ غَيْرِ عِلْمِكَ»
+        <span class="rawi">(رواه عكرمة مولى ابن عباس رضي الله تعالى عنهما)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ikrimah, budak yang dimerdekakan Ibnu Abbas radhiyallahu 'anhuma, ia berkata: Rasulullah ﷺ bersabda: "Ketika hari Kiamat tiba, Allah akan menutup (rahasia) antara seorang hamba dengan seluruh manusia, lalu diserahkan kepadanya catatan kebaikan-kebaikannya untuk ia baca. Allah bertanya: 'Apa yang engkau lihat?' Ia menjawab: 'Aku melihat banyak kebaikan.' Allah bertanya: 'Apakah ada yang berkurang darinya?' Ia menjawab: 'Tidak.' Kemudian diserahkan kepadanya catatan keburukan-keburukannya untuk ia baca... Lalu diserahkan kepadanya selembar catatan lagi, ia membacanya. Allah bertanya: 'Apa yang engkau lihat?' Ia menjawab: 'Aku melihat banyak kebaikan.' Allah bertanya: 'Apakah engkau mengenalinya?' Ia menjawab: 'Tidak.' Allah berfirman kepadanya: 'Itu adalah (pahala) dari orang-orang yang pernah menzalimimu, menyakitimu, dan mengambil hartamu tanpa sepengetahuanmu.'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini memberikan penghiburan luar biasa bagi orang yang dizalimi: pahala kebaikan orang yang menzaliminya akan "dipindahkan" kepadanya di akhirat sebagai kompensasi, bahkan tanpa ia sadari sebelumnya sudah "diberi" pahala tersebut sejak di dunia.</p>
+      <p><span class="sub">2. Kisah Pendukung — Senjata Makan Tuan (Ibrahim bin Adham)</span>Ibrahim bin Adham memiliki 72 budak yang ia merdekakan setelah bertobat. Salah satu bekas budaknya yang mabuk berat memintanya menunjukkan jalan pulang; Ibrahim justru menuntunnya ke sebuah kuburan sambil berkata "inilah rumah yang sesungguhnya, rumah-rumah lain hanyalah rumah semu." Si pemabuk marah dan memukulinya berkali-kali dengan cambuk tanpa menyadari identitasnya, namun Ibrahim hanya mendoakan "semoga Allah mengampunimu" setiap kali dipukul. Ketika orang lain memberitahu bahwa yang ia pukuli adalah tuannya sendiri yang telah memerdekakannya, si pemabuk pun turun dari kudanya dan meminta maaf. Ibrahim menjawab bahwa ia mendoakan kebaikan justru karena pukulan itu menjadi sebab masuknya ia ke surga, sebagaimana kandungan hadits di atas.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan pentingnya sabar dan memaafkan ketika dizalimi, dengan menanamkan keyakinan bahwa Allah tidak pernah membiarkan kezaliman berlalu tanpa balasan yang adil — bahkan menguntungkan pihak yang dizalimi.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan bagaimana hadits ini bisa menjadi penghibur ketika santri mengalami perlakuan tidak adil dari teman atau orang lain.</li>
+          <li>Ceritakan kisah Ibrahim bin Adham sebagai teladan sabar menghadapi penganiayaan tanpa dendam.</li>
+          <li>Latih santri merespons konflik dengan sikap memaafkan, bukan membalas, dengan memahami "hikmah tersembunyi" di balik kezaliman yang dialami.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 28 ==================== -->
+  <article class="hadith-card" id="hadits-28">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-28</span>
+      <span class="title-ar">الحديث الثامن والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَسْمَاءَ بِنْتِ عُمَيْسٍ الْخَثْعَمِيَّةِ رَضِيَ اللهُ تَعَالَى عَنْهَا قَالَتْ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ يَقُولُ: «بِئْسَ الْعَبْدُ عَبْدٌ تَجَبَّرَ وَاعْتَدَى وَاخْتَالَ وَنَسِيَ الْكَبِيرَ الْمُتَعَالَ. بِئْسَ الْعَبْدُ عَبْدٌ تَجَبَّرَ وَاعْتَدَى وَنَسِيَ الْجَبَّارَ الْأَعْلَى. بِئْسَ الْعَبْدُ عَبْدٌ سَهَا وَنَسِيَ الْمَقَابِرَ وَالْبِلَى. بِئْسَ الْعَبْدُ عَبْدٌ عَتَا وَطَغَى وَنَسِيَ الْمَبْدَأَ وَالْمُنْتَهَى. بِئْسَ الْعَبْدُ عَبْدٌ يَخْتَارُ الدُّنْيَا بِالدِّينِ. بِئْسَ الْعَبْدُ عَبْدٌ يَحْتَالُ الدُّنْيَا بِالشُّبُهَاتِ. بِئْسَ الْعَبْدُ عَبْدٌ ذُو طَمَعٍ يَقُودُهُ إِلَى النَّارِ. بِئْسَ الْعَبْدُ عَبْدُ هَوًى يُضِلُّهُ. بِئْسَ الْعَبْدُ عَبْدٌ رَغِبَ بِذُلِّهِ عَنِ الْحَقِّ»
+        <span class="rawi">(رواه أسماء بنت عميس الخثعمية رضي الله تعالى عنها)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Asma binti 'Umais al-Khats'amiyyah radhiyallahu 'anha, ia berkata: aku mendengar Rasulullah ﷺ bersabda: "Seburuk-buruk hamba adalah hamba yang sombong, berbuat aniaya, congkak, dan lupa kepada Yang Maha Besar lagi Maha Tinggi. Seburuk-buruk hamba adalah hamba yang sombong, berbuat aniaya, dan lupa kepada Yang Maha Perkasa lagi Maha Luhur. Seburuk-buruk hamba adalah hamba yang lalai dan lupa akan kuburan serta kehancuran (jasadnya). Seburuk-buruk hamba adalah hamba yang melampaui batas dan lupa akan awal dan akhir (kehidupannya). Seburuk-buruk hamba adalah hamba yang memilih dunia dengan mengatasnamakan agama. Seburuk-buruk hamba adalah hamba yang menipu demi dunia dengan hal-hal syubhat. Seburuk-buruk hamba adalah hamba yang rakus hingga menuntunnya ke neraka. Seburuk-buruk hamba adalah hamba yang diperbudak hawa nafsu hingga tersesat. Seburuk-buruk hamba adalah hamba yang rela terhina demi meninggalkan kebenaran."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini merangkai sembilan sifat "seburuk-buruk hamba" yang berpusat pada satu akar masalah: melupakan Allah dan akhirat karena terlena oleh dunia, kesombongan, dan hawa nafsu.</p>
+      <p><span class="sub">2. Kisah Pendukung — Pengkhianat Terkutuk</span>Kitab ini mengisahkan Khalifah Umar bin Abdul Aziz yang mengirim pasukan berperang ke Romawi; 20 sahabat tertawan dan diminta murtad oleh Kaisar dengan iming-iming jabatan. Dua sahabat pertama teguh menolak dan gugur syahid — bahkan kepala mereka yang terpenggal terus membaca ayat Al-Qur'an sambil menggelinding. Namun sahabat ketiga tergoda dan murtad demi dunia; ia bahkan diminta membuktikan "keseriusan" dengan membunuh temannya sendiri — namun sang penasihat kerajaan justru menilainya sebagai pengkhianat yang tidak layak dipercaya sama sekali, dan akhirnya ia pun dibunuh serta kepalanya menggelinding terpisah dari kedua sahabat yang syahid, sebagai simbol akhir yang hina bagi pengkhianat agama.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan bahaya memilih dunia dengan mengorbankan agama dan prinsip, serta menanamkan keteguhan iman melalui kisah dua sahabat yang syahid demi mempertahankan akidahnya.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Bahas satu per satu sembilan sifat "seburuk-buruk hamba" dan minta santri memberi contoh nyata di kehidupan sehari-hari.</li>
+          <li>Diskusikan kisah pengkhianat terkutuk: mengapa pengkhianatan terhadap prinsip biasanya berujung pada pengkhianatan lain yang lebih besar?</li>
+          <li>Tanamkan keteguhan iman melalui teladan dua sahabat yang memilih syahid daripada murtad demi dunia.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 29 ==================== -->
+  <article class="hadith-card" id="hadits-29">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-29</span>
+      <span class="title-ar">الحديث التاسع والعشرون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَبْدِ الْعَزِيزِ بْنِ صُهَيْبٍ قَالَ: سَمِعْتُ أَنَسَ بْنَ مَالِكٍ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: مَرُّوا بِجَنَازَةٍ فَأَثْنَوْا عَلَيْهَا خَيْرًا، فَقَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «وَجَبَتْ». ثُمَّ مَرُّوا بِجَنَازَةٍ أُخْرَى فَأَثْنَوْا عَلَيْهَا شَرًّا، فَقَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «وَجَبَتْ». قَالَ عُمَرُ بْنُ الْخَطَّابِ: مَا وَجَبَتْ؟ فَقَالَ النَّبِيُّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «هَذَا أَثْنَيْتُمْ عَلَيْهِ خَيْرًا، وَجَبَتْ لَهُ الْجَنَّةُ، وَهَذَا أَثْنَيْتُمْ عَلَيْهِ شَرًّا، وَجَبَتْ لَهُ النَّارُ. أَنْتُمْ شُهَدَاءُ اللهِ فِي أَرْضِهِ»
+        <span class="rawi">(رواه أنس بن مالك رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abdul Aziz bin Shuhaib, ia berkata: aku mendengar Anas bin Malik radhiyallahu 'anhu berkata: Orang-orang melewati sebuah jenazah lalu memuji kebaikannya, maka Nabi ﷺ bersabda: "Wajib (baginya surga)." Kemudian mereka melewati jenazah lain lalu mencela keburukannya, maka Nabi ﷺ bersabda: "Wajib (baginya neraka)." Umar bin Khattab bertanya: "Apa yang wajib?" Nabi ﷺ menjawab: "Jenazah ini kalian puji kebaikannya, maka wajib baginya surga; dan jenazah ini kalian cela keburukannya, maka wajib baginya neraka. Kalian adalah saksi-saksi Allah di muka bumi-Nya."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan bahwa kesaksian jamaah muslim atas seseorang — baik pujian maupun celaan — memiliki bobot besar di sisi Allah, karena umat Nabi Muhammad ﷺ dijadikan "saksi Allah di muka bumi." Ini menjadi dasar pentingnya menjaga nama baik sekaligus adab dalam menyaksikan/menilai orang lain.</p>
+      <p><span class="sub">2. Penguat — Kesaksian Tiga Orang</span>Diriwayatkan pula dari Abul Aswad ad-Duali, dari Umar bin Khattab, bahwa Rasulullah ﷺ bersabda: "Tidak ada seorang mayit pun yang disaksikan kebaikannya oleh tiga orang, kecuali wajib baginya surga." Ketika ditanya bagaimana jika hanya dua orang, Nabi ﷺ menjawab: "Meskipun dua orang," namun tidak ditanyakan lebih lanjut mengenai kesaksian satu orang saja.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menanamkan pentingnya menjaga perilaku baik selama hidup agar dikenang dan disaksikan kebaikannya oleh sesama, serta mengajarkan adab tidak sembarangan mencela orang yang telah wafat.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan: bagaimana cara hidup agar kelak dikenang dengan kebaikan oleh banyak orang?</li>
+          <li>Ajarkan adab ta'ziyah dan berbicara tentang jenazah — hindari membicarakan keburukan orang yang telah wafat.</li>
+          <li>Refleksi: minta santri menuliskan bagaimana mereka ingin dikenang oleh keluarga dan teman-temannya kelak.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 30 ==================== -->
+  <article class="hadith-card" id="hadits-30">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-30</span>
+      <span class="title-ar">الحديث الثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَامِرِ بْنِ رَبِيعَةَ عَنِ النَّبِيِّ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ أَنَّهُ قَالَ: «إِذَا مَاتَ الْعَبْدُ وَاللهُ يَعْلَمُ مِنْهُ شَرًّا وَقَالَ النَّاسُ خَيْرًا، يَقُولُ اللهُ تَعَالَى لِلْمَلَائِكَةِ: اشْهَدُوا، قَدْ قَبِلْتُ شَهَادَةَ عِبَادِي عَلَى عَبْدِي، وَغَفَرْتُ لِعَبْدِي مَعَ عِلْمِي بِهِ»
+        <span class="rawi">(رواه عامر بن ربيعة)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Amir bin Rabi'ah, dari Nabi ﷺ, beliau bersabda: "Apabila seorang hamba meninggal dunia, sedangkan Allah mengetahui keburukan padanya namun orang-orang mengatakan kebaikan tentangnya, Allah Ta'ala berfirman kepada para malaikat: 'Bersaksilah, sungguh Aku telah menerima kesaksian hamba-hamba-Ku atas hamba-Ku ini, dan Aku telah mengampuni hamba-Ku itu, sekalipun Aku mengetahui (keburukan) yang ada padanya.'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini melengkapi tema hadits ke-29: Allah bahkan berkenan mengampuni seorang hamba yang sebenarnya diketahui-Nya berbuat keburukan, semata-mata karena kesaksian baik yang diberikan orang lain atasnya setelah wafat — sebuah bentuk kasih sayang Allah yang luar biasa besar terhadap husnuzhan sesama hamba.</p>
+      <p><span class="sub">2. Kisah Pendukung — Penipu Cerdas</span>Dikisahkan seorang penipu ulung yang dijuluki "Ath-Thorror" gemar menipu orang di pasar dengan modus mengaku sebagai teman ayah korban lalu mentraktirnya makan, namun diam-diam kabur sebelum membayar sehingga korbannya yang harus menanggung biaya. Seumur hidupnya ia hidup dengan tipu daya. Menjelang ajal, ia menyewa dua orang masing-masing satu dinar untuk memuji dirinya sebagai "orang saleh yang baik" sepanjang prosesi pemakamannya. Setelah dikubur, dua malaikat penanya kubur justru diperintahkan pergi meninggalkannya, dengan firman: "Tinggalkan hamba-Ku, sesungguhnya ia hidup dengan tipu daya dan mati pun dengan tipu daya" — dan Allah tetap mengampuninya berkat kesaksian dua orang tersebut, meskipun mereka disewa untuk memberi kesaksian palsu.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan dua sisi pelajaran: (a) betapa luasnya rahmat dan pengampunan Allah, bahkan bagi orang yang hidupnya penuh tipu daya, namun (b) kisah ini bukan pembenaran untuk menipu — melainkan pengingat agar berusaha meninggalkan kesan baik yang tulus semasa hidup, bukan direkayasa di akhir hayat.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan batas antara "berbaik sangka kepada Allah atas ampunan-Nya" dengan "menyepelekan dosa karena merasa pasti diampuni".</li>
+          <li>Bahas kisah Penipu Cerdas: mengapa Allah tetap mengampuninya meski kesaksian itu direkayasa (disewa)?</li>
+          <li>Ajak santri membangun reputasi baik yang tulus dan konsisten semasa hidup, bukan menunggu rekayasa di akhir hayat.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 31 ==================== -->
+  <article class="hadith-card" id="hadits-31">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-31</span>
+      <span class="title-ar">الحديث الحادي والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «يَدْفَعُ اللهُ تَعَالَى الْبَلَاءَ عَنْ أُمَّتِي بِمَنْ يُصَلِّي عَمَّنْ لَا يُصَلِّي، وَلَوِ اجْتَمَعُوا عَلَى تَرْكِ الصَّلَاةِ مَا نَظَرَهُمُ اللهُ طَرْفَةَ عَيْنٍ. وَيَدْفَعُ اللهُ بِمَنْ يُزَكِّي مِنْ أُمَّتِي عَمَّنْ لَا يُزَكِّي... وَيَدْفَعُ اللهُ عَنْ أُمَّتِي بِمَنْ يَصُومُ عَمَّنْ لَا يَصُومُ... وَيَدْفَعُ اللهُ عَنْ أُمَّتِي بِمَنْ يَحُجُّ عَمَّنْ لَا يَحُجُّ... وَيَدْفَعُ اللهُ عَنْ أُمَّتِي بِمَنْ يُجَمِّعُ عَمَّنْ لَا يُجَمِّعُ، وَلَوِ اجْتَمَعُوا عَلَى تَرْكِ الْجُمُعَةِ مَا نَظَرَهُمُ اللهُ طَرْفَةَ عَيْنٍ». وَهُوَ قَوْلُهُ تَعَالَى: «وَلَوْلَا دَفْعُ اللهِ النَّاسَ بَعْضَهُمْ بِبَعْضٍ لَفَسَدَتِ الْأَرْضُ وَلَكِنَّ اللهَ ذُو فَضْلٍ عَلَى الْعَالَمِينَ»
+        <span class="rawi">(رواه ابن عباس رضي الله عنهما)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ibnu Abbas radhiyallahu 'anhuma, ia berkata: Rasulullah ﷺ bersabda: "Allah menolak bencana dari umatku berkat orang yang shalat, demi orang yang tidak shalat — sekiranya mereka semua sepakat meninggalkan shalat, niscaya Allah tidak akan memandang mereka sekejap mata pun. Allah pun menolak bencana berkat orang yang berzakat dari umatku, demi orang yang tidak berzakat... berkat orang yang berpuasa, demi orang yang tidak berpuasa... berkat orang yang berhaji, demi orang yang tidak berhaji... dan berkat orang yang shalat Jumat, demi orang yang tidak shalat Jumat — sekiranya mereka semua sepakat meninggalkan shalat Jumat, niscaya Allah tidak akan memandang mereka sekejap mata pun." Inilah makna firman Allah Ta'ala: "Dan sekiranya Allah tidak menolak (keganasan) sebagian manusia dengan sebagian yang lain, niscaya rusaklah bumi ini. Akan tetapi Allah mempunyai karunia atas semesta alam." (QS. Al-Baqarah: 251)</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan bahwa keberadaan orang-orang saleh yang menjalankan ibadah (shalat, zakat, puasa, haji, Jumat) menjadi sebab ditolaknya azab dari seluruh umat, termasuk bagi mereka yang lalai. Ini menunjukkan betapa besar nilai keberadaan orang-orang saleh bagi keselamatan masyarakat secara luas.</p>
+      <p><span class="sub">2. Kisah Pendukung — Tobat Preman Fudhail bin Iyad</span>Fudhail bin Iyad adalah seorang perampok jalanan yang berpindah dari satu daerah ke daerah lain untuk beraksi. Suatu malam, sekelompok musafir yang mengetahui keberadaannya bersepakat menguji nasib dengan memanah ke arahnya — sambil masing-masing dari ketiga pemanah membacakan ayat Al-Qur'an yang berbeda (QS. Al-Hadid: 16, Adz-Dzariyat: 50, dan Az-Zumar: 54) setiap kali melepaskan anak panah. Setiap kali itu pula Fudhail berteriak keras dan hampir pingsan, meyakini bahwa "panah Allah" telah mengenai hatinya meski panah fisik tidak pernah menyentuhnya. Pada panah ketiga, ia benar-benar bertobat total di hadapan anak buahnya, meninggalkan dunia perampokan, dan menuju Makkah. Dalam perjalanannya, Harun ar-Rasyid menceritakan mimpinya tentang seruan langit yang mengabarkan bahwa Fudhail telah memilih mengabdi kepada Allah — sebuah pengakuan besar atas tobatnya yang tulus.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menekankan pentingnya menjadi bagian dari "golongan yang menyelamatkan" (ahli shalat, zakat, puasa, haji, Jumat) demi keberkahan bersama, serta menjadikan kisah Fudhail sebagai bukti bahwa ayat Al-Qur'an memiliki kekuatan luar biasa untuk menggetarkan hati yang paling keras sekalipun.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan konsep "keberkahan kolektif": bagaimana ketaatan sebagian orang bisa melindungi masyarakat secara luas dari bencana?</li>
+          <li>Ceritakan kisah tobat dramatis Fudhail bin Iyad sebagai inspirasi bahwa ayat Al-Qur'an bisa mengubah hati yang paling keras.</li>
+          <li>Ajak santri merenungkan: ayat mana yang paling menyentuh hati mereka pribadi, dan mengapa?</li>
+          <li>Motivasi santri untuk menjadi golongan yang istiqamah beribadah, sebagai kontribusi nyata bagi keselamatan bersama.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 32 ==================== -->
+  <article class="hadith-card" id="hadits-32">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-32</span>
+      <span class="title-ar">الحديث الثاني والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «خِيَارُ أُمَّتِي مَنْ شَهِدَ أَنْ لَا إِلَهَ إِلَّا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِذَا أَحْسَنُوا اسْتَبْشَرُوا وَإِذَا أَسَاؤُوا اسْتَغْفَرُوا، وَإِذَا سَافَرُوا قَصَرُوا صَلَاتَهُمْ وَأَفْطَرُوا مِنْ صَوْمِهِمْ. وَإِنَّ شِرَارَ أُمَّتِي الَّذِينَ وُلِدُوا فِي النِّعَمِ وَغُذُوا فِي النِّعَمِ، وَهِمَّتُهُمْ أَلْوَانُ الطَّعَامِ وَأَلْوَانُ الشَّرَابِ، وَإِذَا تَكَلَّمُوا تَشَدَّقُوا وَإِذَا مَشَوْا تَبَخْتَرُوا»
+        <span class="rawi">(رواه أبو هريرة رضي الله عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Hurairah radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Orang-orang pilihan dari umatku adalah mereka yang bersaksi bahwa tidak ada tuhan selain Allah dan Muhammad adalah utusan-Nya; ketika berbuat baik mereka bergembira, ketika berbuat buruk mereka beristighfar; ketika bepergian jauh mereka mengqashar shalat dan berbuka puasa. Sesungguhnya orang-orang buruk dari umatku adalah mereka yang dilahirkan dalam kemewahan dan dibesarkan dalam kemewahan, yang perhatiannya hanya tertuju pada ragam makanan dan minuman; jika berbicara mereka bersikap sombong, dan jika berjalan mereka berlagak angkuh."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menggambarkan dua kutub ekstrem dalam umat: golongan terbaik yang tulus bertauhid, gembira dalam kebaikan, cepat beristighfar dari kesalahan, dan menjalankan keringanan syariat (rukhshah) saat safar; sedangkan golongan terburuk adalah yang dimanjakan kemewahan hingga hanya sibuk memikirkan kesenangan duniawi dan bersikap sombong.</p>
+      <p><span class="sub">2. Kisah Pendukung — Tangisan Para Sahabat</span>Suatu malam di bulan Rajab, Nabi ﷺ mengintip masjid dan mendengar Abu Bakar menangis membaca ayat tentang Allah "membeli" jiwa raga orang beriman dengan surga — Abu Bakar khawatir dirinya "cacat" sehingga dikembalikan Allah. Ali karramallahu wajhah menangis membaca ayat tentang tidak samanya orang berilmu dan tidak berilmu, khawatir tidak sebanding dengan Nabi Adam yang diajari seluruh nama. Mu'adz bin Jabal dan Bilal juga menangis dalam shalat mereka. Nabi ﷺ ikut menangis mendengarnya, lalu esok paginya menjelaskan lewat wahyu Jibril bahwa Allah yang telah "membeli" dengan mengetahui segala cela hamba-Nya sejak awal tidak akan pernah mengembalikannya — sebuah jaminan besar akan rahmat Allah bagi hamba yang beriman.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menggunakan hadits ini untuk mendorong santri meneladani sikap rendah hati para sahabat, sekaligus mewaspadai sikap sombong dan hidup berfoya-foya yang dicela dalam hadits ini.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan ciri-ciri "umat terbaik" vs "umat terburuk" dalam hadits ini dan minta santri menilai diri sendiri secara jujur.</li>
+          <li>Ceritakan kisah tangisan para sahabat sebagai teladan kekhusyukan dan kerendahan hati di hadapan Allah.</li>
+          <li>Diskusikan bahaya hidup dalam kemewahan berlebihan tanpa rasa syukur dan kepedulian sosial.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 33 ==================== -->
+  <article class="hadith-card" id="hadits-33">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-33</span>
+      <span class="title-ar">الحديث الثالث والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عُبَادَةَ بْنِ الصَّامِتِ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «مَنِ اغْتَسَلَ يَوْمَ الْجُمُعَةِ بِنِيَّةٍ خَالِصَةٍ لَمْ يَمُرَّ الْمَاءُ عَلَى شَعْرَةٍ مِنْ جَسَدِهِ إِلَّا تَلَأْلَأَتْ نُورًا، فَتَصِيرُ كُلُّهُمْ نُورًا يَوْمَ الْقِيَامَةِ فِي الْمَوْقِفِ... وَمَنِ اغْتَسَلَ يَوْمَ الْجُمُعَةِ وَلَبِسَ ثِيَابَهُ ثُمَّ خَرَجَ مِنْ بَابِ دَارِهِ يَمْشِي إِلَى الْجُمُعَةِ كَتَبَ اللهُ تَعَالَى لَهُ بِكُلِّ خُطْوَةٍ يَخْطُوهَا عِبَادَةَ سَنَةٍ صِيَامِهَا وَقِيَامِهَا»
+        <span class="rawi">(رواه عبادة بن الصامت رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ubadah bin Shamit radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Barangsiapa mandi pada hari Jumat dengan niat yang tulus, tidak ada air yang mengalir melewati sehelai rambut pun di tubuhnya melainkan akan bersinar menjadi cahaya, sehingga seluruh tubuhnya menjadi cahaya pada hari Kiamat di tempat berkumpul (mahsyar)... Barangsiapa mandi pada hari Jumat, mengenakan pakaiannya, lalu keluar dari pintu rumahnya berjalan menuju shalat Jumat, Allah akan mencatat baginya pada setiap langkah yang ia ayunkan pahala ibadah setahun penuh berupa puasa dan qiyamul lailnya."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini merinci keutamaan luar biasa dari amalan-amalan hari Jumat: mandi dengan niat tulus, berjalan kaki menuju masjid, menjaga adab di dalam masjid, membaca Surat Al-Kahfi, hingga shalat sunnah sebelum khutbah — semuanya berpahala berlipat ganda yang luar biasa besar.</p>
+      <p><span class="sub">2. Rincian Amalan Jumat</span>Hadits ini juga menyebutkan: setiap jamaah yang menjaga adab di masjid dicatat pahala 25 kali shalat untuk setiap orang yang turut shalat Jumat bersamanya; membaca Surat Al-Kahfi menghasilkan "tiang cahaya" yang membentang hingga Masjidil Haram (atau Baitul Makmur bila shalat di Makkah), diisi para malaikat yang memintakan ampunan; serta shalat sunnah 4 rakaat sebelum khutbah dengan bacaan tertentu setara menunaikan hak Jumat sebagaimana dilakukan para malaikat.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat mendorong santri mempersiapkan hari Jumat dengan sungguh-sungguh: mandi, berpakaian rapi, berjalan kaki jika memungkinkan, datang lebih awal, membaca Al-Kahfi, dan menjaga adab selama di masjid.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Buat checklist amalan Jumat bersama santri: mandi, wangi-wangian, pakaian terbaik, baca Al-Kahfi, datang awal, shalat sunnah, menjaga adab.</li>
+          <li>Biasakan membaca Surat Al-Kahfi bersama setiap Jumat pagi di kelas/majelis.</li>
+          <li>Diskusikan mengapa hari Jumat disebut "haji mini" bagi umat Islam yang tidak mampu berhaji.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 34 ==================== -->
+  <article class="hadith-card" id="hadits-34">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-34</span>
+      <span class="title-ar">الحديث الرابع والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَلِيِّ بْنِ الْحُسَيْنِ عَنْ جَدِّهِ عَنْ رَسُولِ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ قَالَ: «أَرْبَعُ خِصَالٍ مَنْ كُنَّ فِيهِ كَمَلَ إِسْلَامُهُ وَلَوْ كَانَ مِنْ قَرْنِهِ إِلَى قَدَمِهِ خَطَايَا: الصِّدْقُ، وَالشُّكْرُ، وَالْحَيَاءُ، وَحُسْنُ الْخُلُقِ»
+        <span class="rawi">(رواه علي بن الحسين عن جده)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ali bin al-Husain, dari kakeknya, dari Rasulullah ﷺ, beliau bersabda: "Empat perkara, barangsiapa memilikinya maka sempurnalah keislamannya sekalipun dari ujung rambut sampai kaki penuh dengan kesalahan: kejujuran, syukur, malu, dan akhlak yang baik."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan bahwa empat sifat — jujur, syukur, malu, dan akhlak baik — adalah fondasi kesempurnaan keislaman seseorang, bahkan dapat menutupi banyak kekurangan dan kesalahan lainnya.</p>
+      <p><span class="sub">2. Kisah Pendukung — Ja'far Sang Burung Terbang</span>Ja'far bin Abi Thalib (Ja'far ath-Thayyar) radhiyallahu 'anhu diberi dua sayap hijau berhias permata oleh Allah untuk terbang bersama malaikat setelah gugur syahid. Ketika ditanya Nabi ﷺ amal apa yang mengantarkannya pada kemuliaan itu, Ja'far menjawab bahwa ia menghindari tiga hal sejak masa jahiliah hingga Islam: berbohong, berzina, dan mabuk. Alasannya sangat logis dan mendalam — ia berpikir bahwa pembohong akan dicurigai dan dipermalukan, pezina akan melukai kehormatan orang lain sebagaimana ia sendiri tidak akan rela jika keluarganya diperlakukan demikian, dan pemabuk akan kehilangan akal sehingga ditertawakan orang. Jibril membenarkan bahwa kedua sayap itu diberikan atas ketiga hal yang ia jauhi tersebut.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menggunakan kisah Ja'far untuk mengajarkan bahwa akal sehat dan hati nurani (bukan hanya perintah agama semata) sesungguhnya sudah cukup untuk mengenali keburukan dosa-dosa besar — sehingga menguatkan pemahaman bahwa syariat Islam selaras dengan fitrah manusia.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Bahas empat sifat (jujur, syukur, malu, akhlak baik) dan minta santri memberi contoh penerapannya sehari-hari.</li>
+          <li>Diskusikan kisah Ja'far: bagaimana logika sederhana (empati) bisa menuntun seseorang menjauhi dosa besar bahkan sebelum mengenal Islam?</li>
+          <li>Ajak santri merenungkan: sifat mana dari keempatnya yang paling perlu mereka perkuat saat ini?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 35 ==================== -->
+  <article class="hadith-card" id="hadits-35">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-35</span>
+      <span class="title-ar">الحديث الخامس والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ رَضِيَ اللهُ تَعَالَى عَنْهُ عَنِ النَّبِيِّ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ قَالَ: «مَنْ قَالَ حِينَ يَأْوِي إِلَى فِرَاشِهِ: أَسْتَغْفِرُ اللهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ، ثَلَاثَ مَرَّاتٍ، غَفَرَ اللهُ لَهُ ذُنُوبَهُ وَإِنْ كَانَتْ مِثْلَ زَبَدِ الْبَحْرِ، وَإِنْ كَانَتْ مِثْلَ عَدَدِ وَرَقِ الْأَشْجَارِ، وَإِنْ كَانَتْ مِثْلَ عَدَدِ رَمْلِ عَالِجٍ، وَإِنْ كَانَتْ مِثْلَ أَيَّامِ الدُّنْيَا»
+        <span class="rawi">(رواه أبو سعيد الخدري رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Sa'id al-Khudri radhiyallahu 'anhu, dari Nabi ﷺ, beliau bersabda: "Barangsiapa membaca ketika hendak tidur: 'Aku memohon ampun kepada Allah Yang Maha Agung, yang tidak ada tuhan selain Dia, Yang Maha Hidup lagi Maha Berdiri Sendiri, dan aku bertobat kepada-Nya' sebanyak tiga kali, Allah akan mengampuni dosa-dosanya sekalipun sebanyak buih di lautan, sebanyak dedaunan pepohonan, sebanyak butiran pasir, dan sekalipun sebanyak hari-hari dunia."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini mengajarkan zikir istighfar ringan sebelum tidur yang pahalanya luar biasa besar — menghapus dosa dalam jumlah yang digambarkan dengan perumpamaan-perumpamaan yang tak terhingga banyaknya.</p>
+      <p><span class="sub">2. Penguat — Mimpi Bertemu Rasulullah ﷺ</span>Abu Sahal al-Muadzin, seorang yang saleh, bermimpi bertemu Rasulullah ﷺ didampingi Abu Bakar dan Umar, lalu menanyakan langsung keabsahan hadits ini kepada beliau, dan Rasulullah ﷺ mengangguk membenarkannya — sebuah penguat riwayat yang menambah keyakinan akan keutamaan zikir ini.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat membiasakan santri membaca doa istighfar ini tiga kali setiap menjelang tidur sebagai penutup hari, sekaligus melatih kebiasaan muhasabah diri sebelum beristirahat.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Hafalkan bacaan istighfar ini bersama santri dan biasakan membacanya setiap malam sebelum tidur.</li>
+          <li>Diskusikan makna filosofis "dosa sebanyak buih lautan" — betapa luasnya rahmat Allah dibanding dosa manusia.</li>
+          <li>Jadikan momen sebelum tidur sebagai waktu refleksi harian: apa kebaikan dan kesalahan yang dilakukan hari ini?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 36 ==================== -->
+  <article class="hadith-card" id="hadits-36">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-36</span>
+      <span class="title-ar">الحديث السادس والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ عَلِيِّ بْنِ أَبِي طَالِبٍ كَرَّمَ اللهُ وَجْهَهُ أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «إِنَّ فَاتِحَةَ الْكِتَابِ، وَآيَةَ الْكُرْسِيِّ، وَآيَتَيْنِ مِنْ آلِ عِمْرَانَ... لَمَّا أَرَادَ اللهُ تَعَالَى أَنْ يُنْزِلَهُنَّ تَعَلَّقْنَ بِالْعَرْشِ فَقُلْنَ: أَتُهْبِطُنَا إِلَى أَرْضِكَ وَإِلَى مَنْ يَعْصِيكَ؟ قَالَ اللهُ تَعَالَى: وَعِزَّتِي وَجَلَالِي، لَا يَقْرَؤُكُنَّ أَحَدٌ مِنْ عِبَادِي دُبُرَ كُلِّ صَلَاةٍ إِلَّا جَعَلْتُ الْجَنَّةَ مَثْوَاهُ»
+        <span class="rawi">(رواه علي بن أبي طالب كرم الله وجهه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ali bin Abi Thalib karramallahu wajhah, ia berkata: Rasulullah ﷺ bersabda: "Sesungguhnya Surat Al-Fatihah, Ayat Kursi, dan dua ayat dari Surat Ali 'Imran (ayat 18-19 dan 26-27)... ketika Allah hendak menurunkannya, ayat-ayat itu bergantung di 'Arsy sambil berkata: 'Apakah Engkau akan menurunkan kami ke bumi-Mu, kepada orang yang akan bermaksiat kepada-Mu?' Allah berfirman: 'Demi kemuliaan dan keagungan-Ku, tidaklah seorang hamba-Ku membaca kalian setiap selesai shalat, melainkan Aku jadikan surga sebagai tempat kembalinya.'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan keagungan Al-Fatihah, Ayat Kursi, dan ayat-ayat pilihan dari Ali 'Imran — digambarkan secara puitis "khawatir" diturunkan ke bumi yang penuh maksiat, namun Allah menjamin siapa saja yang rutin membacanya setelah shalat akan dijamin surga, dilindungi dari musuh, dan dipenuhi 70 hajatnya setiap hari.</p>
+      <p><span class="sub">2. Kisah Pendukung — Nauf al-Khawari</span>Seorang murid Nabi Isa bernama Nauf al-Khawari pergi berdakwah ke istana Raja Persia. Ia menunjukkan mukjizat mengusir setan hanya dengan mengucap basmalah, hingga menyadarkan seorang patih untuk beriman secara diam-diam. Ketika kuda kesayangan raja mati, Nauf menghidupkannya kembali dengan mengajak raja, ayahnya, dan istrinya masing-masing memegang satu kaki kuda sambil mengucap kalimat tauhid — kaki-kaki itu bergerak satu demi satu, dan akhirnya seluruh kuda hidup kembali setelah seluruh rakyat ikut mengucapkannya, sehingga mereka semua masuk Islam.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat membiasakan santri membaca Al-Fatihah, Ayat Kursi, dan ayat-ayat Ali 'Imran ini setelah shalat fardhu sebagai wirid harian, sekaligus menjadikan kisah Nauf sebagai motivasi bahwa kalimat tauhid memiliki kekuatan luar biasa.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Susun paket wirid ba'da shalat: Al-Fatihah, Ayat Kursi, dan dua ayat Ali 'Imran, lalu praktikkan bersama.</li>
+          <li>Ceritakan kisah Nauf al-Khawari sebagai ilustrasi kekuatan kalimat tauhid dalam dakwah.</li>
+          <li>Diskusikan makna metaforis "ayat-ayat bergantung di 'Arsy" — bagaimana ini menggambarkan kemuliaan wahyu Al-Qur'an?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 37 ==================== -->
+  <article class="hadith-card" id="hadits-37">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-37</span>
+      <span class="title-ar">الحديث السابع والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ تَعَالَى عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «إِذَا جَلَسَ أَحَدُكُمْ فِي مَجْلِسٍ فَلَا يَبْرَحَنَّ حَتَّى يَقُولَ ثَلَاثَ مَرَّاتٍ: سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا أَنْتَ، أَغْفِرْ لِي وَتُبْ عَلَيَّ. إِنْ كَانَ فِي مَجْلِسِ خَيْرٍ كَانَ كَالطَّابَعِ عَلَيْهِ، وَإِنْ كَانَ فِي مَجْلِسِ لَغْوٍ كَانَ كَفَّارَةً لِمَا كَانَ فِي ذَلِكَ الْمَجْلِسِ»
+        <span class="rawi">(رواه أبو هريرة رضي الله تعالى عنه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Abu Hurairah radhiyallahu 'anhu, ia berkata: Rasulullah ﷺ bersabda: "Apabila salah seorang dari kalian duduk dalam suatu majelis, janganlah ia beranjak sebelum membaca tiga kali: 'Maha Suci Engkau, ya Allah, dan dengan memuji-Mu, aku bersaksi bahwa tidak ada tuhan selain Engkau, ampunilah aku dan terimalah tobatku.' Jika majelis itu adalah majelis kebaikan, bacaan itu menjadi seperti stempel penguat baginya; dan jika majelis itu adalah majelis yang sia-sia, bacaan itu menjadi penebus atas apa yang terjadi di majelis tersebut."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Doa penutup majelis ini (dikenal sebagai Kaffaratul Majlis) berfungsi ganda: mengokohkan pahala jika majelis itu baik, atau menghapus dosa jika majelis itu sia-sia/tidak bermanfaat. Ini adalah amalan ringan yang sangat dianjurkan diucapkan di akhir setiap perkumpulan.</p>
+      <p><span class="sub">2. Kisah Pendukung — Orang-orang Fasik yang Bertobat</span>Abu Yazid al-Busthami bermimpi mendapat kabar bahwa seorang budak pemabuk akan menjadi tetangganya di surga. Setelah menempuh perjalanan jauh dan awalnya kecewa mendapati budak itu memang berkumpul dengan para pemabuk, ia justru dipanggil oleh budak tersebut yang ternyata mengetahui rahasia mimpinya. Budak itu menjelaskan bahwa dari 80 orang fasik yang berkumpul, ia telah berhasil menyadarkan 40 orang untuk bertobat menjadi teman-tetangganya kelak di surga, dan meminta Abu Yazid membantu menyadarkan 40 sisanya. Mendengar hal ini, seluruh 40 orang yang tersisa pun bertobat seketika, sehingga genap 82 orang menjadi penghuni surga.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat membiasakan santri mengucapkan doa Kaffaratul Majlis setiap mengakhiri pertemuan/kelas, sekaligus mengambil pelajaran dari kisah Abu Yazid tentang pentingnya tidak berputus asa mendakwahi orang yang tampak jauh dari kebaikan.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Ajarkan dan biasakan membaca doa Kaffaratul Majlis di akhir setiap pelajaran/pertemuan kelas.</li>
+          <li>Ceritakan kisah Abu Yazid al-Busthami sebagai teladan untuk tidak menghakimi seseorang hanya dari penampilan luar.</li>
+          <li>Diskusikan: mengapa doa yang sama bisa berfungsi sebagai "penguat pahala" sekaligus "penebus dosa" tergantung konteks majelisnya?</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 38 ==================== -->
+  <article class="hadith-card" id="hadits-38">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-38</span>
+      <span class="title-ar">الحديث الثامن والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ سَعِيدِ بْنِ أَبِي بُرْدَةَ عَنْ أَبِيهِ عَنِ النَّبِيِّ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ أَنَّهُ قَالَ: «إِذَا اجْتَمَعَ أَهْلُ النَّارِ فِي النَّارِ، وَمَعَهُمْ مَنْ شَاءَ اللهُ تَعَالَى مِنْ أَهْلِ الْقِبْلَةِ، قَالَ الْكُفَّارُ لِلْمُسْلِمِينَ: أَلَمْ تَكُونُوا مُسْلِمِينَ؟ قَالُوا: بَلَى. قَالُوا: فَمَا أَغْنَى عَنْكُمْ إِسْلَامُكُمْ وَقَدْ صِرْتُمْ مَعَنَا فِي النَّارِ؟ قَالُوا: كَانَتْ لَنَا ذُنُوبٌ فَأُخِذْنَا بِهَا. فَسَمِعَ اللهُ مَا قَالُوا، فَأَمَرَ بِإِخْرَاجِ مَنْ كَانَ مِنْ أَهْلِ الْقِبْلَةِ فَأُخْرِجُوا. فَلَمَّا رَأَى الْكُفَّارُ ذَلِكَ قَالُوا: يَا لَيْتَنَا كُنَّا مُسْلِمِينَ»
+        <span class="rawi">(رواه سعيد بن أبي بردة عن أبيه)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Sa'id bin Abu Burdah, dari ayahnya, dari Nabi ﷺ, beliau bersabda: "Ketika penghuni neraka telah berkumpul di dalamnya, bersama mereka orang-orang ahli kiblat (muslim berdosa besar) yang dikehendaki Allah, orang-orang kafir berkata kepada kaum muslim: 'Bukankah kalian dahulu muslim?' Mereka menjawab: 'Benar.' Orang-orang kafir berkata: 'Lalu apa gunanya keislaman kalian, sedangkan kalian tetap bersama kami di neraka?' Mereka menjawab: 'Kami memiliki dosa-dosa sehingga kami disiksa karenanya.' Allah pun mendengar ucapan mereka, lalu memerintahkan agar ahli kiblat itu dikeluarkan, maka mereka pun dikeluarkan. Ketika orang-orang kafir menyaksikan hal itu, mereka berkata: 'Alangkah baiknya seandainya dahulu kami adalah orang-orang muslim.'"</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits ini menegaskan bahwa keislaman, sekalipun disertai dosa besar yang mengantarkan seseorang ke neraka untuk sementara, tetap menjadi jaminan keluarnya seseorang dari neraka pada akhirnya — sebuah perbedaan fundamental dengan kekufuran yang bersifat kekal di neraka.</p>
+      <p><span class="sub">2. Kisah Pendukung — "Ya Hannan Ya Mannan"</span>Malaikat Jibril mendengar rintihan seorang lelaki dari umat Muhammad ﷺ yang telah 40.000 tahun berada di neraka sambil terus menyeru "Ya Hannaan Ya Mannaan" (Wahai Yang Maha Pengasih, wahai Yang Maha Pemberi). Karena kecintaannya kepada Nabi Muhammad ﷺ, Jibril memohon izin Allah untuk mensyafaatinya. Setelah pencarian panjang oleh Malaikat Malik di kedalaman neraka yang paling dahsyat, lelaki itu akhirnya ditemukan dalam kondisi mengenaskan, dibebaskan dari ular dan belenggu, lalu dibawa menghadap Allah. Ia mengakui dosanya dan memohon ampun, hingga Allah mengampuninya, memandikannya dengan air Kautsar, dan menyerahkannya kepada Nabi Muhammad ﷺ di surga sebagai bentuk syafaat Jibril karena kecintaannya kepada beliau.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Guru dapat menanamkan harapan (raja') yang kuat kepada santri bahwa keislaman dan tauhid adalah jaminan keselamatan akhir, sekalipun seseorang harus menanggung konsekuensi dosa terlebih dahulu — sekaligus peringatan agar tidak menyepelekan dosa karena bisa membawa siksaan yang sangat lama.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan perbedaan mendasar antara siksa muslim berdosa (sementara) dan siksa kafir (kekal) menurut akidah Ahlus Sunnah.</li>
+          <li>Ceritakan kisah "Ya Hannan Ya Mannan" untuk menanamkan harapan sekaligus kehati-hatian terhadap dosa.</li>
+          <li>Ajarkan zikir "Ya Hannaan Ya Mannaan" sebagai salah satu doa yang bisa diamalkan sehari-hari.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 39 ==================== -->
+  <article class="hadith-card" id="hadits-39">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-39</span>
+      <span class="title-ar">الحديث التاسع والثلاثون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنْ مُجَاهِدٍ عَنْ سَلْمَانَ رَضِيَ اللهُ تَعَالَى عَنْهُمَا عَنِ النَّبِيِّ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «مَنْ حَفِظَ عَلَى أُمَّتِي هَذِهِ الْأَرْبَعِينَ حَدِيثًا دَخَلَ الْجَنَّةَ، وَحَشَرَهُ اللهُ تَعَالَى مَعَ الْأَنْبِيَاءِ وَالْعُلَمَاءِ يَوْمَ الْقِيَامَةِ». فَقُلْنَا: يَا رَسُولَ اللهِ، أَيَّ الْأَرْبَعِينَ حَدِيثًا؟ فَقَالَ عَلَيْهِ الصَّلَاةُ وَالسَّلَامُ: «أَنْ تُؤْمِنَ بِاللهِ وَالْيَوْمِ الْآخِرِ وَالْمَلَائِكَةِ وَالْكِتَابِ وَالنَّبِيِّينَ وَالْبَعْثِ بَعْدَ الْمَوْتِ وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ مِنَ اللهِ تَعَالَى، وَتَشْهَدَ أَنْ لَا إِلَهَ إِلَّا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ...»
+        <span class="rawi">(رواه مجاهد عن سلمان رضي الله تعالى عنهما)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Mujahid, dari Salman radhiyallahu 'anhuma, dari Nabi ﷺ: "Barangsiapa dari umatku menjaga 40 hadits ini, ia akan masuk surga, dan Allah akan mengumpulkannya bersama para nabi dan ulama pada hari Kiamat." Kami bertanya: "Wahai Rasulullah, 40 hadits yang mana?" Beliau menjawab: "(Yaitu) engkau beriman kepada Allah, hari akhir, para malaikat, kitab-kitab, para nabi, kebangkitan setelah mati, dan takdir baik-buruknya dari Allah; engkau bersaksi tiada tuhan selain Allah dan Muhammad adalah utusan-Nya..." — beliau kemudian merinci puluhan poin lainnya: mendirikan shalat dengan sempurna, menunaikan zakat, puasa Ramadhan, haji bagi yang mampu, shalat sunnah 12 rakaat plus witir 3 rakaat, tidak menyekutukan Allah, berbakti kepada orang tua, menjauhi harta anak yatim dan riba, menjauhi khamr, tidak bersumpah/bersaksi palsu, tidak mengikuti hawa nafsu, tidak menggibah, menjaga kehormatan orang lain, bersabar atas musibah, tidak berputus asa dari rahmat Allah, mendahulukan akhirat atas dunia, dermawan kepada saudara muslim, jujur, mendidik keluarga dengan baik, menyambung silaturahmi, memperbanyak zikir, tidak meninggalkan Al-Qur'an dan shalat Jumat/jamaah/hari raya, serta memperlakukan orang lain sebagaimana ingin diperlakukan.</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits penutup ini secara istimewa menjelaskan bahwa "40 hadits" yang dimaksud sesungguhnya adalah rangkaian pokok-pokok akidah dan akhlak Islam yang komprehensif — mencakup rukun iman, rukun Islam, dan puluhan adab keseharian, sebagai satu paket "hadits" yang jika dijaga dan diamalkan akan mengantarkan pada surga.</p>
+      <p><span class="sub">2. Balasan Menjaga 40 Hadits</span>Rasulullah ﷺ menjanjikan berbagai keutamaan luar biasa: dikumpulkan bersama para nabi dan ulama, diberi kalung cahaya di hari Kiamat, diberi izin mensyafaati puluhan ribu manusia, diberi pahala setara 40 wali Abdal, diberi 1000 malaikat pembangun istana di surga untuk setiap hadits yang dijaga, diharamkan jasadnya dari neraka, dan ditempatkan setara kedudukan para ulama.</p>
+      <p><span class="sub">3. Nilai Pendidikan</span>Ini adalah momentum tepat bagi guru untuk mengajak santri merangkum kembali seluruh pelajaran akidah dan akhlak yang telah dipelajari sepanjang kitab ini menjadi satu kesatuan yang utuh dan mudah diingat.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Buat rangkuman/infografis pribadi berisi poin-poin akidah dan akhlak dari hadits ini sebagai "pedoman hidup harian" santri.</li>
+          <li>Diskusikan mengapa penutup kitab menyatukan seluruh pokok ajaran menjadi satu "hadits besar" yang komprehensif.</li>
+          <li>Motivasi santri untuk terus mempelajari dan mengamalkan, bukan sekadar menghafal daftar ini.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ==================== HADITS 40 (PENUTUP) ==================== -->
+  <article class="hadith-card" id="hadits-40">
+    <div class="hadith-head">
+      <span class="badge">Hadits ke-40 (Penutup)</span>
+      <span class="title-ar">الحديث الأربعون</span>
+    </div>
+
+    <div class="block">
+      <h4>Teks Arab</h4>
+      <div class="arab-text">
+        عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا أَنَّهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «يَخْرُجُ فِي آخِرِ الزَّمَانِ أَقْوَامٌ وُجُوهُهُمْ وُجُوهُ الْآدَمِيِّينَ وَقُلُوبُهُمْ قُلُوبُ الشَّيَاطِينِ، وَأَمْثَالُهُمْ كَأَمْثَالِ الذِّئَابِ الضَّوَارِي، لَيْسَ فِي قُلُوبِهِمْ شَيْءٌ مِنَ الرَّحْمَةِ، سَفَّاكُونَ لِلدِّمَاءِ لَا يَرْغَبُونَ عَنِ الْقَبِيحِ...» وَقَالَ رَسُولُ اللهِ صَلَّى اللهُ تَعَالَى عَلَيْهِ وَسَلَّمَ: «سَيَأْتِي عَلَى النَّاسِ زَمَانٌ يُخَلِّقُونَ فِيهِ سُنَّتِي وَيُجَدِّدُونَ الْبِدْعَةَ، فَمَنِ اتَّبَعَ سُنَّتِي يَوْمَئِذٍ صَارَ غَرِيبًا وَبَقِيَ وَحِيدًا»
+        <span class="rawi">(رواه ابن عباس رضي الله عنهما)</span>
+      </div>
+    </div>
+
+    <div class="block translation">
+      <h4>Terjemahan</h4>
+      <p>Dari Ibnu Abbas radhiyallahu 'anhuma, ia berkata: Rasulullah ﷺ bersabda: "Akan muncul di akhir zaman kaum-kaum yang wajah mereka adalah wajah manusia namun hati mereka adalah hati setan, keadaan mereka bagaikan serigala buas — tiada sedikit pun kasih sayang di hati mereka, gemar menumpahkan darah, dan tidak segan berbuat keji..." Rasulullah ﷺ juga bersabda: "Akan datang suatu zaman atas manusia ketika mereka melapukkan sunnahku dan memperbarui bid'ah. Maka barangsiapa mengikuti sunnahku pada masa itu, ia akan menjadi orang asing dan tinggal sendirian."</p>
+    </div>
+
+    <div class="block explanation">
+      <h4>Penjelasan &amp; Kupasan Pelajaran</h4>
+      <p><span class="sub">1. Makna Umum</span>Hadits penutup kitab ini berisi peringatan tentang tanda-tanda akhir zaman: manusia berhati keji, hukum bid'ah dianggap sunnah, dan orang yang berpegang teguh pada sunnah Nabi ﷺ justru dianggap asing dan kesepian karena minoritas.</p>
+      <p><span class="sub">2. Kisah Pendukung — Seruan Peringatan di Tepi Laut</span>Empat ulama sufi (Shalih al-Murri, Abdul Wahid bin Zaid, 'Atabah al-Ghulam, dan Salmah al-Aswad) mendengar seruan gaib dari tepi laut yang mengingatkan bahaya terlena oleh makanan dan kelezatan nafsu — hingga salah satu dari mereka pingsan mendengarnya, dan mereka pun meninggalkan hidangan tanpa mencicipinya sedikit pun, sebagai teladan zuhud yang ekstrem.</p>
+      <p><span class="sub">3. Dialog tentang Golongan Istimewa di Akhir Zaman</span>Para sahabat bertanya apakah ada kaum sesudah mereka yang lebih utama. Nabi ﷺ menjawab ada — mereka yang tidak pernah bertemu Nabi ﷺ maupun menerima wahyu langsung, namun hati mereka "meleleh" dalam kepasrahan seperti garam larut dalam air, hidup di tengah kerusakan zaman "seperti ulat dalam cuka", dan menjaga agama mereka "seperti memegang bara api" — sulit namun tetap teguh dipegang.</p>
+      <p><span class="sub">4. Nilai Pendidikan &amp; Penutup Kitab</span>Kitab ini ditutup dengan pesan yang sangat relevan bagi santri masa kini: keteguhan memegang sunnah di tengah zaman yang penuh godaan bid'ah dan kerusakan moral memang akan terasa "asing" dan berat, namun justru itulah yang paling dimuliakan Allah — sebagaimana perumpamaan memegang bara api yang menyakitkan namun bernilai tinggi.</p>
+
+      <div class="teaching-box">
+        <h5>Panduan Mengajar</h5>
+        <ul>
+          <li>Diskusikan tanda-tanda akhir zaman dalam hadits ini dan kaitkan dengan fenomena sosial masa kini secara bijak.</li>
+          <li>Renungkan bersama perumpamaan "memegang bara api" — bagaimana rasanya istiqamah di tengah lingkungan yang tidak mendukung kebaikan?</li>
+          <li>Sebagai penutup kajian kitab Ushfuriyah, ajak santri merangkum pelajaran paling berkesan dari keseluruhan 40 hadits yang telah dipelajari.</li>
+          <li>Tutup kajian dengan doa dan niat untuk terus mengamalkan seluruh nasihat dalam kitab ini dalam kehidupan sehari-hari.</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <section class="intro" id="kolofon">
+    <h3>🎉 Kitab Lengkap — 40 Hadits</h3>
+    <p>Alhamdulillah, seluruh <strong>40 hadits Kitab Al-Mawa'izh Al-'Ushfuriyyah</strong> telah tersaji lengkap di atas — teks Arab asli, terjemahan, penjelasan mendalam, serta panduan mengajar untuk setiap babnya. Semua matan hadits dan kisah pendukungnya telah dicroscek ke berbagai sumber terpercaya (naskah terjemah resmi, situs kajian pesantren, dan referensi hadits) agar akurat sesuai kitab aslinya.</p>
+    <p>Kitab ini ditutup sendiri oleh pengarangnya, Syekh Muhammad bin Abu Bakar al-'Ushfuri, dengan doa dan harapan agar risalah kecil ini bermanfaat bagi siapa saja yang mempelajarinya, sebagaimana beliau tuturkan dalam muqaddimah — bahwa kitab ini disusun setelah perjalanan panjang tobat dan pencarian keridhaan Allah.</p>
+  </section>
+
+  <div class="note-box">
+    <strong>Catatan akurasi:</strong> Sebagian riwayat pendukung (hikayah/kisah) dalam kitab klasik seperti ini diturunkan secara turun-temurun dalam tradisi pesantren dan kadang memiliki variasi sanad antar naskah. Apabila lembaga Anda memiliki naskah cetak dengan redaksi sedikit berbeda pada bagian tertentu, hal itu wajar dalam tradisi periwayatan kitab-kitab mawa'izh seperti ini. Bila diperlukan penyesuaian dengan naskah spesifik yang dipakai di lembaga Anda, silakan unggah halaman terkait untuk dicocokkan.
+  </div>
+
+  <section class="intro" id="cara-pakai">
+    <h3>Panduan Penggunaan untuk Pengajar</h3>
+    <ul>
+      <li>Gunakan urutan <strong>Baca Arab bersama → Terjemahkan per kalimat → Diskusi makna → Kaitkan dengan kehidupan santri</strong> agar pembelajaran aktif.</li>
+      <li>Kotak hijau "Panduan Mengajar" di tiap hadits bisa langsung dipakai sebagai bahan diskusi kelas atau tugas reflektif.</li>
+      <li>Halaman ini dapat dicetak (Ctrl/Cmd+P) untuk dijadikan modul/hand-out santri.</li>
+      <li>Font Arab menggunakan <em>Scheherazade New</em> agar harakat terbaca jelas — cocok untuk santri tingkat pemula yang masih belajar membaca teks berharakat.</li>
+      <li>Dengan 40 hadits, kitab ini ideal dikhatamkan dalam 40 hari atau disesuaikan dengan kalender bulan Ramadhan (1 hadits per hari).</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 by <strong>Achmad Fauzi</strong> &nbsp;|&nbsp; Email: vaozeei@gmail.com
+</footer>
+
+<script>
+  (function(){
+    var fab = document.getElementById('tocToggle');
+    var panel = document.getElementById('tocPanel');
+    var overlay = document.getElementById('tocOverlay');
+    var iconOpen = document.getElementById('tocIconOpen');
+    var iconClose = document.getElementById('tocIconClose');
+    var links = panel.querySelectorAll('.toc-link');
+
+    function openMenu(){
+      panel.classList.add('is-open');
+      overlay.classList.add('is-open');
+      panel.setAttribute('aria-hidden', 'false');
+      fab.setAttribute('aria-expanded', 'true');
+      iconOpen.style.display = 'none';
+      iconClose.style.display = '';
+    }
+    function closeMenu(){
+      panel.classList.remove('is-open');
+      overlay.classList.remove('is-open');
+      panel.setAttribute('aria-hidden', 'true');
+      fab.setAttribute('aria-expanded', 'false');
+      iconOpen.style.display = '';
+      iconClose.style.display = 'none';
+    }
+    function toggleMenu(){
+      if (panel.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
+    }
+
+    fab.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', closeMenu);
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') closeMenu();
+    });
+    links.forEach(function(link){
+      link.addEventListener('click', function(){
+        setTimeout(closeMenu, 150);
+      });
+    });
+
+    // Highlight the section currently in view
+    var sections = [];
+    links.forEach(function(link){
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({ id: id, el: el, link: link });
+    });
+    function onScroll(){
+      var pos = window.scrollY + 120;
+      var current = null;
+      for (var i = 0; i < sections.length; i++){
+        if (sections[i].el.offsetTop <= pos) current = sections[i];
+      }
+      links.forEach(function(l){ l.classList.remove('is-active'); });
+      if (current) current.link.classList.add('is-active');
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+</body>
+</html>

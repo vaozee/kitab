@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panduan Belajar Akidah Islamiyyah — Ilmu Tauhid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBF7EF;
+    --bg-alt: #F3ECDD;
+    --panel: #FFFFFF;
+    --ink: #23342E;
+    --ink-soft: #5B6B62;
+    --emerald: #0F5C43;
+    --emerald-deep: #0A4433;
+    --gold: #B8862E;
+    --gold-soft: #E7C97A;
+    --line: #E4DAC2;
+    --shadow: 0 10px 30px -14px rgba(20,44,34,.25);
+    --radius: 14px;
+    --font-arabic: 'Amiri', serif;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Lora', serif;
+    --font-ui: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 500px at 10% -10%, #FFFDF7 0%, transparent 60%),
+      radial-gradient(900px 500px at 110% 10%, #FDF6E6 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ===== Ornamental divider ===== */
+  .ornament{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin:0 auto; max-width:340px; color:var(--gold);
+  }
+  .ornament::before,.ornament::after{
+    content:""; flex:1; height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);
+  }
+  .ornament svg{flex:none;}
+
+  /* ===== Header / Hero ===== */
+  header.hero{
+    position:relative;
+    padding:64px 20px 46px;
+    text-align:center;
+    background:
+      linear-gradient(180deg, rgba(15,92,67,0.06), rgba(15,92,67,0) 70%);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  header.hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(184,134,46,0.05) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(-45deg, rgba(15,92,67,0.045) 0 2px, transparent 2px 26px);
+    pointer-events:none;
+  }
+  .arch{
+    position:relative; z-index:1;
+    width:88px; height:110px; margin:0 auto 18px;
+    border:2.5px solid var(--gold);
+    border-top-left-radius:70px; border-top-right-radius:70px;
+    display:flex; align-items:flex-end; justify-content:center;
+    padding-bottom:12px;
+  }
+  .arch span{font-family:var(--font-arabic); color:var(--emerald); font-size:26px; font-weight:700;}
+  .eyebrow{
+    position:relative; z-index:1;
+    font-family:var(--font-ui); letter-spacing:.22em; text-transform:uppercase;
+    font-size:12px; color:var(--gold); font-weight:600; margin-bottom:10px;
+  }
+  h1.title{
+    position:relative; z-index:1;
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(34px,5vw,54px);
+    color:var(--emerald-deep);
+    margin:0 0 6px;
+  }
+  .title-ar{
+    position:relative; z-index:1;
+    font-family:var(--font-arabic); font-size:clamp(24px,3.4vw,34px);
+    color:var(--emerald); margin:4px 0 16px; direction:rtl;
+  }
+  .subtitle{
+    position:relative; z-index:1;
+    font-family:var(--font-body); font-style:italic; color:var(--ink-soft);
+    font-size:17px; max-width:640px; margin:0 auto 22px;
+  }
+  .hero-tags{
+    position:relative; z-index:1;
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px;
+  }
+  .hero-tags span{
+    font-family:var(--font-ui); font-size:12.5px; font-weight:600; color:var(--emerald-deep);
+    background:var(--panel); border:1px solid var(--line); padding:6px 14px; border-radius:999px;
+  }
+
+  /* ===== Layout ===== */
+  .layout{
+    display:grid; grid-template-columns:270px 1fr; gap:0; max-width:1240px; margin:0 auto;
+  }
+  nav.toc{
+    position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+    padding:28px 18px 40px; border-right:1px solid var(--line);
+    background:linear-gradient(180deg,var(--bg-alt),var(--bg));
+  }
+  nav.toc h4{
+    font-family:var(--font-ui); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--gold); margin:0 0 12px 6px;
+  }
+  nav.toc a{
+    display:flex; gap:10px; align-items:baseline;
+    text-decoration:none; font-family:var(--font-ui); font-size:14px; font-weight:500;
+    color:var(--ink-soft); padding:9px 8px; border-radius:8px; transition:.15s;
+    border-left:2px solid transparent;
+  }
+  nav.toc a:hover{ background:rgba(15,92,67,.07); color:var(--emerald-deep); border-left-color:var(--gold);}
+  nav.toc a .num{ font-family:var(--font-arabic); color:var(--gold); font-size:16px; min-width:18px;}
+
+  main{ padding:44px clamp(18px,4vw,56px) 90px; min-width:0; }
+
+  /* ===== Section blocks ===== */
+  section.block{ margin-bottom:64px; scroll-margin-top:20px; }
+  .block-head{
+    display:flex; align-items:center; gap:16px; margin-bottom:22px;
+    padding-bottom:16px; border-bottom:2px solid var(--gold-soft);
+  }
+  .block-num{
+    font-family:var(--font-arabic); font-size:30px; color:var(--gold); font-weight:700;
+    background:var(--panel); border:1.5px solid var(--gold-soft); border-radius:12px;
+    width:52px; height:52px; display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .block-head h2{
+    font-family:var(--font-display); font-size:clamp(24px,3vw,32px); color:var(--emerald-deep); margin:0;
+    font-weight:700;
+  }
+  .block-head .ar{
+    display:block; font-family:var(--font-arabic); font-size:18px; color:var(--emerald); direction:rtl; margin-top:2px;
+  }
+  .lead{ color:var(--ink-soft); font-size:15.5px; margin:-8px 0 24px; max-width:78ch; }
+
+  /* ===== Q&A Card ===== */
+  .qa{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px; margin-bottom:16px; box-shadow:var(--shadow);
+  }
+  .qa .q{
+    display:flex; gap:10px; font-family:var(--font-ui); font-weight:700; color:var(--emerald-deep);
+    font-size:15.5px; margin-bottom:8px;
+  }
+  .qa .q .tag{
+    flex:none; font-size:10.5px; letter-spacing:.1em; background:var(--emerald); color:#fff;
+    padding:3px 9px; border-radius:999px; height:fit-content; font-family:var(--font-ui);
+  }
+  .qa .a{ color:var(--ink); font-size:15.5px; }
+  .qa .a p{ margin:0 0 10px; }
+  .qa .a p:last-child{ margin-bottom:0; }
+
+  .note{
+    margin-top:14px; padding:14px 16px; border-radius:10px;
+    background:linear-gradient(180deg,#FBF3DC,#F7ECC9);
+    border:1px solid var(--gold-soft); border-left:4px solid var(--gold);
+  }
+  .note .note-title{
+    font-family:var(--font-ui); font-weight:700; font-size:12px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:6px; display:flex; gap:6px; align-items:center;
+  }
+  .note p{ margin:0 0 6px; font-size:14.5px; color:#3B3222;}
+  .note p:last-child{margin:0;}
+
+  .dalil{
+    margin-top:12px; padding:16px 18px; border-radius:10px;
+    background:#F1F8F4; border:1px solid #CFE6DA;
+  }
+  .dalil .arabic{
+    font-family:var(--font-arabic); direction:rtl; text-align:right; font-size:22px;
+    color:var(--emerald-deep); line-height:2.1; margin-bottom:8px;
+  }
+  .dalil .terj{ font-size:14.5px; color:var(--ink-soft); font-style:italic; margin:0;}
+  .dalil .ref{ font-family:var(--font-ui); font-size:12px; color:var(--emerald); font-weight:600; margin-top:6px;}
+
+  /* ===== Table ===== */
+  .tbl-wrap{ overflow-x:auto; margin:18px 0; border-radius:var(--radius); border:1px solid var(--line); box-shadow:var(--shadow);}
+  table{ width:100%; border-collapse:collapse; background:var(--panel); font-size:14.5px; min-width:640px;}
+  thead th{
+    background:var(--emerald); color:#fff; font-family:var(--font-ui); font-weight:600;
+    text-align:left; padding:12px 14px; font-size:12.5px; letter-spacing:.03em;
+  }
+  tbody td{ padding:11px 14px; border-top:1px solid var(--line); vertical-align:top;}
+  tbody tr:nth-child(even){ background:#FBF8F0; }
+  td.ar{ font-family:var(--font-arabic); direction:rtl; text-align:right; font-size:19px; color:var(--emerald-deep); white-space:nowrap;}
+  td.small{ font-size:13px; color:var(--ink-soft);}
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:720px){ .grid2{grid-template-columns:1fr;} }
+
+  .pillbox{
+    display:flex; flex-wrap:wrap; gap:8px; margin:14px 0;
+  }
+  .pillbox .pill{
+    font-family:var(--font-ui); font-size:13px; font-weight:600; color:var(--emerald-deep);
+    background:#EAF3EE; border:1px solid #CFE6DA; padding:6px 12px; border-radius:999px;
+  }
+
+  .divider-orn{ margin:34px 0; }
+
+  blockquote.kaidah{
+    font-family:var(--font-display); font-style:italic; font-size:19px; color:var(--emerald-deep);
+    border-left:3px solid var(--gold); padding:8px 0 8px 18px; margin:16px 0;
+  }
+
+  /* ===== Footer ===== */
+  footer{
+    text-align:center; padding:34px 20px 44px; border-top:1px solid var(--line);
+    background:var(--bg-alt); font-family:var(--font-ui); font-size:13px; color:var(--ink-soft);
+  }
+  footer .fline{ margin-top:6px; }
+
+  /* ===== Mobile ===== */
+  .toc-toggle{ display:none; }
+  @media(max-width:900px){
+    .layout{ grid-template-columns:1fr; }
+    nav.toc{
+      position:relative; height:auto; border-right:none; border-bottom:1px solid var(--line);
+      display:none;
+    }
+    nav.toc.open{ display:block; }
+    .toc-toggle{
+      display:block; margin:18px auto 0; width:calc(100% - 36px); max-width:420px;
+      background:var(--emerald); color:#fff; border:none; padding:12px 16px; border-radius:10px;
+      font-family:var(--font-ui); font-weight:600; font-size:14px; cursor:pointer;
+    }
+    main{ padding:34px 18px 70px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="arch"><span>ﷲ</span></div>
+  <div class="eyebrow">Materi Ilmu Kalam · Tauhid · Akidah</div>
+  <h1 class="title">Panduan Belajar Akidah Islamiyyah</h1>
+  <div class="title-ar">جَوَاهِرُ العَقِيدَةِ الإِسْلَامِيَّة</div>
+  <p class="subtitle">Disusun dalam format tanya‑jawab agar mudah dipahami, dilengkapi dalil Al‑Qur'an berbahasa Arab, terjemahan, dan penjelasan tambahan untuk keperluan belajar‑mengajar.</p>
+  <div class="hero-tags">
+    <span>6 Rukun Iman</span>
+    <span>Dalil Naqli &amp; Aqli</span>
+    <span>Tanya Jawab</span>
+    <span>Untuk Pemula</span>
+  </div>
+</header>
+
+<button class="toc-toggle" onclick="document.querySelector('nav.toc').classList.toggle('open')">☰ Daftar Isi</button>
+
+<div class="layout">
+<nav class="toc">
+  <h4>Daftar Isi</h4>
+  <a href="#pengantar"><span class="num">۰</span> Pengantar Akidah</a>
+  <a href="#bab1"><span class="num">١</span> Iman kepada Allah</a>
+  <a href="#bab2"><span class="num">٢</span> Iman kepada Malaikat</a>
+  <a href="#bab3"><span class="num">٣</span> Iman kepada Kitab</a>
+  <a href="#bab4"><span class="num">٤</span> Iman kepada Rasul</a>
+  <a href="#bab5"><span class="num">٥</span> Iman kepada Hari Akhir</a>
+  <a href="#bab6"><span class="num">٦</span> Iman kepada Qadha &amp; Qadar</a>
+  <a href="#penutup"><span class="num">٧</span> Penutup &amp; Isu Penting</a>
+</nav>
+
+<main>
+
+<!-- ================= PENGANTAR ================= -->
+<section class="block" id="pengantar">
+  <div class="block-head">
+    <div class="block-num">۰</div>
+    <div>
+      <h2>Pengantar Akidah Islamiyyah</h2>
+      <span class="ar">مدخل إلى العقيدة الإسلامية</span>
+    </div>
+  </div>
+  <p class="lead">Sebelum masuk ke pembahasan rinci, penting memahami dasar‑dasar berikut: apa itu akidah, apa makna Islam, dan apa saja rukun (pilar) yang menjadi fondasinya.</p>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apakah makna 'Aqidah Islamiyyah?</div>
+    <div class="a"><p>'Aqidah Islamiyyah ialah perkara-perkara yang wajib diyakini oleh orang Islam, yakni hal-hal yang diyakini secara mantap oleh orang Islam akan kebenarannya, tanpa keraguan sedikit pun.</p></div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Kata <em>'aqidah</em> berasal dari akar kata Arab <span style="font-family:var(--font-arabic)">عَقَدَ</span> (‘aqada) yang berarti "mengikat dengan kuat". Karena itu akidah sering disebut juga <em>i'tiqad</em> — keyakinan yang terikat kuat di dalam hati sehingga tidak mudah goyah oleh keraguan, bisikan, atau tekanan dari luar. Akidah berbeda dengan fiqih: fiqih membahas hukum amal perbuatan (halal-haram, sah-batal), sedangkan akidah membahas keyakinan hati tentang Allah, alam gaib, dan hari akhir. Ilmu yang membahas akidah secara sistematis disebut <em>ilmu kalam</em> atau <em>ilmu tauhid</em>.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apakah makna Islam?</div>
+    <div class="a"><p>Islam adalah mengucapkan dengan lisan (bersyahadat), dan membenarkan dengan hati bahwa segala sesuatu yang dibawa oleh Nabi Muhammad ﷺ itu haq (benar).</p></div>
+    <div class="dalil">
+      <div class="arabic">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ</div>
+      <p class="terj">"Aku bersaksi bahwa tiada Tuhan yang berhak disembah selain Allah, dan aku bersaksi bahwa Muhammad adalah utusan Allah."</p>
+      <p class="ref">— Dua Kalimat Syahadat</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Definisi Islam di atas menekankan dua unsur: <strong>ucapan lisan</strong> (syahadatain) dan <strong>pembenaran hati</strong> (tashdiq bil qalb). Keduanya harus menyatu — mengucapkan tanpa meyakini disebut nifaq (kemunafikan), sedangkan meyakini dalam hati tanpa mengucapkan (bagi yang mampu) belum menggugurkan kewajiban syahadat secara lahiriah. Islam secara bahasa berarti "berserah diri" dan "kedamaian/keselamatan" — mengisyaratkan bahwa seorang muslim menyerahkan diri sepenuhnya kepada aturan Allah demi meraih keselamatan dunia-akhirat.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apakah rukun-rukun Akidah Islamiyyah?</div>
+    <div class="a"><p>Rukun akidah Islamiyyah ada enam perkara, yang dikenal sebagai <strong>Rukun Iman</strong>:</p></div>
+    <div class="pillbox">
+      <span class="pill">1. Iman kepada Allah</span>
+      <span class="pill">2. Iman kepada Malaikat</span>
+      <span class="pill">3. Iman kepada Kitab</span>
+      <span class="pill">4. Iman kepada Rasul</span>
+      <span class="pill">5. Iman kepada Hari Akhir</span>
+      <span class="pill">6. Iman kepada Qadha &amp; Qadar</span>
+    </div>
+    <div class="dalil">
+      <div class="arabic">آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ</div>
+      <p class="terj">"Rasul (Muhammad) beriman kepada apa yang diturunkan kepadanya dari Tuhannya, demikian pula orang-orang yang beriman. Semua beriman kepada Allah, malaikat-malaikat-Nya, kitab-kitab-Nya, dan rasul-rasul-Nya."</p>
+      <p class="ref">— QS. Al-Baqarah: 285</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan untuk Pengajaran</div>
+      <p>Enam rukun ini juga disebutkan Nabi ﷺ dalam <em>Hadis Jibril</em> yang masyhur, ketika Malaikat Jibril bertanya tentang iman lalu Nabi menjawab dengan enam perkara di atas. Cara mudah menghafalnya bagi pemula adalah dengan akronim <strong>"A-M-K-R-H-Q"</strong>: Allah, Malaikat, Kitab, Rasul, Hari akhir, Qadha-Qadar. Keenam rukun ini saling berkaitan: keimanan kepada Allah adalah pondasi utama, malaikat dan kitab adalah sarana wahyu, rasul adalah penyampai wahyu, hari akhir adalah tujuan akhir kehidupan, dan qadha-qadar adalah penjelas mengapa segala sesuatu terjadi sesuai kehendak Allah.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= BAB 1: ALLAH ================= -->
+<section class="block" id="bab1">
+  <div class="block-head">
+    <div class="block-num">١</div>
+    <div>
+      <h2>Iman kepada Allah Subhaanahu wa Ta'ala</h2>
+      <span class="ar">الإيمان بالله سبحانه وتعالى</span>
+    </div>
+  </div>
+  <p class="lead">Rukun pertama dan paling fundamental: meyakini bahwa Allah memiliki segala sifat kesempurnaan dan jauh dari segala kekurangan.</p>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Bagaimana cara beriman kepada Allah secara ringkas dan rinci?</div>
+    <div class="a"><p>Secara ringkas: meyakini Allah memiliki segala sifat yang sempurna dan jauh dari sifat kekurangan. Secara rinci, kita wajib mengenal <strong>13 sifat wajib</strong> bagi Allah beserta lawannya (sifat mustahil), dan satu sifat jaiz (boleh).</p></div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);color:var(--emerald-deep);font-size:22px;margin-top:30px;">Tabel 13 Sifat Wajib bagi Allah</h3>
+  <p class="lead" style="margin-top:-6px;">Setiap sifat wajib memiliki lawan berupa sifat mustahil (tidak mungkin ada pada Allah). Sifat-sifat ini terbagi 4 kategori: <em>Nafsiyah</em> (1), <em>Salbiyah</em> (5), <em>Ma'ani</em> (7 — termasuk 7 sifat turunan Ma'nawiyah).</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Sifat Wajib</th><th>Arab</th><th>Arti</th><th>Sifat Mustahil (lawannya)</th><th>Kategori</th></tr></thead>
+      <tbody>
+        <tr><td>Wujud</td><td class="ar">وُجُود</td><td>Ada</td><td>'Adam (tiada)</td><td class="small">Nafsiyah</td></tr>
+        <tr><td>Qidam</td><td class="ar">قِدَم</td><td>Terdahulu, tanpa permulaan</td><td>Huduts (baru ada)</td><td class="small">Salbiyah</td></tr>
+        <tr><td>Baqa'</td><td class="ar">بَقَاء</td><td>Kekal, tanpa akhir</td><td>Fana' (binasa)</td><td class="small">Salbiyah</td></tr>
+        <tr><td>Mukhalafatu lil Hawadits</td><td class="ar">مُخَالَفَةٌ لِلْحَوَادِث</td><td>Berbeda total dari makhluk</td><td>Mumatsalatu lil hawadits (serupa makhluk)</td><td class="small">Salbiyah</td></tr>
+        <tr><td>Qiyamuhu Binafsihi</td><td class="ar">قِيَامُهُ بِنَفْسِهِ</td><td>Berdiri sendiri, mandiri</td><td>Ihtiyaju lighairihi (butuh selain-Nya)</td><td class="small">Salbiyah</td></tr>
+        <tr><td>Wahdaniyyah</td><td class="ar">وَحْدَانِيَّة</td><td>Maha Esa</td><td>Ta'addud (berbilang/berserikat)</td><td class="small">Salbiyah</td></tr>
+        <tr><td>Qudrah</td><td class="ar">قُدْرَة</td><td>Maha Kuasa</td><td>'Ajz (lemah)</td><td class="small">Ma'ani</td></tr>
+        <tr><td>Iradah</td><td class="ar">إِرَادَة</td><td>Maha Berkehendak</td><td>Karahah (terpaksa)</td><td class="small">Ma'ani</td></tr>
+        <tr><td>'Ilm</td><td class="ar">عِلْم</td><td>Maha Mengetahui</td><td>Jahl (bodoh)</td><td class="small">Ma'ani</td></tr>
+        <tr><td>Hayah</td><td class="ar">حَيَاة</td><td>Maha Hidup</td><td>Maut (mati)</td><td class="small">Ma'ani</td></tr>
+        <tr><td>Sama'</td><td class="ar">سَمْع</td><td>Maha Mendengar</td><td>Shamam (tuli)</td><td class="small">Ma'ani</td></tr>
+        <tr><td>Bashar</td><td class="ar">بَصَر</td><td>Maha Melihat</td><td>'Umyu (buta)</td><td class="small">Ma'ani</td></tr>
+        <tr><td>Kalam</td><td class="ar">كَلَام</td><td>Maha Berfirman</td><td>Bukmu (bisu)</td><td class="small">Ma'ani</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="note-title">📘 Penjelasan Tambahan: 7 Sifat Ma'nawiyah</div>
+    <p>Dari tujuh sifat Ma'ani (Qudrah, Iradah, 'Ilm, Hayah, Sama', Bashar, Kalam) lahir tujuh sifat turunan yang disebut <em>Ma'nawiyah</em> — yaitu keadaan tetap Allah dengan sifat tersebut: Allah itu <strong>Qadiran</strong> (Yang Maha Berkuasa), <strong>Muridan</strong> (Yang Maha Berkehendak), <strong>'Aliman</strong> (Yang Maha Mengetahui), <strong>Hayyan</strong> (Yang Maha Hidup), <strong>Sami'an</strong> (Yang Maha Mendengar), <strong>Bashiran</strong> (Yang Maha Melihat), dan <strong>Mutakalliman</strong> (Yang Maha Berfirman). Sehingga totalnya dikenal sebagai <strong>20 Sifat Wajib bagi Allah</strong> jika 13 sifat di atas ditambah 7 sifat ma'nawiyah. Metode penghafalan 20 sifat ini sangat populer di pesantren-pesantren tradisional dan biasanya diajarkan sejak usia dini melalui kitab <em>'Aqidatul 'Awam</em> dan <em>Sanusiyyah</em>.</p>
+  </div>
+
+  <h3 style="font-family:var(--font-display);color:var(--emerald-deep);font-size:22px;margin-top:30px;">Dalil Al-Qur'an untuk Sebagian Sifat Wajib</h3>
+  <p class="lead" style="margin-top:-6px;">Agar pembelajaran tidak sekadar hafalan istilah, setiap sifat sebaiknya dikaitkan dengan ayat rujukannya. Berikut beberapa contoh yang bisa dipakai sebagai bahan tadabbur di kelas.</p>
+
+  <div class="dalil">
+    <div class="arabic">لَيْسَ كَمِثْلِهِ شَيْءٌ ۖ وَهُوَ السَّمِيعُ الْبَصِيرُ</div>
+    <p class="terj">"Tidak ada sesuatu pun yang serupa dengan Dia, dan Dia-lah Yang Maha Mendengar, Maha Melihat."</p>
+    <p class="ref">— QS. Asy-Syura: 11 (dalil sifat Mukhalafatu lil Hawadits, Sama', dan Bashar)</p>
+  </div>
+  <div class="dalil">
+    <div class="arabic">اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ</div>
+    <p class="terj">"Allah, tidak ada Tuhan selain Dia, Yang Maha Hidup, Yang terus-menerus mengurus (makhluk-Nya); tidak mengantuk dan tidak tidur."</p>
+    <p class="ref">— QS. Al-Baqarah: 255 (dalil sifat Hayah dan Qiyamuhu Binafsihi)</p>
+  </div>
+  <div class="dalil">
+    <div class="arabic">إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+    <p class="terj">"Sesungguhnya Allah Maha Kuasa atas segala sesuatu."</p>
+    <p class="ref">— QS. Al-Baqarah: 20 (dalil sifat Qudrah)</p>
+  </div>
+  <div class="dalil">
+    <div class="arabic">وَهُوَ بِكُلِّ شَيْءٍ عَلِيمٌ</div>
+    <p class="terj">"Dan Dia Maha Mengetahui segala sesuatu."</p>
+    <p class="ref">— QS. Al-Hadid: 3 (dalil sifat 'Ilm, sekaligus Qidam dan Baqa' — karena ayat ini juga menyebut Allah sebagai Yang Awal dan Yang Akhir)</p>
+  </div>
+  <div class="dalil">
+    <div class="arabic">قُلْ هُوَ اللَّهُ أَحَدٌ</div>
+    <p class="terj">"Katakanlah: Dialah Allah, Yang Maha Esa."</p>
+    <p class="ref">— QS. Al-Ikhlas: 1 (dalil sifat Wahdaniyyah — satu surah pendek yang merangkum keesaan Allah)</p>
+  </div>
+  <div class="note">
+    <div class="note-title">📘 Tips Pengajaran</div>
+    <p>Untuk pembelajaran anak-anak atau pemula, guru dapat meminta murid mencari sendiri satu ayat pendukung untuk tiap sifat sebagai tugas rumah (hafalan surah pendek biasanya sudah mencakup banyak sifat wajib Allah, misalnya Al-Ikhlas mencakup Wahdaniyyah, Qidam, dan Mukhalafatu lil Hawadits sekaligus). Metode "satu sifat, satu ayat, satu contoh kehidupan sehari-hari" terbukti efektif membuat konsep abstrak ilmu kalam menjadi lebih membumi.</p>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Bagaimana cara meyakini Wujud (keberadaan) Allah?</div>
+    <div class="a"><p>Hendaklah meyakini bahwa Allah itu ada, dan keberadaan Dzat-Nya itu ada dengan sendirinya tanpa memerlukan wasilah atau perantara. Keberadaan-Nya wajib adanya (wajib al-wujud), tidak mungkin Dia pernah tiada.</p></div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Dalam ilmu kalam, keberadaan sesuatu dibagi tiga: <strong>wajib al-wujud</strong> (mustahil tiada — hanya Allah), <strong>mumkin al-wujud</strong> (boleh ada boleh tiada — seluruh makhluk), dan <strong>mustahil al-wujud</strong> (mustahil ada — misalnya sekutu bagi Allah). Bukti akal sederhana atas wujud Allah: setiap benda baru (huduts) pasti ada penyebabnya (muhdits), dan rangkaian sebab-akibat itu tidak mungkin berjalan tanpa batas (tasalsul) atau berputar (daur), sehingga harus berhenti pada satu Dzat yang wajib ada dengan sendirinya — itulah Allah.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apa maksud lafadz "Istiwa'" pada firman Allah tentang 'Arsy?</div>
+    <div class="a"><p>Yang dimaksud dengan <em>istiwa'</em> adalah istiwa' yang pantas bagi keagungan Allah. Maknanya sudah diketahui (ma'lum), tetapi bagaimana caranya tidak diketahui (majhul) dan tidak perlu dipertanyakan. Istiwa' Allah atas 'Arsy tidak serupa dengan bersemayamnya makhluk di atas kendaraan.</p></div>
+    <div class="dalil">
+      <div class="arabic">الرَّحْمَٰنُ عَلَى الْعَرْشِ اسْتَوَىٰ</div>
+      <p class="terj">"(Allah) Yang Maha Pengasih, beristiwa' di atas 'Arsy."</p>
+      <p class="ref">— QS. Thaha: 5</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan: Dua Pendekatan Ulama</div>
+      <p>Untuk memahami ayat-ayat <em>mutasyabihat</em> (ayat yang mengandung lafadz seperti tangan, wajah, mata, bersemayam), ada dua pendekatan ulama Ahlus Sunnah:</p>
+      <p><strong>1. Manhaj Salaf (tafwidh):</strong> menetapkan makna lafadz sesuai kemuliaan Allah tanpa membahas "caranya" (bila kayf), sambil menyucikan Allah dari keserupaan dengan makhluk. Ini dianggap lebih aman dan lebih kuat.</p>
+      <p><strong>2. Manhaj Khalaf (ta'wil):</strong> mengalihkan makna lafadz kepada makna yang sesuai dengan keagungan Allah — misalnya <em>istiwa'</em> ditafsirkan <em>istila'</em> (menguasai), <em>yad</em> (tangan) ditafsirkan nikmat/kekuasaan, dan <em>a'yun</em> (mata) ditafsirkan penjagaan. Pendekatan ini dipakai sebagai langkah preventif agar orang awam tidak terjerumus pada tasybih (menyerupakan Allah dengan makhluk).</p>
+      <p>Kedua pendekatan ini sepakat pada satu titik penting: <strong>siapa pun yang menyerupakan Allah dengan makhluk-Nya adalah sesat (dhallun)</strong>. Perbedaan hanya pada metode penjelasan, bukan pada substansi akidah tanzih (mensucikan Allah dari keserupaan).</p>
+    </div>
+    <blockquote class="kaidah">"Segala hal yang terlintas dalam benakmu tentang Allah, maka Allah tidak seperti itu."</blockquote>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apa sifat yang boleh (jaiz) bagi Allah?</div>
+    <div class="a"><p>Yaitu <em>Fi'lu kulli mumkinin aw tarkuhu</em> — melakukan sesuatu yang mungkin (dibolehkan secara akal) atau meninggalkannya. Contohnya: menciptakan manusia dalam keadaan kaya atau miskin, sehat atau sakit — semuanya murni hak prerogatif Allah, tanpa ada yang bisa mempertanyakan "mengapa".</p></div>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= BAB 2: MALAIKAT ================= -->
+<section class="block" id="bab2">
+  <div class="block-head">
+    <div class="block-num">٢</div>
+    <div>
+      <h2>Iman kepada Malaikat</h2>
+      <span class="ar">الإيمان بالملائكة</span>
+    </div>
+  </div>
+  <p class="lead">Malaikat adalah makhluk gaib ciptaan Allah dari cahaya, yang senantiasa taat dan tidak pernah membangkang.</p>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Siapakah malaikat itu, dan apakah manusia bisa melihatnya?</div>
+    <div class="a">
+      <p>Malaikat adalah materi lembut yang diciptakan dari cahaya (nur). Mereka tidak makan dan minum, serta tidak pernah durhaka kepada Allah — apa pun yang diperintahkan pasti mereka kerjakan. Manusia biasa tidak bisa melihat wujud asli mereka karena bentuknya yang sangat halus (kecuali para Nabi), namun jika malaikat berubah wujud menjadi bentuk padat (misalnya berwujud manusia), maka manusia biasa dapat melihatnya.</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Perbandingan tiga makhluk gaib dalam akidah Islam sering ditanyakan murid: <strong>Malaikat</strong> diciptakan dari cahaya (nur) dan selalu taat; <strong>Jin</strong> diciptakan dari nyala api (nar) dan memiliki pilihan taat/maksiat seperti manusia; <strong>Manusia</strong> diciptakan dari tanah (thin) dan juga memiliki pilihan. Malaikat tidak memiliki nafsu, sehingga tidak ada konsep "godaan" bagi mereka — berbeda dengan jin dan manusia yang diuji dengan hawa nafsu.</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);color:var(--emerald-deep);font-size:22px;margin-top:26px;">Tabel Malaikat dan Tugasnya</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Nama Malaikat</th><th>Arab</th><th>Tugas Utama</th></tr></thead>
+      <tbody>
+        <tr><td>Jibril</td><td class="ar">جِبْرِيل</td><td>Menyampaikan wahyu kepada para Nabi dan Rasul</td></tr>
+        <tr><td>Mikail</td><td class="ar">مِيكَائِيل</td><td>Mengatur rezeki, hujan, dan tumbuh-tumbuhan</td></tr>
+        <tr><td>Israfil</td><td class="ar">إِسْرَافِيل</td><td>Meniup sangkakala pada Hari Kiamat</td></tr>
+        <tr><td>Izrail (Malakul Maut)</td><td class="ar">مَلَكُ المَوْت</td><td>Mencabut nyawa</td></tr>
+        <tr><td>Raqib</td><td class="ar">رَقِيب</td><td>Mencatat amal baik manusia</td></tr>
+        <tr><td>'Atid</td><td class="ar">عَتِيد</td><td>Mencatat amal buruk manusia</td></tr>
+        <tr><td>Munkar &amp; Nakir</td><td class="ar">مُنكَر وَنَكِير</td><td>Menanyai mayit dalam kubur</td></tr>
+        <tr><td>Ridwan</td><td class="ar">رِضْوَان</td><td>Penjaga pintu surga</td></tr>
+        <tr><td>Malik</td><td class="ar">مَالِك</td><td>Penjaga neraka</td></tr>
+        <tr><td>Hafazhah</td><td class="ar">الحَفَظَة</td><td>Menjaga dan mengawal manusia</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <div class="note-title">📘 Catatan Pengajaran</div>
+    <p>Sepuluh malaikat di atas adalah yang paling populer diajarkan (dikenal sebagai "10 Malaikat wajib diketahui" di kurikulum madrasah), meski jumlah malaikat sesungguhnya tidak terhingga dan hanya diketahui oleh Allah. Ada pula yang bertugas menyangga 'Arsy dan menjaga kemaslahatan alam semesta secara umum.</p>
+  </div>
+
+  <div class="dalil">
+    <div class="arabic">الْحَمْدُ لِلَّهِ فَاطِرِ السَّمَاوَاتِ وَالْأَرْضِ جَاعِلِ الْمَلَائِكَةِ رُسُلًا أُولِي أَجْنِحَةٍ مَّثْنَىٰ وَثُلَاثَ وَرُبَاعَ</div>
+    <p class="terj">"Segala puji bagi Allah Pencipta langit dan bumi, yang menjadikan malaikat sebagai utusan-utusan yang mempunyai sayap, masing-masing dua, tiga, atau empat."</p>
+    <p class="ref">— QS. Fathir: 1</p>
+  </div>
+  <div class="dalil">
+    <div class="arabic">لَّا يَعْصُونَ اللَّهَ مَا أَمَرَهُمْ وَيَفْعَلُونَ مَا يُؤْمَرُونَ</div>
+    <p class="terj">"Mereka (para malaikat) tidak mendurhakai Allah terhadap apa yang Dia perintahkan, dan mereka mengerjakan apa yang diperintahkan."</p>
+    <p class="ref">— QS. At-Tahrim: 6</p>
+  </div>
+  <div class="note">
+    <div class="note-title">📘 Penjelasan Tambahan: Dampak Iman kepada Malaikat dalam Kehidupan</div>
+    <p>Mengajarkan rukun ini tidak cukup hanya menghafal nama dan tugas; guru perlu menekankan dampak praktisnya, yaitu menumbuhkan sifat <em>muraqabah</em> (merasa selalu diawasi) karena setiap ucapan dan perbuatan dicatat oleh malaikat Raqib dan 'Atid. Kesadaran ini menjadi pengendali perilaku (self-control) yang efektif, terutama saat seseorang berada sendirian dan tidak diawasi manusia lain — karena ia tahu tetap ada "saksi" yang mencatat setiap amalnya.</p>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= BAB 3: KITAB ================= -->
+<section class="block" id="bab3">
+  <div class="block-head">
+    <div class="block-num">٣</div>
+    <div>
+      <h2>Iman kepada Kitab Allah</h2>
+      <span class="ar">الإيمان بكتب الله</span>
+    </div>
+  </div>
+  <p class="lead">Kitab-kitab Allah adalah firman-Nya yang diturunkan kepada para Rasul, berisi petunjuk, perintah, larangan, janji, dan ancaman.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Kitab</th><th>Arab</th><th>Diturunkan kepada</th><th>Kandungan Utama</th></tr></thead>
+      <tbody>
+        <tr><td>Taurat</td><td class="ar">التَّوْرَاة</td><td>Nabi Musa a.s.</td><td>Hukum agama, akidah yang benar, kabar gembira kedatangan Nabi Muhammad ﷺ</td></tr>
+        <tr><td>Zabur</td><td class="ar">الزَّبُور</td><td>Nabi Dawud a.s.</td><td>Kumpulan dzikir, nasihat, dan hikmah (tanpa hukum syariat baru)</td></tr>
+        <tr><td>Injil</td><td class="ar">الإِنجِيل</td><td>Nabi 'Isa a.s.</td><td>Ajakan mengesakan Allah, penyempurnaan sebagian hukum Taurat, kabar gembira penutup para Nabi</td></tr>
+        <tr><td>Al-Qur'an</td><td class="ar">القُرْآن</td><td>Nabi Muhammad ﷺ</td><td>Kitab penutup dan penyempurna, berlaku hingga akhir zaman</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <div class="note-title">📘 Penjelasan Tambahan: Mengapa Kitab Terdahulu Diyakini Sudah Berubah?</div>
+    <p>Ulama menilai bahwa naskah Taurat dan Injil yang beredar saat ini telah mengalami perubahan (tahrif) dari aslinya. Beberapa indikasi yang biasa diajarkan: (1) tidak konsistennya penyebutan perkara akhirat (surga, neraka, kebangkitan) yang biasanya selalu ada di kitab-kitab samawi; (2) adanya bagian yang menceritakan kematian penerima wahyu itu sendiri (misalnya kisah wafatnya Nabi Musa di akhir Taurat) — hal yang mustahil ditulis oleh yang bersangkutan; (3) Injil yang beredar (Matius, Markus, Lukas, Yohanes) ditulis oleh orang-orang yang tidak pernah bertemu langsung dengan Nabi Isa, dan keempatnya saling berselisih dalam banyak riwayat.</p>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Mengapa Al-Qur'an disebut mukjizat terbesar?</div>
+    <div class="a">
+      <p>Al-Qur'an adalah <em>ayat 'aqliyah</em> yang abadi sepanjang masa dan dapat direnungkan kapan saja dengan akal — berbeda dengan mukjizat lain yang hanya terjadi sesaat lalu menjadi cerita. Kemukjizatannya terletak pada kefasihan dan keindahan bahasa yang melampaui kemampuan manusia, dibuktikan lewat tantangan (tahaddi) kepada bangsa Arab — yang justru paling fasih berbahasa di zamannya — untuk membuat satu surat semisal, dan mereka gagal total selama lebih dari 1400 tahun.</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Empat Bukti Kemukjizatan Al-Qur'an (untuk didiskusikan di kelas)</div>
+      <p><strong>1. I'jaz Ikhbari</strong> — memuat kabar tentang kejadian yang belum terjadi lalu terbukti sesuai kenyataan.<br>
+      <strong>2. Tidak membosankan</strong> — semakin sering dibaca dan diulang, semakin terasa nikmat, berbeda dengan tulisan manusia biasa.<br>
+      <strong>3. I'jaz 'Ilmi</strong> — memuat pengetahuan yang di luar jangkauan masyarakat Arab abad ke-7.<br>
+      <strong>4. Kisah umat terdahulu</strong> — diturunkan kepada Nabi yang ummi (tidak bisa membaca-menulis), namun mampu menceritakan detail sejarah umat-umat sebelumnya secara akurat.</p>
+    </div>
+    <div class="dalil">
+      <div class="arabic">وَإِن كُنتُمْ فِي رَيْبٍ مِّمَّا نَزَّلْنَا عَلَىٰ عَبْدِنَا فَأْتُوا بِسُورَةٍ مِّن مِّثْلِهِ</div>
+      <p class="terj">"Jika kamu meragukan (Al-Qur'an) yang Kami turunkan kepada hamba Kami, maka buatlah satu surah semisal dengannya."</p>
+      <p class="ref">— QS. Al-Baqarah: 23 (ayat tantangan/tahaddi)</p>
+    </div>
+    <div class="dalil">
+      <div class="arabic">إِنَّا نَحْنُ نَزَّلْنَا الذِّكْرَ وَإِنَّا لَهُ لَحَافِظُونَ</div>
+      <p class="terj">"Sesungguhnya Kamilah yang menurunkan Al-Qur'an, dan sesungguhnya Kami benar-benar akan menjaganya."</p>
+      <p class="ref">— QS. Al-Hijr: 9 (dalil bahwa Al-Qur'an mustahil berubah)</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Bahan Diskusi Kelas</div>
+      <p>Ajukan pertanyaan reflektif kepada murid: "Mengapa Allah menjamin penjagaan Al-Qur'an, sedangkan kitab-kitab sebelumnya tidak mendapat jaminan yang sama?" Poin diskusi: penjagaan kitab terdahulu diserahkan kepada umatnya masing-masing, sedangkan Al-Qur'an sebagai kitab penutup dan pedoman abadi hingga akhir zaman dijaga langsung oleh Allah — inilah salah satu keistimewaan yang membedakannya dari kitab-kitab samawi lainnya.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= BAB 4: RASUL ================= -->
+<section class="block" id="bab4">
+  <div class="block-head">
+    <div class="block-num">٤</div>
+    <div>
+      <h2>Iman kepada Para Utusan Allah</h2>
+      <span class="ar">الإيمان بالرسل عليهم السلام</span>
+    </div>
+  </div>
+  <p class="lead">Para utusan Allah diutus sebagai wujud kasih sayang-Nya, memberi kabar gembira dan peringatan, serta membimbing manusia menuju jalan yang benar.</p>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apa perbedaan Nabi dan Rasul?</div>
+    <div class="a"><p>Nabi adalah manusia yang diberi wahyu berupa aturan syariat meski tidak diperintahkan menyampaikannya. Jika Nabi tersebut diperintahkan Allah untuk menyampaikan wahyu kepada umatnya, maka ia juga disebut Rasul. Maka: <strong>setiap Rasul pasti Nabi, namun tidak setiap Nabi adalah Rasul.</strong></p></div>
+    <div class="dalil">
+      <div class="arabic">وَمَا أَرْسَلْنَا مِن قَبْلِكَ إِلَّا رِجَالًا نُّوحِي إِلَيْهِمْ</div>
+      <p class="terj">"Dan Kami tidak mengutus sebelum engkau (Muhammad), melainkan orang laki-laki yang Kami beri wahyu kepada mereka."</p>
+      <p class="ref">— QS. An-Nahl: 43 (dalil bahwa Rasul selalu manusia, bukan malaikat atau makhluk lain)</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--font-display);color:var(--emerald-deep);font-size:22px;margin-top:26px;">25 Nabi &amp; Rasul yang Disebut dalam Al-Qur'an</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>No</th><th>Nama</th><th>Arab</th><th>No</th><th>Nama</th><th>Arab</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Adam</td><td class="ar">آدَم</td><td>14</td><td>Musa</td><td class="ar">مُوسَى</td></tr>
+        <tr><td>2</td><td>Idris</td><td class="ar">إِدْرِيس</td><td>15</td><td>Harun</td><td class="ar">هَارُون</td></tr>
+        <tr><td>3</td><td>Nuh</td><td class="ar">نُوح</td><td>16</td><td>Dzulkifli</td><td class="ar">ذُو الكِفْل</td></tr>
+        <tr><td>4</td><td>Hud</td><td class="ar">هُود</td><td>17</td><td>Dawud</td><td class="ar">دَاوُد</td></tr>
+        <tr><td>5</td><td>Sholeh</td><td class="ar">صَالِح</td><td>18</td><td>Sulaiman</td><td class="ar">سُلَيْمَان</td></tr>
+        <tr><td>6</td><td>Ibrahim</td><td class="ar">إِبْرَاهِيم</td><td>19</td><td>Ilyas</td><td class="ar">إِلْيَاس</td></tr>
+        <tr><td>7</td><td>Luth</td><td class="ar">لُوط</td><td>20</td><td>Ilyasa'</td><td class="ar">اليَسَع</td></tr>
+        <tr><td>8</td><td>Ismail</td><td class="ar">إِسْمَاعِيل</td><td>21</td><td>Yunus</td><td class="ar">يُونُس</td></tr>
+        <tr><td>9</td><td>Ishaq</td><td class="ar">إِسْحَاق</td><td>22</td><td>Zakariyya</td><td class="ar">زَكَرِيَّا</td></tr>
+        <tr><td>10</td><td>Ya'qub</td><td class="ar">يَعْقُوب</td><td>23</td><td>Yahya</td><td class="ar">يَحْيَى</td></tr>
+        <tr><td>11</td><td>Yusuf</td><td class="ar">يُوسُف</td><td>24</td><td>'Isa</td><td class="ar">عِيسَى</td></tr>
+        <tr><td>12</td><td>Ayyub</td><td class="ar">أَيُّوب</td><td>25</td><td>Muhammad ﷺ</td><td class="ar">مُحَمَّد</td></tr>
+        <tr><td>13</td><td>Syu'aib</td><td class="ar">شُعَيْب</td><td></td><td></td><td class="ar"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid2" style="margin-top:26px;">
+    <div class="qa" style="margin-bottom:0;">
+      <div class="q"><span class="tag">4 SIFAT WAJIB</span> bagi Rasul</div>
+      <div class="a">
+        <p><strong>Shidq</strong> <span class="ar" style="font-size:16px;">صِدْق</span> — Jujur, tidak mungkin berbohong.</p>
+        <p><strong>Amanah</strong> <span class="ar" style="font-size:16px;">أَمَانَة</span> — Terpercaya, lahir-batin terjaga.</p>
+        <p><strong>Tabligh</strong> <span class="ar" style="font-size:16px;">تَبْلِيغ</span> — Menyampaikan seluruh wahyu tanpa menyembunyikan.</p>
+        <p><strong>Fathanah</strong> <span class="ar" style="font-size:16px;">فَطَانَة</span> — Cerdas, sempurna akal dan pemahamannya.</p>
+      </div>
+    </div>
+    <div class="qa" style="margin-bottom:0;">
+      <div class="q"><span class="tag">4 SIFAT MUSTAHIL</span> bagi Rasul</div>
+      <div class="a">
+        <p><strong>Kadzib</strong> <span class="ar" style="font-size:16px;">كَذِب</span> — Berbohong.</p>
+        <p><strong>Khianat</strong> <span class="ar" style="font-size:16px;">خِيَانَة</span> — Berkhianat/durhaka ('isyan).</p>
+        <p><strong>Kitman</strong> <span class="ar" style="font-size:16px;">كِتْمَان</span> — Menyembunyikan wahyu.</p>
+        <p><strong>Baladah</strong> <span class="ar" style="font-size:16px;">بَلَادَة</span> — Bodoh/pelupa (ghaflah).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa" style="margin-top:16px;">
+    <div class="q"><span class="tag">SOAL</span> Apa perbedaan Mukjizat, Sihir, dan Karomah?</div>
+    <div class="a">
+      <p><strong>Mukjizat</strong> adalah kejadian luar biasa dari seorang Nabi/Rasul untuk membuktikan kebenaran dakwahnya, mustahil ditandingi oleh siapa pun (misalnya tongkat Nabi Musa menjadi ular nyata).</p>
+      <p><strong>Sihir</strong> adalah keluarbiasaan semu — sebenarnya memiliki sebab tersembunyi yang bisa dipelajari dan ditiru orang lain; bersumber dari jiwa yang buruk dan menghasilkan kerusakan.</p>
+      <p><strong>Karomah</strong> adalah kejadian luar biasa pada diri seorang wali (kekasih Allah yang saleh), namun tidak terkait dengan pengakuan kenabian.</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan: Tabel Perbandingan</div>
+      <p><strong>Mukjizat</strong> → pelakunya Nabi/Rasul · terkait dakwah kenabian · mustahil ditiru.<br>
+      <strong>Karomah</strong> → pelakunya Wali · tidak terkait dakwah kenabian · sebagai tanda kedekatan pada Allah, syaratnya wali tersebut mengikuti syariat Rasul.<br>
+      <strong>Sihir</strong> → pelakunya siapa saja yang mempelajari sebabnya · bersumber dari jiwa jahat · bisa dipelajari & ditandingi.<br>
+      <strong>Ma'unah</strong> (istilah tambahan yang baik diketahui) → kejadian luar biasa pada orang biasa yang saleh, sebagai pertolongan Allah dalam kondisi darurat.</p>
+    </div>
+    <div class="dalil">
+      <div class="arabic">فَأَلْقَىٰ عَصَاهُ فَإِذَا هِيَ ثُعْبَانٌ مُّبِينٌ</div>
+      <p class="terj">"Maka dia (Musa) melemparkan tongkatnya, tiba-tiba tongkat itu menjadi ular yang sebenarnya."</p>
+      <p class="ref">— QS. Al-A'raf: 107</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Mengapa Nabi Muhammad ﷺ disebut penutup para Nabi (Khatamun Nabiyyin)?</div>
+    <div class="a">
+      <p>Karena hikmah diutusnya para Nabi — mengajak manusia menyembah Allah dan menunjukkan jalan yang benar — telah tercapai secara sempurna melalui syariat Nabi Muhammad ﷺ, yang cocok bagi seluruh umat manusia di setiap masa, tempat, dan keadaan. Adapun Nabi 'Isa a.s. yang akan turun di akhir zaman, beliau turun sebagai pengikut syariat Nabi Muhammad ﷺ (bukan membawa syariat baru), sehingga kedudukan Nabi Muhammad sebagai penutup para Nabi tetap sah.</p>
+    </div>
+    <div class="dalil">
+      <div class="arabic">مَّا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِّن رِّجَالِكُمْ وَلَٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ</div>
+      <p class="terj">"Muhammad bukanlah bapak dari salah seorang laki-laki kalian, tetapi ia adalah Rasulullah dan penutup para Nabi."</p>
+      <p class="ref">— QS. Al-Ahzab: 40</p>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:20px;">
+    <div class="note-title">📘 Penjelasan Tambahan: Akhlak Nabi Muhammad ﷺ untuk Diteladani</div>
+    <p>Nabi Muhammad ﷺ dikenal dengan gelar <strong>Al-Amin</strong> (yang tepercaya) sejak sebelum diangkat menjadi Rasul, bahkan oleh orang-orang musyrik sekalipun. Sifat-sifat luhur beliau yang layak dijadikan bahan teladan dalam pengajaran: menyambung silaturahim, menolong yang membutuhkan, pemaaf, penyabar, rendah hati (tawadhu') namun tetap berwibawa, fasih dan bijak dalam bertutur kata, serta selalu berserah diri (tawakal) kepada Allah dalam setiap urusan. Kajian sirah (sejarah hidup) Nabi diakui bahkan oleh kalangan orientalis sebagai riwayat hidup tokoh yang paling lengkap terdokumentasi dalam sejarah manusia.</p>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= BAB 5: HARI AKHIR ================= -->
+<section class="block" id="bab5">
+  <div class="block-head">
+    <div class="block-num">٥</div>
+    <div>
+      <h2>Iman kepada Hari Akhir</h2>
+      <span class="ar">الإيمان باليوم الآخر</span>
+    </div>
+  </div>
+  <p class="lead">Meyakini bahwa kehidupan dunia pasti berakhir, dan setiap manusia akan dibangkitkan kembali untuk mempertanggungjawabkan seluruh amal perbuatannya.</p>
+
+  <h3 style="font-family:var(--font-display);color:var(--emerald-deep);font-size:22px;">Alur Peristiwa Hari Akhir</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Tahapan</th><th>Arab</th><th>Penjelasan Singkat</th></tr></thead>
+      <tbody>
+        <tr><td>1. Fitnah/Pertanyaan Kubur</td><td class="ar">فِتْنَةُ القَبْر</td><td>Malaikat Munkar-Nakir menanyakan Tuhan, Nabi, agama, dan amal seseorang</td></tr>
+        <tr><td>2. Nikmat/Siksa Kubur</td><td class="ar">عَذَابُ القَبْر</td><td>Balasan awal sesuai jawaban dan amal semasa hidup</td></tr>
+        <tr><td>3. Kebangkitan (Ba'ts)</td><td class="ar">البَعْث</td><td>Seluruh manusia dihidupkan kembali dari kubur</td></tr>
+        <tr><td>4. Pengumpulan (Hasyr)</td><td class="ar">الحَشْر</td><td>Dikumpulkan di padang Mahsyar untuk menunggu peradilan</td></tr>
+        <tr><td>5. Hisab</td><td class="ar">الحِسَاب</td><td>Penghitungan amal, anggota tubuh menjadi saksi</td></tr>
+        <tr><td>6. Mizan</td><td class="ar">المِيزَان</td><td>Penimbangan amal baik dan buruk</td></tr>
+        <tr><td>7. Pembagian Catatan Amal</td><td class="ar">صَحِيفَةُ الأَعْمَال</td><td>Diterima lewat tangan kanan (baik) atau kiri (buruk)</td></tr>
+        <tr><td>8. Shirath</td><td class="ar">الصِّرَاط</td><td>Jembatan di atas neraka yang harus dilewati semua orang</td></tr>
+        <tr><td>9. Syafaat</td><td class="ar">الشَّفَاعَة</td><td>Pertolongan para Nabi, wali, ulama, dan syuhada bagi mukmin pelaku maksiat</td></tr>
+        <tr><td>10. Surga/Neraka</td><td class="ar">الجَنَّة / النَّار</td><td>Tempat kembali akhir sesuai balasan amal</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Mengapa manusia tidak bisa melihat proses di alam kubur?</div>
+    <div class="a"><p>Allah menutup penglihatan manusia dari hal tersebut sebagai bentuk ujian, agar menjadi jelas siapa yang benar-benar beriman kepada perkara gaib dan siapa yang meragukannya. Perumpamaannya seperti orang yang sedang tidur dan bermimpi — orang di sampingnya tidak bisa menyaksikan atau merasakan apa yang dialami di dalam mimpi tersebut.</p></div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Konsep ini penting diajarkan untuk menjelaskan hakikat <em>iman kepada yang gaib</em> (al-ghaib) sebagai salah satu ciri utama orang bertakwa yang disebutkan di awal Surah Al-Baqarah. Keimanan sejati justru diuji ketika sesuatu tidak dapat dibuktikan secara empiris-inderawi, namun diyakini kebenarannya berdasarkan berita yang sahih dari Allah dan Rasul-Nya (dalil naqli), didukung argumentasi akal (dalil aqli) bahwa Dzat Yang Maha Kuasa mampu melakukan hal tersebut.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apa dalil tentang penimbangan amal (mizan) dan kesaksian anggota tubuh?</div>
+    <div class="a"><p>Pada Hari Kiamat, seluruh amal manusia — sekecil apa pun — akan ditimbang dengan seadil-adilnya, dan anggota tubuh manusia sendiri akan menjadi saksi atas perbuatannya di dunia.</p></div>
+    <div class="dalil">
+      <div class="arabic">فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ ۝ وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ</div>
+      <p class="terj">"Maka barangsiapa mengerjakan kebaikan seberat biji atom, niscaya dia akan melihat (balasan)nya. Dan barangsiapa mengerjakan kejahatan seberat biji atom, niscaya dia akan melihat (balasan)nya pula."</p>
+      <p class="ref">— QS. Az-Zalzalah: 7-8</p>
+    </div>
+    <div class="dalil">
+      <div class="arabic">الْيَوْمَ نَخْتِمُ عَلَىٰ أَفْوَاهِهِمْ وَتُكَلِّمُنَا أَيْدِيهِمْ وَتَشْهَدُ أَرْجُلُهُم بِمَا كَانُوا يَكْسِبُونَ</div>
+      <p class="terj">"Pada hari ini Kami tutup mulut mereka; tangan mereka akan berkata kepada Kami dan kaki mereka akan menjadi saksi terhadap apa yang dahulu mereka kerjakan."</p>
+      <p class="ref">— QS. Yasin: 65</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan untuk Kelas</div>
+      <p>Ayat Az-Zalzalah sangat efektif dijadikan penguat motivasi beramal bagi murid: menegaskan bahwa <em>tidak ada amal yang sia-sia</em>, sekecil apa pun kebaikan (seperti menyingkirkan duri di jalan) maupun keburukan (seperti berbohong kecil) tetap tercatat dan akan diperlihatkan kelak. Ini menjadi dasar penting dalam pembentukan kesadaran moral (akhlak) sejak dini.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apakah balasan berbeda antara mukmin taat, mukmin berdosa, dan kafir?</div>
+    <div class="a">
+      <p><strong>Mukmin yang taat</strong> — langsung masuk surga dan kekal di dalamnya.</p>
+      <p><strong>Mukmin yang berdosa</strong> — jika Allah berkehendak mengampuni, langsung masuk surga; jika tidak, disiksa dahulu di neraka sesuai kadar dosanya, kemudian dikeluarkan dan dimasukkan ke surga secara kekal (berkat rahmat dan tauhid yang dimilikinya).</p>
+      <p><strong>Kafir/munafik</strong> — kekal di neraka selamanya, tanpa keringanan siksa sedikit pun.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= BAB 6: QADHA QADAR ================= -->
+<section class="block" id="bab6">
+  <div class="block-head">
+    <div class="block-num">٦</div>
+    <div>
+      <h2>Iman kepada Qadha' dan Qadar</h2>
+      <span class="ar">الإيمان بالقضاء والقدر</span>
+    </div>
+  </div>
+  <p class="lead">Meyakini bahwa segala sesuatu terjadi atas kehendak, pengetahuan, dan ketentuan Allah — namun manusia tetap memiliki pilihan dan bertanggung jawab atas perbuatannya.</p>
+
+  <div class="grid2">
+    <div class="qa" style="margin-bottom:0;">
+      <div class="q"><span class="tag">DEFINISI</span> Qadha'</div>
+      <div class="a"><p><span class="ar" style="font-size:20px;">القَضَاء</span><br>Ketetapan/keputusan Allah tentang segala sesuatu sejak zaman azali (sebelum sesuatu itu ada), berdasarkan ilmu-Nya yang meliputi segalanya.</p></div>
+    </div>
+    <div class="qa" style="margin-bottom:0;">
+      <div class="q"><span class="tag">DEFINISI</span> Qadar</div>
+      <div class="a"><p><span class="ar" style="font-size:20px;">القَدَر</span><br>Perwujudan nyata dari ketetapan (qadha') tersebut dalam kehidupan sehari-hari, sesuai waktu dan ukuran yang telah ditentukan.</p></div>
+    </div>
+  </div>
+
+  <div class="qa" style="margin-top:16px;">
+    <div class="q"><span class="tag">SOAL</span> Jika Allah pencipta segala perbuatan manusia, apakah manusia dipaksa (majbur)?</div>
+    <div class="a">
+      <p>Tidak. Manusia tidak dipaksa sama sekali karena ia memiliki keinginan sendiri (iradah juz'iyyah) yang dapat mengarahkannya pada kebaikan atau keburukan, disertai akal untuk memilih. Jika kehendaknya condong pada kebaikan, ia mendapat pahala; jika condong pada keburukan, ia mendapat siksa — karena keburukan itu terjadi atas keinginannya sendiri.</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan: Konsep Kasb (Al-Kasb)</div>
+      <p>Dalam ilmu kalam Ahlus Sunnah (mazhab Asy'ariyah), dikenal istilah <strong>kasb</strong> <span class="ar" style="font-size:17px;">الكَسْب</span> — yaitu "upaya/ikhtiar" manusia yang berkaitan dengan perbuatannya, sementara <em>penciptaan</em> perbuatan tersebut tetaplah murni dari Allah. Analogi mudahnya: Allah menciptakan gerakan tangan menulis, tetapi manusia yang "mengusahakan" (kasb) gerakan itu sesuai kehendaknya sendiri — berbeda dengan gerakan tangan gemetar yang terjadi di luar kehendaknya (idltirari). Konsep ini menjembatani dua ekstrem: paham <em>Jabariyah</em> (manusia sepenuhnya dipaksa, tanpa pilihan sama sekali) dan paham <em>Qadariyah</em> (manusia sepenuhnya independen menciptakan perbuatannya sendiri, seolah tanpa campur tangan Allah). Ahlus Sunnah mengambil jalan tengah: Allah Pencipta segala sesuatu termasuk perbuatan hamba, namun hamba tetap memiliki ikhtiar yang menjadi dasar pertanggungjawaban (taklif).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Contoh sederhana pembeda perbuatan ikhtiyari dan idltirari?</div>
+    <div class="a"><p>Bandingkan gerakan tangan saat <em>menulis</em> (disandarkan pada diri sendiri: "aku menulis dengan usahaku") dengan gerakan tangan saat <em>gemetar</em> (tidak disandarkan pada diri: "tanganku gemetar di luar keinginanku"). Perbuatan jenis pertama (ikhtiyari) berkonsekuensi pahala/dosa; perbuatan jenis kedua (idltirari) tidak dituntut pertanggungjawaban apa pun.</p></div>
+  </div>
+
+  <blockquote class="kaidah">"Barangsiapa berbuat maksiat lalu berdalih 'ini sudah takdir', maka alasan itu tidak diterima — karena Allah tetap memberinya kemampuan, usaha, dan akal untuk memilih jalan yang benar."</blockquote>
+
+  <div class="dalil">
+    <div class="arabic">إِنَّا كُلَّ شَيْءٍ خَلَقْنَاهُ بِقَدَرٍ</div>
+    <p class="terj">"Sesungguhnya Kami menciptakan segala sesuatu menurut ukuran (takdir)."</p>
+    <p class="ref">— QS. Al-Qamar: 49</p>
+  </div>
+  <div class="dalil">
+    <div class="arabic">وَلَا تَقْفُ مَا لَيْسَ لَكَ بِهِ عِلْمٌ ۚ إِنَّ السَّمْعَ وَالْبَصَرَ وَالْفُؤَادَ كُلُّ أُولَٰئِكَ كَانَ عَنْهُ مَسْئُولًا</div>
+    <p class="terj">"Dan janganlah kamu mengikuti apa yang tidak kamu ketahui. Sesungguhnya pendengaran, penglihatan, dan hati, semuanya akan dimintai pertanggungjawaban."</p>
+    <p class="ref">— QS. Al-Isra': 36 (dalil bahwa manusia tetap bertanggung jawab atas ikhtiarnya)</p>
+  </div>
+  <div class="note">
+    <div class="note-title">📘 Penjelasan Tambahan: Menyikapi Takdir dengan Benar</div>
+    <p>Ada kaidah penting yang perlu ditanamkan kepada murid: <strong>takdir dijadikan alasan untuk menerima musibah yang sudah terjadi (ridha), bukan dijadikan alasan untuk membenarkan perbuatan dosa yang akan/sedang dilakukan.</strong> Contoh penerapan yang benar: seseorang tertimpa kecelakaan lalu berkata "ini sudah takdir Allah, aku bersabar" — itu benar dan terpuji. Namun jika seseorang berbuat curang lalu berkata "ini sudah takdirku menjadi pencuri" — itu keliru, karena perbuatan yang belum/sedang terjadi masih berada dalam wilayah ikhtiar (pilihan) yang harus dipertanggungjawabkan.</p>
+  </div>
+</section>
+
+<div class="ornament"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z" fill="currentColor"/></svg></div>
+
+<!-- ================= PENUTUP ================= -->
+<section class="block" id="penutup">
+  <div class="block-head">
+    <div class="block-num">٧</div>
+    <div>
+      <h2>Penutup: Beberapa Isu Penting</h2>
+      <span class="ar">خاتمة: مسائل مهمة</span>
+    </div>
+  </div>
+  <p class="lead">Sejumlah pertanyaan lanjutan yang sering muncul dalam pembelajaran akidah tingkat menengah.</p>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apakah manusia bisa melihat Allah di akhirat?</div>
+    <div class="a"><p>Secara akal hal itu mungkin, dan secara dalil naqli hal itu benar akan dialami oleh penghuni surga (dikenal dengan istilah <em>Ru'yatullah</em>). Adapun orang kafir dihalangi dari melihat Allah, sebagai tambahan penyesalan bagi mereka.</p></div>
+    <div class="dalil">
+      <div class="arabic">وُجُوهٌ يَوْمَئِذٍ نَّاضِرَةٌ ۝ إِلَىٰ رَبِّهَا نَاظِرَةٌ</div>
+      <p class="terj">"Wajah-wajah (orang mukmin) pada hari itu berseri-seri, memandang kepada Tuhannya."</p>
+      <p class="ref">— QS. Al-Qiyamah: 22-23</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Cara melihat Allah kelak tidak sama dengan cara manusia melihat sesuatu di dunia (bila kayf — tanpa arah, jarak, atau bentuk tertentu), sebagaimana kaidah umum bahwa segala sesuatu yang disandarkan kepada Allah tidak menyerupai apa yang ada pada makhluk.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apa itu Isra' Mi'raj?</div>
+    <div class="a">
+      <p><strong>Isra'</strong> <span class="ar" style="font-size:17px;">الإِسْرَاء</span> — perjalanan malam Nabi Muhammad ﷺ dari Masjidil Haram (Makkah) ke Masjidil Aqsha (Palestina).</p>
+      <p><strong>Mi'raj</strong> <span class="ar" style="font-size:17px;">المِعْرَاج</span> — kenaikan Nabi dari Masjidil Aqsha menembus langit hingga bertemu para malaikat dan menerima perintah salat lima waktu, sebagai bentuk kemuliaan yang dianugerahkan Allah kepada beliau.</p>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Peristiwa ini termaktub jelas dalam Al-Qur'an surah Al-Isra' ayat 1, dan dijelaskan lebih rinci dalam hadis-hadis sahih. Karena Allah Maha Kuasa atas segala sesuatu — termasuk membuat benda-benda langit menempuh jarak jutaan tahun cahaya dalam sekejap — maka tidak mengherankan jika Dia memuliakan Nabi-Nya dengan perjalanan luar biasa dalam waktu singkat (dalam satu malam).</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Bolehkah wali mencapai derajat Nabi, atau lepas dari kewajiban syariat?</div>
+    <div class="a"><p>Tidak mungkin seorang wali mencapai derajat kenabian. Selama seseorang berakal sehat dan balig, tidak mungkin baginya gugur kewajiban syariat (salat, puasa, dsb). Siapa pun yang meyakini hal itu bisa terjadi maka telah keluar dari akidah yang benar — karomah yang sejati justru hanya muncul pada wali yang taat mengikuti jalan Rasulullah ﷺ, bukan yang membuat "jalan sendiri".</p></div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Siapa saja empat Imam Mazhab yang pendapatnya layak diikuti (taklid)?</div>
+    <div class="a">
+      <p>Meski ulama mujtahid (yang mampu menyimpulkan hukum langsung dari Al-Qur'an dan Sunnah) jumlahnya sangat banyak, empat mazhab berikut paling luas diikuti karena pendapat mereka telah tersusun sistematis dan sanadnya tersambung mutawatir hingga sekarang:</p>
+    </div>
+    <div class="pillbox">
+      <span class="pill">Imam Abu Hanifah (Hanafi)</span>
+      <span class="pill">Imam Malik bin Anas (Maliki)</span>
+      <span class="pill">Imam Asy-Syafi'i (Syafi'i)</span>
+      <span class="pill">Imam Ahmad bin Hanbal (Hanbali)</span>
+    </div>
+    <div class="note">
+      <div class="note-title">📘 Penjelasan Tambahan</div>
+      <p>Perbedaan pendapat di antara empat imam mazhab ini hanya terjadi pada wilayah <em>furu'iyyah</em> (hukum cabang/praktis) yang dalilnya tidak bersifat pasti (dzanni), bukan pada pokok akidah (ushuluddin) yang dalilnya jelas dan disepakati bersama. Perbedaan semacam ini justru menjadi rahmat dan kemudahan (rukhsah) bagi umat, karena memberi keleluasaan dalam kondisi tertentu tanpa keluar dari koridor syariat.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">SOAL</span> Apa saja tanda-tanda besar Kiamat?</div>
+    <div class="a">
+      <p>Di antaranya: keluarnya <strong>Dajjal</strong> (yang mengaku memiliki sifat ketuhanan), keluarnya hewan melata yang bisa mengenali status iman-kafir manusia, terbitnya matahari dari arah barat (setelah itu pintu tobat tertutup), keluarnya <strong>Ya'juj dan Ma'juj</strong>, serta turunnya kembali Nabi 'Isa a.s. untuk membunuh Dajjal dan memperbaiki keadaan umat.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><span class="tag">RINGKASAN</span> Siapakah orang yang beruntung?</div>
+    <div class="a"><p>Yaitu mukmin yang saleh — mengerjakan perkara yang benar, memenuhi perintah Penciptanya, taat pada syariat baik dalam keadaan lapang maupun sempit, dan tetap istiqamah meski dunia terus berubah. Merekalah orang-orang yang beruntung dan mendapat tambahan kebaikan dari Allah.</p></div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div>Panduan Belajar Akidah Islamiyyah — disusun untuk kebutuhan pembelajaran ilmu tauhid.</div>
+  <div class="fline">© 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: vaozeei@gmail.com</div>
+</footer>
+
+</body>
+</html>

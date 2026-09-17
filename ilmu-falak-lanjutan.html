@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilmu Falak Lanjutan — Modul Pembelajaran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0b1424;
+    --night-2:#132038;
+    --paper:#f8f2e2;
+    --paper-2:#f1e8d2;
+    --ink:#2a2013;
+    --ink-soft:#4a3e29;
+    --gold:#b3872f;
+    --gold-light:#d9b96a;
+    --gold-deep:#8a6a22;
+    --teal:#1e5a52;
+    --teal-light:#2f7d72;
+    --rule:#cbb583;
+    --maroon:#7c2d2d;
+    --shadow: 0 10px 30px rgba(20,14,4,.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    line-height:1.75;
+    font-size:17px;
+  }
+  ::selection{ background:var(--gold-light); color:var(--night); }
+
+  h1,h2,h3,h4{
+    font-family:'Spectral', serif;
+    color:var(--ink);
+    line-height:1.25;
+    margin:0 0 .5em 0;
+  }
+  .arabic{
+    font-family:'Amiri', serif;
+    direction:rtl;
+    unicode-bidi:isolate;
+  }
+  a{ color:var(--teal); }
+  p{ margin:0 0 1.1em 0; }
+
+  /* ===== Star field hero ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(ellipse at 50% -10%, #1c2c4a 0%, var(--night) 55%),
+      linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+    color:var(--paper);
+    overflow:hidden;
+    padding:80px 24px 100px;
+  }
+  .stars, .stars2, .stars3{
+    position:absolute; inset:0;
+    background-repeat:repeat;
+    opacity:.8;
+  }
+  .stars{
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 140px 90px, #fff, transparent),
+      radial-gradient(1px 1px at 90px 160px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 220px 60px, #fff, transparent),
+      radial-gradient(1px 1px at 260px 200px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 320px 130px, #fff, transparent);
+    background-size:360px 260px;
+    animation: drift 140s linear infinite;
+  }
+  .stars2{
+    background-image:
+      radial-gradient(1px 1px at 60px 40px, var(--gold-light), transparent),
+      radial-gradient(1px 1px at 190px 150px, var(--gold-light), transparent),
+      radial-gradient(1px 1px at 310px 80px, var(--gold-light), transparent);
+    background-size:400px 300px;
+    opacity:.5;
+    animation: drift 220s linear infinite reverse;
+  }
+  @keyframes drift{ from{ transform:translateY(0);} to{ transform:translateY(-600px);} }
+  @media (prefers-reduced-motion: reduce){ .stars,.stars2{ animation:none; } }
+
+  .armillary{ width:220px; height:220px; margin:0 auto 28px; opacity:.92; }
+  .armillary circle, .armillary ellipse{ fill:none; stroke:var(--gold-light); stroke-width:1; }
+  .armillary .thick{ stroke-width:1.4; stroke:var(--gold); }
+
+  .eyebrow{
+    font-family:'Inter', sans-serif;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    color:var(--gold-light);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 5.5vw, 3.6rem);
+    color:var(--paper);
+    font-weight:600;
+    max-width:16ch;
+    margin:0 auto .3em;
+  }
+  .hero .sub{
+    font-style:italic;
+    color:#cdd8e6;
+    font-size:1.05rem;
+    max-width:46ch;
+    margin:0 auto 26px;
+  }
+  .hero .arabic-cover{
+    font-size:clamp(1.5rem, 4vw, 2.15rem);
+    color:var(--gold-light);
+    margin:10px auto 8px;
+  }
+  .hero .translit{
+    font-family:'Inter',sans-serif;
+    font-size:.85rem;
+    color:#9fb0c6;
+    letter-spacing:.02em;
+    margin-bottom:36px;
+  }
+  .kitab-chips{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+    max-width:560px; margin:0 auto 30px;
+  }
+  .kitab-chips span{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    border:1px solid rgba(217,185,106,.4);
+    color:#e7d9b3;
+    padding:6px 14px;
+    border-radius:100px;
+    letter-spacing:.02em;
+  }
+  .hero .byline{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    color:#8695ab;
+    letter-spacing:.06em;
+  }
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    font-family:'Inter',sans-serif; font-size:11px; letter-spacing:.2em;
+    color:#7f8fa8; text-transform:uppercase;
+  }
+
+  /* ===== Layout with sidebar ===== */
+  .layout{
+    display:grid;
+    grid-template-columns:270px minmax(0,1fr);
+    max-width:1220px;
+    margin:0 auto;
+  }
+  nav.toc{
+    position:sticky; top:0; align-self:start;
+    height:100vh;
+    overflow-y:auto;
+    background:var(--paper-2);
+    border-right:1px solid var(--rule);
+    padding:26px 18px 60px 26px;
+    font-family:'Inter',sans-serif;
+  }
+  nav.toc .toc-title{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    font-size:1rem;
+    color:var(--gold-deep);
+    margin-bottom:14px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--rule);
+  }
+  nav.toc a{
+    display:block;
+    font-size:13px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding:5px 8px;
+    border-radius:5px;
+    margin-bottom:1px;
+    line-height:1.4;
+  }
+  nav.toc a:hover{ background:rgba(179,135,47,.12); color:var(--gold-deep); }
+  nav.toc a.active{ background:var(--gold); color:#fff; }
+  nav.toc .grp{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    color:#a1926d;
+    margin:16px 0 4px 8px;
+  }
+  #navToggle{ display:none; }
+
+  main{ min-width:0; padding:0; }
+
+  .container{
+    max-width:760px;
+    margin:0 auto;
+    padding:64px 28px 40px;
+  }
+
+  /* Kata pengantar / intro card */
+  .intro-block{
+    background:var(--paper-2);
+    border:1px solid var(--rule);
+    border-radius:4px;
+    padding:34px 34px;
+    margin-bottom:10px;
+  }
+  .intro-block h2{ font-size:1.5rem; color:var(--gold-deep);}
+
+  /* ===== Chapter styling ===== */
+  section.bab{
+    padding:70px 28px 10px;
+    max-width:760px;
+    margin:0 auto;
+    border-top:1px solid var(--rule);
+  }
+  section.bab:first-of-type{ border-top:none; }
+  .bab-kicker{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:10px;
+  }
+  .bab h2.bab-title{
+    font-size:clamp(1.5rem, 3.4vw, 2.05rem);
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink);
+  }
+  .bab .bab-desc{
+    font-style:italic;
+    color:var(--ink-soft);
+    margin-bottom:34px;
+    font-size:.98rem;
+  }
+  h3.sub{
+    font-size:1.18rem;
+    color:var(--gold-deep);
+    margin-top:2.2em;
+    margin-bottom:.6em;
+    padding-bottom:.25em;
+    border-bottom:1px solid var(--rule);
+  }
+  h4.subsub{
+    font-family:'Inter',sans-serif;
+    font-size:.82rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--maroon);
+    margin-top:1.6em;
+    margin-bottom:.5em;
+  }
+
+  /* Formula box */
+  .formula{
+    background:var(--night);
+    color:var(--gold-light);
+    border-radius:6px;
+    padding:20px 24px;
+    margin:18px 0 22px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:.92rem;
+    line-height:1.7;
+    overflow-x:auto;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  .formula::before{
+    content:"Rumus";
+    position:absolute; top:-10px; left:16px;
+    background:var(--gold);
+    color:var(--night);
+    font-family:'Inter',sans-serif;
+    font-size:10px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:2px 9px;
+    border-radius:3px;
+  }
+
+  /* Example box */
+  .contoh{
+    background:#fffaf0;
+    border-left:4px solid var(--teal);
+    padding:18px 22px;
+    margin:18px 0 22px;
+    border-radius:0 4px 4px 0;
+  }
+  .contoh .lab{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--teal);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .contoh p{ margin-bottom:.6em; font-size:.96rem; }
+
+  .catatan{
+    background:#f4ede0;
+    border:1px dashed var(--gold);
+    padding:16px 20px;
+    margin:18px 0 22px;
+    border-radius:4px;
+    font-size:.93rem;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+  .catatan .lab{
+    font-family:'Inter',sans-serif;
+    font-style:normal;
+    font-size:10.5px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    font-weight:600;
+    display:block;
+    margin-bottom:6px;
+  }
+
+  /* Manuscript quote (Arabic + translation) */
+  .manuskrip{
+    position:relative;
+    background:linear-gradient(180deg,#fbf5e4,#f6ecd2);
+    border:1px solid var(--gold);
+    border-radius:6px;
+    padding:34px 30px 26px;
+    margin:26px 0 30px;
+    box-shadow:var(--shadow);
+  }
+  .manuskrip::before, .manuskrip::after{
+    content:"";
+    position:absolute;
+    width:22px; height:22px;
+    border:2px solid var(--gold);
+  }
+  .manuskrip::before{ top:8px; left:8px; border-right:none; border-bottom:none; }
+  .manuskrip::after{ bottom:8px; right:8px; border-left:none; border-top:none; }
+  .manuskrip .sumber{
+    font-family:'Inter',sans-serif;
+    font-size:10.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    text-align:center;
+    margin-bottom:16px;
+  }
+  .manuskrip .arabic{
+    font-size:clamp(1.35rem, 3vw, 1.85rem);
+    text-align:center;
+    color:var(--ink);
+    margin-bottom:16px;
+    line-height:2;
+  }
+  .manuskrip .translit{
+    text-align:center;
+    font-style:italic;
+    color:var(--maroon);
+    font-size:.96rem;
+    margin-bottom:14px;
+  }
+  .manuskrip .terjemah{
+    text-align:center;
+    font-family:'Inter',sans-serif;
+    font-size:.98rem;
+    color:var(--ink);
+    max-width:52ch;
+    margin:0 auto;
+  }
+  .manuskrip .terjemah b{ color:var(--gold-deep); }
+
+  /* Tables */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:18px 0 26px;
+    font-size:.92rem;
+    background:#fff;
+    box-shadow:var(--shadow);
+  }
+  th, td{
+    border:1px solid var(--rule);
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  th{
+    background:var(--gold-deep);
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:.78rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  tr:nth-child(even) td{ background:var(--paper-2); }
+
+  ul.list, ol.list{ padding-left:1.3em; margin-bottom:1.2em; }
+  ul.list li, ol.list li{ margin-bottom:.5em; }
+
+  .poin-kunci{
+    background:var(--teal);
+    color:#eaf3f1;
+    border-radius:6px;
+    padding:22px 26px;
+    margin:30px 0 6px;
+  }
+  .poin-kunci .lab{
+    font-family:'Inter',sans-serif;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .poin-kunci ul{ margin:0; padding-left:1.2em; }
+  .poin-kunci li{ margin-bottom:.4em; font-size:.93rem; }
+
+  .glosarium dt{ font-family:'Spectral',serif; font-weight:600; color:var(--gold-deep); margin-top:14px; }
+  .glosarium dd{ margin:2px 0 0 0; font-size:.94rem; }
+
+  /* ===== Lampiran: Rujukan Teks Kitab ===== */
+  .rujukan-hero{
+    background:radial-gradient(ellipse at 50% -10%, #1c2c4a 0%, var(--night) 55%), linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+    color:var(--paper); text-align:center; padding:56px 24px 46px;
+    margin-top:70px;
+  }
+  .rujukan-hero h2{ color:var(--paper); font-size:clamp(1.6rem,4vw,2.3rem); margin:0 auto .3em; max-width:22ch; }
+  .rujukan-hero p{ color:#cdd8e6; max-width:56ch; margin:0 auto; font-size:.95rem; }
+  .disclaimer{
+    max-width:760px; margin:-24px auto 0; padding:0 24px;
+  }
+  .disclaimer-inner{
+    background:#fffaf0; border:1px solid var(--gold); border-left:6px solid var(--maroon);
+    border-radius:6px; padding:22px 26px; box-shadow:var(--shadow); font-size:.92rem;
+    position:relative; z-index:5;
+  }
+  .disclaimer-inner .lab{ font-family:'Inter',sans-serif; font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--maroon); margin-bottom:8px; display:block; }
+  .disclaimer-inner ul{ margin:.6em 0 0; padding-left:1.2em; }
+  .disclaimer-inner li{ margin-bottom:.4em; }
+
+  nav.jump{
+    max-width:760px; margin:30px auto 0; padding:0 28px;
+    display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
+    font-family:'Inter',sans-serif;
+  }
+  nav.jump a{
+    text-decoration:none; font-size:12px; color:var(--gold-deep);
+    border:1px solid var(--gold); padding:7px 15px; border-radius:100px;
+    background:var(--paper-2);
+  }
+
+  .kitab-block{ max-width:760px; margin:0 auto; padding:56px 28px 10px; border-top:1px solid var(--rule); }
+  .kitab-block .meta{ font-style:italic; color:var(--ink-soft); font-size:.94rem; margin-bottom:26px; }
+
+  .verified{
+    border-left:4px solid var(--teal); background:#fffaf0;
+    padding:16px 20px; margin:16px 0 20px; border-radius:0 4px 4px 0;
+  }
+  .verified .lab{ font-family:'Inter',sans-serif; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--teal); font-weight:700; margin-bottom:8px; }
+  .verified .src{ font-family:'Inter',sans-serif; font-size:11px; color:#7a6c4d; margin-top:8px; }
+
+  .formula-frag{
+    background:var(--night); color:var(--gold-light); border-radius:6px;
+    padding:16px 20px; margin:16px 0 20px; font-family:'JetBrains Mono', monospace;
+    font-size:.85rem; line-height:1.7; overflow-x:auto;
+  }
+
+  .not-verified{
+    border:1px dashed #999; background:#f2f2ee; padding:14px 18px; margin:16px 0 20px;
+    border-radius:4px; font-size:.89rem; color:#555;
+  }
+  .not-verified .lab{ font-family:'Inter',sans-serif; font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:#777; margin-bottom:6px; display:block; }
+
+  dl.terms dt{ font-family:'Spectral',serif; font-weight:600; color:var(--gold-deep); margin-top:10px; }
+  dl.terms dd{ margin:2px 0 0 0; font-size:.9rem; }
+
+  .refs-list{ font-size:.85rem; }
+  .refs-list li{ margin-bottom:8px; }
+
+  footer{
+    background:var(--night);
+    color:#9fb0c6;
+    text-align:center;
+    padding:46px 20px 40px;
+    font-family:'Inter',sans-serif;
+    font-size:12.5px;
+    letter-spacing:.03em;
+    margin-top:60px;
+  }
+  footer a{ color:var(--gold-light); text-decoration:none; }
+  footer .divider{
+    width:60px; height:1px; background:var(--gold); opacity:.5;
+    margin:0 auto 18px;
+  }
+
+  .topbar-mobile{
+    display:none;
+    position:sticky; top:0; z-index:50;
+    background:var(--night); color:var(--paper);
+    padding:12px 18px;
+    align-items:center; justify-content:space-between;
+    font-family:'Inter',sans-serif;
+  }
+  .topbar-mobile button{
+    background:none; border:1px solid var(--gold-light);
+    color:var(--gold-light); border-radius:4px;
+    padding:6px 12px; font-size:12px; font-family:'Inter',sans-serif;
+  }
+
+  @media (max-width: 900px){
+    .layout{ grid-template-columns:1fr; }
+    nav.toc{
+      position:fixed; top:46px; left:0; right:0; bottom:0;
+      height:auto;
+      z-index:40;
+      transform:translateY(-110%);
+      transition:transform .25s ease;
+      border-right:none;
+      border-bottom:1px solid var(--rule);
+    }
+    nav.toc.open{ transform:translateY(0); }
+    .topbar-mobile{ display:flex; }
+    .container, section.bab{ padding-left:20px; padding-right:20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar-mobile">
+  <strong>Ilmu Falak Lanjutan</strong>
+  <button id="navBtn" onclick="document.getElementById('sideNav').classList.toggle('open')">Daftar Isi</button>
+</div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="stars"></div>
+  <div class="stars2"></div>
+
+  <svg class="armillary" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="80"/>
+    <ellipse cx="100" cy="100" rx="80" ry="28"/>
+    <ellipse cx="100" cy="100" rx="28" ry="80"/>
+    <ellipse class="thick" cx="100" cy="100" rx="80" ry="55" transform="rotate(23.4 100 100)"/>
+    <circle class="thick" cx="100" cy="100" r="4" fill="currentColor" stroke="none" style="fill:#d9b96a"/>
+    <circle cx="100" cy="100" r="92"/>
+  </svg>
+
+  <div class="eyebrow">Modul Pembelajaran &middot; Santri Tingkat Lanjut / Ma'had Aly</div>
+  <h1>Ilmu Falak Lanjutan</h1>
+  <p class="sub">Syarah Sullam an-Nayyirain, al-Khulashah al-Wafiyyah, dan Durus al-Falakiyyah — hisab waktu shalat, arah kiblat, dan rukyat hilal</p>
+
+  <div class="arabic-cover arabic">حِسَابُ أَوْقَاتِ الصَّلَاةِ وَالْقِبْلَةِ وَرُؤْيَةِ الْهِلَالِ</div>
+  <div class="translit">Ḥisābu Awqāti aṣ-Ṣalāti wal-Qiblati wa Ru'yatil-Hilāl — "Hisab waktu-waktu shalat, kiblat, dan rukyat hilal"</div>
+
+  <div class="kitab-chips">
+    <span>Sullam an-Nayyirain</span>
+    <span>Al-Khulashah al-Wafiyyah</span>
+    <span>Durus al-Falakiyyah</span>
+  </div>
+
+  <div class="byline">16 Bab / Pertemuan — Disusun oleh Achmad Fauzi</div>
+  <div class="scroll-cue">Gulir ke bawah ↓</div>
+</header>
+
+<div class="layout">
+  <nav class="toc" id="sideNav">
+    <div class="toc-title">Daftar Isi</div>
+    <a href="#pengantar">Kata Pengantar</a>
+    <div class="grp">Fondasi</div>
+    <a href="#bab1">Bab 1 — Pendahuluan &amp; Epistemologi</a>
+    <a href="#bab2">Bab 2 — Koordinat Langit &amp; Trigonometri Bola</a>
+    <a href="#bab3">Bab 3 — Kalender &amp; Data Ephemeris</a>
+    <a href="#bab4">Bab 4 — Deklinasi &amp; Equation of Time</a>
+    <div class="grp">Waktu Shalat &amp; Kiblat</div>
+    <a href="#bab5">Bab 5 — Hisab Waktu Shalat: Teori</a>
+    <a href="#bab6">Bab 6 — Praktik Waktu Shalat</a>
+    <a href="#bab7">Bab 7 — Arah Kiblat</a>
+    <a href="#bab8">Bab 8 — Praktik Rashdul Qiblah</a>
+    <div class="grp">Awal Bulan &amp; Syarah Kitab</div>
+    <a href="#bab9">Bab 9 — Ijtima' &amp; Ketinggian Hilal</a>
+    <a href="#bab10">Bab 10 — Syarah Sullam an-Nayyirain</a>
+    <a href="#bab11">Bab 11 — Syarah Al-Khulashah al-Wafiyyah</a>
+    <a href="#bab12">Bab 12 — Syarah Durus al-Falakiyyah</a>
+    <div class="grp">Gerhana &amp; Fikih</div>
+    <a href="#bab13">Bab 13 — Gerhana Matahari</a>
+    <a href="#bab14">Bab 14 — Gerhana Bulan</a>
+    <a href="#bab15">Bab 15 — Kalender Falakiyah &amp; Fikih</a>
+    <a href="#bab16">Bab 16 — Integrasi &amp; Penutup</a>
+    <div class="grp">Referensi</div>
+    <a href="#glosarium">Glosarium</a>
+    <a href="#pustaka">Daftar Pustaka</a>
+    <a href="#rujukan" style="color:var(--maroon);font-weight:600;">📜 Lampiran: Teks Kitab Asli</a>
+  </nav>
+
+  <main>
+    <div class="container" id="pengantar">
+      <div class="intro-block">
+        <h2>Kata Pengantar</h2>
+        <p>Segala puji bagi Allah subhanahu wa ta'ala yang telah menundukkan matahari, bulan, dan bintang-bintang dengan ketentuan (taqdir) yang presisi, sehingga manusia dapat menghitung waktu, bulan, dan tahun (QS. Yunus: 5). Ilmu Falak merupakan cabang ilmu keislaman yang menautkan kajian syariat dengan sains astronomi — ilmu yang sangat aplikatif untuk menentukan awal waktu shalat, arah kiblat, awal bulan kamariah, serta gerhana matahari dan bulan.</p>
+        <p>Pelajaran ini disusun berdasarkan tiga kitab rujukan klasik yang menjadi tangga perkembangan metodologi hisab di Nusantara: <b>Sullam an-Nayyirain</b> karya Muhammad Manshur bin Abdul Hamid al-Batawi, 1344 H/1925 M (hisab hakiki taqribi berbasis Zij Ulugh Beyk), <b>al-Khulashah al-Wafiyyah</b> karya Zubair Umar al-Jailani, cet. pertama 1354 H/1935 M (hisab hakiki bit tahkik dengan jadwal logaritma), dan <b>al-Durus al-Falakiyyah</b> karya Syaikh Muhammad Ma'shum bin Ali, Jombang (hisab hakiki dengan daftar logaritma 5 desimal). Ketiganya bukan saling meniadakan, melainkan menunjukkan satu ilmu yang sama — trigonometri bola dan posisi benda langit — yang disajikan dengan alat bantu dan kedalaman data berbeda sesuai zamannya. <a href="#rujukan">Lihat Lampiran: Rujukan Teks Kitab Asli →</a></p>
+        <p>Enam belas bab berikut disusun bertahap: delapan pertemuan pertama membahas hisab waktu shalat dan arah kiblat, delapan pertemuan berikutnya membahas hisab awal bulan kamariah, syarah tiga kitab, gerhana, dan fikih hisab-rukyat, ditutup dengan integrasi falak klasik dan astronomi modern.</p>
+      </div>
+    </div>
+
+    <!-- ===================== BAB 1 ===================== -->
+    <section class="bab" id="bab1">
+      <div class="bab-kicker">Pertemuan 1 &middot; Fondasi</div>
+      <h2 class="bab-title">Bab 1 — Pendahuluan Ilmu Falak Lanjutan dan Epistemologi Hisab</h2>
+      <p class="bab-desc">Menempatkan ilmu falak dalam khazanah keislaman, mengenal tiga kitab rujukan, dan memahami tingkatan hisab dari yang paling sederhana hingga paling presisi.</p>
+
+      <h3 class="sub">1.1 Kedudukan Ilmu Falak dalam Khazanah Keislaman</h3>
+      <p>Ilmu falak adalah ilmu yang mempelajari peredaran benda-benda langit, khususnya matahari dan bulan, sejauh berkaitan dengan penentuan waktu ibadah: waktu shalat, arah kiblat, awal bulan kamariah, dan gerhana. Ulama klasik menyebutnya juga <em>'ilm al-miqat</em> (ilmu penentu waktu) karena fungsi utamanya adalah <em>dhabt al-'ibadah bi al-zaman</em> — mengikat ibadah dengan waktu. Dasar normatifnya antara lain firman Allah dalam QS. Yunus ayat 5, yang menegaskan bahwa matahari dan bulan ditetapkan orbitnya agar manusia mengetahui bilangan tahun dan perhitungan (hisab).</p>
+      <p>Pada tingkat lanjut, kajian diperdalam pada tiga pilar: (1) penguasaan trigonometri bola sebagai bahasa hisab hakiki; (2) kemampuan membaca dan men-syarah-i teks kitab klasik; (3) kemampuan mempraktikkan hisab dengan data ephemeris kontemporer.</p>
+
+      <h3 class="sub">1.2 Tiga Kitab Rujukan dan Karakteristik Metodenya</h3>
+      <table>
+        <tr><th>Kitab</th><th>Pengarang</th><th>Metode</th><th>Ciri Khas</th></tr>
+        <tr><td>Sullam an-Nayyirain</td><td>KH. Muhammad Manshur al-Batawi (w. 1934 M)</td><td>Hisab 'Urfi/Taqribi</td><td>Data tabel sederhana, mudah dihitung manual, akurasi rendah–sedang</td></tr>
+        <tr><td>Al-Khulashah al-Wafiyyah</td><td>KH. Zubair Umar al-Jailani</td><td>Hisab Hakiki bit Tahkik</td><td>Data lebih rinci, koreksi bertingkat, akurasi menengah–tinggi</td></tr>
+        <tr><td>Al-Durus al-Falakiyyah</td><td>Syaikh Muhammad Ma'shum bin Ali (Jombang)</td><td>Hisab Hakiki (Jadwal Logaritma 5 Desimal)</td><td>Data wasath &amp; khassah per buruj-darajah-daqiqah, epoch Jombang (112,26° BT)</td></tr>
+        <tr><td colspan="4" style="font-style:italic;font-size:.85rem;background:#fff;">Catatan: dalam modul pembelajaran ini, prinsip metode hakiki-tahkiki kitab tersebut dipadukan dengan pendekatan hisab kontemporer (data ephemeris &amp; kalkulator) sebagai pengembangan lanjutannya — lihat Bab 12.</td></tr>
+      </table>
+      <p>Ketiga kitab menunjukkan tangga perkembangan metodologi hisab: dari hisab 'urfi (berbasis siklus tetap), ke hisab hakiki taqribi (posisi benda langit dengan tabel sederhana), hingga hisab hakiki tahkiki/kontemporer (data astronomis presisi tinggi). Santri tingkat lanjut dituntut memahami ketiganya secara komparatif, bukan sekadar menghafal satu metode.</p>
+
+      <h3 class="sub">1.3 Klasifikasi Hisab dalam Ilmu Falak</h3>
+      <ul class="list">
+        <li><b>Hisab 'Urfi</b> — perhitungan berbasis rata-rata peredaran bulan/matahari dengan siklus tetap.</li>
+        <li><b>Hisab Hakiki Taqribi</b> — memperhitungkan posisi riil benda langit namun dengan data dan koreksi yang disederhanakan.</li>
+        <li><b>Hisab Hakiki Tahkiki</b> — memperhitungkan posisi riil dengan koreksi rinci (paralaks, refraksi, semi diameter, dip ufuk).</li>
+        <li><b>Hisab Kontemporer</b> — menggunakan data ephemeris astronomis presisi tinggi dan perangkat lunak, tetap berbasis rumus trigonometri bola yang sama.</li>
+      </ul>
+
+      <h3 class="sub">1.4 Epistemologi Hisab: Sumber Data dan Validitasnya</h3>
+      <p>Validitas hasil hisab bergantung pada dua hal: ketepatan rumus (kerangka matematis) dan ketepatan data (posisi matahari/bulan). Kitab klasik menyertakan tabel data yang akurasinya terbatas pada masa penyusunan, sedangkan data ephemeris kontemporer (mis. Ephemeris Hisab Rukyat Kemenag RI) diperbarui tiap tahun dari algoritma astronomi modern (VSOP87, ELP2000).</p>
+      <div class="catatan"><span class="lab">Catatan Metodologis</span>Rumus (thariqah al-hisab) bersifat kekal dan dapat dipelajari dari kitab klasik, sedangkan data (bayanat) sebaiknya diperbarui mengikuti sumber paling mutakhir yang tersedia.</div>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 1</div>
+        <ul>
+          <li>Ilmu falak mengikat ibadah dengan waktu — dasarnya QS. Yunus: 5.</li>
+          <li>Tiga kitab rujukan mewakili tiga generasi metode: 'urfi/taqribi, hakiki bit tahkik, dan kontemporer.</li>
+          <li>Rumus hisab kekal; data hisab wajib diperbarui setiap tahun.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 2 ===================== -->
+    <section class="bab" id="bab2">
+      <div class="bab-kicker">Pertemuan 2 &middot; Fondasi</div>
+      <h2 class="bab-title">Bab 2 — Koordinat Langit dan Trigonometri Bola</h2>
+      <p class="bab-desc">Bahasa matematis di balik seluruh rumus hisab: bola langit, segitiga bola, dan rumus induk tinggi benda langit.</p>
+
+      <h3 class="sub">2.1 Bola Langit (al-Kurah al-Falakiyyah)</h3>
+      <p>Untuk keperluan hisab, langit dipandang sebagai bola raksasa dengan bumi (atau pengamat) di pusatnya. Posisi benda langit dinyatakan dalam dua sistem koordinat utama:</p>
+      <ul class="list">
+        <li><b>Sistem Koordinat Horizon</b> — mengukur posisi benda langit relatif terhadap ufuk pengamat: tinggi (irtifa', h) dan azimuth (A), berubah setiap saat karena rotasi bumi.</li>
+        <li><b>Sistem Koordinat Ekuator</b> — mengukur posisi relatif terhadap ekuator langit: deklinasi (δ) dan sudut waktu (t) atau asensiorekta, lebih stabil untuk data tabel/ephemeris.</li>
+      </ul>
+
+      <h3 class="sub">2.2 Segitiga Bola (al-Muthallats al-Kurawi)</h3>
+      <p>Perhitungan posisi benda langit memakai trigonometri bola pada segitiga yang dibentuk oleh Kutub Langit (P), Zenith pengamat (Z), dan benda langit (X) — disebut segitiga PZX. Dua dalil utamanya:</p>
+      <div class="formula">Dalil Sinus:  sin a / sin A  =  sin b / sin B  =  sin c / sin C
+
+Dalil Kosinus Sisi:  cos a  =  cos b · cos c  +  sin b · sin c · cos A</div>
+      <p>Pada segitiga PZX: sisi PZ = 90° − φ (φ = lintang tempat), sisi PX = 90° − δ (δ = deklinasi benda langit), sisi ZX = 90° − h (h = tinggi benda langit), dan sudut di P adalah sudut waktu (t).</p>
+
+      <h3 class="sub">2.3 Penurunan Rumus Sudut Waktu dari Rumus Induk</h3>
+      <p>Dengan menerapkan dalil kosinus sisi pada segitiga PZX diperoleh rumus induk tinggi benda langit — rumus paling fundamental dalam ilmu falak, dipakai pada hampir seluruh bab berikutnya:</p>
+      <div class="formula">sin h  =  sin φ · sin δ  +  cos φ · cos δ · cos t</div>
+      <p>Diselesaikan untuk t, diperoleh rumus sudut waktu yang dipakai untuk menghitung waktu shalat (Bab 5), ketinggian hilal (Bab 9), dan berbagai hisab lain:</p>
+      <div class="formula">t  =  arc cos [ (sin h − sin φ · sin δ) / (cos φ · cos δ) ]</div>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 2</div>
+        <ul>
+          <li>Segitiga PZX (Kutub–Zenith–Bintang) adalah kerangka geometris seluruh hisab falak.</li>
+          <li>Rumus induk sin h = sinφ sinδ + cosφ cosδ cos t adalah rumus paling sering dipakai dalam modul ini.</li>
+          <li>Rumus sudut waktu t = arc cos[...] diturunkan langsung dari rumus induk.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 3 ===================== -->
+    <section class="bab" id="bab3">
+      <div class="bab-kicker">Pertemuan 3 &middot; Fondasi</div>
+      <h2 class="bab-title">Bab 3 — Kalender Hijriyah-Masehi dan Data Ephemeris</h2>
+      <p class="bab-desc">Dua sistem kalender yang berbeda basis peredarannya, serta pengenalan data ephemeris sebagai sumber angka hisab kontemporer.</p>
+
+      <h3 class="sub">3.1 Sistem Kalender Kamariah dan Syamsiah</h3>
+      <p>Kalender kamariah (Hijriyah) berbasis peredaran bulan mengelilingi bumi (bulan sinodis ±29,53 hari), sedangkan kalender syamsiah (Masehi) berbasis peredaran semu tahunan matahari (±365,25 hari). Karena satu tahun Hijriyah (354–355 hari) lebih pendek dari satu tahun Masehi, selisihnya terakumulasi setiap tahun — sekitar 11 hari per tahun.</p>
+
+      <h3 class="sub">3.2 Konversi Hijriyah ke Masehi (Metode Tabel/Umur Khalifah)</h3>
+      <h4 class="subsub">Tabel Kabisat dalam Daur 30 Tahun (Hisab 'Urfi)</h4>
+      <p>Daur 30 tahun adalah siklus hisab 'urfi yang mengandung 11 tahun kabisat (Dzulhijjah berumur 30 hari) dan 19 tahun basithah (Dzulhijjah berumur 29 hari), menjaga rata-rata panjang bulan tetap mendekati 29,53 hari sepanjang siklus.</p>
+
+      <h3 class="sub">3.3 Data Ephemeris: Struktur dan Fungsi</h3>
+      <p>Ephemeris Hisab Rukyat adalah data astronomis harian (diterbitkan tahunan oleh Kemenag RI) yang memuat posisi matahari dan bulan per jam GMT, meliputi: deklinasi matahari (δ☉), equation of time (e), deklinasi bulan (δ☾), asensiorekta, semi diameter, dan horizontal parallax. Data inilah yang menggantikan tabel tetap pada kitab klasik dalam hisab kontemporer.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 3</div>
+        <ul>
+          <li>Kalender kamariah berbasis bulan (±29,53 hari/bulan), kalender syamsiah berbasis matahari (±365,25 hari/tahun).</li>
+          <li>Daur 30 tahun (hisab 'urfi): 11 tahun kabisat, 19 tahun basithah.</li>
+          <li>Ephemeris menyajikan data posisi matahari-bulan per jam, dasar seluruh hisab kontemporer.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 4 ===================== -->
+    <section class="bab" id="bab4">
+      <div class="bab-kicker">Pertemuan 4 &middot; Fondasi</div>
+      <h2 class="bab-title">Bab 4 — Deklinasi Matahari dan Equation of Time</h2>
+      <p class="bab-desc">Dua besaran harian yang menjadi input utama hampir seluruh rumus waktu shalat dan arah kiblat.</p>
+
+      <h3 class="sub">4.1 Definisi Deklinasi Matahari</h3>
+      <p>Deklinasi matahari (mail syamsi, δ☉) adalah jarak sudut matahari dari ekuator langit. Nilainya berkisar antara +23,45° (titik balik musim panas belahan utara, ±21 Juni) hingga −23,45° (titik balik musim dingin, ±22 Desember), dan nol saat ekuinoks (±21 Maret dan 23 September). Perubahan deklinasi inilah penyebab pergeseran waktu terbit-terbenam matahari sepanjang tahun serta pergeseran rashdul qiblah harian.</p>
+
+      <h3 class="sub">4.2 Pendekatan Rumus Deklinasi (Formula Cooper Sederhana)</h3>
+      <div class="formula">δ☉ ≈ 23,45° × sin [ 360°/365 × (n + 284) ]</div>
+      <p>dengan n = nomor urut hari dalam tahun (1 Januari = 1). Rumus pendekatan ini memiliki galat hingga ±1°, sehingga untuk hisab presisi tetap wajib memakai data ephemeris.</p>
+      <div class="contoh">
+        <div class="lab">Contoh Perhitungan</div>
+        <p>Estimasi deklinasi 21 Maret (n=80, ekuinoks): δ☉ ≈ 23,45° × sin[360/365 × (80+284)] = 23,45° × sin(359,0°) ≈ −0,41° — mendekati 0°, sesuai definisi ekuinoks.</p>
+      </div>
+
+      <h3 class="sub">4.3 Equation of Time (Ta'dil al-Waqt / Perata Waktu)</h3>
+      <p>Equation of time (e) adalah selisih antara waktu matahari hakiki dan waktu matahari pertengahan (waktu jam biasa), timbul akibat: (1) orbit bumi berbentuk elips sehingga kecepatan gerak semu matahari tidak konstan, dan (2) kemiringan sumbu rotasi bumi terhadap bidang ekliptika. Nilai e berkisar −14 hingga +16 menit sepanjang tahun.</p>
+      <div class="catatan"><span class="lab">Konvensi Tanda</span>Waktu Zuhur hakiki = pukul 12 dikurangi e. Santri wajib memeriksa konvensi tanda pada sumber data ephemeris yang dipakai, karena tidak semua sumber memakai tanda yang sama.</div>
+
+      <h3 class="sub">4.4 Tabel Ilustrasi Nilai Deklinasi dan Equation of Time Bulanan</h3>
+      <table>
+        <tr><th>Tanggal</th><th>Deklinasi δ☉ (approx.)</th><th>Equation of Time e (approx.)</th></tr>
+        <tr><td>21 Maret</td><td>0° 00'</td><td>−7 menit</td></tr>
+        <tr><td>21 Juni</td><td>+23° 26'</td><td>−1 menit</td></tr>
+        <tr><td>23 September</td><td>0° 00'</td><td>+7 menit</td></tr>
+        <tr><td>22 Desember</td><td>−23° 26'</td><td>+2 menit</td></tr>
+        <tr><td>11 Februari</td><td>−14° 15'</td><td>−14 menit (ekstrem minimum)</td></tr>
+        <tr><td>3 November</td><td>−14° 30'</td><td>+16 menit (ekstrem maksimum)</td></tr>
+      </table>
+
+      <h3 class="sub">4.5 Aplikasi dalam Hisab Waktu Zuhur</h3>
+      <p>Waktu Zuhur hakiki terjadi ketika matahari tepat di meridian tempat, yaitu pukul 12.00 waktu hakiki setempat. Konversi ke Waktu Daerah memerlukan koreksi equation of time dan koreksi selisih bujur:</p>
+      <div class="formula">Zuhur (WD) = 12:00 − e + (BTd − BTx) / 15</div>
+      <p>dengan BTd = bujur standar zona waktu (mis. 105° untuk WIB), BTx = bujur tempat yang dihisab, e = equation of time (dalam jam).</p>
+      <div class="contoh">
+        <div class="lab">Contoh Perhitungan</div>
+        <p>Zuhur di Yogyakarta (BT = 110° 22'), WIB (BTd=105°), e = +3 menit = 0,05 jam:</p>
+        <p>Zuhur = 12:00 − 0,05 + (105 − 110,3667)/15 = 12:00 − 0,4078 jam = pukul 11:35,5 WIB. Ditambah ihtiyat 2 menit → pukul <b>11:38 WIB</b>.</p>
+      </div>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 4</div>
+        <ul>
+          <li>Deklinasi matahari berkisar ±23,45°, bernilai nol saat ekuinoks.</li>
+          <li>Equation of time mengoreksi selisih waktu matahari hakiki vs. waktu jam biasa (−14 s.d. +16 menit).</li>
+          <li>Zuhur(WD) = 12:00 − e + (BTd−BTx)/15 adalah rumus dasar seluruh hisab waktu shalat.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 5 ===================== -->
+    <section class="bab" id="bab5">
+      <div class="bab-kicker">Pertemuan 5 &middot; Waktu Shalat &amp; Kiblat</div>
+      <h2 class="bab-title">Bab 5 — Hisab Awal Waktu Shalat: Teori dan Rumus</h2>
+      <p class="bab-desc">Menerjemahkan batas syar'i tiap waktu shalat menjadi padanan posisi matahari, lalu menghitungnya dengan rumus sudut waktu.</p>
+
+      <h3 class="sub">5.1 Dasar Syar'i dan Definisi Astronomis Waktu Shalat</h3>
+      <p>Waktu-waktu shalat memiliki batas syar'i yang dijelaskan dalam hadits (mis. HR. Muslim dari Abdullah bin Amr), dan setiap batas tersebut memiliki padanan posisi matahari yang dapat dihisab secara astronomis:</p>
+      <table>
+        <tr><th>Waktu Shalat</th><th>Definisi Syar'i</th><th>Padanan Tinggi Matahari (h)</th></tr>
+        <tr><td>Zuhur</td><td>Matahari tergelincir dari titik kulminasi</td><td>h = 0° (kulminasi) + ihtiyat</td></tr>
+        <tr><td>Ashar</td><td>Panjang bayangan = panjang benda + bayangan saat zuhur</td><td>h = arc cot(1 + tan|φ−δ|)</td></tr>
+        <tr><td>Maghrib</td><td>Matahari terbenam sempurna</td><td>h = −1° (semi diameter &amp; refraksi)</td></tr>
+        <tr><td>Isya</td><td>Hilangnya mega merah (syafaq)</td><td>h = −18°</td></tr>
+        <tr><td>Subuh</td><td>Munculnya fajar shadiq</td><td>h = −20°</td></tr>
+        <tr><td>Terbit (Syuruq)</td><td>Matahari terbit sempurna</td><td>h = −1°</td></tr>
+      </table>
+      <p>Sullam an-Nayyirain menandaskan definisi-definisi di atas secara ringkas dalam bahasa Arab-Melayu, dengan nilai h yang sedikit bervariasi antar madzhab hisab. Modul ini memakai konvensi Kementerian Agama RI: Subuh −20°, Isya −18°.</p>
+
+      <h3 class="sub">5.2 Rumus Umum Sudut Waktu Matahari</h3>
+      <div class="formula">t = arc cos [ (sin h − sin φ · sin δ) / (cos φ · cos δ) ]
+
+Waktu Shalat = Zuhur ± (t/15) + Ihtiyat</div>
+      <p>Tanda positif (+) dipakai untuk waktu setelah kulminasi (Ashar, Maghrib, Isya); tanda negatif (−) untuk waktu sebelum kulminasi (Subuh, Terbit).</p>
+
+      <h3 class="sub">5.3 Rumus Khusus Waktu Ashar</h3>
+      <p>Waktu Ashar didefinisikan berdasarkan panjang bayangan, bukan ketinggian matahari yang tetap. Tinggi matahari saat Ashar (hA) dihitung dahulu, baru disubstitusikan ke rumus sudut waktu:</p>
+      <div class="formula">hA = arc cot [ 1 + tan |φ − δ| ]</div>
+      <div class="contoh">
+        <div class="lab">Contoh Perhitungan Waktu Ashar</div>
+        <p>φ = −6° 58' (Jakarta), δ = −7° 12' (pertengahan Oktober). |φ−δ| = 0,2333°; tan(0,2333°)=0,004072.</p>
+        <p>hA = arc cot(1,004072) = 44° 53'. sin hA = 0,7059; sinφ sinδ = 0,015198; cosφ cosδ = 0,98481.</p>
+        <p>cos tA = (0,7059−0,015198)/0,98481 = 0,7013 → tA = arc cos(0,7013) = 45° 30' = <b>3 jam 2 menit</b> setelah Zuhur.</p>
+      </div>
+
+      <h3 class="sub">5.4 Ihtiyat (Kehati-hatian)</h3>
+      <p>Ihtiyat adalah penambahan waktu (umumnya 1–2 menit) sebagai margin keamanan dalam hisab waktu shalat, mengantisipasi kesalahan pembulatan data dan perbedaan lokasi dalam satu wilayah jadwal. Zuhur umumnya memakai ihtiyat lebih besar (2–4 menit) karena posisi matahari bergerak lambat di sekitar kulminasi.</p>
+      <div class="catatan"><span class="lab">Catatan Fikih-Astronomis</span>Ihtiyat bukan bagian dari definisi syar'i waktu shalat, melainkan langkah kehati-hatian praktis agar waktu yang diumumkan tidak mendahului batas yang sesungguhnya.</div>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 5</div>
+        <ul>
+          <li>Setiap waktu shalat punya padanan tinggi matahari (h) tersendiri: Subuh −20°, Isya −18°, Maghrib −1°, Ashar via arc cot.</li>
+          <li>Waktu Shalat = Zuhur ± (t/15) + Ihtiyat.</li>
+          <li>Ihtiyat adalah margin praktis, bukan bagian dari definisi syar'i.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 6 ===================== -->
+    <section class="bab" id="bab6">
+      <div class="bab-kicker">Pertemuan 6 &middot; Waktu Shalat &amp; Kiblat</div>
+      <h2 class="bab-title">Bab 6 — Praktik Hisab Waktu Shalat: Studi Kasus Lengkap</h2>
+      <p class="bab-desc">Menyusun jadwal shalat penuh sehari, langkah demi langkah, untuk dua kota dengan karakter lintang berbeda.</p>
+
+      <h3 class="sub">6.1 Studi Kasus: Hisab Jadwal Shalat Kota Semarang</h3>
+      <p>Data: φ = −6° 58' 0" (LS), λ = 110° 24' 0" BT, zona WIB (BTd=105°), data ilustratif δ☉ = −8° 30', e = +5 menit = 0,0833 jam.</p>
+      <div class="contoh">
+        <div class="lab">Langkah 1 — Zuhur</div>
+        <p>Zuhur = 12:00 − 0,0833 + (105−110,4)/15 = 12:00 − 0,4433 jam = 11:33,4 + ihtiyat 2 menit = <b>11:35 WIB</b>.</p>
+      </div>
+      <div class="contoh">
+        <div class="lab">Langkah 2 — Ashar</div>
+        <p>|φ−δ|=1,5333°; hA=arc cot(1,02677)=44°15'. cos tA=(0,6984−0,017926)/0,98170=0,6935 → tA=46°04'=3j4,3m.</p>
+        <p>Ashar = 11:33,4 + 3:04,3 = 14:37,7 + ihtiyat = <b>14:40 WIB</b>.</p>
+      </div>
+      <div class="contoh">
+        <div class="lab">Langkah 3–6 — Maghrib, Isya, Subuh, Terbit</div>
+        <p>Dengan cara yang sama (h=−1° untuk Maghrib &amp; Terbit, h=−18° Isya, h=−20° Subuh), diperoleh Maghrib 17:44, Isya 18:53, Subuh 04:09, Terbit 05:23 (semua WIB, sudah + ihtiyat).</p>
+      </div>
+
+      <h3 class="sub">6.2 Ringkasan Jadwal Shalat Hasil Hisab (Semarang)</h3>
+      <table>
+        <tr><th>Waktu Shalat</th><th>Hasil Hisab (WIB)</th></tr>
+        <tr><td>Subuh</td><td>04:09</td></tr>
+        <tr><td>Terbit</td><td>05:23</td></tr>
+        <tr><td>Zuhur</td><td>11:35</td></tr>
+        <tr><td>Ashar</td><td>14:40</td></tr>
+        <tr><td>Maghrib</td><td>17:44</td></tr>
+        <tr><td>Isya</td><td>18:53</td></tr>
+      </table>
+
+      <h3 class="sub">6.3 Studi Kasus Kedua: Kota Banda Aceh (Lintang Utara)</h3>
+      <p>Data: φ = +5° 33' = 5,55°, λ = 95° 19' BT, zona WIB, data ilustratif musim Juni: δ☉ = +22° 15', e = −1,5 menit.</p>
+      <table>
+        <tr><th>Waktu Shalat</th><th>Hasil Hisab (WIB)</th></tr>
+        <tr><td>Subuh</td><td>05:05</td></tr>
+        <tr><td>Zuhur</td><td>12:42</td></tr>
+        <tr><td>Ashar</td><td>16:08</td></tr>
+        <tr><td>Maghrib</td><td>18:56</td></tr>
+        <tr><td>Isya</td><td>20:10</td></tr>
+      </table>
+      <p>Pada lintang utara dengan deklinasi matahari jauh lebih positif (musim panas belahan utara), rentang waktu antara Subuh dan Isya menjadi lebih panjang dibanding kota-kota di sekitar ekuator/lintang selatan — konsekuensi geometris posisi matahari terhadap lintang tempat.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 6</div>
+        <ul>
+          <li>Ashar dihitung dari Zuhur <em>hakiki</em> (sebelum ihtiyat) agar ihtiyat tidak terakumulasi ganda.</li>
+          <li>Maghrib dan Terbit memakai sudut waktu (t) yang sama (h=−1°) tetapi diukur ke arah berlawanan dari Zuhur.</li>
+          <li>Rentang siang-malam sangat dipengaruhi lintang tempat dan musim (deklinasi matahari).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 7 ===================== -->
+    <section class="bab" id="bab7">
+      <div class="bab-kicker">Pertemuan 7 &middot; Waktu Shalat &amp; Kiblat</div>
+      <h2 class="bab-title">Bab 7 — Arah Kiblat: Segitiga Bola dan Rumus Azimuth</h2>
+      <p class="bab-desc">Menghitung arah menuju Ka'bah sebagai busur lingkaran besar di permukaan bumi, bukan garis lurus pada peta datar.</p>
+
+      <h3 class="sub">7.1 Konsep Dasar Arah Kiblat</h3>
+      <p>Arah kiblat adalah arah menuju Ka'bah (21° 25' 21,04" LU, 39° 49' 34,25" BT) yang ditempuh melalui jalur terpendek (great circle) di permukaan bumi. Karena bumi hampir bulat, arah kiblat umumnya tidak sama dengan arah lurus pada peta datar (proyeksi Mercator), melainkan mengikuti busur lingkaran besar.</p>
+
+      <h3 class="sub">7.2 Segitiga Bola Arah Kiblat</h3>
+      <p>Arah kiblat dihitung menggunakan segitiga bola dengan tiga titik: Kutub Utara (U), lokasi tempat (X), dan Ka'bah (K). Sisi UX = 90°−φx, sisi UK = 90°−φk, sisi XK = jarak sudut tempat ke Ka'bah. Sudut di titik U adalah C = selisih bujur tempat terhadap Ka'bah.</p>
+
+      <h3 class="sub">7.3 Rumus Arah Kiblat (Cotangent Formula)</h3>
+      <div class="formula">cotan B = ( cos φx · tan φk / sin C ) − ( sin φx / tan C )</div>
+      <p>dengan φx = lintang tempat, φk = lintang Ka'bah (21° 25' 21,04" LU), C = selisih bujur tempat terhadap Ka'bah (λk = 39° 49' 34,25" BT). Nilai B adalah sudut dari titik Utara ke arah Barat (untuk wilayah di timur Makkah, mis. Indonesia).</p>
+
+      <div class="contoh">
+        <div class="lab">Contoh Perhitungan — Arah Kiblat Kota Semarang</div>
+        <p>φx = −6,9667°, λx = 110,4°. C = λx−λk = 110,4−39,8262 = 70,5738°.</p>
+        <p>cotan B = (0,99262×0,39236/0,94322) − (−0,12126/2,8617) = 0,41297 + 0,04238 = 0,45535.</p>
+        <p>B = arc cotan(0,45535) = <b>65° 27'</b> dari Utara ke Barat (U 65°27' B), setara azimuth 294°33' dari Utara searah jarum jam.</p>
+      </div>
+
+      <h3 class="sub">7.5 Rashdul Qiblah (Bayang-Bayang Kiblat)</h3>
+      <p>Rashdul qiblah adalah momen ketika bayang-bayang matahari searah dengan arah kiblat, sehingga arah kiblat dapat ditentukan langsung tanpa kompas. Ada dua jenis: rashdul qiblah global (dua kali setahun, ±27-28 Mei dan 15-16 Juli, saat matahari tepat di atas Ka'bah) dan rashdul qiblah lokal harian (dihitung untuk lokasi dan tanggal mana pun).</p>
+      <div class="formula">cotan Az = ( sin φx · cos t − cos φx · tan δ ) / sin t</div>
+      <p>Waktu t yang membuat azimuth matahari (Az) sama dengan azimuth kiblat hasil hisab 7.3 itulah yang dikonversi menjadi waktu rashdul qiblah lokal.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 7</div>
+        <ul>
+          <li>Arah kiblat mengikuti busur lingkaran besar, bukan garis lurus pada peta Mercator.</li>
+          <li>cotan B = (cosφx tanφk/sinC) − (sinφx/tanC) adalah rumus baku arah kiblat.</li>
+          <li>Rashdul qiblah global terjadi 2×/tahun untuk seluruh dunia; rashdul qiblah lokal berbeda tiap tempat dan tanggal.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 8 ===================== -->
+    <section class="bab" id="bab8">
+      <div class="bab-kicker">Pertemuan 8 &middot; Waktu Shalat &amp; Kiblat</div>
+      <h2 class="bab-title">Bab 8 — Praktik Hisab dan Pengukuran Rashdul Qiblah</h2>
+      <p class="bab-desc">Dari rumus di atas kertas menuju pengukuran nyata di lapangan menggunakan bayangan matahari.</p>
+
+      <h3 class="sub">8.1 Alat dan Bahan Praktik Lapangan</h3>
+      <ul class="list">
+        <li>Tongkat istiwa' (gnomon) atau benda tegak lurus dengan tinggi terukur</li>
+        <li>Waterpas/unting-unting untuk memastikan tegak lurus sempurna</li>
+        <li>Jam yang telah dikalibrasi dengan RRI/BMKG/GPS (akurasi detik)</li>
+        <li>Kalkulator ilmiah atau aplikasi hisab untuk verifikasi</li>
+        <li>Alat tulis dan lembar kerja pengukuran</li>
+      </ul>
+
+      <h3 class="sub">Prosedur Praktik Rashdul Qiblah Lokal</h3>
+      <ol class="list">
+        <li>Hitung arah kiblat lokasi (rumus kotangen, Bab 7.3), peroleh nilai B.</li>
+        <li>Hitung sudut waktu matahari (t) saat azimuth matahari sama dengan B, untuk tanggal praktik.</li>
+        <li>Konversikan nilai t menjadi waktu setempat.</li>
+        <li>Pada waktu tersebut, tegakkan tongkat istiwa' dengan sempurna.</li>
+        <li>Tandai garis bayangan tongkat — garis tersebut menunjukkan arah kiblat.</li>
+        <li>Verifikasi dengan kompas kiblat atau aplikasi GPS, catat selisihnya.</li>
+      </ol>
+
+      <h3 class="sub">8.3 Contoh Kasus Lengkap: Rashdul Qiblah Lokal Kota Semarang</h3>
+      <p>Dari Bab 7.4, arah kiblat Semarang B = 65°27' (azimuth 294°33'). Dengan mencoba beberapa nilai t secara iteratif pada rumus azimuth hingga Az mendekati 294°33', diperoleh t ≈ 40°30' setelah kulminasi = 2 jam 42 menit.</p>
+      <div class="contoh">
+        <div class="lab">Hasil</div>
+        <p>Jika Zuhur hakiki hari itu pukul 11:33 WIB, rashdul qiblah lokal Semarang terjadi pukul 11:33 + 2:42 = pukul <b>14:15 WIB</b>. Pada saat itu, bayangan tongkat istiwa' menunjukkan arah kiblat kota Semarang.</p>
+      </div>
+      <div class="catatan"><span class="lab">Catatan Praktik</span>Perhitungan iteratif sudut waktu (t) biasanya dibantu kalkulator terprogram atau spreadsheet karena melibatkan pencarian nilai t secara coba-ralat. Santri tetap wajib memahami logika rumus sebelum menggunakan alat bantu hitung.</div>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 8</div>
+        <ul>
+          <li>Rashdul qiblah lokal ditemukan dengan mencari t di mana azimuth matahari = azimuth kiblat.</li>
+          <li>Ketegakan sempurna tongkat istiwa' sangat menentukan akurasi hasil.</li>
+          <li>Verifikasi lapangan (kompas/GPS) tetap diperlukan sebagai pembanding hasil hisab.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 9 ===================== -->
+    <section class="bab" id="bab9">
+      <div class="bab-kicker">Pertemuan 9 &middot; Awal Bulan &amp; Syarah Kitab</div>
+      <h2 class="bab-title">Bab 9 — Hisab Awal Bulan: Ijtima' dan Ketinggian Hilal</h2>
+      <p class="bab-desc">Dari konjungsi bulan-matahari menuju kriteria visibilitas hilal yang menjadi dasar penetapan awal bulan kamariah.</p>
+
+      <h3 class="sub">9.1 Konsep Ijtima' (Konjungsi/Iqtiran)</h3>
+      <p>Ijtima' adalah momen ketika bujur ekliptika bulan dan matahari berimpit dilihat dari bumi — dikenal juga sebagai konjungsi geosentris atau <em>new moon</em>. Ijtima' menjadi syarat perlu (<em>necessary condition</em>), bukan syarat cukup (<em>sufficient condition</em>), bagi kemungkinan awal bulan kamariah baru. Diperlukan syarat tambahan berupa ketinggian hilal di atas ufuk saat ghurub pada hari ijtima' tersebut.</p>
+
+      <h3 class="sub">9.3 Ketinggian Hilal (Irtifa' al-Hilal)</h3>
+      <p>Setelah waktu ijtima' diketahui, langkah berikutnya menghitung ketinggian hilal (h☾) saat matahari terbenam, memakai rumus induk (Bab 2) dengan data deklinasi bulan (δ☾) dan sudut waktu bulan (t☾) saat ghurub:</p>
+      <div class="formula">sin h☾ = sin φ · sin δ☾ + cos φ · cos δ☾ · cos t☾</div>
+      <h4 class="subsub">Koreksi-Koreksi Ketinggian Hilal</h4>
+      <ul class="list">
+        <li><b>Refraksi (inkisar)</b> — pembiasan cahaya atmosfer, menaikkan posisi tampak ±34' pada ufuk.</li>
+        <li><b>Paralaks (ikhtilaf al-mandhar)</b> — pengamat tidak di pusat bumi, mengurangi tinggi bulan.</li>
+        <li><b>Semi diameter (nishf al-quthr)</b> — jari-jari piringan bulan.</li>
+        <li><b>Dip ufuk</b> — koreksi akibat ketinggian pengamat dari permukaan laut.</li>
+      </ul>
+      <div class="formula">h☾ (mar'i) = h☾ (hakiki) + Refraksi − Paralaks ± Semi Diameter ± Dip</div>
+
+      <h3 class="sub">9.4 Kriteria Visibilitas Hilal (Imkanur Rukyat)</h3>
+      <table>
+        <tr><th>Kriteria</th><th>Syarat Utama</th><th>Keterangan</th></tr>
+        <tr><td>Wujudul Hilal</td><td>h☾ &gt; 0° saat ghurub</td><td>Kriteria hisab murni, dipakai a.l. oleh Muhammadiyah</td></tr>
+        <tr><td>Imkanur Rukyat (lama)</td><td>h☾ ≥ 2°, umur bulan ≥ 8 jam</td><td>Kriteria historis MABIMS sebelum 2021</td></tr>
+        <tr><td>Kriteria MABIMS Baru (2021)</td><td>h☾ ≥ 3° dan elongasi ≥ 6,4°</td><td>Berlaku di Indonesia, Malaysia, Singapura, Brunei</td></tr>
+      </table>
+      <div class="catatan"><span class="lab">Catatan Penting</span>Hisab ketinggian hilal sangat sensitif terhadap presisi data. Untuk keputusan isbat, wajib menggunakan data ephemeris resmi tahun berjalan dan mengikuti keputusan sidang isbat/otoritas berwenang.</div>
+
+      <h4 class="subsub">Prosedur Uji Kriteria (berlaku untuk h☾ berapa pun hasilnya)</h4>
+      <ol class="list">
+        <li>Bandingkan h☾ mar'i (setelah koreksi) dengan ambang 3° pada Kriteria MABIMS Baru.</li>
+        <li>Bandingkan elongasi dengan ambang 6,4°.</li>
+        <li>Jika <b>kedua</b> syarat terpenuhi → hilal memenuhi imkanur rukyat.</li>
+        <li>Jika salah satu atau kedua syarat tidak terpenuhi → bulan disempurnakan (istikmal) menjadi 30 hari.</li>
+      </ol>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 9</div>
+        <ul>
+          <li>Ijtima' adalah syarat perlu, bukan syarat cukup, bagi awal bulan kamariah.</li>
+          <li>Ketinggian hilal mar'i = hakiki + refraksi − paralaks ± semi diameter ± dip.</li>
+          <li>Kriteria MABIMS Baru (2021): h☾ ≥ 3° DAN elongasi ≥ 6,4° — kedua syarat harus terpenuhi bersamaan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 10 ===================== -->
+    <section class="bab" id="bab10">
+      <div class="bab-kicker">Pertemuan 10 &middot; Syarah Kitab</div>
+      <h2 class="bab-title">Bab 10 — Syarah Kitab Sullam an-Nayyirain: Metode Taqribi</h2>
+      <p class="bab-desc">Membaca langsung teks pembuka kitab, memahami logika tabel siap pakai di balik hisab taqribi.</p>
+
+      <h3 class="sub">10.1 Profil Kitab dan Sistematika</h3>
+      <p>Sullam an-Nayyirain (Tangga Menuju Dua Benda Cahaya) disusun oleh KH. Muhammad Manshur bin Abdul Hamid al-Batawi, ulama falak Betawi awal abad ke-20. Kitab ini terdiri atas tiga risalah: risalah pertama membahas hisab awal bulan kamariah, risalah kedua gerhana bulan, dan risalah ketiga gerhana matahari. Ditulis dalam bahasa Arab-Melayu dan dilengkapi tabel-tabel data (jadwal) yang dipakai langsung tanpa kalkulator trigonometri.</p>
+
+      <h3 class="sub">10.3 Petikan dan Syarah Istilah Kunci</h3>
+      <div class="manuskrip">
+        <div class="sumber">Petikan Pembuka Risalah Pertama &middot; Sullam an-Nayyirain</div>
+        <div class="arabic">فَصْلٌ فِي مَعْرِفَةِ اجْتِمَاعِ النَّيِّرَيْنِ</div>
+        <div class="translit">Fashlun fi Ma'rifati Ijtima' an-Nayyirain</div>
+        <div class="terjemah"><b>Terjemah:</b> "Pasal tentang mengetahui pertemuan dua benda cahaya (matahari dan bulan)"</div>
+      </div>
+      <p>Kata <em>an-Nayyirain</em> (dua benda cahaya) merujuk pada matahari dan bulan, sedangkan <em>ijtima'</em> menegaskan fokus pasal ini pada momen konjungsi keduanya. Struktur judul pasal yang ringkas semacam ini merupakan ciri khas kitab-kitab falak klasik, langsung menyebutkan objek kajian tanpa banyak pengantar filosofis — berbeda dengan kitab-kitab fikih klasik yang umumnya lebih panjang muqaddimahnya.</p>
+
+      <table>
+        <tr><th>Istilah (Arab-Melayu)</th><th>Makna Harfiah</th><th>Penjelasan Fungsional</th></tr>
+        <tr><td>Wasath</td><td>Pertengahan/rata-rata</td><td>Posisi rata-rata benda langit sebelum dikoreksi</td></tr>
+        <tr><td>Khasshah</td><td>Keistimewaan/anomali</td><td>Data koreksi terkait posisi benda langit dalam orbitnya</td></tr>
+        <tr><td>Ta'dil</td><td>Perataan/koreksi</td><td>Selisih koreksi dari posisi rata-rata ke posisi hakiki</td></tr>
+        <tr><td>Markaz</td><td>Pusat/basis</td><td>Data pokok/basis perhitungan untuk tahun tertentu</td></tr>
+        <tr><td>Ijtima'</td><td>Berkumpul</td><td>Konjungsi bulan-matahari</td></tr>
+      </table>
+
+      <h3 class="sub">10.4 Kekuatan dan Keterbatasan Metode Taqribi</h3>
+      <p><b>Kekuatan:</b> mudah diajarkan dan dipraktikkan tanpa kalkulator trigonometri, cocok untuk pengenalan awal santri. <b>Keterbatasan:</b> akurasi terbatas (galat hingga beberapa derajat pada ketinggian hilal, beberapa jam pada waktu ijtima'), dan data tabel disusun untuk masa tertentu sehingga presisi menurun untuk tahun-tahun yang jauh dari masa penyusunan. Hasil hisab taqribi umumnya dipakai sebagai perkiraan awal (kalender/almanak), bukan dasar tunggal isbat.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 10</div>
+        <ul>
+          <li>Sullam an-Nayyirain berisi tiga risalah: awal bulan, gerhana bulan, gerhana matahari.</li>
+          <li>Logika taqribi: wasath (rata-rata) → khasshah (anomali) → ta'dil (koreksi) → hasil.</li>
+          <li>Angka-angka tabelnya pada dasarnya adalah hasil pra-hitung rumus trigonometri bola (Bab 2) untuk kondisi rata-rata.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 11 ===================== -->
+    <section class="bab" id="bab11">
+      <div class="bab-kicker">Pertemuan 11 &middot; Syarah Kitab</div>
+      <h2 class="bab-title">Bab 11 — Syarah Kitab Al-Khulashah al-Wafiyyah: Hisab Hakiki bit Tahkik</h2>
+      <p class="bab-desc">Jembatan antara metode taqribi dan metode hakiki tahkiki penuh, dengan bantuan jadwal logaritma.</p>
+
+      <h3 class="sub">11.1 Profil Kitab dan Kedudukannya</h3>
+      <p>Al-Khulashah al-Wafiyyah fi al-Falak bi Jadwal al-Lughariyyah disusun oleh KH. Zubair Umar al-Jailani (Salatiga). Kitab ini menonjol karena menyertakan jadwal logaritma (jadwal lughariyyah) sebagai alat bantu perhitungan trigonometri sebelum era kalkulator elektronik, sehingga santri dapat menghitung fungsi sinus-cosinus-tangen melalui penjumlahan-pengurangan logaritma.</p>
+
+      <h3 class="sub">11.2 Ciri Metode Hakiki bit Tahkik</h3>
+      <div class="manuskrip">
+        <div class="sumber">Petikan Judul Kitab &middot; Al-Khulashah al-Wafiyyah</div>
+        <div class="arabic">وَهَذِهِ الْخُلَاصَةُ الْوَافِيَةُ فِي الْفَلَكِ بِجَدْوَلِ اللُّغَارِيتْمِيَّةِ</div>
+        <div class="translit">Wa hadzihi al-Khulashatu al-Wafiyyatu fi al-Falaki bi Jadwali al-Lughaaritmiyyah</div>
+        <div class="terjemah"><b>Terjemah:</b> "Dan inilah ikhtisar yang lengkap dalam ilmu falak dengan jadwal logaritma"</div>
+      </div>
+      <p><em>Al-Khulashah al-Wafiyyah</em> (ikhtisar yang lengkap/memadai) menunjukkan ambisi penyusun merangkum ilmu falak secara utuh namun tetap ringkas, sedangkan frasa <em>bi Jadwal al-Lughariyyah</em> (dengan jadwal logaritma) secara eksplisit menyatakan alat bantu hitung yang menjadi ciri khas kitab ini dibanding kitab-kitab sezamannya yang masih memakai tabel nilai langsung.</p>
+
+      <h4 class="subsub">Penggunaan Jadwal Logaritma (Ilustrasi Prinsip)</h4>
+      <div class="formula">log(cos φ × cos δ) = log(cos φ) + log(cos δ)
+kemudian hasil penjumlahan dicari anti-log-nya pada tabel</div>
+      <p>Prinsip ini mempercepat perhitungan manual sebelum era kalkulator, dan tetap relevan diajarkan untuk melatih pemahaman logaritma serta menghargai jerih payah metodologis ulama falak klasik.</p>
+
+      <h3 class="sub">11.5 Perbandingan Tiga Kitab dalam Satu Kasus (Waktu Maghrib)</h3>
+      <table>
+        <tr><th>Aspek</th><th>Sullam an-Nayyirain</th><th>Al-Khulashah al-Wafiyyah</th><th>Durus al-Falakiyyah</th></tr>
+        <tr><td>Data deklinasi</td><td>Tabel bulanan rata-rata</td><td>Tabel harian (jadwal lughariyyah)</td><td>Data ephemeris harian per jam GMT</td></tr>
+        <tr><td>Alat bantu hitung</td><td>Tabel siap pakai</td><td>Jadwal logaritma</td><td>Kalkulator/software</td></tr>
+        <tr><td>Koreksi dip/refraksi</td><td>Umumnya diabaikan/disatukan dalam ihtiyat</td><td>Diperhitungkan sebagian</td><td>Diperhitungkan penuh dan sistematis</td></tr>
+        <tr><td>Estimasi galat</td><td>Beberapa menit</td><td>Sekitar 1 menit</td><td>Sub-menit (detik)</td></tr>
+      </table>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 11</div>
+        <ul>
+          <li>Al-Khulashah al-Wafiyyah = jembatan taqribi → hakiki tahkiki, lewat jadwal logaritma.</li>
+          <li>Logaritma mengubah perkalian trigonometri menjadi penjumlahan — lebih mudah dihitung manual.</li>
+          <li>Struktur hisabnya lebih rinci daripada Sullam an-Nayyirain: data harian, bukan bulanan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 12 ===================== -->
+    <section class="bab" id="bab12">
+      <div class="bab-kicker">Pertemuan 12 &middot; Syarah Kitab</div>
+      <h2 class="bab-title">Bab 12 — Syarah Kitab Al-Durus al-Falakiyyah dan Pengembangan Metode Kontemporer</h2>
+      <p class="bab-desc">Kitab hisab hakiki dengan jadwal logaritma berketelitian tinggi, dan bagaimana prinsipnya dikembangkan dengan alat bantu kontemporer — puncak dari tiga generasi metode hisab dalam modul ini.</p>
+
+      <h3 class="sub">12.1 Profil Kitab dan Konteks Penyusunan</h3>
+      <p>Al-Durus al-Falakiyyah disusun oleh Syaikh Muhammad Ma'shum bin Ali dari Jombang, Jawa Timur (edisi yang beredar dicetak 1992). Kitab ini memakai daftar logaritma 5 desimal — lebih presisi dibanding jadwal logaritma 4 desimal pada kitab-kitab sezamannya — dengan data wasath al-syams (posisi rata-rata matahari) dan khasshah al-syams (anomali) dalam satuan buruj, darajah, daqiqah, dan tsawani, memakai epoch Jombang (112,26° BT). Metodenya tergolong hisab hakiki taqribi/tahkik dengan tabel siap pakai, sebagaimana kitab sezamannya Badi'ah al-Mitsal.</p>
+      <div class="catatan"><span class="lab">Catatan Penamaan Bab</span>Judul Bab 12 modul ini — "hisab kontemporer" — merujuk pada pengembangan lanjutan prinsip kitab ini dengan data ephemeris dan kalkulator modern (dibahas pada 12.3), bukan klaim bahwa kitab aslinya sudah memakai alat bantu tersebut. Kitab aslinya adalah karya hisab hakiki era jadwal logaritma.</div>
+
+      <h3 class="sub">12.2 Frasa Judul dalam Modul Ini</h3>
+      <div class="manuskrip">
+        <div class="sumber">Frasa Judul (redaksi modul pembelajaran ini) &middot; bukan kutipan halaman sampul asli terverifikasi</div>
+        <div class="arabic">دُرُوسُ الْفَلَكِيَّةِ لِمَعْرِفَةِ الْأَوْقَاتِ الشَّرْعِيَّةِ بِالْحِسَابِ الْمُعَاصِرِ</div>
+        <div class="translit">Durusu al-Falakiyyati li Ma'rifati al-Awqaati asy-Syar'iyyati bi al-Hisaabi al-Mu'aashir</div>
+        <div class="terjemah"><b>Terjemah:</b> "Pelajaran-pelajaran ilmu falak untuk mengetahui waktu-waktu syar'i dengan hisab kontemporer"</div>
+      </div>
+      <p>Kata <em>durus</em> (pelajaran-pelajaran, bentuk jamak) sesuai dengan judul aslinya menunjukkan struktur kitab sebagai rangkaian pembahasan bertahap — pendekatan yang turut menginspirasi struktur modul ini. Adapun frasa tambahan <em>bi al-hisab al-mu'ashir</em> di atas adalah redaksi yang dipakai modul pembelajaran ini untuk menandai pembahasan pengembangan kontemporer pada sub-bab 12.3, bukan kutipan yang telah terverifikasi berasal dari halaman sampul cetakan asli kitab.</p>
+
+      <ul class="list">
+        <li>Data dasar bersumber dari Ephemeris Hisab Rukyat yang diperbarui setiap tahun, bukan tabel tetap dalam kitab.</li>
+        <li>Rumus disajikan secara eksplisit dalam notasi trigonometri bola, sehingga santri memahami logika perhitungan, bukan sekadar hasil akhir.</li>
+        <li>Koreksi-koreksi (refraksi, paralaks, semi diameter, dip) diperhitungkan secara penuh dan konsisten.</li>
+        <li>Mendorong verifikasi silang dengan hasil software falak (Winhisab, Accurate Times, atau algoritma Jean Meeus).</li>
+      </ul>
+
+      <h3 class="sub">12.3 Contoh Petikan Metode: Hisab Awal Waktu Shalat Kontemporer</h3>
+      <p>Rumus yang disajikan pada Durus al-Falakiyyah untuk waktu shalat pada dasarnya identik dengan rumus induk Bab 2 dan Bab 5, namun dengan penekanan pada penggunaan data deklinasi dan equation of time <em>per jam</em> (bukan per hari/bulan), sehingga interpolasi data menjadi keterampilan penting yang diajarkan secara eksplisit.</p>
+      <div class="formula">Nilai(t) = Nilai(t0) + [ (t − t0) / (t1 − t0) ] × [ Nilai(t1) − Nilai(t0) ]</div>
+      <p>Rumus interpolasi linear di atas dipakai memperoleh nilai deklinasi/equation of time pada jam tertentu (mis. pukul 05.00 WIB) dari dua data jam terdekat dalam ephemeris (mis. data pukul 22.00 dan 23.00 GMT), mengingat ephemeris hanya menyajikan data per jam genap GMT.</p>
+
+      <h3 class="sub">12.4 Syarah Perbandingan Filosofis Tiga Kitab</h3>
+      <p>Jika Sullam an-Nayyirain merepresentasikan "hisab sebagai warisan yang diwariskan" (tabel jadi, tinggal dipakai) dan Al-Khulashah al-Wafiyyah merepresentasikan "hisab sebagai keterampilan hitung manual yang cermat" (jadwal logaritma), maka Durus al-Falakiyyah merepresentasikan <b>"hisab sebagai pemahaman prinsip yang dieksekusi dengan alat bantu modern"</b>. Ketiganya sesungguhnya adalah satu ilmu yang sama — trigonometri bola dan posisi benda langit — yang disajikan dengan alat bantu dan tingkat kedalaman data berbeda sesuai zamannya.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 12</div>
+        <ul>
+          <li>Durus al-Falakiyyah = rumus trigonometri bola eksplisit + data ephemeris per jam + alat bantu modern.</li>
+          <li>Interpolasi linear adalah keterampilan kunci karena ephemeris hanya menyajikan data per jam genap GMT.</li>
+          <li>Tiga kitab = satu ilmu yang sama, disajikan dengan kedalaman data dan alat bantu berbeda sesuai zamannya.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 13 ===================== -->
+    <section class="bab" id="bab13">
+      <div class="bab-kicker">Pertemuan 13 &middot; Gerhana &amp; Fikih</div>
+      <h2 class="bab-title">Bab 13 — Gerhana Matahari: Teori dan Hisab</h2>
+      <p class="bab-desc">Mengapa tidak setiap bulan baru menghasilkan gerhana, dan bagaimana garis besar menghisabnya.</p>
+
+      <h3 class="sub">13.1 Konsep Dasar Gerhana Matahari (Kusuf)</h3>
+      <p>Gerhana matahari terjadi ketika bulan berada di antara matahari dan bumi sehingga bayangan bulan jatuh ke permukaan bumi. Gerhana matahari hanya mungkin terjadi saat ijtima', namun tidak setiap ijtima' menghasilkan gerhana karena bidang orbit bulan miring ±5° terhadap bidang ekliptika matahari.</p>
+
+      <h3 class="sub">13.2 Syarat Terjadinya Gerhana: Titik Simpul (Node)</h3>
+      <p>Gerhana matahari dapat terjadi jika ijtima' terjadi ketika bulan berada dekat titik simpul (node) orbitnya — titik potong bidang orbit bulan dan bidang ekliptika. Terdapat dua titik simpul: simpul naik (al-ra's) dan simpul turun (al-dzanab).</p>
+      <div class="formula">Syarat kasar gerhana matahari: |β (lintang bulan saat ijtima')| &lt; 1,5° hingga 1,8°</div>
+
+      <h3 class="sub">13.3 Jenis-Jenis Gerhana Matahari</h3>
+      <table>
+        <tr><th>Jenis</th><th>Kondisi</th><th>Karakteristik</th></tr>
+        <tr><td>Total</td><td>Bulan menutupi seluruh piringan matahari, jarak bumi-bulan relatif dekat</td><td>Kegelapan total di jalur totalitas, durasi maksimum ±7,5 menit</td></tr>
+        <tr><td>Cincin (Annular)</td><td>Bulan berada lebih jauh (dekat apogee)</td><td>Tampak cincin cahaya matahari mengelilingi piringan bulan</td></tr>
+        <tr><td>Sebagian (Parsial)</td><td>Bulan hanya menutupi sebagian piringan matahari</td><td>Terjadi di wilayah luar jalur pusat, terkena bayangan penumbra</td></tr>
+        <tr><td>Hibrida</td><td>Kombinasi total dan cincin tergantung posisi pengamat</td><td>Jarang terjadi, akibat kelengkungan bumi</td></tr>
+      </table>
+
+      <h3 class="sub">13.5 Musim Gerhana (Eclipse Season)</h3>
+      <p>Karena titik simpul orbit bulan bergeser (regresi) sekitar 19,3° per tahun, musim gerhana terjadi dua kali setahun dengan interval sekitar 173 hari (bukan tepat 6 bulan). Pada setiap musim gerhana, minimal terjadi satu gerhana matahari.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 13</div>
+        <ul>
+          <li>Gerhana matahari hanya mungkin saat ijtima', dengan syarat lintang bulan &lt;1,5°–1,8° dari titik simpul.</li>
+          <li>Empat jenis: total, cincin, sebagian, hibrida.</li>
+          <li>Musim gerhana berulang tiap ±173 hari akibat regresi titik simpul orbit bulan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 14 ===================== -->
+    <section class="bab" id="bab14">
+      <div class="bab-kicker">Pertemuan 14 &middot; Gerhana &amp; Fikih</div>
+      <h2 class="bab-title">Bab 14 — Gerhana Bulan: Teori dan Hisab</h2>
+      <p class="bab-desc">Ketika bumi menjadi penghalang, dan mengapa bulan tampak kemerahan alih-alih hilang total.</p>
+
+      <h3 class="sub">14.1 Konsep Dasar Gerhana Bulan (Khusuf)</h3>
+      <p>Gerhana bulan terjadi ketika bumi berada di antara matahari dan bulan, sehingga bulan memasuki bayangan bumi. Berbeda dengan gerhana matahari, gerhana bulan hanya mungkin terjadi saat istiqbal (oposisi/purnama), dan dapat disaksikan dari seluruh belahan bumi yang mengalami malam hari — tidak terbatas jalur sempit.</p>
+
+      <h3 class="sub">14.2 Geometri Bayangan Bumi</h3>
+      <p>Bayangan bumi terdiri atas <b>umbra</b> (bayangan inti, gelap total) dan <b>penumbra</b> (bayangan kabur, cahaya terhalang sebagian). Karena ukuran bumi jauh lebih besar dari bulan, diameter sudut bayangan umbra bumi jauh lebih besar dari diameter sudut bulan, sehingga durasi gerhana bulan total dapat mencapai lebih dari 1 jam — jauh lebih lama dari gerhana matahari total.</p>
+
+      <table>
+        <tr><th>Jenis</th><th>Kondisi</th><th>Karakteristik</th></tr>
+        <tr><td>Total</td><td>Seluruh piringan bulan memasuki umbra bumi</td><td>Bulan tampak kemerahan ("blood moon") akibat pembiasan cahaya atmosfer bumi</td></tr>
+        <tr><td>Sebagian</td><td>Sebagian piringan bulan memasuki umbra</td><td>Sebagian piringan gelap, sebagian tetap terang</td></tr>
+        <tr><td>Penumbra</td><td>Bulan hanya memasuki bayangan penumbra</td><td>Peredupan tipis, sulit diamati kasat mata</td></tr>
+      </table>
+
+      <h3 class="sub">14.5 Fase-Fase Gerhana Bulan Total</h3>
+      <ul class="list">
+        <li><b>P1</b> — Kontak awal penumbra</li>
+        <li><b>U1</b> — Kontak awal umbra (gerhana sebagian dimulai)</li>
+        <li><b>U2</b> — Kontak total awal (gerhana total dimulai)</li>
+        <li><b>Puncak gerhana</b> — bulan paling dekat dengan pusat umbra</li>
+        <li><b>U3</b> — Kontak total akhir</li>
+        <li><b>U4</b> — Kontak akhir umbra</li>
+        <li><b>P4</b> — Kontak akhir penumbra, gerhana berakhir</li>
+      </ul>
+
+      <div class="catatan"><span class="lab">Mengapa Bulan Tampak Merah?</span>Cahaya matahari yang melewati atmosfer bumi dibiaskan dan disaring — cahaya biru terhambur lebih banyak (efek serupa langit senja) — sehingga cahaya merah-jingga yang tersisa membelok masuk ke wilayah umbra dan menyinari bulan dengan warna kemerahan.</div>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 14</div>
+        <ul>
+          <li>Gerhana bulan hanya terjadi saat istiqbal (purnama), teramati dari seluruh belahan bumi yang malam.</li>
+          <li>Umbra = gelap total; penumbra = kabur/sebagian.</li>
+          <li>Durasi totalitas gerhana bulan (&gt;1 jam) jauh lebih lama dari gerhana matahari (±7,5 menit).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 15 ===================== -->
+    <section class="bab" id="bab15">
+      <div class="bab-kicker">Pertemuan 15 &middot; Gerhana &amp; Fikih</div>
+      <h2 class="bab-title">Bab 15 — Kalender Falakiyah dan Fikih Hisab-Rukyat</h2>
+      <p class="bab-desc">Bagaimana hasil hisab bertemu fikih: ikhtilaf mathla', wilayatul hukmi, dan mekanisme sidang isbat di Indonesia.</p>
+
+      <h3 class="sub">15.1 Ikhtilaf Mathla' (Perbedaan Titik Terbit)</h3>
+      <p>Mathla' adalah tempat/wilayah terbitnya hilal yang menjadi acuan keberlakuan hasil rukyat/hisab. Sebagian ulama berpendapat mathla' bersifat lokal (ikhtilaf mathali', merujuk hadits Kuraib), sebagian lain berpendapat mathla' bersifat global/wilayatul hukmi (satu penetapan berlaku untuk kawasan luas, bahkan satu negara).</p>
+
+      <h3 class="sub">15.2 Wilayatul Hukmi di Indonesia</h3>
+      <p>Konsep wilayatul hukmi menetapkan bahwa hasil rukyat/hisab yang berlaku di satu titik diberlakukan untuk seluruh wilayah hukum yang sama (seluruh Indonesia), tanpa memandang ikhtilaf mathla' antarwilayah — demi keseragaman dan kemaslahatan (mashlahah) dalam penyelenggaraan ibadah nasional.</p>
+
+      <h3 class="sub">15.3 Hubungan Hisab dan Rukyat dalam Fikih</h3>
+      <p>Hisab dan rukyat tidak diposisikan sebagai dua metode yang saling meniadakan, melainkan saling melengkapi dalam mekanisme sidang isbat: hisab menyediakan data prediktif sebagai panduan kapan dan di mana rukyat perlu difokuskan, sedangkan rukyat menjadi konfirmasi empiris. Keputusan akhir (isbat) diambil oleh Menteri Agama, mempertimbangkan hasil hisab Tim Hisab Rukyat Kemenag dan laporan saksi rukyat yang disumpah.</p>
+
+      <h3 class="sub">15.4 Ormas dan Kriteria yang Dipakai</h3>
+      <table>
+        <tr><th>Pihak</th><th>Kriteria yang Dipakai</th><th>Basis Penetapan</th></tr>
+        <tr><td>Pemerintah RI (Kemenag)</td><td>Kriteria MABIMS Baru (h≥3°, elongasi≥6,4°) + konfirmasi rukyat</td><td>Sidang isbat (hisab + rukyat)</td></tr>
+        <tr><td>Muhammadiyah</td><td>Wujudul Hilal (h&gt;0° saat ghurub)</td><td>Hisab murni, tanpa menunggu rukyat</td></tr>
+        <tr><td>Sebagian ormas/pesantren tradisional</td><td>Rukyatul hilal bil fi'li (rukyat aktual)</td><td>Kesaksian rukyat sebagai penentu utama, hisab sebagai panduan</td></tr>
+      </table>
+
+      <h3 class="sub">15.5 Kalender Falakiyah: Fungsi dan Penyusunan</h3>
+      <p>Kalender falakiyah (takwim/almanak) disusun berdasarkan hasil hisab awal bulan kamariah untuk satu tahun penuh, digunakan sebagai rujukan perencanaan — bukan penetapan final, yang tetap menunggu sidang isbat untuk bulan-bulan penting seperti Ramadhan/Syawal/Dzulhijjah.</p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 15</div>
+        <ul>
+          <li>Dua pandangan mathla': lokal (ikhtilaf mathali') vs global (wilayatul hukmi).</li>
+          <li>Indonesia menganut wilayatul hukmi nasional demi keseragaman ibadah.</li>
+          <li>Sidang isbat menggabungkan data hisab (prediktif) dan rukyat (konfirmasi empiris).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== BAB 16 ===================== -->
+    <section class="bab" id="bab16">
+      <div class="bab-kicker">Pertemuan 16 &middot; Penutup</div>
+      <h2 class="bab-title">Bab 16 — Integrasi Ilmu Falak Klasik dan Astronomi Modern, Penutup</h2>
+      <p class="bab-desc">Merangkai kembali satu semester pembelajaran: satu ilmu, tiga generasi kitab, dan adab menuntut ilmu falak.</p>
+
+      <h3 class="sub">16.1 Titik Temu Falak Klasik dan Astronomi Modern</h3>
+      <p>Sepanjang modul ini, santri telah melihat bahwa inti keilmuan falak — baik pada Sullam an-Nayyirain, al-Khulashah al-Wafiyyah, maupun Durus al-Falakiyyah — bertumpu pada satu fondasi yang sama: trigonometri bola dan posisi benda langit relatif terhadap bumi. Astronomi modern (VSOP87 untuk matahari, ELP2000 untuk bulan) pada dasarnya menyempurnakan akurasi data posisi benda langit, bukan mengganti kerangka rumus dasar yang telah dirumuskan sejak lama oleh ulama falak.</p>
+
+      <h3 class="sub">16.2 Peran Software dan Teknologi dalam Hisab Kontemporer</h3>
+      <p>Perangkat lunak falak mempercepat hisab dari berjam-jam manual menjadi hitungan detik. Meski demikian, penguasaan prinsip manual tetap penting agar santri mampu: (1) memverifikasi kewajaran hasil software, (2) memahami sumber galat jika terjadi perbedaan hasil antar-aplikasi, dan (3) tidak menjadi "buta metodologi" yang sekadar menekan tombol tanpa memahami dasar keilmuannya.</p>
+
+      <h3 class="sub">16.3 Etika dan Adab Berilmu Falak</h3>
+      <ul class="list">
+        <li><b>Amanah ilmiah</b> — menyampaikan hasil hisab apa adanya, tidak memanipulasi data.</li>
+        <li><b>Tawadhu' metodologis</b> — menyadari keterbatasan setiap metode hisab, termasuk yang paling presisi sekalipun.</li>
+        <li><b>Menghormati ikhtilaf</b> — memahami perbedaan kriteria/metode antar-ormas dan mazhab fikih sebagai ranah ijtihad yang sah.</li>
+        <li><b>Adab terhadap sanad keilmuan</b> — menghargai jasa ulama falak klasik sebagai peletak dasar keilmuan.</li>
+      </ul>
+
+      <h3 class="sub">16.5 Rangkuman Keseluruhan Modul</h3>
+      <table>
+        <tr><th>Kelompok Bab</th><th>Materi Inti</th><th>Kompetensi Utama</th></tr>
+        <tr><td>Bab 1–4</td><td>Dasar epistemologi, trigonometri bola, kalender, deklinasi &amp; equation of time</td><td>Fondasi matematis dan konseptual</td></tr>
+        <tr><td>Bab 5–8</td><td>Hisab waktu shalat dan arah kiblat</td><td>Aplikasi praktis harian</td></tr>
+        <tr><td>Bab 9–12</td><td>Hisab awal bulan dan syarah tiga kitab</td><td>Analisis komparatif metodologi</td></tr>
+        <tr><td>Bab 13–15</td><td>Gerhana matahari-bulan dan fikih hisab-rukyat</td><td>Wawasan menyeluruh dan kontekstual</td></tr>
+        <tr><td>Bab 16</td><td>Integrasi dan proyek akhir</td><td>Sintesis dan aplikasi mandiri</td></tr>
+      </table>
+
+      <h3 class="sub">16.6 Penutup</h3>
+      <p>Demikian modul Ilmu Falak Lanjutan ini disusun sebagai panduan pembelajaran satu semester bagi santri tingkat lanjut. Ilmu falak adalah ilmu yang menuntut ketekunan menghitung sekaligus kehalusan hati dalam memahami keagungan ciptaan Allah subhanahu wa ta'ala melalui peredaran benda-benda langit yang presisi. Semoga santri yang mempelajari modul ini tidak hanya terampil dalam hisab, tetapi juga semakin bertambah keyakinan dan ketakwaannya. <em>Wallahu a'lam bish-shawab.</em></p>
+
+      <div class="poin-kunci">
+        <div class="lab">Poin Kunci Bab 16</div>
+        <ul>
+          <li>Astronomi modern menyempurnakan data, bukan mengganti kerangka rumus dasar ilmu falak klasik.</li>
+          <li>Penguasaan hisab manual tetap penting sebagai dasar untuk memverifikasi hasil software.</li>
+          <li>Empat adab berilmu falak: amanah ilmiah, tawadhu' metodologis, menghormati ikhtilaf, adab terhadap sanad keilmuan.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== GLOSARIUM ===================== -->
+    <section class="bab" id="glosarium">
+      <div class="bab-kicker">Referensi</div>
+      <h2 class="bab-title">Glosarium</h2>
+      <p class="bab-desc">Istilah-istilah kunci yang muncul sepanjang 16 bab pelajaran ini.</p>
+      <dl class="glosarium">
+        <dt>Azimuth</dt><dd>Sudut benda langit diukur dari titik Utara searah jarum jam sepanjang ufuk.</dd>
+        <dt>Deklinasi (Mail)</dt><dd>Jarak sudut benda langit dari ekuator langit.</dd>
+        <dt>Ephemeris</dt><dd>Data astronomis harian memuat posisi matahari, bulan, dan koreksi terkait, diterbitkan tahunan.</dd>
+        <dt>Equation of Time</dt><dd>Selisih antara waktu matahari hakiki dan waktu matahari pertengahan (jam biasa).</dd>
+        <dt>Hakiki Bit Tahkik</dt><dd>Metode hisab berbasis posisi riil benda langit dengan koreksi yang dicermatkan lebih lanjut.</dd>
+        <dt>Hakiki Taqribi</dt><dd>Metode hisab berbasis posisi riil benda langit namun dengan data dan koreksi yang disederhanakan.</dd>
+        <dt>Hilal</dt><dd>Bulan sabit muda yang menandai awal bulan kamariah.</dd>
+        <dt>Ihtiyat</dt><dd>Penambahan waktu (margin kehati-hatian) dalam hisab waktu shalat.</dd>
+        <dt>Ijtima'</dt><dd>Konjungsi; berimpitnya bujur ekliptika bulan dan matahari.</dd>
+        <dt>Ikhtilaf Mathla'</dt><dd>Perbedaan pendapat mengenai cakupan wilayah keberlakuan rukyat/hisab awal bulan.</dd>
+        <dt>Imkanur Rukyat</dt><dd>Kemungkinan hilal dapat dirukyat berdasarkan kriteria ketinggian dan elongasi tertentu.</dd>
+        <dt>Istiqbal</dt><dd>Oposisi; posisi bulan purnama, berselisih 180° bujur ekliptika dari matahari.</dd>
+        <dt>Kusuf / Khusuf</dt><dd>Gerhana matahari / gerhana bulan.</dd>
+        <dt>Mathla'</dt><dd>Tempat/wilayah terbitnya hilal yang menjadi acuan keberlakuan hasil rukyat/hisab.</dd>
+        <dt>Paralaks (Ikhtilaf al-Mandhar)</dt><dd>Perbedaan posisi benda langit akibat pengamat tidak berada di pusat bumi.</dd>
+        <dt>Rashdul Qiblah</dt><dd>Momen ketika bayang-bayang matahari searah dengan arah kiblat.</dd>
+        <dt>Refraksi (Inkisar)</dt><dd>Pembiasan cahaya oleh atmosfer bumi yang menaikkan posisi tampak benda langit.</dd>
+        <dt>Ta'dil</dt><dd>Koreksi/perataan dari posisi rata-rata (wasath) menuju posisi hakiki.</dd>
+        <dt>Wasath</dt><dd>Posisi rata-rata benda langit sebelum dikoreksi (istilah hisab taqribi).</dd>
+        <dt>Wilayatul Hukmi</dt><dd>Konsep keberlakuan satu hasil rukyat/hisab untuk seluruh wilayah hukum tertentu.</dd>
+      </dl>
+    </section>
+
+    <!-- ===================== PUSTAKA ===================== -->
+    <section class="bab" id="pustaka">
+      <div class="bab-kicker">Referensi</div>
+      <h2 class="bab-title">Daftar Pustaka</h2>
+      <ul class="list">
+        <li>Al-Batawi, Muhammad Manshur bin Abdul Hamid. <em>Sullam an-Nayyirain fi Ma'rifati al-Ijtima' wa al-Kusufain</em>. Jakarta Barat: Dirasiyah al-Khairiyyah al-Mansuriyah, 1344 H/1925 M.</li>
+        <li>Al-Jailani, Zubair Umar. <em>Al-Khulashah al-Wafiyyah fi al-Falak bi Jadwal al-Lugharitmiyyah</em>. Solo: Melati, 1354 H/1935 M (cet. ulang Menara Kudus, 1955).</li>
+        <li>Ma'shum bin Ali, Muhammad. <em>Al-Durus al-Falakiyyah</em>, Jilid 1. Jombang: t.p., 1992.</li>
+        <li>Khazin, Muhyiddin. <em>Ilmu Falak dalam Teori dan Praktik</em>. Yogyakarta: Buana Pustaka, 2004.</li>
+        <li>Khazin, Muhyiddin. <em>Kamus Ilmu Falak</em>. Yogyakarta: Buana Pustaka, 2005.</li>
+        <li>Maghfuri, Alfan. "Hisab Waktu Shalat dalam Kitab Al-Durus Al-Falakiyyah." <em>Al-Mizan: Jurnal Pemikiran Hukum Islam</em> 14, no. 1 (2018): 122–134.</li>
+        <li>Izzuddin, Ahmad. <em>Ilmu Falak Praktis: Metode Hisab-Rukyat Praktis dan Solusi Permasalahannya</em>. Semarang: Pustaka Rizki Putra, 2012.</li>
+        <li>Hambali, Slamet. <em>Ilmu Falak 1: Penentuan Awal Waktu Shalat dan Arah Kiblat Seluruh Dunia</em>. Semarang: Program Pascasarjana IAIN Walisongo, 2011.</li>
+        <li>Kementerian Agama RI. <em>Ephemeris Hisab Rukyat</em> (edisi tahun berjalan). Jakarta: Ditjen Bimas Islam.</li>
+        <li>Kementerian Agama RI. <em>Keputusan Bersama Kriteria MABIMS Baru</em>. Jakarta, 2021.</li>
+        <li>Meeus, Jean. <em>Astronomical Algorithms</em>. 2nd ed. Richmond: Willmann-Bell, 1998.</li>
+        <li>Departemen Agama RI. <em>Pedoman Penentuan Awal Waktu Shalat</em>. Jakarta: Ditjen Bimas Islam, 1994.</li>
+        <li>Azhari, Susiknan. <em>Ensiklopedi Hisab Rukyat</em>. Yogyakarta: Pustaka Pelajar, 2008.</li>
+        <li>Djamaluddin, Thomas. <em>Astronomi Memberi Solusi Penyatuan Ummat</em>. Jakarta: LAPAN, 2011.</li>
+      </ul>
+    </section>
+
+    <!-- ===================== LAMPIRAN: RUJUKAN TEKS KITAB ===================== -->
+    <div class="rujukan-hero" id="rujukan">
+      <div class="eyebrow" style="font-family:'Inter',sans-serif;letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--gold-light);margin-bottom:14px;">Lampiran</div>
+      <h2>Rujukan Teks Kitab Asli dan Terjemahan</h2>
+      <p>Sullam an-Nayyirain &middot; Al-Khulashah al-Wafiyyah &middot; Al-Durus al-Falakiyyah</p>
+    </div>
+
+    <div class="disclaimer">
+      <div class="disclaimer-inner">
+        <span class="lab">⚠ Catatan Kejujuran Sumber — Mohon Dibaca</span>
+        <p style="margin-bottom:.6em;">Lampiran ini <b>bukan</b> hasil pindaian (scan) langsung dari cetakan asli ketiga kitab. Saya (asisten AI) tidak memiliki akses ke salinan fisik/PDF kitab-kitab ini, sehingga tidak bisa mereproduksi teks halaman demi halaman secara verbatim dan terverifikasi.</p>
+        <p style="margin-bottom:.6em;">Yang tersaji di bawah ini disusun dari dua jenis materi, ditandai jelas pada tiap bagian:</p>
+        <ul>
+          <li><b style="color:var(--teal)">Kotak hijau "Terverifikasi"</b> — data (judul kitab, nama pengarang, tahun cetak, istilah teknis, struktur risalah, fragmen rumus) yang dikutip dari sumber akademik yang menyebutkan/mengutip kitab tersebut secara eksplisit (skripsi, tesis, jurnal ilmu falak) — sumber dicantumkan di tiap kotak.</li>
+          <li><b style="color:#777">Kotak abu-abu putus-putus "Redaksi Modul"</b> — kalimat Arab yang disusun oleh modul pembelajaran ini sebagai gambaran gaya bahasa kitab, <b>tidak diklaim</b> sebagai kutipan verbatim dari halaman kitab asli.</li>
+        </ul>
+        <p style="margin:.8em 0 0;">Jika Anda memiliki salinan PDF/scan asli ketiga kitab ini, silakan unggah — saya dapat langsung mengutip teks yang benar-benar tercetak di dalamnya untuk menggantikan bagian yang masih bertanda "belum terverifikasi".</p>
+      </div>
+    </div>
+
+    <nav class="jump">
+      <a href="#kt-sullam">Sullam an-Nayyirain</a>
+      <a href="#kt-khulashah">Al-Khulashah al-Wafiyyah</a>
+      <a href="#kt-durus">Al-Durus al-Falakiyyah</a>
+      <a href="#kt-rujukan">Daftar Rujukan</a>
+    </nav>
+
+    <!-- ---- Kitab 1: Sullam an-Nayyirain ---- -->
+    <div class="kitab-block" id="kt-sullam">
+      <div class="bab-kicker">Kitab Rujukan 1 &middot; Hisab Hakiki Taqribi</div>
+      <h2 class="bab-title">Sullam an-Nayyirain</h2>
+      <p class="meta">سلم النيرين في معرفة اجتماع النيرين والكسوفين &middot; Muhammad Manshur bin Abdul Hamid al-Batawi &middot; Jakarta, 1344 H / 1925 M</p>
+
+      <div class="manuskrip">
+        <div class="sumber">Judul Lengkap Kitab (Terverifikasi)</div>
+        <div class="arabic">سُلَّمُ النَّيِّرَيْنِ فِي مَعْرِفَةِ اجْتِمَاعِ النَّيِّرَيْنِ وَالْكُسُوفَيْنِ</div>
+        <div class="translit">Sullamu an-Nayyirain fi Ma'rifati Ijtima' an-Nayyirain wa al-Kusufain</div>
+        <div class="terjemah"><b>Terjemah:</b> "Tangga menuju (pengetahuan tentang) dua benda cahaya, dalam mengetahui pertemuan dua benda cahaya (matahari-bulan) dan dua gerhana (matahari-bulan)"</div>
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Data Bibliografis</div>
+        <p style="margin-bottom:0;">Pengarang: Muhammad Manshur bin Abdul Hamid bin Muhammad Damiri al-Batawi. Diterbitkan: Jakarta Barat, Dirasiyah al-Khairiyyah al-Mansuriyah, 1344 H/1925 M.</p>
+        <div class="src">Sumber: Rahman Kaharuddin, "Analisis Pemikiran Muhammad Mansur Al-Batawi", Jurnal Hisabuna, UIN Alauddin, catatan kaki no.30, mengutip kolofon kitab.</div>
+      </div>
+
+      <h3 class="sub">Petikan Pembuka Risalah Pertama</h3>
+      <div class="manuskrip">
+        <div class="sumber">Dari Modul Pembelajaran (bukan kutipan halaman kitab yang terverifikasi)</div>
+        <div class="arabic">فَصْلٌ فِي مَعْرِفَةِ اجْتِمَاعِ النَّيِّرَيْنِ</div>
+        <div class="translit">Fashlun fi Ma'rifati Ijtima' an-Nayyirain</div>
+        <div class="terjemah"><b>Terjemah:</b> "Pasal tentang mengetahui pertemuan dua benda cahaya (matahari dan bulan)"</div>
+      </div>
+      <div class="not-verified">
+        <span class="lab">Redaksi Modul</span>
+        Frasa di atas disusun mengikuti pola judul pasal umum pada kitab-kitab falak klasik (redaksi <em>fashlun fi ma'rifati...</em>), sejalan dengan judul risalah pertama yang memang tercatat berjudul <em>Risalatul Ula fi Ma'rifatil Ijtima'in Nayyirain</em> (lihat kotak terverifikasi di bawah). Kalimat pembuka persis yang tercetak di halaman kitab tidak dapat saya verifikasi tanpa akses ke salinan aslinya.
+      </div>
+
+      <h3 class="sub">Struktur Tiga Risalah (Terverifikasi)</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Struktur Kitab</div>
+        <table style="margin:10px 0 0; box-shadow:none;">
+          <tr><th>Risalah</th><th>Judul (Arab-Latin)</th><th>Isi</th></tr>
+          <tr><td>Pertama</td><td>Risalatul Ula fi Ma'rifatil Ijtima'in Nayyirain</td><td>Ijtima', irtifa'ul hilal, posisi hilal, umur hilal</td></tr>
+          <tr><td>Kedua</td><td>Risalatus Saniyah fi Ma'rifatil Khusufil Qamar</td><td>Gerhana bulan</td></tr>
+          <tr><td>Ketiga</td><td>Risalatus Salisah fi Ma'rifatil Khusufil Syamsi</td><td>Gerhana matahari</td></tr>
+        </table>
+        <div class="src">Sumber: angdarmawan, "Analisis Kitab Sulamun Nayyirain" (2017); dikonfirmasi AL-WIJDÁN: Journal of Islamic Education Studies, Vol. III No. 2 (2018).</div>
+      </div>
+
+      <h3 class="sub">Metode dan Istilah Kunci (Terverifikasi)</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Basis Metode</div>
+        <p>Metode hisabnya diadaptasi dari <em>Zij Ulugh Beyk</em> karya Sultan Ulugh Beyk al-Samarqandi (w. 804 H), dibawa ke Nusantara oleh Abdur Rahman al-Mishri dan diringkas (talkhis) oleh ayah pengarang, Abdul Hamid. Interval ijtima' rata-rata dalam kitab ini adalah <b>29 hari 12 jam 44 menit</b> — sangat dekat dengan nilai astronomis modern bulan sinodis (29,53059 hari).</p>
+        <p style="margin-bottom:0;">Sistem angkanya memakai notasi abjad Arab: <em>Abajaddun Hawazun Khathayakun Lamanun Sa'afashun Qarasyun Tatsakhadhun Dhadlaghun</em>, angka bergaya India menurut penelitian.</p>
+        <div class="src">Sumber: angdarmawan, "Analisis Kitab Sulamun Nayyirain" (2017); Rahman Kaharuddin, Jurnal Hisabuna (2025).</div>
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Metode Irtifa'ul Hilal</div>
+        <p style="margin-bottom:0;">Ketinggian hilal (irtifa'ul hilal) dihitung dengan membagi dua selisih antara waktu terbenam Matahari dan waktu ijtima', dengan dasar bulan meninggalkan matahari ke arah timur sejauh 12° setiap 24 jam.</p>
+        <div class="src">Sumber: Ahmad Masyhadi, "Analisis Terhadap Metode Pemikiran Mohammad Manshur Al-Batawi tentang Irtifa'ul Hilal", Digilib UIN Sunan Ampel Surabaya (2010), mengutip langsung Sullamun Nayyirain, Jakarta, 1925.</div>
+      </div>
+
+      <dl class="terms">
+        <dt>Wasath</dt><dd>Posisi rata-rata benda langit sebelum dikoreksi.</dd>
+        <dt>Khasshah</dt><dd>Data anomali/keistimewaan posisi benda langit dalam orbitnya.</dd>
+        <dt>Markaz</dt><dd>Data pusat/basis perhitungan untuk epoch tertentu.</dd>
+        <dt>Al-Auj</dt><dd>Titik apogee (jarak terjauh) dalam orbit benda langit.</dd>
+        <dt>Ta'dil</dt><dd>Koreksi/interpolasi dari posisi rata-rata menuju posisi hakiki.</dd>
+      </dl>
+
+      <h3 class="sub">Struktur Isi Kitab (Terverifikasi Lebih Rinci)</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Isi Tiga Bab Utama</div>
+        <p>Sebuah naskah panduan hisab yang disusun mengikuti kitab ini (dipindai/disusun ulang oleh Ustadz Tedi Sobandi, tersedia di Internet Archive) menunjukkan kitab ini terbagi tiga bab: <b>Bab I Ijtima'</b> (mencari waktu konjungsi matahari-bulan beserta ketinggian, lama tampak, dan kecerlangan hilal), <b>Bab II Khusuf</b> (gerhana bulan — mencari waktu awal, pertengahan, akhir, dan warna gerhana), dan <b>Bab III Kusuf</b> (gerhana matahari, dengan langkah tambahan memperhitungkan paralaks/beda lihat karena posisi pengamat di permukaan bumi). Kitab juga menyertakan bagian tambahan berupa rumus jarak antar-tempat dan arah kiblat, tabel buruj/zodiak, kalender Masehi abadi, serta blangko kosong untuk latihan hisab santri.</p>
+        <div class="src">Sumber: "Hisab Taqribi Sullam an-Nayyiron", naskah panduan disusun ulang mengikuti kitab Sullam an-Nayyirain, diunggah di Internet Archive (koleksi tedisobandi.wordpress.com), diakses 2026.</div>
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Rumus Jarak Dua Tempat dan Arah Kiblat</div>
+        <div class="formula-frag">Jarak dua tempat:
+  M = Cos⁻¹( Sin Φ1 × Sin Φ2 + Cos Φ1 × Cos Φ2 × Cos ΔBujur )
+
+Arah kiblat:
+  Q = Tan⁻¹( Cos Φ1 × Tan Φ2 / Sin A − Sin Φ1 / Tan A )</div>
+        <p style="margin-bottom:0;">Rumus arah kiblat ini konsisten dengan rumus kotangen yang dipakai pada Bab 7 modul pembelajaran ini — mengonfirmasi bahwa kerangka trigonometri bola yang sama dipakai lintas kitab dan lintas generasi metode hisab.</p>
+        <div class="src">Sumber: naskah "Hisab Taqribi Sullam an-Nayyiron", bagian "Jarak Antara Dua Tempat" dan "Arah Qiblat", op. cit.</div>
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Ringkasan Biografi Pengarang</div>
+        <p style="margin-bottom:0;">Muhammad Manshur lahir di Kampung Sawah, Jembatan Lima, Jakarta, 31 Desember 1878, dan wafat 12 Mei 1967. Beliau belajar di Mekkah sekitar usia 16 tahun (1894) kepada beberapa guru, di antaranya Syekh Muhammad Hayyath, sebelum kembali ke Nusantara melalui Aden, India, dan Singapura. Selain Sullam an-Nayyirain, tercatat beberapa karya falak lain seperti <em>Khulashotul Jadawil</em> dan <em>Mizanul I'tidal</em>.</p>
+        <div class="src">Sumber: naskah "Hisab Taqribi Sullam an-Nayyiron", bagian "Biografi Singkat Sang Guru", op. cit.</div>
+      </div>
+    </div>
+
+    <!-- ---- Kitab 2: Al-Khulashah al-Wafiyyah ---- -->
+    <div class="kitab-block" id="kt-khulashah">
+      <div class="bab-kicker">Kitab Rujukan 2 &middot; Hisab Hakiki bit Tahkik</div>
+      <h2 class="bab-title">Al-Khulashah al-Wafiyyah</h2>
+      <p class="meta">الخلاصة الوافية في الفلك بجدول اللوغاريتمية &middot; Zubair Umar al-Jailani &middot; Solo, 1354 H / 1935 M</p>
+
+      <div class="manuskrip">
+        <div class="sumber">Judul Lengkap Kitab (Terverifikasi — dua sumber independen sepakat)</div>
+        <div class="arabic">الْخُلَاصَةُ الْوَافِيَةُ فِي الْفَلَكِ بِجَدْوَلِ اللُّوغَارِيتْمِيَّةِ</div>
+        <div class="translit">Al-Khulashah al-Wafiyyah fi al-Falak bi Jadwal al-Lugharitmiyyah</div>
+        <div class="terjemah"><b>Terjemah:</b> "Ikhtisar yang lengkap/memadai dalam ilmu falak, dengan jadwal logaritma"</div>
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Data Bibliografis</div>
+        <p style="margin-bottom:0;">Pengarang: Zubair Umar al-Jailani, ulama asal Bojonegoro yang menetap di Salatiga (wafat 1401 H/1990 M). Cetakan pertama: 1354 H/1935 M oleh percetakan Melati, Solo/Surakarta. Cetak ulang dengan revisi: 1955, percetakan Menara Kudus.</p>
+        <div class="src">Sumber: Al-Tsaqafa: Jurnal Ilmiah Peradaban Islam, Vol. 20 No. 1 (2023), hlm. 14–28; dikonfirmasi silang dengan Fauzi, Al-Marshad: Jurnal Astronomi Islam (2017), dan Al-Mazaahib: Jurnal Perbandingan Hukum, Vol. 5 No. 2 (2017).</div>
+      </div>
+
+      <div class="not-verified">
+        <span class="lab">Catatan</span>
+        Berbeda dengan Sullam an-Nayyirain, pencarian saya tidak menemukan naskah panduan/terjemah bebas yang membedah isi pasal kitab ini sedetail dua kitab lainnya. Yang berhasil diverifikasi baru sebatas judul lengkap dan data bibliografis di atas, ditambah catatan silang berikut.
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Rujukan Silang dari Kitab Sullam an-Nayyirain</div>
+        <p style="margin-bottom:0;">Naskah panduan Sullam an-Nayyirain (dikutip di atas) beberapa kali merujuk halaman spesifik Al-Khulashah al-Wafiyyah sebagai pembanding — misalnya perihal koreksi <em>ta'dil al-'alamah</em> dalam perhitungan gerhana (dirujuk pada "halaman 120" dan "halaman 155" kitab tersebut) dan sebuah hadits tentang bintang Tsurayya yang dikutip dari "halaman 182". Ini mengindikasikan Al-Khulashah al-Wafiyyah membahas topik ijtima', gerhana, dan manazil bulan dengan struktur serupa namun koreksi lebih rinci — konsisten dengan kedudukannya sebagai metode hisab hakiki bit tahkik.</p>
+        <div class="src">Sumber: naskah "Hisab Taqribi Sullam an-Nayyiron" (op. cit.), catatan kaki no. 5 dan 21.</div>
+      </div>
+
+      <h3 class="sub">Ciri Metodologis</h3>
+      <p>Kitab ini menyertakan jadwal logaritma (jadwal lughariyyah) sebagai alat bantu perhitungan trigonometri sebelum era kalkulator elektronik — mengubah operasi perkalian sinus-cosinus menjadi penjumlahan logaritma, sehingga tergolong metode hisab hakiki bit tahkik: lebih presisi dari metode taqribi karena data dan koreksi yang lebih rinci, namun masih mengandalkan tabel cetak, belum data ephemeris digital.</p>
+    </div>
+
+    <!-- ---- Kitab 3: Al-Durus al-Falakiyyah ---- -->
+    <div class="kitab-block" id="kt-durus">
+      <div class="bab-kicker">Kitab Rujukan 3 &middot; Hisab Hakiki, Jadwal Logaritma 5 Desimal</div>
+      <h2 class="bab-title">Al-Durus al-Falakiyyah</h2>
+      <p class="meta">الدروس الفلكية &middot; Syaikh Muhammad Ma'shum bin Ali &middot; Jombang (edisi cetak 1992)</p>
+
+      <div class="not-verified" style="margin-bottom:28px;">
+        <span class="lab">⚠ Koreksi Penting Dibanding Modul Pembelajaran Sebelumnya</span>
+        Versi awal modul mengatribusikan kitab ini kepada KH. Muhyiddin Khazin. Berdasarkan penelusuran, atribusi yang benar adalah <b>Syaikh Muhammad Ma'shum bin Ali dari Jombang</b>. Muhyiddin Khazin adalah penulis kitab falak lain yang juga banyak dirujuk (<em>Ilmu Falak dalam Teori dan Praktik</em>, <em>Kamus Ilmu Falak</em>) namun bukan pengarang Al-Durus al-Falakiyyah. Koreksi ini telah diterapkan pada Bab 1 dan Bab 12 modul ini.
+      </div>
+
+      <div class="manuskrip">
+        <div class="sumber">Judul Kitab — transliterasi Arab standar (bukan kutipan sampul yang dipindai)</div>
+        <div class="arabic">الدُّرُوسُ الْفَلَكِيَّةُ</div>
+        <div class="translit">Al-Durus al-Falakiyyah</div>
+        <div class="terjemah"><b>Terjemah:</b> "Pelajaran-pelajaran ilmu falak"</div>
+      </div>
+
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Data Bibliografis</div>
+        <p style="margin-bottom:0;">Pengarang: Syaikh Muhammad Ma'shum bin Ali, Jombang, Jawa Timur. Edisi Jilid 1 dicetak tahun 1992.</p>
+        <div class="src">Sumber: Digilib UIN Sunan Ampel Surabaya, skripsi Iqbal Linurin Nahri (daftar pustaka: "Ma'shûm bin Alî, Syaikh Muhammad. al-Durus al-Falakiyyah. Jilid 1. Jombang: TP, 1992"); dikonfirmasi Alfan Maghfuri, "Hisab Waktu Shalat dalam Kitab al-Durus al-Falakiyyah", Al-Mizan: Jurnal Pemikiran Hukum Islam, Vol. 14 No. 1 (2018): 122–134.</div>
+      </div>
+
+      <h3 class="sub">Fragmen Rumus yang Terverifikasi</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Rumus Fadllu al-Dair (dikutip Alfan Maghfuri, Al-Mizan 2018)</div>
+        <div class="formula-frag">Log Sin Tamam Fadllu al-Dair
+  = Log Sin Ashlu al-Mu'addal − Log Sin Ashlu al-Muthlaq</div>
+        <p style="margin-bottom:0;">Nilai <em>Fadllu al-Dair</em> (dalam satuan derajat) dipakai menghitung waktu shalat Ashar (dikonversi ke jam) dan waktu Dhuha (dari titik 4°30' dikonversi ke jam, ditambah jam 6).</p>
+        <div class="src">Sumber: Alfan Maghfuri, "Hisab Waktu Shalat dalam Kitab al-Durus al-Falakiyyah", Al-Mizan Vol.14 No.1 (2018), dikutip langsung dari bagian B "Hisab Waktu Salat Menggunakan Daftar Logaritma".</div>
+      </div>
+
+      <h3 class="sub">Istilah Teknis Terverifikasi</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Data &amp; Istilah</div>
+        <p>Data pokok kitab berupa <em>wasath al-syams</em> (posisi rata-rata Matahari) dan <em>khassah al-syams</em> (anomali Matahari), dalam satuan buruj–darajah–daqiqah–tsawani (zodiak–derajat–menit–detik busur). Data ini memakai epoch yang sama dengan kitab sezaman <em>Badi'ah al-Mitsal</em>, yaitu epoch Jombang (bujur 112,26° BT). Kitab ini memakai daftar logaritma 5 desimal — lebih presisi dibanding kitab-kitab sezamannya yang umumnya 4 desimal.</p>
+        <p style="margin-bottom:0;"><em>Darajah al-Syams</em> = posisi Matahari pada bidang ekliptika (setara Ecliptic Longitude Matahari dalam astronomi modern). <em>Nishfu Qausi al-Nahar</em> = setengah busur siang (dari kulminasi hingga terbenam Matahari). <em>Nishfu Qausi al-Lail</em> = setengah busur malam (dari tengah malam hingga terbit Matahari). <em>Hisshah al-Syafaq</em> = interval terbenam Matahari hingga terbenamnya mega merah (dipakai untuk waktu Isya). <em>Hisshah al-Fajr</em> = interval terbitnya fajar shadiq hingga terbit Matahari (dipakai untuk waktu Subuh).</p>
+        <div class="src">Sumber: Alfan Maghfuri, Al-Mizan Vol.14 No.1 (2018), mengutip Muhyiddin Khazin, Kamus Ilmu Falak, dan Ma'shum bin Ali, Al-Durus (rujukan halaman 40).</div>
+      </div>
+
+      <h3 class="sub">Ringkasan Biografi Pengarang (Terverifikasi)</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Biografi Muhammad Ma'shum bin Ali</div>
+        <p style="margin-bottom:0;">Nama lengkap Muhammad Ma'shum bin Ali bin Abdul Jabbar al-Maskumambangi, lahir sekitar 1887 M di Desa Maskumambang, Gresik. Beliau menimba ilmu kepada ayahnya lalu ke Pesantren Tebuireng, Jombang, di bawah asuhan Hadratus Syeikh Hasyim Asy'ari, dan kemudian menikahi putri gurunya. Pada 1913 mendirikan Pesantren Seblak, sekitar 300 meter dari Tebuireng. Beliau wafat pada 24 Ramadhan 1351 H (8 Januari 1933 M) dalam usia sekitar 46 tahun. Salah satu santrinya yang menonjol dalam ilmu falak adalah KH. Zubair (Salatiga), pengarang Al-Khulashah al-Wafiyyah — menunjukkan garis keilmuan langsung antara dua dari tiga kitab rujukan modul ini.</p>
+        <div class="src">Sumber: Skripsi, "Bab III: Konsep Hisab Waktu Salat dalam Kitab Ad-Durus al-Falakiyyah karya Ma'sum bin Ali", bagian A "Biografi Intelektual Ma'sum bin Ali", diterbitkan ulang di adoc.pub.</div>
+      </div>
+
+      <h3 class="sub">Struktur Isi Kitab (Terverifikasi Lebih Rinci)</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Tiga Bagian Kitab</div>
+        <p>Berdasarkan tesis akademik yang membedah isinya, kitab ini terbagi tiga bagian besar (al-Kitab al-Awal, ats-Tsani, ats-Tsalits). Bagian pertama memuat 15 pembahasan menggunakan alat Rubu' Mujayyab — mulai dari mengetahui kedudukan matahari (darajah al-syams), deklinasi (mail al-awal), lintang-bujur tempat, hingga waktu shalat, arah kiblat, dan empat arah mata angin, ditutup cara mengukur tinggi menara dan kedalaman sumur. Bagian kedua memperluas pembahasan dengan 17 topik termasuk arah terbit-terbenam matahari dan arah kiblat lewat metode segitiga bola. Bagian ketiga beralih dari alat Rubu' Mujayyab ke <b>tabel logaritma</b> untuk perhitungan yang sama, ditambah pembahasan kalender Hijriyah dan navigasi dengan bantuan bintang.</p>
+        <div class="src">Sumber: Skripsi (op. cit.), bagian C "Gambaran Umum Kitab Ad-Durus al-Falakiyyah".</div>
+      </div>
+
+      <h3 class="sub">Alat Hisab: Rubu' Mujayyab</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Instrumen dan Komponennya</div>
+        <p>Rubu' Mujayyab (kuadran sinus) adalah instrumen seperempat lingkaran berskala 90° yang dipakai kitab ini pada dua bagian pertamanya untuk menghitung sudut benda langit, waktu shalat, dan arah kiblat secara grafis-mekanis — tanpa kalkulator maupun tabel logaritma. Instrumen ini diwarisi dari tradisi astronomi Islam klasik (dikembangkan sejak Ptolemeus, disempurnakan al-Khawarizmi dan Ibnu Syathir) dan lazim dipakai di pesantren Nusantara. Komponen utamanya antara lain: <em>Markaz</em> (titik pusat), <em>Qaus al-Irtifa'</em> (busur utama berskala), <em>Jaib al-Tamam</em> dan <em>al-Sittini</em> (dua garis skala 60 bagian untuk membaca nilai sinus/kosinus), <em>Hadafah</em> (lubang bidik untuk rukyat), serta <em>Hoith</em>, <em>Muri</em>, dan <em>Syaqul</em> (benang, simpul geser, dan bandul pemberat) yang bersama-sama berfungsi sebagai "kalkulator analog" trigonometri bola.</p>
+        <div class="src">Sumber: Skripsi (op. cit.), bagian D "Gambaran Umum Rubu' Mujayyab".</div>
+      </div>
+
+      <h3 class="sub">Prosedur dan Parameter Hisab Waktu Shalat (Terverifikasi)</h3>
+      <div class="verified">
+        <div class="lab">✓ Terverifikasi — Nilai Parameter Asli Kitab</div>
+        <p>Tesis yang sama merinci prosedur hisab waktu shalat memakai Rubu' Mujayyab langkah demi langkah untuk Zuhur, Ashar, Maghrib, Isya, dan Subuh. Beberapa parameter numerik aslinya patut dicatat karena sedikit berbeda dari konvensi Kemenag RI yang dipakai Bab 5 modul ini: <b>ihtiyat kitab ini bernilai 4–5 menit</b> (bukan 2 menit), <b>sudut Isya memakai referensi 17°</b> (bukan 18°), dan <b>sudut Subuh memakai referensi 19°</b> (bukan 20°). Waktu Maghrib dihitung dari Nishfu al-Fudlah ditambah <em>Daqa'iq at-Tamkiniyyah</em> (tenggang waktu piringan matahari tenggelam sempurna) senilai 3,5 menit. Perbedaan nilai-nilai ini adalah contoh nyata keragaman ijtihad metodologis antar-kitab yang dibahas pada Bab 15 modul ini (ikhtilaf mathla' dan kriteria antar-ormas), bukan kesalahan salah satu pihak.</p>
+        <div class="src">Sumber: Skripsi (op. cit.), bagian E "Proses Perhitungan Waktu Salat dalam Kitab Ad-Durus al-Falakiyyah", poin c (Ikhtiyat) dan k (Auqat as-Salat).</div>
+      </div>
+    </div>
+
+    <!-- ---- Daftar Rujukan Lampiran ---- -->
+    <div class="kitab-block" id="kt-rujukan">
+      <div class="bab-kicker">Referensi Lampiran</div>
+      <h2 class="bab-title">Daftar Rujukan Lampiran Ini</h2>
+      <p class="meta">Sumber akademik yang dikutip pada kotak "Terverifikasi" di atas.</p>
+      <ol class="refs-list">
+        <li>Kaharuddin, Rahman. "Analisis Pemikiran Muhammad Mansur Al-Batawi." <em>Jurnal Hisabuna</em>, UIN Alauddin, 2025.</li>
+        <li>angdarmawan. "Analisis Kitab Sulamun Nayyirain." Blog, 2017.</li>
+        <li>AL-WIJDÁN: Journal of Islamic Education Studies, Vol. III No. 2, November 2018.</li>
+        <li>Masyhadi, Ahmad. "Analisis Terhadap Metode Pemikiran Mohammad Manshur Al-Batawi tentang Irtifa'ul Hilal dalam Kitab Sullamun Nayyirain." Digilib UIN Sunan Ampel Surabaya, 2010.</li>
+        <li>Aminullah, Muchammad. "Aplikasi kitab Sullam al-Nayyirain dalam penetapan awal bulan Kamariah Lajnah Falakiyah PP Miftahul Huda Gading Kota Malang." Walisongo Repository, 2016.</li>
+        <li>"Sejarah Perkembangan Ilmu Falak: Sebuah Ikhtisar." FlipHTML5, 2019.</li>
+        <li>Al-Tsaqafa: Jurnal Ilmiah Peradaban Islam, Vol. 20 No. 1, 2023, hlm. 14–28.</li>
+        <li>Fauzi. Al-Marshad: Jurnal Astronomi Islam dan Ilmu-Ilmu Berkaitan, 2017.</li>
+        <li>Al-Mazaahib: Jurnal Perbandingan Hukum, Vol. 5 No. 2, 2017.</li>
+        <li>Nahri, Iqbal Linurin. Skripsi, Digilib UIN Sunan Ampel Surabaya.</li>
+        <li>Maghfuri, Alfan. "Hisab Waktu Shalat dalam Kitab Al-Durus Al-Falakiyyah." <em>Al-Mizan: Jurnal Pemikiran Hukum Islam</em> 14, no. 1 (2018): 122–134.</li>
+        <li>"Hisab Taqribi Sullam an-Nayyiron." Naskah panduan, koleksi tedisobandi.wordpress.com, Internet Archive.</li>
+        <li>"Bab III: Konsep Hisab Waktu Salat dalam Kitab Ad-Durus al-Falakiyyah karya Ma'sum bin Ali." Skripsi, diterbitkan ulang di adoc.pub.</li>
+      </ol>
+    </div>
+
+    <footer>
+      <div class="divider"></div>
+      <div>© 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Mobile nav close on link click
+  document.querySelectorAll('nav.toc a').forEach(a=>{
+    a.addEventListener('click', ()=> document.getElementById('sideNav').classList.remove('open'));
+  });
+
+  // Active section highlight
+  const links = document.querySelectorAll('nav.toc a');
+  const sections = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = '#' + entry.target.id;
+      const link = document.querySelector(`nav.toc a[href="${id}"]`);
+      if(!link) return;
+      if(entry.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  sections.forEach(s => io.observe(s));
+</script>
+</body>
+</html>

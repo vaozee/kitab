@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قواعد الإعلال — Qawa'id al-'Ilal | Arsip Sharf Digital</title>
+<style>
+:root{
+  --void:#f6f0e0;
+  --void-2:#efe6cc;
+  --panel:#fffdf7;
+  --panel-2:#faf3df;
+  --line:#dccfa2;
+  --gold:#a3791a;
+  --gold-bright:#8a6212;
+  --gold-dim:#b89a4e;
+  --cyan:#0f7d73;
+  --cyan-dim:#3a978d;
+  --parchment:#2a2213;
+  --ink:#1b160d;
+  --text:#31281a;
+  --muted:#6f6650;
+  --danger:#a8492e;
+  --font-ar:"Traditional Arabic","Scheherazade New","Amiri","KFGQPC Uthmanic Script HAFS","Arabic Typesetting",serif;
+  --font-mono:"Consolas","SFMono-Regular","Menlo","Courier New",monospace;
+  --font-serif:Georgia,"Times New Roman",serif;
+  --font-ui:"Segoe UI","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    radial-gradient(ellipse at 20% -10%, rgba(15,125,115,0.06), transparent 45%),
+    radial-gradient(ellipse at 100% 10%, rgba(163,121,26,0.09), transparent 40%),
+    var(--void);
+  color:var(--text);
+  font-family:var(--font-serif);
+  min-height:100vh;
+  background-attachment:fixed;
+}
+/* starfield / grid texture */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(15,125,115,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,125,115,0.05) 1px, transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+  z-index:0;
+  mask-image:radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+}
+
+/* ============ LAYOUT ============ */
+.shell{
+  display:grid;
+  grid-template-columns:300px 1fr;
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;}
+}
+
+/* ============ SIDEBAR ============ */
+.sidebar{
+  border-right:1px solid var(--line);
+  background:linear-gradient(180deg, var(--void-2), var(--void));
+  position:sticky; top:0; height:100vh; overflow-y:auto;
+  padding:0 0 30px 0;
+}
+@media (max-width:900px){
+  .sidebar{position:relative; height:auto; max-height:none; border-right:none; border-bottom:1px solid var(--line);}
+}
+.brand{
+  padding:26px 22px 20px 22px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+}
+.brand::after{
+  content:"";
+  position:absolute; left:22px; right:22px; bottom:-1px; height:1px;
+  background:linear-gradient(90deg, var(--gold), transparent);
+}
+.brand .glyph{
+  font-family:var(--font-ar);
+  font-size:2.1rem;
+  color:var(--gold-bright);
+  text-shadow:0 0 14px rgba(163,121,26,0.18);
+  line-height:1.3;
+}
+.brand .sub{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.18em;
+  color:var(--cyan);
+  text-transform:uppercase;
+  margin-top:8px;
+}
+.brand .sub2{
+  font-family:var(--font-ui);
+  font-size:0.72rem;
+  color:var(--muted);
+  margin-top:4px;
+}
+.navlabel{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  padding:18px 22px 8px 22px;
+}
+.navlist{list-style:none;}
+.navlist li{border-left:2px solid transparent;}
+.navlist a{
+  display:flex;
+  gap:10px;
+  align-items:baseline;
+  padding:9px 20px 9px 20px;
+  color:var(--muted);
+  text-decoration:none;
+  font-family:var(--font-ui);
+  font-size:0.83rem;
+  transition:all .15s ease;
+}
+.navlist a .idx{
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  color:var(--gold-dim);
+  min-width:34px;
+}
+.navlist a:hover, .navlist a.active{
+  color:var(--parchment);
+  background:rgba(15,125,115,0.07);
+}
+.navlist li.active{border-left:2px solid var(--cyan);}
+.navlist a:hover .idx, .navlist a.active .idx{color:var(--cyan);}
+
+/* ============ MAIN ============ */
+.main{padding:0; min-width:0;}
+.hero{
+  padding:64px 56px 48px 56px;
+  border-bottom:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+}
+@media (max-width:700px){ .hero{padding:44px 22px 32px 22px;} }
+.hero::before{
+  content:"";
+  position:absolute; top:-40%; right:-10%; width:520px; height:520px;
+  background:radial-gradient(circle, rgba(163,121,26,0.12), transparent 65%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-family:var(--font-mono);
+  font-size:0.68rem;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:22px;
+}
+.hero-eyebrow::before{
+  content:"";
+  width:26px; height:1px; background:var(--cyan);
+}
+.hero-ar{
+  font-family:var(--font-ar);
+  font-size:3.6rem;
+  color:var(--gold-bright);
+  line-height:1.4;
+  text-shadow:0 0 22px rgba(163,121,26,0.14);
+}
+@media (max-width:700px){ .hero-ar{font-size:2.4rem;} }
+.hero-title{
+  font-family:var(--font-ui);
+  font-size:1.9rem;
+  font-weight:300;
+  letter-spacing:0.06em;
+  margin-top:10px;
+  color:var(--parchment);
+}
+.hero-title b{color:var(--gold-bright); font-weight:600;}
+.hero-desc{
+  max-width:640px;
+  color:var(--muted);
+  margin-top:18px;
+  font-size:0.98rem;
+  line-height:1.7;
+}
+.hero-meta{
+  display:flex; gap:26px; margin-top:28px; flex-wrap:wrap;
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--gold-dim);
+}
+.hero-meta span b{color:var(--cyan); display:block; font-size:1.1rem; font-family:var(--font-ui);}
+
+.content{padding:8px 56px 80px 56px;}
+@media (max-width:700px){ .content{padding:8px 20px 60px 20px;} }
+
+/* section separators */
+.section-title{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.24em;
+  text-transform:uppercase;
+  color:var(--cyan-dim);
+  margin:52px 0 18px 0;
+  display:flex; align-items:center; gap:14px;
+}
+.section-title::after{content:""; flex:1; height:1px; background:var(--line);}
+
+/* ============ MUQADDIMAH ============ */
+.intro-card{
+  background:linear-gradient(160deg, var(--panel), var(--panel-2));
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:34px;
+  position:relative;
+}
+.intro-card .ar-block{
+  font-family:var(--font-ar);
+  font-size:1.7rem;
+  line-height:2.5;
+  color:var(--parchment);
+  text-align:right;
+  direction:rtl;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:18px;
+}
+.intro-card .id-block{
+  color:var(--text);
+  line-height:1.85;
+  font-size:0.98rem;
+}
+.intro-card .id-block p{margin-bottom:14px;}
+
+/* ============ KAIDAH PANEL (signature element) ============ */
+.kaidah{
+  position:relative;
+  margin-bottom:46px;
+  scroll-margin-top:24px;
+}
+.frame{
+  position:relative;
+  background:linear-gradient(155deg, var(--panel) 0%, var(--panel-2) 100%);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:30px 30px 26px 30px;
+  box-shadow:0 16px 32px -22px rgba(60,45,10,0.28);
+}
+@media (max-width:700px){ .frame{padding:20px 18px 20px 18px;} }
+/* corner brackets — hud + manuscript hybrid */
+.frame::before, .frame::after,
+.frame .c1, .frame .c2{
+  content:"";
+  position:absolute;
+  width:22px; height:22px;
+  border-color:var(--gold);
+  border-style:solid;
+  opacity:0.85;
+}
+.frame::before{top:-1px; left:-1px; border-width:2px 0 0 2px;}
+.frame::after{bottom:-1px; right:-1px; border-width:0 2px 2px 0;}
+.frame .c1{top:-1px; right:-1px; border-width:2px 2px 0 0;}
+.frame .c2{bottom:-1px; left:-1px; border-width:0 0 2px 2px;}
+.frame .c1, .frame .c2{border-color:var(--cyan);}
+
+.kaidah-head{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  flex-wrap:wrap; gap:12px;
+  margin-bottom:22px;
+}
+.kaidah-id{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  letter-spacing:0.14em;
+  color:var(--cyan);
+  background:rgba(15,125,115,0.08);
+  border:1px solid var(--cyan-dim);
+  padding:4px 10px;
+  border-radius:2px;
+  display:inline-block;
+}
+.kaidah-name-ar{
+  font-family:var(--font-ar);
+  font-size:1.5rem;
+  color:var(--gold-bright);
+  text-align:right;
+}
+.kaidah-name-id{
+  font-family:var(--font-ui);
+  font-size:0.78rem;
+  color:var(--muted);
+  text-align:right;
+  margin-top:2px;
+}
+
+.matn{
+  background:rgba(163,121,26,0.05);
+  border:1px solid var(--line);
+  border-right:3px solid var(--gold);
+  border-radius:2px;
+  padding:22px 26px;
+  margin-bottom:20px;
+  direction:rtl;
+  text-align:right;
+}
+.matn .ar{
+  font-family:var(--font-ar);
+  font-size:1.55rem;
+  line-height:2.2;
+  color:var(--parchment);
+}
+@media (max-width:700px){ .matn .ar{font-size:1.28rem; line-height:2;} }
+
+.terj{
+  color:var(--text);
+  line-height:1.8;
+  font-size:0.96rem;
+  margin-bottom:18px;
+  padding-left:2px;
+  border-left:2px solid var(--gold-dim);
+  padding-left:16px;
+}
+.terj .lbl{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:6px;
+}
+
+.penjelasan{
+  color:var(--muted);
+  font-size:0.92rem;
+  line-height:1.85;
+  margin-bottom:18px;
+}
+.penjelasan .lbl{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  display:block;
+  margin-bottom:6px;
+}
+.penjelasan p{margin-bottom:8px;}
+
+.contoh{
+  margin-top:6px;
+}
+.contoh .lbl{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:block;
+  margin-bottom:10px;
+}
+.contoh-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(190px,1fr));
+  gap:10px;
+}
+.contoh-item{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:3px;
+  padding:12px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.contoh-item .arr{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  color:var(--cyan-dim);
+  letter-spacing:0.1em;
+}
+.contoh-item .pair{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  direction:rtl;
+}
+.contoh-item .hasil{
+  font-family:var(--font-ar);
+  font-size:1.28rem;
+  color:var(--gold-bright);
+}
+.contoh-item .asal{
+  font-family:var(--font-ar);
+  font-size:1.1rem;
+  color:var(--muted);
+}
+.contoh-item .panah{
+  color:var(--cyan);
+  font-family:var(--font-mono);
+  font-size:0.85rem;
+}
+
+.catatan-kecil{
+  margin-top:16px;
+  font-size:0.85rem;
+  color:var(--muted);
+  font-style:italic;
+  border-top:1px dashed var(--line);
+  padding-top:12px;
+}
+
+/* ============ CATATAN AKHIR ============ */
+.penutup{
+  background:linear-gradient(160deg, var(--panel), var(--panel-2));
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:30px 32px;
+  margin-top:10px;
+}
+.penutup-ar{
+  font-family:var(--font-ar);
+  font-size:1.15rem;
+  color:var(--gold-bright);
+  text-align:center;
+  margin-bottom:20px;
+}
+.penutup ol{
+  list-style:none;
+  counter-reset:pt;
+}
+.penutup ol li{
+  counter-increment:pt;
+  position:relative;
+  padding-left:38px;
+  margin-bottom:14px;
+  color:var(--text);
+  line-height:1.7;
+  font-size:0.94rem;
+}
+.penutup ol li::before{
+  content:counter(pt);
+  position:absolute; left:0; top:0;
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:#fffdf7;
+  background:var(--gold);
+  width:22px; height:22px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ============ PROGRESS / TOC MOBILE TOGGLE ============ */
+.mobile-toggle{
+  display:none;
+}
+@media (max-width:900px){
+  .mobile-toggle{
+    display:block;
+    width:100%;
+    background:var(--panel);
+    color:var(--cyan);
+    border:none;
+    border-bottom:1px solid var(--line);
+    padding:14px 20px;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    text-align:left;
+    cursor:pointer;
+  }
+  .navwrap{display:none;}
+  .navwrap.open{display:block;}
+}
+
+/* footer */
+.site-footer{
+  border-top:1px solid var(--line);
+  padding:30px 56px 40px 56px;
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--muted);
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+}
+@media (max-width:700px){ .site-footer{padding:24px 20px 34px 20px;} }
+.site-footer a{color:var(--cyan); text-decoration:none;}
+.site-footer .mark{color:var(--gold-dim);}
+
+/* scrollbar */
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-track{background:var(--void);}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:5px;}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-dim);}
+
+/* focus visibility */
+a:focus-visible, button:focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="glyph">قواعد الإعلال</div>
+      <div class="sub">Arsip Sharf · Modul I'lal</div>
+      <div class="sub2">Qawa'id al-'Ilal bagi Pemula — Terjemah &amp; Syarah</div>
+    </div>
+
+    <button class="mobile-toggle" onclick="document.querySelector('.navwrap').classList.toggle('open')">☰ Daftar Kaidah</button>
+
+    <div class="navwrap open">
+      <div class="navlabel">Pembuka</div>
+      <ul class="navlist" id="nav-open"></ul>
+      <div class="navlabel">Kaidah I'lal (19 Kaidah)</div>
+      <ul class="navlist" id="nav-kaidah"></ul>
+      <div class="navlabel">Penutup</div>
+      <ul class="navlist" id="nav-close"></ul>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <section class="hero">
+      <div class="hero-eyebrow">Buku Ajar Ilmu Sharaf</div>
+      <div class="hero-ar">قواعد الإعلال</div>
+      <div class="hero-title">QAWA'ID AL-<b>'ILAL</b> BAGI PEMULA</div>
+      <p class="hero-desc">
+        Karya asli oleh Syaikh Mundzir Nadzir – Sarangan.
+        Modul ini menghimpun 19 kaidah perubahan huruf 'illat (wawu, ya', dan hamzah) dalam ilmu sharaf,
+        lengkap dengan teks Arab, terjemah, penjelasan, dan contoh terapan — disusun untuk santri pemula
+        yang baru mendalami ilmu 'ilal.
+      </p>
+      <div class="hero-meta">
+        <span><b>19</b>Kaidah I'lal</span>
+        <span><b>Penulis</b>Achmad Fauzi, 2026</span>
+      </div>
+    </section>
+
+    <div class="content">
+
+      <div class="section-title" id="pembuka">Muqaddimah</div>
+      <div class="intro-card kaidah" data-nav="open" data-title="Muqaddimah" id="sec-muqaddimah">
+        <div class="ar-block">
+          بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ. الْحَمْدُ لِلّهِ الَّذِي قَانَا وَنَجَّانَا مِنَ الْأَسْقَامِ، وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ الَّذِي هَدَانَا وَأَخْرَجَنَا مِنَ الظُّلُمَاتِ وَالضَّلَالِ، وَعَلَى آلِهِ وَأَصْحَابِهِ الَّذِينَ جَاهَدُوا فِي الدِّينِ بِالْأَنْفُسِ وَالْأَمْوَالِ.
+        </div>
+        <div class="id-block">
+          <p><strong>Terjemah:</strong> Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang. Segala puji bagi Allah yang telah menjaga kita dan menyelamatkan kita dari segala penderitaan dan penyakit. Shalawat dan salam semoga senantiasa terlimpahkan kepada junjungan kita Nabi Muhammad yang telah memberi kita petunjuk dan mengeluarkan kita dari kegelapan dan kesesatan, beserta keluarga dan sahabat-sahabatnya yang telah berjuang sungguh-sungguh dalam agama dengan mengorbankan jiwa dan harta mereka.</p>
+          <p><strong>Latar belakang penyusunan:</strong> Naskah ini adalah himpunan kaidah-kaidah i'lal dalam ilmu sharaf karya Syaikh Mundzir Nadzir – Sarangan. Penerjemah menghapus sebagian keterangan berbahasa Jawa dari kitab asli dan menertibkan sebagian kaidahnya, dengan tujuan memudahkan santri dan mahasiswa pemula dalam menghafal dan memahami proses i'lal.</p>
+        </div>
+      </div>
+
+      <div class="section-title" id="isi">Isi Kaidah</div>
+      <div id="kaidah-container"></div>
+
+      <div class="section-title" id="penutup-title">Penutup</div>
+      <div class="penutup kaidah" data-nav="close" data-title="Catatan Penting" id="sec-penutup">
+        <div class="penutup-ar">وَاللهُ أَعْلَمُ بِالصَّوَابِ</div>
+        <ol>
+          <li>Setiap hendak mengaji, santri wajib membaca secara bersama-sama kaidah i'lal, dilakukan 15 menit sebelum ustadz datang.</li>
+          <li>Terjemahan Qawa'id al-'Ilal wajib ditulis ulang ke dalam bahasa Arab pegon.</li>
+          <li>Menjelang Haflah Tasyakkur Dirosah, hafalan lughatan/makna-an akan diperiksa, termasuk penulisan terjemahan kaidah i'lal.</li>
+          <li>Santri yang belum dapat menghafal Kaidah I'lal dilarang ikut tampil hafalan pada Haflah Tasyakkur Dirosah, dan tidak mendapat sanad kitab dari mu'allim.</li>
+        </ol>
+      </div>
+
+    </div>
+
+    <footer class="site-footer">
+      <div><span class="mark">قواعد الإعلال</span> · Modul Digital Offline Pesantren</div>
+      <div>© 2026 by Achmad Fauzi · Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+    </footer>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   DATA — 19 Kaidah I'lal
+   ============================================================ */
+const KAIDAH = [
+{
+  id:"01", nameAr:"القاعدة الأولى", nameId:"Wawu/Ya' Berharakat Setelah Fathah",
+  matn:"إِذَا تَحَرَّكَتِ الْوَاوُ أَوِ الْيَاءُ بَعْدَ فَتْحَةٍ مُتَّصِلَةٍ فِي كَلِمَةٍ، أُبْدِلَتَا أَلِفًا. نَحْوُ قَالَ وَبَاعَ، أَصْلُهُمَا فِي الْكَلِمَتَيْنِ قَوَلَ وَبَيَعَ.",
+  terjemah:"Apabila terdapat huruf wawu dan atau huruf ya' berharakat, posisinya setelah fathah yang bersambung (muttashil) dalam satu kata, maka huruf wawu dan atau ya' tersebut harus diganti dengan huruf alif. Seperti kata قَالَ dan بَاعَ, asalnya قَوَلَ dan بَيَعَ.",
+  penjelasan:[
+    "Ini adalah kaidah dasar pembentukan alif dari wawu/ya' — pondasi bagi hampir seluruh proses i'lal berikutnya.",
+    "Berlaku dengan tiga syarat: (1) harakat wawu/ya' tersebut asli, bukan harakat 'aridhah (baru muncul) — seperti pada قَامُوا yang dhammah-nya tidak asli sehingga tidak diganti; (2) jika huruf tersebut bukan lam fi'il, huruf setelahnya wajib berharakat/hidup, bukan sukun — seperti بَيَانٍ, لَيْلٍ, dan خَوْرَنَقٍ yang tetap karena huruf setelahnya sukun; (3) jika huruf tersebut adalah lam fi'il, proses i'lal wajib berlaku selama huruf sukun setelahnya bukan alif atau ya' musyaddadah, seperti رَمَى dan عَلَوِيّٖينَ."
+  ],
+  contoh:[["قَالَ","قَوَلَ"],["بَاعَ","بَيَعَ"],["خَشَوْنَ","خَشِيَوْنَ"]],
+  catatan:"Bandingkan dengan kata قَامُوا — dhammah pada huruf wawu di kata tersebut tidak asli (asalnya sukun), sehingga tidak berlaku i'lal."
+},
+{
+  id:"02", nameAr:"القاعدة الثانية", nameId:"'Ain Fi'il Ajwaf — Harakat Berpindah",
+  matn:"إِذَا وَقَعَ الْوَاوُ أَوِ الْيَاءُ عَيْنًا مُتَحَرِّكَةً مِنْ أَجْوَفٍ وَقَبْلَهُمَا سَاكِنٌ صَحِيحٌ، نُقِلَتْ حَرَكَتُهُمَا إِلَى مَا قَبْلَهُمَا. نَحْوُ يَقُومُ وَيَبِيعُ، أَصْلُهُمَا يَقْوُمُ وَيَبْيِعُ.",
+  terjemah:"Apabila terdapat huruf wawu dan atau huruf ya' posisinya menjadi 'ain fi'il berharakat dari fi'il bina ajwaf, di mana sebelumnya terdapat huruf shahih yang sukun, maka harakat huruf wawu dan atau ya' tersebut dipindah ke huruf sebelumnya. Seperti يَقُومُ dan يَبِيعُ, asalnya يَقْوُمُ dan يَبْيِعُ.",
+  penjelasan:[
+    "'Ain fi'il adalah huruf kedua dari fi'il tsulatsi berwazan فَعَلَ (Fa'-'Ain-Lam).",
+    "Bina ajwaf adalah fi'il yang huruf keduanya berupa huruf 'illat (wawu atau ya').",
+    "Huruf shahih artinya huruf selain huruf 'illat (alif, wawu, ya')."
+  ],
+  contoh:[["يَقُومُ","يَقْوُمُ"],["يَبِيعُ","يَبْيِعُ"]]
+},
+{
+  id:"03", nameAr:"القاعدة الثالثة", nameId:"Wawu/Ya' Setelah Alif Zaidah → Hamzah",
+  matn:"إِذَا وَقَعَ الْوَاوُ أَوِ الْيَاءُ بَعْدَ أَلِفٍ زَائِدَةٍ فِي اسْمِ فَاعِلٍ، أُبْدِلَتَا هَمْزَةً، بِشَرْطِ أَنْ يَكُونَا عَيْنًا فِي مَصْدَرٍ أَوْ فِي آخِرِ الْكَلِمَةِ. نَحْوُ قَائِلٍ وَبَائِعٍ، أَصْلُهُمَا قَاوِلٍ وَبَايِعٍ. وَنَحْوُ بِنَاءٍ وَسَاءٍ وَقَاءٍ، أَصْلُهُمَا بِنَايٍ وَسَاوٍ وَقَاوٍ.",
+  terjemah:"Apabila terdapat huruf wawu dan atau ya' posisinya setelah alif zaidah (alif tambahan), maka keduanya diganti dengan huruf hamzah, dengan syarat huruf wawu atau ya' tersebut menjadi 'ain fi'il dalam isim fa'il, atau berada di akhir kata dari mashdar. Misal: قَائِلٍ dan بَائِعٍ, asalnya قَاوِلٍ dan بَايِعٍ. Dan seperti بِنَاءٍ, سَاءٍ, dan قَاءٍ, asalnya بِنَايٍ, سَاوٍ, dan قَاوٍ.",
+  penjelasan:[
+    "Isim fa'il: kata yang menunjukkan pelaku pekerjaan. Mashdar: kata yang menunjukkan pekerjaan tanpa disertai waktu.",
+    "Kaidah ini berlaku untuk isim fa'il dari fi'il tsulatsi mujarrad (tiga huruf tanpa tambahan). Untuk fi'il selain tsulatsi, kaidah ini tidak berlaku, misalnya مُتَوَالٍ dan مُعَايِنٌ."
+  ],
+  contoh:[["قَائِلٌ","قَاوِلٌ"],["بَائِعٌ","بَايِعٌ"],["بِنَاءٌ","بِنَايٌ"]]
+},
+{
+  id:"04", nameAr:"القاعدة الرابعة", nameId:"Wawu dan Ya' Berkumpul — Idgham pada Ya'",
+  matn:"إِذَا اجْتَمَعَ الْوَاوُ وَالْيَاءُ فِي كَلِمَةٍ وَاحِدَةٍ وَسُبِقَ أَحَدُهُمَا بِالسُّكُونِ، أُبْدِلَتِ الْوَاوُ يَاءً، ثُمَّ أُدْغِمَتِ الْيَاءُ الْأُولَى فِي الثَّانِيَةِ. نَحْوُ مَرْمِيٌّ وَقَاضٍ، أَصْلُهُمَا مَرْمُويٌ وَقَاضِيٌ.",
+  terjemah:"Apabila terdapat huruf wawu dan huruf ya' berkumpul dalam satu kata, lalu salah satunya didahului bacaan sukun (mati), maka huruf wawu itu diganti dengan huruf ya', kemudian huruf ya' yang pertama diidghamkan (dimasukkan) pada huruf ya' yang kedua. Misalnya مَرْمِيٌّ dan قَاضٍ, asalnya مَرْمُويٌ dan قَاضِيٌ.",
+  penjelasan:[
+    "Proses ini terjadi dalam dua langkah berurutan: (1) wawu → ya', lalu (2) ya' pertama diidghamkan ke ya' kedua sehingga muncul huruf ya' bertasydid."
+  ],
+  contoh:[["مَرْمِيٌّ","مَرْمُويٌ"],["قَاضٍ","قَاضِيٌ"]]
+},
+{
+  id:"05", nameAr:"القاعدة الخامسة", nameId:"Wawu/Ya' Dhammah di Akhir Kata → Disukunkan",
+  matn:"إِذَا تَطَرَّفَ الْوَاوُ أَوِ الْيَاءُ وَكَانَ مَضْمُومًا، سُكِّنَا. نَحْوُ يَغْزُو وَيَرْمِيْ، أَصْلُهُمَا يَغْزُوُ وَيَرْمِيُ.",
+  terjemah:"Apabila terdapat huruf wawu dan atau huruf ya' berharakat dhammah, posisinya berada di akhir kata, maka keduanya disukunkan (dibaca mati). Misal: يَغْزُو dan يَرْمِيْ, asalnya يَغْزُوُ dan يَرْمِيُ.",
+  penjelasan:[
+    "Kaidah ini mencegah dhammah jatuh pada huruf 'illat di posisi akhir kata — beban artikulasi yang dihindari dalam sharaf."
+  ],
+  contoh:[["يَغْزُو","يَغْزُوُ"],["يَرْمِيْ","يَرْمِيُ"]]
+},
+{
+  id:"06", nameAr:"القاعدة السادسة", nameId:"Wawu di Akhir Kata (Huruf ke-4+) → Ya'",
+  matn:"إِذَا وَقَعَ الْوَاوُ فِي الطَّرَفِ رَابِعَةً فَصَاعِدًا، وَلَمْ يَكُنْ قَبْلَهَا مَا هُوَ مَضْمُومٌ، أُبْدِلَتْ يَاءً. نَحْوُ يَرْضِى وَيَقْوَى، أَصْلُهُمَا يَرْضُوُ وَيَقْوُوُ.",
+  terjemah:"Apabila terdapat huruf wawu di akhir kata menjadi huruf urutan keempat dan seterusnya, dan huruf sebelum wawu tidak berharakat dhammah, maka huruf wawu tersebut diganti menjadi huruf ya'. Misal: يَرْضِى dan يَقْوَى, asalnya يَرْضُوُ dan يَقْوُوُ.",
+  penjelasan:[
+    "Perubahan dari يَرْضُوُ menjadi يَرْضِى selanjutnya berkaitan dengan proses i'lal lanjutan: setelah wawu diganti ya', huruf ya' tersebut kemudian diganti menjadi alif sesuai Kaidah 1."
+  ],
+  contoh:[["يَرْضِى","يَرْضُوُ"],["يَقْوَى","يَقْوُوُ"]]
+},
+{
+  id:"07", nameAr:"القاعدة السابعة", nameId:"Wawu Antara Fathah dan Kasrah Nyata — Dibuang",
+  matn:"إِذَا وَقَعَ الْوَاوُ بَيْنَ الْفَتْحَةِ وَالْكَسْرَةِ الْمُحَقَّقَةِ وَقَبْلَهَا حَرْفُ الْمُضَارَعَةِ، حُذِفَ وُجُوبًا. نَحْوُ يَعِدُ، أَصْلُهُ يَوْعِدُ.",
+  terjemah:"Apabila terdapat huruf wawu berada di antara harakat fathah dan harakat kasrah yang nyata, dan sebelum wawu terdapat huruf mudlora'ah, maka huruf wawu tersebut wajib dibuang (dihilangkan). Seperti kata يَعِدُ, asalnya يَوْعِدُ.",
+  penjelasan:[
+    "Huruf mudlora'ah adalah huruf yang berada di awal fi'il mudlari' yaitu hamzah, nun, ya', dan ta' (dihimpun dalam lafal أنيت)."
+  ],
+  contoh:[["يَعِدُ","يَوْعِدُ"]]
+},
+{
+  id:"08", nameAr:"القاعدة الثامنة", nameId:"Wawu Setelah Kasrah → Ya'",
+  matn:"إِذَا وَقَعَ الْوَاوُ بَعْدَ كَسْرَةٍ فِي اسْمٍ أَوْ فِعْلٍ، أُبْدِلَتْ يَاءً. نَحْوُ رَضِيَ وَغَازِيًا، أَصْلُهُمَا رَضِوَ وَغَازِوًا.",
+  terjemah:"Apabila terdapat huruf wawu posisinya setelah kasrah dalam kata isim atau kata fi'il, maka huruf wawu tersebut diganti dengan huruf ya'. Misal: رَضِيَ dan غَازِيًا, asalnya رَضِوَ dan غَازِوًا.",
+  penjelasan:[
+    "Kaidah ini berpasangan dengan Kaidah 1: setelah wawu diganti ya' dan berada setelah fathah muttashil, ya' tersebut kemudian dapat berubah lagi menjadi alif melalui proses i'lal berikutnya."
+  ],
+  contoh:[["رَضِيَ","رَضِوَ"],["غَازِيًا","غَازِوًا"]]
+},
+{
+  id:"09", nameAr:"القاعدة التاسعة", nameId:"Wawu/Ya' Sukun Bertemu Huruf Mati — Dibuang",
+  matn:"إِذَا لَقِيَ الْوَاوُ أَوِ الْيَاءُ السَّاكِنَانِ بِحَرْفٍ سَاكِنٍ آخَرَ، حُذِفَا. نَحْوُ لَمْ يَصُنْ وَاسْرِ، أَصْلُهُمَا يَصُونْ وَاسْرِيْ.",
+  terjemah:"Apabila terdapat huruf wawu dan atau ya' sukun (mati) bertemu dengan huruf mati yang lain, maka huruf wawu dan atau ya' tersebut dibuang. Misalnya: لَمْ يَصُنْ dan اسْرِ, asalnya يَصُونْ dan اسْرِيْ.",
+  penjelasan:[
+    "Kaidah ini menjelaskan mengapa bentuk jazm/perintah dari fi'il mu'tal lam kerap kehilangan huruf 'illat-nya di akhir kata."
+  ],
+  contoh:[["لَمْ يَصُنْ","يَصُونْ"],["اسْرِ","اسْرِيْ"]]
+},
+{
+  id:"10", nameAr:"القاعدة العاشرة", nameId:"Dua Huruf Sejenis — Idgham",
+  matn:"إِذَا اجْتَمَعَ حَرْفَانِ مِنْ جِنْسٍ وَاحِدٍ فِي كَلِمَةٍ، أُدْغِمَ الْأَوَّلُ فِي الَّذِي بَعْدَهُ فِي مَا يَتَقَارَبَانِ فِي الْمَخْرَجِ، أَوِ الْمُتَقَارِبَانِ لِثِقَلِ التَّكْرَارِ. نَحْوُ مَدَّ وَمُدِّدٌ وَامْتَدَّ، أَصْلُهَا مَدَدَ وَمُدَدِّدٌ وَامْتَدَدَ.",
+  terjemah:"Apabila terdapat dua huruf berkumpul dalam satu kata dari jenis yang sama, atau berdekatan dalam hal makhraj-nya, maka huruf yang pertama diidghamkan (dimasukkan) pada huruf yang kedua setelah menjadikan huruf pertama tersebut berdekatan dalam hal makhraj-nya, sama seperti huruf yang kedua, karena beratnya pengulangan. Misal: مَدَّ, مُدِّدٌ, dan امْتَدَّ, asalnya مَدَدَ, مُدَدِّدٌ, dan امْتَدَدَ.",
+  penjelasan:[
+    "Makhraj adalah tempat keluarnya huruf. Idgham (peleburan) terjadi agar pengucapan dua huruf sejenis yang berurutan tidak terasa berat di lisan."
+  ],
+  contoh:[["مَدَّ","مَدَدَ"],["مُدِّدٌ","مُدَدِّدٌ"],["امْتَدَّ","امْتَدَدَ"]]
+},
+{
+  id:"11", nameAr:"القاعدة الحادية عشرة", nameId:"Dua Hamzah Bertemu — Hamzah Kedua Diganti",
+  matn:"إِذَا الْتَقَتِ الْهَمْزَتَانِ فِي كَلِمَةٍ وَاحِدَةٍ وَكَانَتِ الثَّانِيَةُ سَاكِنَةً، وَجَبَ إِبْدَالُ الثَّانِيَةِ بِحَرْفٍ مُنَاسِبٍ لِحَرَكَةِ الْأُولَى. نَحْوُ آمَنَ وَمُؤْمِنٌ وَإِيمَانٌ، أَصْلُهَا أَأْمَنَ وَأُأْمِنٌ وَإِئْمَانٌ.",
+  terjemah:"Apabila terdapat dua hamzah bertemu dalam satu kata, dan hamzah yang kedua berharakat sukun (mati), maka hamzah yang kedua wajib diganti dengan huruf yang sesuai dengan harakat hamzah yang pertama. Misal: آمَنَ, مُؤْمِنٌ, dan إِيمَانٌ, asalnya أَأْمَنَ, أُأْمِنٌ, dan إِئْمَانٌ.",
+  penjelasan:[
+    "Hamzah kedua yang sukun diganti menjadi alif jika hamzah pertama berharakat fathah, menjadi wawu jika hamzah pertama berharakat dhammah, dan menjadi ya' jika hamzah pertama berharakat kasrah."
+  ],
+  contoh:[["آمَنَ","أَأْمَنَ"],["مُؤْمِنٌ","أُأْمِنٌ"],["إِيمَانٌ","إِئْمَانٌ"]]
+},
+{
+  id:"12", nameAr:"القاعدة الثانية عشرة", nameId:"Wawu/Ya' Sukun Tak Asli — Tidak Diganti Alif Langsung",
+  matn:"إِنَّ الْوَاوَ وَالْيَاءَ السَّاكِنَتَيْنِ لَا تُقْلَبَانِ أَلِفًا مِنْ أَصْلِهِمَا إِلَّا إِذَا كَانَ سُكُونُهُمَا غَيْرَ أَصْلِيٍّ بِنَقْلِ حَرَكَتِهِمَا إِلَى مَا قَبْلَهُمَا. نَحْوُ أَجَابَ وَأَبَانَ، أَصْلُهُمَا أَجْوَبَ وَأَبْيَنَ.",
+  terjemah:"Pada dasarnya huruf wawu dan huruf ya' yang sukun (mati) tidak dapat diganti menjadi huruf alif, kecuali jika sukun-nya tidak asli — dengan cara memindahkan harakat wawu dan atau ya' pada huruf sebelumnya. Misal: أَجَابَ dan أَبَانَ, asalnya أَجْوَبَ dan أَبْيَنَ.",
+  penjelasan:[
+    "Kaidah ini adalah rambu penting: perubahan wawu/ya' menjadi alif hanya sah setelah harakatnya berpindah (lih. Kaidah 2), bukan pada wawu/ya' yang memang sudah sukun sejak asal."
+  ],
+  contoh:[["أَجَابَ","أَجْوَبَ"],["أَبَانَ","أَبْيَنَ"]]
+},
+{
+  id:"13", nameAr:"القاعدة الثالثة عشرة", nameId:"Wawu Akhir Setelah Dhammah pada Isim Mutamakkin",
+  matn:"إِذَا وَقَعَ الْوَاوُ فِي الْآخِرِ بَعْدَ ضَمَّةٍ فِي اسْمٍ مُتَمَكِّنٍ فِي الْأَصْلِ، أُبْدِلَتْ يَاءً، ثُمَّ نُقِلَتِ الضَّمَّةُ كَسْرَةً بَعْدَ تَبْدِيلِ الْوَاوِ يَاءً. نَحْوُ تَعَالِيًا وَتَعَدِّيًا، أَصْلُهُمَا تَعَالُوًا وَتَعَدُّوًا.",
+  terjemah:"Apabila huruf wawu yang berada di akhir kata setelah harakat dhammah dalam isim mutamakkin (yang menerima tanwin), maka huruf wawu tersebut diganti menjadi huruf ya', kemudian dhammah-nya beralih menjadi harakat kasrah setelah proses pergantian huruf wawu terhadap huruf ya'. Misal: تَعَالِيًا dan تَعَدِّيًا, asalnya تَعَالُوًا dan تَعَدُّوًا.",
+  penjelasan:[
+    "Perubahan ganda terjadi di sini: wawu → ya', lalu dhammah → kasrah, karena bahasa Arab menghindari dhammah bertemu ya' (huruf ya' 'lebih cocok' dengan kasrah)."
+  ],
+  contoh:[["تَعَالِيًا","تَعَالُوًا"],["تَعَدِّيًا","تَعَدُّوًا"]]
+},
+{
+  id:"14", nameAr:"القاعدة الرابعة عشرة", nameId:"Ya' Sukun Setelah Dhammah → Wawu",
+  matn:"إِذَا كَانَتِ الْيَاءُ سَاكِنَةً وَقَبْلَهَا مَا هُوَ مَضْمُومٌ، أُبْدِلَتْ وَاوًا. نَحْوُ يُوسِرُ وَيُوشِمُ، أَصْلُهُمَا يُيْسِرُ وَيُيْشِمُ.",
+  terjemah:"Apabila terdapat huruf ya' sukun (mati), namun sebelumnya terdapat huruf yang berharakat dhammah, maka huruf ya' tersebut diganti menjadi huruf wawu. Misalnya: يُوسِرُ dan يُوشِمُ, asalnya يُيْسِرُ dan يُيْشِمُ.",
+  penjelasan:[
+    "Kaidah ini adalah kebalikan dari kecenderungan pada Kaidah 8 — di sini dhammah 'menarik' ya' menjadi wawu, sebagaimana kasrah menarik wawu menjadi ya'."
+  ],
+  contoh:[["يُوسِرُ","يُيْسِرُ"],["يُوشِمُ","يُيْشِمُ"]]
+},
+{
+  id:"15", nameAr:"القاعدة الخامسة عشرة", nameId:"Isim Maf'ul dari Fi'il Mu'tal 'Ain — Wawu Dibuang",
+  matn:"إِنَّ اسْمَ الْمَفْعُولِ إِذَا كَانَ مِنْ مَفْعُولٍ أَجْوَفَ، وَجَبَ حَذْفُ الْوَاوِ مِنَ الْمَفْعُولِ عِنْدَ سِيبَوَيْهِ. نَحْوُ مَصُونٌ وَمَسِيرٌ، أَصْلُهُمَا مَصْوُونٌ وَمَسْيُورٌ.",
+  terjemah:"Sesungguhnya isim maf'ul jika berasal dari fi'il mu'tal 'ain, maka menurut Sibawaih huruf wawu yang ada pada isim maf'ul tersebut harus dibuang. Misalnya: مَصُونٌ dan مَسِيرٌ, asalnya مَصْوُونٌ dan مَسْيُورٌ.",
+  penjelasan:[
+    "Isim maf'ul: kata yang menunjukkan sesuatu yang dikenai pekerjaan (obyek). Pendapat ini dinisbatkan kepada Imam Sibawaih, ahli nahwu Bashrah yang masyhur."
+  ],
+  contoh:[["مَصُونٌ","مَصْوُونٌ"],["مَسِيرٌ","مَسْيُورٌ"]]
+},
+{
+  id:"16", nameAr:"القاعدة السادسة عشرة", nameId:"Fa' Ifta'ala = Shad/Dlad/Tha'/Zha' → Ta' jadi Tha'",
+  matn:"إِذَا كَانَتْ فَاءُ افْتَعَلَ صَادًا أَوْ ضَادًا أَوْ طَاءً أَوْ ظَاءً، قُلِبَتِ التَّاءُ طَاءً لِثِقَلِ النُّطْقِ بَعْدَ هَذِهِ الْحُرُوفِ. نَحْوُ اصْطَبَرَ وَاضْطَرَبَ وَاطَّرَدَ وَاظَّهَرَ، أَصْلُهَا اصْتَبَرَ وَاضْتَرَبَ وَاطْتَرَدَ وَاظْتَهَرَ.",
+  terjemah:"Apabila fa' (fi'il wazan) ifta'ala adalah huruf shad, atau dlad, atau tha', atau zha', maka huruf ta'-nya diganti tha' karena sulitnya pengucapan setelah huruf-huruf ini. Pergantian ta' dengan tha' karena kedekatan makhraj-nya dengan ta'. Misal: اصْطَبَرَ, اضْطَرَبَ, اطَّرَدَ, dan اظَّهَرَ, asalnya اصْتَبَرَ, اضْتَرَبَ, اطْتَرَدَ, dan اظْتَهَرَ.",
+  penjelasan:[
+    "Wazan افتعل memiliki huruf ta' tambahan setelah fa' fi'il. Ketika fa' fi'il-nya termasuk huruf ithbaq (shad, dlad, tha', zha' — huruf tebal), ta' berubah menjadi tha' agar sifat tebal (isti'la') tetap konsisten sepanjang kata."
+  ],
+  contoh:[["اصْطَبَرَ","اصْتَبَرَ"],["اضْطَرَبَ","اضْتَرَبَ"],["اطَّرَدَ","اطْتَرَدَ"],["اظَّهَرَ","اظْتَهَرَ"]]
+},
+{
+  id:"17", nameAr:"القاعدة السابعة عشرة", nameId:"Fa' Ifta'ala = Dal/Dzal/Zay → Ta' jadi Dal",
+  matn:"إِذَا كَانَتْ فَاءُ افْتَعَلَ دَالًا أَوْ ذَالًا أَوْ زَايًا، قُلِبَتِ التَّاءُ دَالًا لِثِقَلِ النُّطْقِ بِالتَّاءِ بَعْدَ هَذِهِ الْحُرُوفِ. نَحْوُ ادَّرَأَ وَاذَّكَرَ وَازْدَجَرَ، أَصْلُهَا ادْتَرَأَ وَاذْتَكَرَ وَازْتَجَرَ.",
+  terjemah:"Apabila fa' (fi'il wazan) ifta'ala adalah huruf dal, atau dzal, atau zay, maka huruf ta'-nya diganti dal karena sulitnya pengucapan huruf ta' setelah huruf-huruf ini. Pergantian ta' dengan dal karena kedekatan makhraj-nya dengan ta'. Misalnya: ادَّرَأَ, اذَّكَرَ, dan ازْدَجَرَ, asalnya ادْتَرَأَ, اذْتَكَرَ, dan ازْتَجَرَ.",
+  penjelasan:[
+    "Pola ini serupa dengan Kaidah 16, namun untuk kelompok huruf jahr yang berdekatan makhraj dengan ta' (dal, dzal, zay), sehingga ta' berubah menjadi dal, bukan tha'."
+  ],
+  contoh:[["ادَّرَأَ","ادْتَرَأَ"],["اذَّكَرَ","اذْتَكَرَ"],["ازْدَجَرَ","ازْتَجَرَ"]]
+},
+{
+  id:"18", nameAr:"القاعدة الثامنة عشرة", nameId:"Fa' Ifta'ala = Wawu/Ya'/Tsa' → Ta'",
+  matn:"إِذَا كَانَتْ فَاءُ افْتَعَلَ وَاوًا أَوْ يَاءً أَوْ ثَاءً، قُلِبَتْ تَاءً لِثِقَلِ النُّطْقِ بِالْحَرْفِ السَّاكِنِ اللَّيِّنِ مَعَ التَّاءِ، وَلِتَقَارُبِهِمَا فِي الْمُوَاصَفَةِ. نَحْوُ اتَّصَلَ وَاتَّسَرَ وَاتَّغَرَ، أَصْلُهَا اوْتَصَلَ وَايْتَسَرَ وَاثْتَغَرَ.",
+  terjemah:"Apabila fa' (fi'il wazan) ifta'ala berupa huruf wawu, atau ya', atau tsa', maka fa' fi'il-nya diganti huruf ta' karena sulitnya mengucapkan huruf layyin yang sukun berdampingan dengan ta', dan karena keduanya saling berdekatan dalam hal makhraj serta sifatnya. Misalnya: اتَّصَلَ, اتَّسَرَ, dan اتَّغَرَ, asalnya اوْتَصَلَ, ايْتَسَرَ, dan اثْتَغَرَ.",
+  penjelasan:[
+    "Khusus jika fa' fi'il-nya adalah huruf tsa', diperbolehkan pula mengganti ta' wazan ifta'ala dengan huruf tsa', karena kedekatan sifat hams di antara keduanya — misalnya اثَّغَرَ, asalnya اثْتَغَرَ."
+  ],
+  contoh:[["اتَّصَلَ","اوْتَصَلَ"],["اتَّسَرَ","ايْتَسَرَ"],["اتَّغَرَ","اثْتَغَرَ"]]
+},
+{
+  id:"19", nameAr:"القاعدة التاسعة عشرة", nameId:"Fa' Tafa'ala/Tafaa'ala — Idgham dengan Hamzah Washal",
+  matn:"إِذَا كَانَ فَاءُ تَفَعَّلَ وَتَفَاعَلَ تَاءً أَوْ ثَاءً أَوْ دَالًا أَوْ ذَالًا أَوْ زَايًا أَوْ سِينًا أَوْ شِينًا أَوْ صَادًا أَوْ ضَادًا أَوْ طَاءً أَوْ ظَاءً، جَازَ قَلْبُ تَائِهِمَا بِمَا يُقَارِبُهُ فِي الْمَخْرَجِ، ثُمَّ أُدْغِمَتِ الْأُولَى فِي الثَّانِيَةِ بَعْدَ جَعْلِ أَوَّلِ الْمُتَقَارِبَيْنِ مِثْلَ الثَّانِي لِلْمُجَانَسَةِ، مَعَ اجْتِلَابِ هَمْزَةِ الْوَصْلِ لِيُمْكِنَ الِابْتِدَاءُ بِالسَّاكِنِ. نَحْوُ اتَّرَسَ وَاثَّاقَلَ وَادَّثَّرَ وَاذَّكَّرَ وَازَّجَّرَ وَاسَّمَّعَ وَاشَّقَّقَ وَاصَّدَّقَ وَاضَّرَّعَ وَاظَّهَّرَ وَاطَّاهَرَ، أَصْلُهَا تَتَرَّسَ وَتَثَاقَلَ وَتَدَثَّرَ وَتَذَكَّرَ وَتَزَجَّرَ وَتَسَمَّعَ وَتَشَقَّقَ وَتَصَدَّقَ وَتَضَرَّعَ وَتَظَهَّرَ وَتَطَاهَرَ.",
+  terjemah:"Apabila fa' (fi'il wazan) tafa''ala dan tafaa'ala berupa huruf ta', atau tsa', atau dal, atau dzal, atau zay, atau sin, atau syin, atau shad, atau dlad, atau tha', atau zha', maka boleh mengganti huruf ta' tersebut dengan huruf yang berdekatan makhrajnya, kemudian huruf pertama diidghamkan pada huruf kedua setelah menjadikan huruf pertama sejenis dengan huruf kedua, disertai mendatangkan hamzah washal agar bisa memulai pengucapan dengan huruf yang mati. Misalnya: اتَّرَسَ, اثَّاقَلَ, ادَّثَّرَ, اذَّكَّرَ, ازَّجَّرَ, اسَّمَّعَ, اشَّقَّقَ, اصَّدَّقَ, اضَّرَّعَ, اظَّهَّرَ, dan اطَّاهَرَ, asalnya تَتَرَّسَ, تَثَاقَلَ, تَدَثَّرَ, تَذَكَّرَ, تَزَجَّرَ, تَسَمَّعَ, تَشَقَّقَ, تَصَدَّقَ, تَضَرَّعَ, تَظَهَّرَ, dan تَطَاهَرَ.",
+  penjelasan:[
+    "Proses i'lal secara rinci dijabarkan pada dua contoh pertama: اتَّرَسَ (dari تَتَرَّسَ) dan اثَّاقَلَ (dari تَثَاقَلَ) — huruf ta' pertama pada wazan تفعّل/تفاعل diidghamkan (untuk اتَّرَسَ) atau diganti huruf yang berdekatan makhraj lalu diidghamkan (untuk اثَّاقَلَ), kemudian ditambahkan hamzah washal di awal karena kata dimulai dengan huruf sukun. Sembilan contoh lainnya mengikuti pola qiyas yang sama.",
+    "Penting: kaidah ini sifatnya jaiz (boleh), bukan ketentuan wajib/pasti — bentuk hasil i'lal semacam ini jarang dijumpai dalam pemakaian, dan yang lebih umum digunakan justru bentuk asalnya tanpa i'lal."
+  ],
+  contoh:[["اتَّرَسَ","تَتَرَّسَ"],["اثَّاقَلَ","تَثَاقَلَ"],["اذَّكَّرَ","تَذَكَّرَ"]]
+}
+];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function el(tag, cls, html){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function buildKaidahCard(k){
+  const wrap = el("div","kaidah");
+  wrap.id = "kaidah-"+k.id;
+  wrap.dataset.nav = "kaidah";
+  wrap.dataset.title = "Kaidah "+parseInt(k.id,10)+" — "+k.nameId;
+
+  const frame = el("div","frame");
+  frame.innerHTML = '<span class="c1"></span><span class="c2"></span>';
+
+  const head = el("div","kaidah-head");
+  head.innerHTML =
+    '<span class="kaidah-id">QI · '+k.id+'</span>' +
+    '<div><div class="kaidah-name-ar">'+k.nameAr+'</div><div class="kaidah-name-id">'+k.nameId+'</div></div>';
+  frame.appendChild(head);
+
+  const matn = el("div","matn");
+  matn.innerHTML = '<div class="ar">'+k.matn+'</div>';
+  frame.appendChild(matn);
+
+  const terj = el("div","terj");
+  terj.innerHTML = '<span class="lbl">Terjemah</span>' + k.terjemah;
+  frame.appendChild(terj);
+
+  const pj = el("div","penjelasan");
+  let pjHtml = '<span class="lbl">Penjelasan</span>';
+  k.penjelasan.forEach(p => pjHtml += '<p>'+p+'</p>');
+  pj.innerHTML = pjHtml;
+  frame.appendChild(pj);
+
+  if(k.contoh && k.contoh.length){
+    const c = el("div","contoh");
+    let cHtml = '<span class="lbl">Contoh Perubahan</span><div class="contoh-grid">';
+    k.contoh.forEach(pair => {
+      cHtml += '<div class="contoh-item"><span class="arr">Asal → Bentuk</span>' +
+        '<div class="pair"><span class="hasil">'+pair[0]+'</span><span class="panah">←</span><span class="asal">'+pair[1]+'</span></div></div>';
+    });
+    cHtml += '</div>';
+    c.innerHTML = cHtml;
+    frame.appendChild(c);
+  }
+
+  if(k.catatan){
+    const cat = el("div","catatan-kecil", "Catatan: "+k.catatan);
+    frame.appendChild(cat);
+  }
+
+  wrap.appendChild(frame);
+  return wrap;
+}
+
+const container = document.getElementById("kaidah-container");
+KAIDAH.forEach(k => container.appendChild(buildKaidahCard(k)));
+
+/* ============================================================
+   NAV BUILD
+   ============================================================ */
+function addNav(listId, id, label, sub){
+  const ul = document.getElementById(listId);
+  const li = el("li");
+  const a = el("a");
+  a.href = "#"+id;
+  a.innerHTML = (sub ? '<span class="idx">'+sub+'</span>' : '') + '<span>'+label+'</span>';
+  li.appendChild(a);
+  ul.appendChild(li);
+  return {li, a};
+}
+
+addNav("nav-open","sec-muqaddimah","Muqaddimah");
+KAIDAH.forEach(k => {
+  addNav("nav-kaidah","kaidah-"+k.id, k.nameId, "QI-"+k.id);
+});
+addNav("nav-close","sec-penutup","Catatan Penting");
+
+/* active state on scroll */
+const navLinks = Array.from(document.querySelectorAll(".navlist a"));
+const targets = navLinks.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+
+function setActive(){
+  let idx = 0;
+  const y = window.scrollY + 120;
+  targets.forEach((t,i) => { if(t.offsetTop <= y) idx = i; });
+  navLinks.forEach((a,i) => {
+    const li = a.parentElement;
+    if(i === idx){ a.classList.add("active"); li.classList.add("active"); }
+    else { a.classList.remove("active"); li.classList.remove("active"); }
+  });
+}
+window.addEventListener("scroll", setActive, {passive:true});
+setActive();
+
+/* close mobile nav after click */
+document.querySelectorAll(".navlist a").forEach(a=>{
+  a.addEventListener("click", ()=>{
+    if(window.innerWidth <= 900){
+      document.querySelector(".navwrap").classList.remove("open");
+    }
+  });
+});
+</script>
+</body>
+</html>

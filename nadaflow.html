@@ -1,0 +1,1681 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nadaflow — Pemutar Musik & Lirik</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#0a0d18;
+    --bg-2:#161033;
+    --bg-3:#1c1440;
+    --glass:rgba(255,255,255,0.055);
+    --glass-strong:rgba(255,255,255,0.09);
+    --glass-border:rgba(255,255,255,0.14);
+    --accent-a:#8b5cf6;
+    --accent-b:#22d3ee;
+    --accent-grad:linear-gradient(135deg,#8b5cf6 0%,#6366f1 45%,#22d3ee 100%);
+    --text-hi:#f5f5f7;
+    --text-mid:#a6abbd;
+    --text-low:#666c82;
+    --danger:#f87171;
+    --karaoke-sung:#fbbf24;
+    --radius-lg:26px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --shadow-glass:0 8px 32px rgba(0,0,0,0.45);
+    --sidebar-w:290px;
+    color-scheme:dark;
+  }
+  html[data-theme="light"]{
+    --bg-1:#f4f5fb;
+    --bg-2:#eceef8;
+    --bg-3:#e3e6f5;
+    --glass:rgba(20,20,35,0.04);
+    --glass-strong:rgba(20,20,35,0.075);
+    --glass-border:rgba(20,20,40,0.15);
+    --accent-a:#6d28d9;
+    --accent-b:#0e7490;
+    --accent-grad:linear-gradient(135deg,#6d28d9 0%,#4f46e5 45%,#0e7490 100%);
+    --text-hi:#14141f;
+    --text-mid:#454a60;
+    --text-low:#6c7086;
+    --danger:#dc2626;
+    --karaoke-sung:#b45309;
+    --shadow-glass:0 8px 28px rgba(30,30,60,0.12);
+    color-scheme:light;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  html{transition:background-color .3s ease;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(139,92,246,0.25), transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(34,211,238,0.18), transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(99,102,241,0.2), transparent 50%),
+      linear-gradient(160deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+    background-attachment:fixed;
+    color:var(--text-hi);
+    min-height:100%;
+    overflow-x:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px 16px;
+    position:relative;
+    transition:background-color .3s ease, color .3s ease;
+  }
+  html[data-theme="light"] body{
+    background:
+      radial-gradient(circle at 15% 15%, rgba(109,40,217,0.09), transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(14,116,144,0.08), transparent 40%),
+      radial-gradient(circle at 50% 90%, rgba(79,70,229,0.06), transparent 50%),
+      linear-gradient(160deg, var(--bg-1), var(--bg-2) 55%, var(--bg-3));
+  }
+  html[data-theme="light"] .orb{opacity:0.14;}
+  html[data-theme="light"] .vinyl::before{background:#f4f5fb;}
+  h1,h2,h3{font-family:'Sora',sans-serif;}
+
+  /* floating ambient orbs */
+  .orb{position:fixed;border-radius:50%;filter:blur(70px);opacity:0.35;pointer-events:none;z-index:0;}
+  .orb1{width:340px;height:340px;background:#8b5cf6;top:-100px;left:-100px;animation:float1 16s ease-in-out infinite;}
+  .orb2{width:280px;height:280px;background:#22d3ee;bottom:-80px;right:-60px;animation:float2 18s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,40px)}}
+  @keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,-30px)}}
+
+  /* ============ PLAYER CARD ============ */
+  .player-card{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:420px;
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(24px) saturate(150%);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-glass);
+    padding:28px 26px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:8px;
+    font-family:'Sora',sans-serif;font-weight:700;font-size:13px;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--text-mid);
+  }
+  .brand .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-grad);box-shadow:0 0 10px var(--accent-b);}
+
+  .cover-wrap{
+    display:flex;align-items:center;justify-content:center;
+    padding:14px 0 4px;
+  }
+  .vinyl{
+    width:168px;height:168px;border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%, #0e0b1a 0 14px, #1b1530 15px 17px, #0e0b1a 18px 46px, #1e1834 47px 49px, #0e0b1a 50px 70px, #1b1530 71px 73px, #0e0b1a 74px 100%);
+    position:relative;
+    box-shadow:0 10px 30px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06);
+    animation:spin 9s linear infinite;
+    animation-play-state:paused;
+  }
+  .vinyl.spinning{animation-play-state:running;}
+  .vinyl::after{
+    content:'';position:absolute;inset:0;margin:auto;width:46px;height:46px;border-radius:50%;
+    background:var(--accent-grad);box-shadow:0 0 18px rgba(139,92,246,0.6);
+  }
+  .vinyl::before{
+    content:'';position:absolute;inset:0;margin:auto;width:10px;height:10px;border-radius:50%;
+    background:#0a0d18;z-index:2;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .track-info{text-align:center;padding:0 6px;}
+  .track-info h1{font-size:19px;font-weight:700;letter-spacing:-0.01em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .track-info p{font-size:13px;color:var(--text-mid);margin-top:4px;font-weight:500;}
+
+  .progress-row{display:flex;align-items:center;gap:10px;}
+  .progress-row span{font-size:11px;color:var(--text-low);font-variant-numeric:tabular-nums;min-width:32px;}
+  .progress-row span:last-child{text-align:right;}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;height:4px;border-radius:4px;
+    background:rgba(255,255,255,0.14);flex:1;cursor:pointer;outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+    background:var(--accent-grad);box-shadow:0 0 8px rgba(139,92,246,0.8);cursor:pointer;
+    border:2px solid rgba(255,255,255,0.85);
+  }
+  #seek{
+    background:linear-gradient(90deg, var(--accent-a) var(--pct,0%), rgba(255,255,255,0.14) var(--pct,0%));
+  }
+
+  .controls{display:flex;align-items:center;justify-content:center;gap:22px;}
+  .icon-btn{
+    background:none;border:none;color:var(--text-hi);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border-radius:50%;transition:background .2s, transform .15s;
+  }
+  .icon-btn:hover{background:rgba(255,255,255,0.08);}
+  .icon-btn:active{transform:scale(0.92);}
+  .icon-btn svg{width:20px;height:20px;}
+  .play-btn{
+    width:60px;height:60px;border-radius:50%;background:var(--accent-grad);
+    box-shadow:0 6px 24px rgba(139,92,246,0.55);
+  }
+  .play-btn:hover{background:var(--accent-grad);filter:brightness(1.08);}
+  .play-btn svg{width:24px;height:24px;}
+  .play-btn.needs-tap{animation:needsTapPulse 1.1s ease-in-out infinite;}
+  @keyframes needsTapPulse{
+    0%,100%{box-shadow:0 6px 24px rgba(139,92,246,0.55),0 0 0 0 rgba(139,92,246,0.55);}
+    50%{box-shadow:0 6px 24px rgba(139,92,246,0.55),0 0 0 12px rgba(139,92,246,0);}
+  }
+
+  .secondary-row{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .ghost-btn{
+    display:flex;align-items:center;gap:6px;
+    background:var(--glass-strong);border:1px solid var(--glass-border);
+    color:var(--text-hi);font-family:'Inter';font-size:12.5px;font-weight:600;
+    padding:9px 13px;border-radius:999px;cursor:pointer;transition:all .2s;
+    white-space:nowrap;
+  }
+  .ghost-btn:hover{background:rgba(255,255,255,0.14);transform:translateY(-1px);}
+  html[data-theme="light"] .ghost-btn{background:#ffffff;border-color:rgba(20,20,40,0.16);box-shadow:0 1px 4px rgba(30,30,60,0.06);}
+  html[data-theme="light"] .ghost-btn:hover{background:#f4f2ff;}
+  .ghost-btn svg{width:14px;height:14px;flex-shrink:0;}
+  .ghost-btn.accent{background:var(--accent-grad);border:none;color:#fff;}
+  html[data-theme="light"] .ghost-btn.accent{background:var(--accent-grad);border:none;color:#fff;}
+  html[data-theme="light"] .ghost-btn.accent:hover{background:var(--accent-grad);}
+  .ghost-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none !important;}
+  .ghost-btn:disabled:hover{background:var(--glass-strong);}
+  html[data-theme="light"] .ghost-btn:disabled:hover{background:#ffffff;}
+  .volume-wrap{display:flex;align-items:center;gap:7px;flex:1;min-width:0;}
+  .volume-wrap svg{width:15px;height:15px;color:var(--text-mid);flex-shrink:0;}
+  .volume-wrap input{max-width:70px;}
+  .lyrics-btn{flex-shrink:0;}
+
+  .drop-zone{
+    border:1.5px dashed var(--glass-border);border-radius:var(--radius-md);
+    padding:14px;text-align:center;font-size:12px;color:var(--text-low);
+    transition:all .2s;cursor:pointer;
+  }
+  .drop-zone.drag{border-color:var(--accent-b);background:rgba(34,211,238,0.06);color:var(--text-mid);}
+
+  .yt-row{display:flex;gap:8px;}
+  .yt-row input[type=text]{
+    flex:1;min-width:0;background:var(--glass);border:1px solid var(--glass-border);
+    color:var(--text-hi);padding:10px 13px;border-radius:999px;font-size:12.5px;
+    font-family:'Inter';outline:none;transition:border-color .2s;
+  }
+  .yt-row input[type=text]:focus{border-color:var(--accent-a);}
+  .yt-row input[type=text]::placeholder{color:var(--text-low);}
+  .yt-row .ghost-btn{flex-shrink:0;}
+  .yt-row .ghost-btn.accent{background:var(--accent-grad);border:none;color:#fff;}
+  html[data-theme="light"] .yt-row .ghost-btn.accent{background:var(--accent-grad);border:none;color:#fff;}
+  .yt-results{
+    display:none;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;
+    margin-top:-4px;
+  }
+  .yt-results.show{display:flex;}
+  .yt-results::-webkit-scrollbar{width:5px;}
+  .yt-results::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px;}
+  html[data-theme="light"] .yt-results::-webkit-scrollbar-thumb{background:rgba(20,20,40,0.18);}
+  .yt-result-item{
+    display:flex;align-items:center;gap:10px;
+    background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+    padding:6px;cursor:pointer;transition:background .15s, border-color .15s;
+  }
+  .yt-result-item:hover{background:var(--glass-strong);}
+  html[data-theme="light"] .yt-result-item{background:#ffffff;border-color:rgba(20,20,40,0.14);}
+  html[data-theme="light"] .yt-result-item:hover{background:#f4f2ff;}
+  .yt-result-item img{width:64px;height:36px;border-radius:7px;object-fit:cover;flex-shrink:0;background:#000;}
+  .yt-result-main{display:flex;flex-direction:column;gap:1px;min-width:0;}
+  .yt-result-title{font-size:12.5px;font-weight:700;color:var(--text-hi);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .yt-result-channel{font-size:11px;color:var(--text-mid);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .yt-apikey-link{
+    background:none;border:none;color:var(--text-low);font-size:10.5px;
+    text-decoration:underline;cursor:pointer;padding:0;font-family:'Inter';
+    align-self:center;
+  }
+  .yt-apikey-link:hover{color:var(--text-mid);}
+  .yt-frame{
+    display:none;width:100%;aspect-ratio:16/9;border-radius:var(--radius-md);
+    overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.08);
+    position:relative;background:#000;
+  }
+  .yt-frame.active{display:block;}
+  .yt-frame #ytPlayerMount{position:absolute;inset:0;width:100%;height:100%;}
+  /* mode "audio saja": video YouTube resmi tetap dimuat & diputar via iframe,
+     tetap di posisi normal dalam layar (bukan digeser ke luar/​diperkecil ekstrem)
+     karena YouTube menolak autoplay pada iframe yang dianggap "tak terlihat"
+     (baik terlalu kecil maupun berada jauh di luar viewport) — di sini disamarkan
+     lewat opacity:0 saja, ukuran & posisi tetap wajar & berada di layar. */
+  .cover-wrap{position:relative;overflow:hidden;}
+  .cover-wrap.yt-mode .yt-frame.active{
+    position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;
+    opacity:0;pointer-events:none;
+    box-shadow:none;border-radius:0;overflow:hidden;
+  }
+  .yt-badge{
+    display:none;position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    align-items:center;gap:4px;font-size:10px;font-weight:700;
+    color:var(--text-low);background:var(--glass-strong);border:1px solid var(--glass-border);
+    padding:3px 9px;border-radius:999px;backdrop-filter:blur(8px);white-space:nowrap;
+  }
+  .cover-wrap.yt-mode .yt-badge{display:inline-flex;}
+  .yt-badge svg{width:10px;height:10px;flex-shrink:0;}
+
+  .playlist{max-height:120px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;}
+  .playlist::-webkit-scrollbar{width:5px;}
+  .playlist::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px;}
+  .pl-item{
+    display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-sm);
+    font-size:12.5px;cursor:pointer;color:var(--text-mid);transition:background .15s;
+  }
+  .pl-item:hover{background:rgba(255,255,255,0.06);}
+  .pl-item.active{background:rgba(139,92,246,0.18);color:var(--text-hi);}
+  .pl-item .idx{width:16px;font-variant-numeric:tabular-nums;color:var(--text-low);font-size:11px;}
+  .pl-item .name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .pl-item .eq{display:flex;gap:2px;align-items:flex-end;height:10px;}
+  .pl-item.active .eq span{background:var(--accent-b);animation:eq 0.8s ease-in-out infinite;}
+  .pl-item .eq span{display:block;width:2px;background:transparent;border-radius:1px;}
+  .pl-item.active .eq span:nth-child(1){height:40%;animation-delay:0s;}
+  .pl-item.active .eq span:nth-child(2){height:100%;animation-delay:.2s;}
+  .pl-item.active .eq span:nth-child(3){height:65%;animation-delay:.4s;}
+  @keyframes eq{0%,100%{transform:scaleY(0.4)}50%{transform:scaleY(1)}}
+
+
+  /* ============ FULLSCREEN LYRICS ============ */
+  .lyrics-overlay{
+    position:fixed;inset:0;z-index:50;
+    display:flex;flex-direction:column;
+    background:linear-gradient(180deg, #0a0d18, #140e2c 60%, #1c1440);
+    opacity:0;pointer-events:none;transform:scale(1.03);
+    transition:opacity .45s cubic-bezier(.22,.61,.36,1), transform .45s cubic-bezier(.22,.61,.36,1);
+  }
+  .lyrics-overlay.open{opacity:1;pointer-events:auto;transform:scale(1);}
+  html[data-theme="light"] .lyrics-overlay{background:linear-gradient(180deg, #f8f9fd, #eef0f9 55%, #e5e8f5);}
+  .lyrics-bg{
+    position:absolute;inset:0;z-index:0;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(139,92,246,0.28), transparent 45%),
+      radial-gradient(circle at 80% 75%, rgba(34,211,238,0.22), transparent 45%);
+    animation:bgshift 14s ease-in-out infinite alternate;
+  }
+  html[data-theme="light"] .lyrics-bg{
+    background:
+      radial-gradient(circle at 20% 20%, rgba(109,40,217,0.10), transparent 45%),
+      radial-gradient(circle at 80% 75%, rgba(14,116,144,0.09), transparent 45%);
+  }
+  @keyframes bgshift{
+    0%{background-position:0% 0%;}
+    100%{background-position:20% 10%;}
+  }
+  .close-btn{
+    position:absolute;top:20px;right:20px;z-index:5;
+    width:38px;height:38px;border-radius:50%;
+    background:var(--glass-strong);border:1px solid var(--glass-border);
+    color:var(--text-hi);cursor:pointer;font-size:18px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(10px);
+  }
+  html[data-theme="light"] .close-btn,
+  html[data-theme="light"] .theme-toggle,
+  html[data-theme="light"] .sidebar-toggle{
+    background:#ffffff;border:1px solid rgba(20,20,40,0.18);
+    box-shadow:0 2px 10px rgba(30,30,60,0.12);
+  }
+  .close-btn:hover{background:rgba(255,255,255,0.16);}
+  html[data-theme="light"] .close-btn:hover{background:rgba(20,20,40,0.1);}
+
+  .theme-toggle{
+    position:absolute;top:20px;right:66px;z-index:5;
+    width:38px;height:38px;border-radius:50%;
+    background:var(--glass-strong);border:1px solid var(--glass-border);
+    color:var(--text-hi);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(10px);transition:background .2s;
+  }
+  .theme-toggle:hover{background:rgba(255,255,255,0.16);}
+  html[data-theme="light"] .theme-toggle:hover{background:rgba(20,20,40,0.1);}
+  .theme-toggle svg{width:18px;height:18px;}
+  .home-theme-toggle{position:fixed;top:20px;right:20px;z-index:10;}
+  .app-footer{
+    position:fixed;left:0;right:0;bottom:10px;z-index:2;
+    text-align:center;font-size:11px;color:var(--text-low);
+    pointer-events:none;letter-spacing:0.02em;
+  }
+  .app-footer a{color:var(--text-low);pointer-events:auto;text-decoration:none;}
+  .app-footer a:hover{color:var(--text-mid);text-decoration:underline;}
+
+  /* sidebar collapse handle */
+  .sidebar-toggle{
+    position:absolute;top:20px;left:20px;z-index:6;
+    width:38px;height:38px;border-radius:50%;
+    background:var(--glass-strong);border:1px solid var(--glass-border);
+    color:var(--text-hi);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(10px);transition:background .2s, transform .3s ease;
+  }
+  .sidebar-toggle:hover{background:rgba(255,255,255,0.16);}
+  html[data-theme="light"] .sidebar-toggle:hover{background:rgba(20,20,40,0.1);}
+  .sidebar-toggle svg{width:16px;height:16px;transition:transform .3s ease;}
+  .lyrics-shell.sidebar-collapsed .sidebar-toggle svg{transform:rotate(180deg);}
+
+  /* shell: sidebar (header + tools + sync) + main lyrics area, side by side */
+  .lyrics-shell{
+    position:relative;z-index:2;flex:1;min-height:0;
+    display:flex;
+  }
+  .lyrics-sidebar{
+    width:var(--sidebar-w);flex-shrink:0;min-height:0;overflow-y:auto;overflow-x:hidden;
+    display:flex;flex-direction:column;gap:16px;
+    padding:64px 22px 24px;
+    border-right:1px solid var(--glass-border);
+    transition:width .32s cubic-bezier(.22,.61,.36,1), padding .32s cubic-bezier(.22,.61,.36,1),
+               opacity .25s ease, border-color .3s ease;
+  }
+  .lyrics-shell.sidebar-collapsed .lyrics-sidebar{
+    width:0;padding-left:0;padding-right:0;opacity:0;pointer-events:none;
+    border-right-color:transparent;
+  }
+  .lyrics-sidebar::-webkit-scrollbar{width:5px;}
+  .lyrics-sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px;}
+  html[data-theme="light"] .lyrics-sidebar::-webkit-scrollbar-thumb{background:rgba(20,20,40,0.18);}
+
+  .lyrics-header{text-align:left;flex-shrink:0;}
+  .lyrics-header h2{font-size:19px;font-weight:700;line-height:1.3;}
+  .lyrics-header p{font-size:12.5px;color:var(--text-mid);margin-top:3px;}
+  .lyrics-status{
+    display:inline-flex;align-items:center;gap:6px;margin-top:10px;
+    font-size:11px;font-weight:600;color:var(--text-low);
+    background:var(--glass);border:1px solid var(--glass-border);
+    padding:5px 12px;border-radius:14px;
+    max-width:100%;white-space:normal;text-align:left;line-height:1.5;
+  }
+  .lyrics-status .sdot{width:6px;height:6px;border-radius:50%;background:var(--text-low);flex-shrink:0;margin-top:2px;align-self:flex-start;}
+  .lyrics-status.ok .sdot{background:#34d399;box-shadow:0 0 6px #34d399;}
+  .lyrics-status.online .sdot{background:var(--accent-b);box-shadow:0 0 6px var(--accent-b);}
+  .lyrics-status.err .sdot{background:var(--danger);box-shadow:0 0 6px var(--danger);}
+
+  .lyrics-tools{
+    display:flex;flex-direction:column;gap:8px;flex-shrink:0;
+    padding-top:14px;border-top:1px solid var(--glass-border);
+  }
+  .lyrics-tools input[type=text]{
+    background:var(--glass);border:1px solid var(--glass-border);color:var(--text-hi);
+    padding:10px 14px;border-radius:999px;font-size:12.5px;font-family:'Inter';
+    width:100%;outline:none;transition:border-color .2s;
+  }
+  html[data-theme="light"] .lyrics-tools input[type=text]{background:#ffffff;border-color:rgba(20,20,40,0.16);}
+  .lyrics-tools input[type=text]:focus{border-color:var(--accent-a);}
+  .lyrics-tools input[type=text]::placeholder{color:var(--text-low);}
+  .lyrics-tools .ghost-btn{width:100%;justify-content:center;}
+
+  .search-results{
+    display:none;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto;
+    margin-top:2px;
+  }
+  .search-results.show{display:flex;}
+  .search-results::-webkit-scrollbar{width:5px;}
+  .search-results::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:4px;}
+  html[data-theme="light"] .search-results::-webkit-scrollbar-thumb{background:rgba(20,20,40,0.18);}
+  .result-item{
+    background:var(--glass);border:1px solid var(--glass-border);border-radius:12px;
+    padding:9px 12px;cursor:pointer;transition:background .15s, border-color .15s;
+  }
+  .result-item:hover{background:var(--glass-strong);}
+  .result-item.selected{border-color:var(--accent-a);background:rgba(139,92,246,0.12);}
+  html[data-theme="light"] .result-item{background:#ffffff;border-color:rgba(20,20,40,0.14);}
+  html[data-theme="light"] .result-item:hover{background:#f4f2ff;}
+  html[data-theme="light"] .result-item.selected{border-color:var(--accent-a);background:rgba(109,40,217,0.08);}
+  .result-main{display:flex;flex-direction:column;gap:1px;}
+  .result-title{font-size:12.5px;font-weight:700;color:var(--text-hi);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .result-artist{font-size:11px;color:var(--text-mid);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .result-meta{display:flex;align-items:center;gap:8px;margin-top:5px;}
+  .result-badge{
+    font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;
+    background:rgba(255,255,255,0.08);color:var(--text-low);
+  }
+  .result-badge.ok{background:rgba(52,211,153,0.15);color:#34d399;}
+  .result-badge.plain{background:rgba(34,211,238,0.15);color:var(--accent-b);}
+  html[data-theme="light"] .result-badge{background:rgba(20,20,40,0.06);}
+  .result-dur{font-size:10.5px;color:var(--text-low);font-variant-numeric:tabular-nums;}
+
+  .lyrics-sync{
+    position:absolute;z-index:6;right:20px;bottom:20px;width:220px;
+    background:var(--glass-strong);border:1px solid var(--glass-border);
+    border-radius:16px;padding:14px 16px;backdrop-filter:blur(10px);
+    display:flex;flex-direction:column;gap:8px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.28);
+  }
+  html[data-theme="light"] .lyrics-sync{
+    background:#ffffff;border-color:rgba(20,20,40,0.18);
+    box-shadow:0 4px 18px rgba(30,30,60,0.14);
+  }
+  .lyrics-sync .sync-label{font-size:11.5px;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.06em;}
+  .lyrics-sync .sync-hint{font-size:11px;color:var(--text-low);line-height:1.5;}
+  .sync-controls{display:flex;align-items:center;gap:6px;}
+  .sync-btn{
+    flex:1;height:32px;border-radius:8px;background:var(--glass-strong);border:1px solid var(--glass-border);
+    color:var(--text-hi);font-family:'Inter';font-size:12px;font-weight:700;cursor:pointer;transition:background .15s;
+  }
+  .sync-btn:hover{background:rgba(255,255,255,0.16);}
+  html[data-theme="light"] .sync-btn{background:#ffffff;border-color:rgba(20,20,40,0.16);}
+  html[data-theme="light"] .sync-btn:hover{background:#f4f2ff;}
+  .sync-value{
+    min-width:64px;text-align:center;font-family:'Sora',sans-serif;font-weight:700;font-size:13px;
+    color:var(--accent-b);flex-shrink:0;
+  }
+  .sync-reset{
+    align-self:flex-start;background:none;border:none;color:var(--text-low);font-size:11px;
+    text-decoration:underline;cursor:pointer;padding:0;font-family:'Inter';
+  }
+  .sync-reset:hover{color:var(--text-mid);}
+
+  .lyrics-main{flex:1;min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden;}
+  .lyrics-viewport{
+    position:relative;flex:1;min-height:0;overflow:hidden;
+    display:flex;justify-content:center;
+    padding:0 28px;
+    -webkit-mask-image:linear-gradient(180deg, transparent 0, #000 12%, #000 85%, transparent 100%);
+    mask-image:linear-gradient(180deg, transparent 0, #000 12%, #000 85%, transparent 100%);
+  }
+  .lyrics-inner{
+    display:flex;width:100%;max-width:640px;min-height:0;
+  }
+  .slide-track{
+    display:none;
+  }
+  .slide-indicator{
+    position:absolute;left:-3px;width:10px;border-radius:6px;
+    background:var(--accent-grad);
+    box-shadow:0 0 16px rgba(139,92,246,0.75), 0 0 30px rgba(34,211,238,0.3);
+    transition:top .4s cubic-bezier(.22,.61,.36,1), height .4s cubic-bezier(.22,.61,.36,1);
+    top:0;height:0;
+  }
+  .lyrics-list{
+    flex:1;min-width:0;overflow-y:auto;padding:42vh 4px;
+    scroll-behavior:smooth;
+  }
+  .lyrics-list::-webkit-scrollbar{display:none;}
+  .lyrics-line{
+    font-family:'Sora',sans-serif;font-size:25px;font-weight:600;
+    color:var(--text-low);line-height:1.65;padding:10px 0;
+    transition:color .35s, transform .35s, opacity .35s;
+    cursor:pointer;transform-origin:center center;opacity:0.55;
+    text-align:center;
+  }
+  .lyrics-line:hover{color:var(--text-mid);}
+  /* lirik tanpa timestamp (statis): hover meniru tampilan baris aktif pada lirik tersinkron */
+  .lyrics-list.unsynced .lyrics-line{transition:color .3s, transform .3s, font-size .3s, opacity .3s;}
+  .lyrics-list.unsynced .lyrics-line:hover{
+    font-size:33px;transform:scale(1.02);opacity:1;
+    background-image:linear-gradient(90deg, var(--karaoke-sung), var(--karaoke-sung));
+    background-clip:text;-webkit-background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 16px rgba(139,92,246,0.4));
+  }
+  html[data-theme="light"] .lyrics-list.unsynced .lyrics-line:hover{filter:drop-shadow(0 0 10px rgba(109,40,217,0.22));}
+  /* baris yang sudah dinyanyikan: diwarnai seperti jejak karaoke */
+  .lyrics-line.passed{color:var(--karaoke-sung);opacity:0.4;}
+  /* baris yang sedang dinyanyikan: font besar + isian warna karaoke berjalan (--fill) */
+  .lyrics-line.active{
+    --fill:0%;
+    font-size:33px;transform:scale(1.02);opacity:1;
+    background-image:linear-gradient(90deg, var(--karaoke-sung) 0%, var(--karaoke-sung) var(--fill), var(--text-hi) var(--fill), var(--text-hi) 100%);
+    background-clip:text;-webkit-background-clip:text;
+    color:transparent;-webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 16px rgba(139,92,246,0.4));
+    transition:transform .35s, opacity .35s, background-image .12s linear;
+  }
+  html[data-theme="light"] .lyrics-line.active{filter:drop-shadow(0 0 10px rgba(109,40,217,0.22));}
+  .lyrics-empty{
+    padding:60px 0;text-align:left;color:var(--text-mid);font-size:14px;
+    line-height:1.6;
+  }
+  .lyrics-empty b{color:var(--text-hi);}
+
+  @media (max-width:760px){
+    .lyrics-shell{flex-direction:column;}
+    .lyrics-sidebar{
+      width:100%;max-height:46vh;padding:60px 20px 16px;
+      border-right:none;border-bottom:1px solid var(--glass-border);
+      transition:max-height .32s cubic-bezier(.22,.61,.36,1), padding .32s cubic-bezier(.22,.61,.36,1),
+                 opacity .25s ease, border-color .3s ease;
+    }
+    .lyrics-shell.sidebar-collapsed .lyrics-sidebar{
+      max-height:0;width:100%;padding-top:0;padding-bottom:0;opacity:0;pointer-events:none;
+      border-bottom-color:transparent;
+    }
+    .sidebar-toggle svg{transform:rotate(-90deg);}
+    .lyrics-shell.sidebar-collapsed .sidebar-toggle svg{transform:rotate(90deg);}
+    .lyrics-viewport{padding:0 18px;}
+    .lyrics-list{padding:8vh 4px 30vh;}
+    .lyrics-sync{
+      right:12px;bottom:12px;left:12px;width:auto;
+      flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 10px;padding:10px 14px;
+    }
+    .lyrics-sync .sync-label{flex-shrink:0;}
+    .sync-controls{flex:1;min-width:0;}
+    .sync-reset{margin-left:auto;}
+  }
+
+  /* ============ PASTE MODAL ============ */
+  .paste-modal{
+    position:fixed;inset:0;z-index:60;display:none;
+    align-items:center;justify-content:center;padding:20px;
+    background:rgba(5,5,12,0.6);backdrop-filter:blur(6px);
+  }
+  .paste-modal.open{display:flex;}
+  .paste-box{
+    width:100%;max-width:440px;background:var(--bg-3);border:1px solid var(--glass-border);
+    border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-glass);
+  }
+  .paste-box h3{font-size:16px;margin-bottom:6px;}
+  .paste-box p{font-size:12.5px;color:var(--text-mid);margin-bottom:12px;line-height:1.5;}
+  .paste-box textarea{
+    width:100%;height:180px;resize:vertical;background:rgba(0,0,0,0.25);
+    border:1px solid var(--glass-border);border-radius:var(--radius-sm);
+    color:var(--text-hi);padding:12px;font-family:'Inter';font-size:12.5px;line-height:1.6;
+    outline:none;
+  }
+  html[data-theme="light"] .paste-box textarea{background:rgba(20,20,40,0.045);}
+  .paste-box textarea:focus{border-color:var(--accent-a);}
+  .paste-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;}
+  .btn-primary{
+    background:var(--accent-grad);border:none;color:#fff;font-weight:700;font-size:12.5px;
+    padding:10px 18px;border-radius:999px;cursor:pointer;font-family:'Inter';
+  }
+  .btn-plain{
+    background:transparent;border:1px solid var(--glass-border);color:var(--text-mid);
+    font-weight:600;font-size:12.5px;padding:10px 18px;border-radius:999px;cursor:pointer;font-family:'Inter';
+  }
+
+  @media (max-width:480px){
+    .lyrics-line{font-size:21px;}
+    .lyrics-line.active{font-size:27px;}
+    .lyrics-list.unsynced .lyrics-line:hover{font-size:27px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .vinyl,.orb,.lyrics-bg{animation:none !important;}
+    *{transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<button class="theme-toggle home-theme-toggle" id="btnToggleThemeHome" title="Ganti mode terang/gelap">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M20.5 14.5A8.5 8.5 0 019.5 3.5a8.5 8.5 0 1011 11z"/></svg>
+</button>
+
+<div class="app-footer">© 2026 by Achmad Fauzi · Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+
+<!-- ===================== PLAYER ===================== -->
+<div class="player-card" id="playerCard">
+  <div class="brand"><span class="dot"></span> NADAFLOW</div>
+
+  <div class="cover-wrap" id="coverWrap">
+    <div class="vinyl" id="vinyl"></div>
+    <div class="yt-frame" id="ytFrame"><div id="ytPlayerMount"></div></div>
+    <div class="yt-badge" title="Audio diputar resmi via YouTube, tampilan video disembunyikan">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2c-.25-1-1-1.75-2-2C17.9 4.7 12 4.7 12 4.7s-5.9 0-7.6.5c-1 .25-1.75 1-2 2C2 8.9 2 12 2 12s0 3.1.4 4.8c.25 1 1 1.75 2 2 1.7.5 7.6.5 7.6.5s5.9 0 7.6-.5c1-.25 1.75-1 2-2 .4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.3V8.7l6 3.3z"/></svg>
+      Audio YouTube
+    </div>
+  </div>
+
+  <div class="track-info">
+    <h1 id="trackTitle">Belum ada lagu</h1>
+    <p id="trackArtist">Pilih atau seret file MP3 untuk mulai</p>
+  </div>
+
+  <div class="progress-row">
+    <span id="curTime">0:00</span>
+    <input type="range" id="seek" value="0" max="100" step="0.1">
+    <span id="durTime">0:00</span>
+  </div>
+
+  <div class="controls">
+    <button class="icon-btn" id="btnPrev" title="Sebelumnya">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+    </button>
+    <button class="icon-btn play-btn" id="btnPlay" title="Putar/Jeda">
+      <svg id="iconPlay" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="iconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+    </button>
+    <button class="icon-btn" id="btnNext" title="Berikutnya">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>
+    </button>
+  </div>
+
+  <div class="secondary-row">
+    <button class="ghost-btn" id="btnOpenFile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+      Buka
+    </button>
+    <div class="volume-wrap">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z"/></svg>
+      <input type="range" id="volume" min="0" max="1" step="0.01" value="0.85">
+    </div>
+    <button class="ghost-btn lyrics-btn" id="btnFullLyrics" title="Tampilkan Lirik Fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+      Buka Lirik
+    </button>
+  </div>
+  <input type="file" id="fileInput" accept="audio/*" multiple hidden>
+
+  <div class="drop-zone" id="dropZone">Seret file MP3 ke sini, atau klik "Buka"</div>
+
+  <div class="yt-row">
+    <input type="text" id="ytUrl" placeholder="Tempel URL YouTube, atau ketik judul lagu untuk mencari">
+    <button class="ghost-btn accent" id="btnYtFetch" title="Ambil video/lirik, atau cari lagu di YouTube">
+      <svg id="ytIconPlay" viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M8 5v14l11-7z"/></svg>
+      <svg id="ytIconSearch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" style="display:none"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span id="ytFetchLabel">Ambil Lirik</span>
+    </button>
+  </div>
+  <div class="yt-results" id="ytResults"></div>
+  <div class="lyrics-status" id="ytStatus" style="display:none;align-self:center;"><span class="sdot"></span><span id="ytStatusText"></span></div>
+  <button class="yt-apikey-link" id="btnYtApiKey" type="button">Atur YouTube API Key (untuk hasil pencarian di sini)</button>
+
+  <div class="playlist" id="playlist"></div>
+</div>
+
+<!-- ===================== FULLSCREEN LYRICS ===================== -->
+<div class="lyrics-overlay" id="lyricsOverlay">
+  <div class="lyrics-bg"></div>
+  <button class="close-btn" id="closeLyrics">✕</button>
+  <button class="theme-toggle" id="btnToggleTheme" title="Ganti mode terang/gelap">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M20.5 14.5A8.5 8.5 0 019.5 3.5a8.5 8.5 0 1011 11z"/></svg>
+  </button>
+
+<div class="lyrics-shell" id="lyricsShell">
+    <button class="sidebar-toggle" id="btnToggleSidebar" title="Ciutkan/perluas panel">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <aside class="lyrics-sidebar">
+      <div class="lyrics-header">
+        <h2 id="fsTitle">—</h2>
+        <p id="fsArtist">—</p>
+        <div class="lyrics-status" id="lyricsStatus"><span class="sdot"></span><span id="lyricsStatusText">Belum ada lirik</span></div>
+      </div>
+
+      <div class="lyrics-tools">
+        <input type="text" id="searchArtist" placeholder="Nama artis">
+        <input type="text" id="searchTitle" placeholder="Judul lagu">
+        <button class="ghost-btn" id="btnSearchOnline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          Cari Online
+        </button>
+        <button class="ghost-btn" id="btnUploadLrc">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+          Unggah .lrc
+        </button>
+        <button class="ghost-btn" id="btnPasteLyrics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Tempel Manual
+        </button>
+        <input type="file" id="lrcInput" accept=".lrc,.txt" hidden>
+        <div class="search-results" id="searchResults"></div>
+        <button class="ghost-btn accent" id="btnSaveSelected" disabled title="Simpan ke cache offline aplikasi & unduh sebagai file .lrc/.txt ke perangkat">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+          Simpan Lirik Terpilih
+        </button>
+      </div>
+    </aside>
+
+    <div class="lyrics-main">
+      <div class="lyrics-viewport">
+        <div class="lyrics-inner">
+          <div class="slide-track">
+            <div class="slide-indicator" id="slideIndicator"></div>
+          </div>
+          <div class="lyrics-list" id="lyricsList">
+            <div class="lyrics-empty">Belum ada lirik untuk lagu ini.<br><b>Cari online</b>, <b>unggah file .lrc</b>, atau <b>tempel manual</b> — lirik akan tersimpan otomatis di perangkat ini untuk diputar ulang secara offline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lyrics-sync" id="lyricsSync">
+    <div class="sync-label">Sinkronisasi Lirik</div>
+    <div class="sync-controls">
+      <button class="sync-btn" id="syncMinus1">−1s</button>
+      <button class="sync-btn" id="syncMinus01">−0.1s</button>
+      <span class="sync-value" id="syncValue">0.0s</span>
+      <button class="sync-btn" id="syncPlus01">+0.1s</button>
+      <button class="sync-btn" id="syncPlus1">+1s</button>
+    </div>
+    <button class="sync-reset" id="syncReset">Reset ke 0.0s</button>
+  </div>
+</div>
+
+<!-- ===================== PASTE MODAL ===================== -->
+<div class="paste-modal" id="pasteModal">
+  <div class="paste-box">
+    <h3>Tempel Lirik Manual</h3>
+    <p>Gunakan format LRC <code>[mm:ss.xx] teks</code> agar lirik tersinkron &amp; muncul indikator geser, atau tempel teks biasa baris-per-baris jika tidak ada waktu. Lirik disimpan offline di perangkat ini.</p>
+    <textarea id="pasteArea" placeholder="[00:12.30] Baris lirik pertama&#10;[00:16.80] Baris lirik kedua&#10;..."></textarea>
+    <div class="paste-actions">
+      <button class="btn-plain" id="btnPasteCancel">Batal</button>
+      <button class="btn-primary" id="btnPasteSave">Simpan Lirik</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- state ---------- */
+  const audio = new Audio();
+  audio.preload = "metadata";
+  let playlist = [];      // {url, name, artist, title, key}
+  let currentIndex = -1;
+  let lyricsLines = [];   // {time (sec|null), text}
+  let lyricsSynced = false;
+  let activeLine = -1;
+  let lyricsOffset = 0;   // detik; positif = lirik ditunda, negatif = lirik dipercepat
+
+  /* ---------- helpers ---------- */
+  const $ = id => document.getElementById(id);
+  const fmtTime = s => {
+    if (!isFinite(s) || s < 0) s = 0;
+    const m = Math.floor(s/60), sec = Math.floor(s%60);
+    return m + ":" + String(sec).padStart(2,"0");
+  };
+  const lyricsKey = (artist, title) => "nadaflow_lyrics::" + (artist||"").trim().toLowerCase() + "::" + (title||"").trim().toLowerCase();
+
+  function guessMeta(filename){
+    const base = filename.replace(/\.[^/.]+$/, "");
+    const parts = base.split(/\s*-\s*/);
+    if (parts.length >= 2){
+      return { artist: parts[0].trim(), title: parts.slice(1).join(" - ").trim() };
+    }
+    return { artist: "", title: base.trim() };
+  }
+
+  /* ---------- elements ---------- */
+  const els = {
+    vinyl: $("vinyl"), title: $("trackTitle"), artist: $("trackArtist"),
+    seek: $("seek"), curTime: $("curTime"), durTime: $("durTime"),
+    btnPlay: $("btnPlay"), iconPlay: $("iconPlay"), iconPause: $("iconPause"),
+    btnPrev: $("btnPrev"), btnNext: $("btnNext"), volume: $("volume"),
+    fileInput: $("fileInput"), btnOpenFile: $("btnOpenFile"), dropZone: $("dropZone"),
+    playerCard: $("playerCard"), playlistEl: $("playlist"),
+    coverWrap: $("coverWrap"), ytFrame: $("ytFrame"), ytUrl: $("ytUrl"), btnYtFetch: $("btnYtFetch"),
+    ytIconPlay: $("ytIconPlay"), ytIconSearch: $("ytIconSearch"), ytFetchLabel: $("ytFetchLabel"),
+    ytStatus: $("ytStatus"), ytStatusText: $("ytStatusText"),
+    ytResults: $("ytResults"), btnYtApiKey: $("btnYtApiKey"),
+    btnFullLyrics: $("btnFullLyrics"), lyricsOverlay: $("lyricsOverlay"), closeLyrics: $("closeLyrics"),
+    lyricsShell: $("lyricsShell"), btnToggleSidebar: $("btnToggleSidebar"), btnToggleTheme: $("btnToggleTheme"),
+    btnToggleThemeHome: $("btnToggleThemeHome"),
+    fsTitle: $("fsTitle"), fsArtist: $("fsArtist"), lyricsStatus: $("lyricsStatus"), lyricsStatusText: $("lyricsStatusText"),
+    searchArtist: $("searchArtist"), searchTitle: $("searchTitle"), btnSearchOnline: $("btnSearchOnline"),
+    searchResults: $("searchResults"), btnSaveSelected: $("btnSaveSelected"),
+    btnUploadLrc: $("btnUploadLrc"), lrcInput: $("lrcInput"), btnPasteLyrics: $("btnPasteLyrics"),
+    lyricsList: $("lyricsList"), slideIndicator: $("slideIndicator"),
+    syncMinus1: $("syncMinus1"), syncMinus01: $("syncMinus01"), syncPlus01: $("syncPlus01"),
+    syncPlus1: $("syncPlus1"), syncReset: $("syncReset"), syncValue: $("syncValue"),
+    pasteModal: $("pasteModal"), pasteArea: $("pasteArea"), btnPasteSave: $("btnPasteSave"), btnPasteCancel: $("btnPasteCancel")
+  };
+
+  /* ================= PLAYLIST / FILE LOADING ================= */
+  function addFiles(fileList){
+    const files = Array.from(fileList).filter(f => f.type.startsWith("audio") || /\.(mp3|wav|ogg|m4a|flac)$/i.test(f.name));
+    if (!files.length) return;
+    switchToFileMode();
+    files.forEach(f => {
+      const meta = guessMeta(f.name);
+      playlist.push({
+        url: URL.createObjectURL(f),
+        name: f.name,
+        artist: meta.artist,
+        title: meta.title || f.name
+      });
+    });
+    renderPlaylist();
+    if (currentIndex === -1) loadTrack(0);
+  }
+
+  function renderPlaylist(){
+    els.playlistEl.innerHTML = "";
+    playlist.forEach((t, i) => {
+      const row = document.createElement("div");
+      row.className = "pl-item" + (i === currentIndex ? " active" : "");
+      row.innerHTML = `<span class="idx">${i+1}</span><span class="name">${t.title}</span>` +
+        (i === currentIndex ? `<span class="eq"><span></span><span></span><span></span></span>` : "");
+      row.onclick = () => loadTrack(i, true);
+      els.playlistEl.appendChild(row);
+    });
+  }
+
+  function loadTrack(i, autoplay){
+    if (i < 0 || i >= playlist.length) return;
+    switchToFileMode();
+    currentIndex = i;
+    const t = playlist[i];
+    audio.src = t.url;
+    els.title.textContent = t.title;
+    els.artist.textContent = t.artist || "Artis tidak diketahui";
+    els.searchArtist.value = t.artist || "";
+    els.searchTitle.value = t.title || "";
+    renderPlaylist();
+    resetLyricsView();
+    tryLoadOfflineLyrics(t.artist, t.title);
+    if (autoplay !== false) audio.play().catch(()=>{});
+  }
+
+  els.btnOpenFile.onclick = () => els.fileInput.click();
+  els.fileInput.onchange = e => addFiles(e.target.files);
+
+  ["dragenter","dragover"].forEach(ev => els.dropZone.addEventListener(ev, e => {
+    e.preventDefault(); els.dropZone.classList.add("drag");
+  }));
+  ["dragleave","drop"].forEach(ev => els.dropZone.addEventListener(ev, e => {
+    e.preventDefault(); els.dropZone.classList.remove("drag");
+  }));
+  els.dropZone.addEventListener("drop", e => addFiles(e.dataTransfer.files));
+  els.dropZone.addEventListener("click", () => els.fileInput.click());
+
+  /* ================= TRANSPORT (abstraksi sumber: file lokal / YouTube) ================= */
+  let sourceMode = "file"; // "file" | "youtube"
+  let ytPlayer = null;
+  let ytApiReady = false;
+  let ytPendingVideoId = null;
+  let ytPoll = null;
+
+  function getCurTime(){
+    if (sourceMode === "youtube" && ytPlayer && ytPlayer.getCurrentTime) return ytPlayer.getCurrentTime() || 0;
+    return audio.currentTime || 0;
+  }
+  function getDur(){
+    if (sourceMode === "youtube" && ytPlayer && ytPlayer.getDuration) return ytPlayer.getDuration() || 0;
+    return audio.duration || 0;
+  }
+  function isPlayerPaused(){
+    if (sourceMode === "youtube" && ytPlayer && ytPlayer.getPlayerState){
+      return ytPlayer.getPlayerState() !== 1; // 1 = YT.PlayerState.PLAYING
+    }
+    return audio.paused;
+  }
+  function seekTo(t){
+    if (sourceMode === "youtube" && ytPlayer && ytPlayer.seekTo) ytPlayer.seekTo(t, true);
+    else audio.currentTime = t;
+  }
+  function onTransportPlaying(){
+    els.iconPlay.style.display = "none"; els.iconPause.style.display = "";
+    els.vinyl.classList.add("spinning");
+    els.btnPlay.classList.remove("needs-tap");
+  }
+  function onTransportPaused(){
+    els.iconPlay.style.display = ""; els.iconPause.style.display = "none";
+    els.vinyl.classList.remove("spinning");
+  }
+
+  function togglePlay(){
+    if (sourceMode === "youtube" && ytPlayer){
+      if (isPlayerPaused()) ytPlayer.playVideo(); else ytPlayer.pauseVideo();
+      return;
+    }
+    if (!audio.src){ els.fileInput.click(); return; }
+    if (audio.paused) audio.play().catch(()=>{}); else audio.pause();
+  }
+  els.btnPlay.onclick = togglePlay;
+  els.btnPrev.onclick = () => { if (sourceMode === "youtube" || !playlist.length) return; loadTrack((currentIndex - 1 + playlist.length) % playlist.length); };
+  els.btnNext.onclick = () => { if (sourceMode === "youtube" || !playlist.length) return; loadTrack((currentIndex + 1) % playlist.length); };
+
+  function switchToFileMode(){
+    if (sourceMode === "youtube"){
+      sourceMode = "file";
+      if (ytPlayer && ytPlayer.pauseVideo) ytPlayer.pauseVideo();
+      if (ytPoll){ clearInterval(ytPoll); ytPoll = null; }
+      els.ytFrame.classList.remove("active");
+      els.coverWrap.classList.remove("yt-mode");
+      onTransportPaused();
+    }
+  }
+
+  audio.addEventListener("play", () => { if (sourceMode === "file") onTransportPlaying(); });
+  audio.addEventListener("pause", () => { if (sourceMode === "file") onTransportPaused(); });
+  audio.addEventListener("ended", () => {
+    if (sourceMode === "file" && playlist.length > 1) loadTrack((currentIndex + 1) % playlist.length);
+  });
+  audio.addEventListener("loadedmetadata", () => {
+    if (sourceMode !== "file") return;
+    els.durTime.textContent = fmtTime(audio.duration);
+    els.seek.max = audio.duration || 0;
+  });
+  audio.addEventListener("timeupdate", () => {
+    if (sourceMode !== "file") return;
+    els.curTime.textContent = fmtTime(audio.currentTime);
+    if (!seekDragging){
+      els.seek.value = audio.currentTime;
+      updateSeekFill();
+    }
+    updateActiveLyric();
+  });
+  function updateSeekFill(){
+    const dur = getDur();
+    const pct = dur ? (els.seek.value / dur * 100) : 0;
+    els.seek.style.setProperty("--pct", pct + "%");
+  }
+  let seekDragging = false;
+  els.seek.addEventListener("input", () => { seekDragging = true; els.curTime.textContent = fmtTime(els.seek.value); updateSeekFill(); });
+  els.seek.addEventListener("change", () => { seekTo(parseFloat(els.seek.value)); seekDragging = false; });
+  els.volume.addEventListener("input", () => {
+    audio.volume = els.volume.value;
+    if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(els.volume.value * 100);
+  });
+  audio.volume = els.volume.value;
+
+  /* ---------- YouTube: ambil video + lirik dari URL ---------- */
+  function extractYoutubeId(url){
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtube\.com\/shorts\/|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/
+    ];
+    for (const p of patterns){ const m = url.match(p); if (m) return m[1]; }
+    return null;
+  }
+
+  function cleanYoutubeTitle(raw){
+    return raw
+      .replace(/[\(\[][^)\]]*(official|lyric|audio|video|mv|hd|4k|visualizer|remaster|full song)[^)\]]*[\)\]]/gi, "")
+      .replace(/\s*\|.*/g, "")
+      .replace(/\s{2,}/g, " ")
+      .trim();
+  }
+
+  function guessMetaFromYoutube(title, author){
+    const cleaned = cleanYoutubeTitle(title || "");
+    const parts = cleaned.split(/\s+-\s+/);
+    if (parts.length >= 2){
+      return { artist: parts[0].trim(), title: parts.slice(1).join(" - ").trim() };
+    }
+    const artist = (author || "").replace(/\s*-\s*topic$/i, "").replace(/vevo$/i, "").trim();
+    return { artist: artist, title: cleaned || (title || "Video YouTube") };
+  }
+
+  function ensureYoutubeApi(){
+    return new Promise(resolve => {
+      if (window.YT && window.YT.Player){ ytApiReady = true; resolve(); return; }
+      window.onYouTubeIframeAPIReady = () => { ytApiReady = true; resolve(); };
+      if (!document.getElementById("ytApiScript")){
+        const tag = document.createElement("script");
+        tag.id = "ytApiScript";
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.head.appendChild(tag);
+      }
+    });
+  }
+
+  function setYtStatus(kind, text){
+    els.ytStatus.style.display = "inline-flex";
+    els.ytStatus.className = "lyrics-status" + (kind === "ok" ? " ok" : kind === "online" ? " online" : kind === "err" ? " err" : "");
+    els.ytStatusText.textContent = text;
+  }
+
+  async function playYoutubeVideo(videoId){
+    await ensureYoutubeApi();
+    sourceMode = "youtube";
+    audio.pause();
+    els.playlistEl.querySelectorAll(".pl-item").forEach(r => r.classList.remove("active"));
+    currentIndex = -1;
+    els.ytFrame.classList.add("active");
+    els.coverWrap.classList.add("yt-mode");
+
+    if (ytPlayer && ytPlayer.loadVideoById){
+      ytPlayer.loadVideoById(videoId);
+      ytPlayer.unMute && ytPlayer.unMute();
+      watchYtAutoplay();
+    } else {
+      ytPlayer = new YT.Player("ytPlayerMount", {
+        videoId: videoId,
+        playerVars: { autoplay: 1, playsinline: 1, rel: 0 },
+        events: {
+          onReady: e => {
+            e.target.setVolume(els.volume.value * 100);
+            e.target.unMute();
+            e.target.playVideo();
+            watchYtAutoplay();
+          },
+          onStateChange: e => {
+            if (e.data === 1){ // playing
+              onTransportPlaying();
+              els.durTime.textContent = fmtTime(ytPlayer.getDuration());
+              els.seek.max = ytPlayer.getDuration() || 0;
+              if (!ytPoll) ytPoll = setInterval(ytTick, 250);
+            } else if (e.data === 2 || e.data === 0){ // paused / ended
+              onTransportPaused();
+            }
+          }
+        }
+      });
+    }
+    if (!ytPoll) ytPoll = setInterval(ytTick, 250);
+  }
+
+  // Sebagian browser/YouTube masih menahan autoplay meski dipicu dari klik pengguna.
+  // Cek beberapa kali dengan jeda makin lama; JANGAN anggap gagal kalau statusnya
+  // masih "buffering" (itu wajar, cuma nunggu koneksi).
+  function watchYtAutoplay(){
+    const BLOCKED_STATES = [-1, 2, 5]; // unstarted, paused, cued (bukan sedang proses)
+    let tries = 0;
+    const check = () => {
+      tries++;
+      if (!ytPlayer || !ytPlayer.getPlayerState || sourceMode !== "youtube") return;
+      const st = ytPlayer.getPlayerState();
+      if (st === 1 || st === 3) return; // sudah playing / masih buffering → aman
+      if (BLOCKED_STATES.includes(st)){
+        ytPlayer.playVideo();
+        if (tries >= 4){
+          setYtStatus("err", "Video termuat tapi diblokir autoplay browser — tekan tombol ▶ di pemutar untuk mulai");
+          els.btnPlay.classList.add("needs-tap");
+          return;
+        }
+      }
+      if (tries < 4) setTimeout(check, 900);
+    };
+    setTimeout(check, 600);
+  }
+
+
+  function ytTick(){
+    if (sourceMode !== "youtube" || !ytPlayer || !ytPlayer.getCurrentTime) return;
+    const t = ytPlayer.getCurrentTime() || 0;
+    const dur = ytPlayer.getDuration() || 0;
+    els.curTime.textContent = fmtTime(t);
+    els.durTime.textContent = fmtTime(dur);
+    if (!seekDragging){
+      els.seek.max = dur || 0;
+      els.seek.value = t;
+      updateSeekFill();
+    }
+    updateActiveLyric();
+  }
+
+  async function fetchFromYoutube(videoId){
+    if (!videoId){ setYtStatus("err", "URL YouTube tidak valid"); return; }
+
+    setYtStatus("none", "Memuat video…");
+
+    // PENTING: putar video SEGERA, sebelum ada jeda network lain (mis. oEmbed).
+    // Kalau ada await/fetch dulu sebelum playVideo(), browser bisa menganggap
+    // ini bukan lagi bagian dari klik pengguna dan memblokir autoplay bersuara.
+    await playYoutubeVideo(videoId);
+
+    let meta = { artist: "", title: "" };
+    if (navigator.onLine){
+      try{
+        const oembedUrl = "https://www.youtube.com/oembed?" + new URLSearchParams({ url: "https://www.youtube.com/watch?v=" + videoId, format: "json" });
+        const res = await fetch(oembedUrl);
+        if (res.ok){
+          const data = await res.json();
+          meta = guessMetaFromYoutube(data.title, data.author_name);
+        }
+      }catch(e){ /* oEmbed gagal, lanjut tanpa metadata otomatis */ }
+    }
+
+    els.title.textContent = meta.title || "Video YouTube";
+    els.artist.textContent = meta.artist || "Artis tidak diketahui";
+    els.fsTitle.textContent = meta.title || "Video YouTube";
+    els.fsArtist.textContent = meta.artist || "Artis tidak diketahui";
+    els.searchArtist.value = meta.artist || "";
+    els.searchTitle.value = meta.title || "";
+    resetLyricsView();
+
+    if (tryLoadOfflineLyrics(meta.artist, meta.title)){
+      setYtStatus("ok", "Video dimuat & lirik ditemukan dari cache offline");
+      return;
+    }
+
+    if (!meta.title){
+      setYtStatus("err", "Video dimuat — isi artis/judul manual lalu klik \"Cari Online\"");
+      return;
+    }
+    if (!navigator.onLine){
+      setYtStatus("err", "Video dimuat — sedang offline, unggah .lrc atau tempel lirik manual");
+      return;
+    }
+    setYtStatus("none", "Video dimuat, mencari lirik online…");
+    await searchOnline();
+    const s = els.lyricsStatusText.textContent;
+    setYtStatus(els.lyricsStatus.classList.contains("online") ? "online" : (els.lyricsStatus.classList.contains("ok") ? "ok" : "err"), "Video diputar — " + s);
+  }
+
+  els.btnYtFetch.onclick = handleYtAction;
+
+  /* ---------- YouTube: mode ketik judul → cari langsung di YouTube ---------- */
+  function updateYtButtonMode(){
+    const val = els.ytUrl.value.trim();
+    const looksLikeUrl = !val || !!extractYoutubeId(val) || /^https?:\/\//i.test(val);
+    els.ytFetchLabel.textContent = looksLikeUrl ? "Ambil Lirik" : "Cari di YouTube";
+    els.ytIconPlay.style.display = looksLikeUrl ? "" : "none";
+    els.ytIconSearch.style.display = looksLikeUrl ? "none" : "";
+  }
+  els.ytUrl.addEventListener("input", updateYtButtonMode);
+  els.ytUrl.addEventListener("keydown", e => {
+    if (e.key === "Enter"){ e.preventDefault(); handleYtAction(); }
+  });
+  updateYtButtonMode();
+
+  /* ---------- YouTube: pencarian dalam-aplikasi (butuh YouTube Data API key) ---------- */
+  const YT_API_KEY_STORAGE = "nadaflow_yt_api_key";
+  function getYtApiKey(){
+    try{ return localStorage.getItem(YT_API_KEY_STORAGE) || ""; }catch(e){ return ""; }
+  }
+  function clearYtResults(){
+    if (els.ytResults){ els.ytResults.innerHTML = ""; els.ytResults.classList.remove("show"); }
+  }
+  function renderYtResults(items){
+    if (!els.ytResults) return;
+    els.ytResults.innerHTML = "";
+    if (!items.length){ els.ytResults.classList.remove("show"); return; }
+    items.forEach(it => {
+      const vid = it.id && it.id.videoId;
+      if (!vid) return;
+      const sn = it.snippet || {};
+      const div = document.createElement("div");
+      div.className = "yt-result-item";
+      const thumb = (sn.thumbnails && (sn.thumbnails.default || sn.thumbnails.medium) || {}).url || "";
+      div.innerHTML =
+        `<img src="${thumb}" alt="">
+         <div class="yt-result-main"><span class="yt-result-title"></span><span class="yt-result-channel"></span></div>`;
+      div.querySelector(".yt-result-title").textContent = sn.title || "Video YouTube";
+      div.querySelector(".yt-result-channel").textContent = sn.channelTitle || "";
+      div.onclick = () => {
+        els.ytUrl.value = "https://www.youtube.com/watch?v=" + vid;
+        updateYtButtonMode();
+        clearYtResults();
+        fetchFromYoutube(vid);
+      };
+      els.ytResults.appendChild(div);
+    });
+    els.ytResults.classList.add("show");
+  }
+  function explainYtApiError(res, data){
+    const err = data && data.error;
+    const reason = err && err.errors && err.errors[0] && err.errors[0].reason;
+    const rawMsg = (err && err.message) || "";
+    const lowerMsg = rawMsg.toLowerCase();
+    let hint = "";
+    if (reason === "accessNotConfigured" || lowerMsg.includes("has not been used") || lowerMsg.includes("it is disabled")){
+      hint = "API-nya belum diaktifkan. Buka Google Cloud Console → APIs & Services → Library → aktifkan \"YouTube Data API v3\" untuk project key ini.";
+    } else if (reason === "keyInvalid" || lowerMsg.includes("api key not valid")){
+      hint = "Key tidak valid — pastikan disalin utuh tanpa spasi, dan belum dihapus/dinonaktifkan di Cloud Console.";
+    } else if (res.status === 403 && (lowerMsg.includes("referer") || lowerMsg.includes("blocked"))){
+      hint = "Key dibatasi (Application restrictions). Di Cloud Console → Credentials → key ini, set \"Application restrictions\" ke None, atau tambahkan referrer yang sesuai.";
+    } else if (reason === "quotaExceeded" || lowerMsg.includes("quota")){
+      hint = "Kuota harian API sudah habis. Coba lagi besok, atau naikkan kuota di Cloud Console.";
+    } else if (res.status === 400){
+      hint = "Permintaan ditolak (400) — kemungkinan API restriction pada key tidak mengizinkan \"YouTube Data API v3\".";
+    }
+    const status = res.status ? `[${res.status}] ` : "";
+    return status + (rawMsg || "Gagal mencari, periksa API key") + (hint ? " — " + hint : "");
+  }
+
+  async function searchYoutubeInApp(query, apiKey){
+    setYtStatus("none", "Mencari di YouTube…");
+    clearYtResults();
+    try{
+      const url = "https://www.googleapis.com/youtube/v3/search?" + new URLSearchParams({
+        part: "snippet", type: "video", maxResults: "8", q: query, key: apiKey
+      });
+      const res = await fetch(url);
+      const data = await res.json().catch(() => null);
+      if (!res.ok){
+        setYtStatus("err", explainYtApiError(res, data));
+        return;
+      }
+      const items = Array.isArray(data.items) ? data.items : [];
+      if (!items.length){ setYtStatus("err", "Tidak ada hasil untuk \"" + query + "\""); return; }
+      renderYtResults(items);
+      setYtStatus("none", "Pilih salah satu hasil di bawah — langsung diputar di sini");
+    }catch(err){
+      setYtStatus("err", "Gagal mencari — periksa koneksi internet");
+    }
+  }
+  function searchYoutubeNewTab(query){
+    const url = "https://www.youtube.com/results?" + new URLSearchParams({ search_query: query });
+    window.open(url, "_blank", "noopener");
+    setYtStatus("none", "Pencarian dibuka di tab baru — salin tautan videonya, tempel di sini, lalu klik lagi. Atur API key agar hasil tampil langsung di sini.");
+  }
+
+  if (els.btnYtApiKey){
+    const refreshApiKeyLabel = () => {
+      els.btnYtApiKey.textContent = getYtApiKey()
+        ? "Ganti / Hapus YouTube API Key"
+        : "Atur YouTube API Key (untuk hasil pencarian di sini)";
+    };
+    refreshApiKeyLabel();
+    els.btnYtApiKey.onclick = () => {
+      const cur = getYtApiKey();
+      const input = prompt(
+        "Tempel YouTube Data API v3 key untuk mengaktifkan hasil pencarian langsung di aplikasi ini (tanpa pindah tab).\n" +
+        "Kosongkan lalu OK untuk menghapus key yang tersimpan.\n" +
+        "Buat key gratis di: https://console.cloud.google.com/apis/credentials",
+        cur
+      );
+      if (input === null) return;
+      try{
+        if (input.trim()) localStorage.setItem(YT_API_KEY_STORAGE, input.trim());
+        else localStorage.removeItem(YT_API_KEY_STORAGE);
+      }catch(e){}
+      refreshApiKeyLabel();
+    };
+  }
+
+  async function handleYtAction(){
+    const raw = els.ytUrl.value.trim();
+    if (!raw){ setYtStatus("err", "Tempel URL YouTube atau ketik judul lagu dulu"); return; }
+    const videoId = extractYoutubeId(raw);
+    if (videoId){ clearYtResults(); await fetchFromYoutube(videoId); return; }
+    if (/^https?:\/\//i.test(raw)){ setYtStatus("err", "Tautan tidak dikenali sebagai video YouTube"); return; }
+    const apiKey = getYtApiKey();
+    if (apiKey){ await searchYoutubeInApp(raw, apiKey); return; }
+    searchYoutubeNewTab(raw);
+  }
+
+  /* ================= LYRICS: PARSING ================= */
+  function parseLRC(text){
+    const lines = text.split(/\r?\n/);
+    const out = [];
+    const timeTag = /\[(\d{1,2}):(\d{2})(?:\.(\d{1,3}))?\]/g;
+    let anySynced = false;
+    for (const raw of lines){
+      const tags = [...raw.matchAll(timeTag)];
+      const content = raw.replace(timeTag, "").trim();
+      if (tags.length){
+        anySynced = true;
+        tags.forEach(m => {
+          const min = parseInt(m[1],10), sec = parseInt(m[2],10);
+          const ms = m[3] ? parseFloat("0." + m[3]) : 0;
+          out.push({ time: min*60 + sec + ms, text: content });
+        });
+      } else if (content && !/^\[.*\]$/.test(raw.trim())){
+        out.push({ time: null, text: content });
+      }
+    }
+    out.sort((a,b) => (a.time ?? Infinity) - (b.time ?? Infinity));
+    return { lines: out, synced: anySynced };
+  }
+
+  function renderLyrics(lines, synced, offset){
+    lyricsLines = lines; lyricsSynced = synced; activeLine = -1;
+    lyricsOffset = offset || 0;
+    updateSyncDisplay();
+    els.lyricsList.classList.toggle("unsynced", !synced);
+    els.lyricsList.innerHTML = "";
+    if (!lines.length){
+      els.lyricsList.innerHTML = `<div class="lyrics-empty">Lirik kosong.</div>`;
+      els.slideIndicator.style.height = "0px";
+      return;
+    }
+    lines.forEach((l, i) => {
+      const div = document.createElement("div");
+      div.className = "lyrics-line";
+      div.textContent = l.text || "♪";
+      div.dataset.i = i;
+      if (synced && l.time != null){
+        div.onclick = () => { seekTo(l.time + lyricsOffset); if (isPlayerPaused()) togglePlay(); };
+      }
+      els.lyricsList.appendChild(div);
+    });
+    if (!synced){
+      // no timestamps: just show static list, hide indicator motion
+      els.slideIndicator.style.height = "0px";
+    }
+  }
+
+  function resetLyricsView(){
+    lyricsLines = []; lyricsSynced = false; activeLine = -1; lyricsOffset = 0;
+    updateSyncDisplay();
+    els.lyricsList.classList.remove("unsynced");
+    els.lyricsList.innerHTML = `<div class="lyrics-empty">Belum ada lirik untuk lagu ini.<br><b>Cari online</b>, <b>unggah file .lrc</b>, atau <b>tempel manual</b> — lirik akan tersimpan otomatis di perangkat ini untuk diputar ulang secara offline.</div>`;
+    els.slideIndicator.style.height = "0px";
+    setStatus("none", "Belum ada lirik");
+    clearSearchResults();
+  }
+
+  function updateActiveLyric(){
+    if (!lyricsSynced || !lyricsLines.length) return;
+    const t = getCurTime() - lyricsOffset;
+    let idx = -1;
+    for (let i = 0; i < lyricsLines.length; i++){
+      if (lyricsLines[i].time != null && lyricsLines[i].time <= t + 0.05) idx = i; else break;
+    }
+    if (idx !== activeLine){
+      const prevEl = els.lyricsList.querySelector(".lyrics-line.active");
+      if (prevEl){ prevEl.classList.remove("active"); prevEl.style.removeProperty("--fill"); }
+      activeLine = idx;
+      if (idx !== -1){
+        const rows = els.lyricsList.querySelectorAll(".lyrics-line");
+        rows.forEach((r,i) => r.classList.toggle("passed", i < idx));
+        const lineEl = rows[idx];
+        if (lineEl){
+          lineEl.classList.add("active");
+          if (els.lyricsOverlay.classList.contains("open")){
+            lineEl.scrollIntoView({ behavior: "smooth", block: "center" });
+            // position sliding indicator relative to the viewport track
+            requestAnimationFrame(() => {
+              const trackRect = els.slideIndicator.parentElement.getBoundingClientRect();
+              const lineRect = lineEl.getBoundingClientRect();
+              const top = lineRect.top - trackRect.top;
+              els.slideIndicator.style.top = Math.max(0, top) + "px";
+              els.slideIndicator.style.height = lineRect.height + "px";
+            });
+          }
+        }
+      }
+    }
+    // isi warna karaoke berjalan di baris yang sedang aktif, mengikuti waktu berjalan
+    // (perkiraan progresif karena format LRC hanya menyimpan waktu per baris, bukan per kata)
+    if (idx !== -1){
+      const lineEl = els.lyricsList.querySelector(".lyrics-line.active");
+      if (lineEl){
+        const startT = lyricsLines[idx].time;
+        const nextL = lyricsLines[idx + 1];
+        const endT = (nextL && nextL.time != null) ? nextL.time : startT + 4;
+        let pct = endT > startT ? ((t - startT) / (endT - startT)) * 100 : 100;
+        pct = Math.max(0, Math.min(100, pct));
+        lineEl.style.setProperty("--fill", pct.toFixed(1) + "%");
+      }
+    }
+  }
+
+  /* ================= LYRICS: OFFLINE CACHE ================= */
+  function saveLyricsOffline(artist, title, lines, synced, offset){
+    try{
+      localStorage.setItem(lyricsKey(artist, title), JSON.stringify({ lines, synced, offset: offset || 0, savedAt: Date.now() }));
+    }catch(e){ /* storage full or unavailable — ignore silently */ }
+  }
+  function tryLoadOfflineLyrics(artist, title){
+    els.fsTitle.textContent = title || "—";
+    els.fsArtist.textContent = artist || "Artis tidak diketahui";
+    clearSearchResults();
+    try{
+      const raw = localStorage.getItem(lyricsKey(artist, title));
+      if (raw){
+        const data = JSON.parse(raw);
+        renderLyrics(data.lines, data.synced, data.offset || 0);
+        setStatus("ok", "Lirik dimuat dari cache offline");
+        return true;
+      }
+    }catch(e){}
+    resetLyricsView();
+    return false;
+  }
+
+  function setStatus(kind, text){
+    els.lyricsStatus.className = "lyrics-status" + (kind === "ok" ? " ok" : kind === "online" ? " online" : kind === "err" ? " err" : "");
+    els.lyricsStatusText.textContent = text;
+  }
+
+  /* ================= LYRICS: SINKRONISASI (OFFSET) ================= */
+  function updateSyncDisplay(){
+    const v = Math.round(lyricsOffset * 10) / 10;
+    els.syncValue.textContent = (v > 0 ? "+" : "") + v.toFixed(1) + "s";
+  }
+  function persistOffset(){
+    const artist = els.searchArtist.value.trim();
+    const title = els.searchTitle.value.trim();
+    if (!title || !lyricsLines.length) return;
+    saveLyricsOffline(artist, title, lyricsLines, lyricsSynced, lyricsOffset);
+  }
+  function nudgeOffset(delta){
+    lyricsOffset = Math.round((lyricsOffset + delta) * 10) / 10;
+    updateSyncDisplay();
+    updateActiveLyric();
+    persistOffset();
+  }
+  els.syncMinus1.onclick = () => nudgeOffset(-1);
+  els.syncMinus01.onclick = () => nudgeOffset(-0.1);
+  els.syncPlus01.onclick = () => nudgeOffset(0.1);
+  els.syncPlus1.onclick = () => nudgeOffset(1);
+  els.syncReset.onclick = () => {
+    lyricsOffset = 0;
+    updateSyncDisplay();
+    updateActiveLyric();
+    persistOffset();
+  };
+
+  /* ================= LYRICS: ONLINE SEARCH (LRCLIB) ================= */
+  let lastSearchResults = [];
+  let selectedSearchItem = null;
+  let selectedSearchMeta = null;
+
+  function clearSearchResults(){
+    lastSearchResults = [];
+    selectedSearchItem = null; selectedSearchMeta = null;
+    if (els.searchResults){ els.searchResults.innerHTML = ""; els.searchResults.classList.remove("show"); }
+    if (els.btnSaveSelected) els.btnSaveSelected.disabled = true;
+  }
+
+  function applySearchResult(item, artist, title){
+    if (item.syncedLyrics){
+      const { lines } = parseLRC(item.syncedLyrics);
+      renderLyrics(lines, true);
+      setStatus("online", "Pratinjau: " + (item.trackName || title) + " — " + (item.artistName || artist || "?") + " · klik \"Simpan Lirik Terpilih\" untuk menyimpan");
+    } else if (item.plainLyrics){
+      const lines = item.plainLyrics.split(/\r?\n/).filter(l => l.trim()).map(t => ({ time: null, text: t }));
+      renderLyrics(lines, false);
+      setStatus("online", "Pratinjau (belum tersinkron): " + (item.trackName || title) + " — " + (item.artistName || artist || "?") + " · klik \"Simpan Lirik Terpilih\" untuk menyimpan");
+    } else {
+      selectedSearchItem = null; selectedSearchMeta = null;
+      if (els.btnSaveSelected) els.btnSaveSelected.disabled = true;
+      setStatus("err", "Item ini tidak punya lirik (instrumental?)");
+      return;
+    }
+    selectedSearchItem = item;
+    selectedSearchMeta = { artist, title };
+    if (els.btnSaveSelected) els.btnSaveSelected.disabled = false;
+    if (els.searchResults){
+      els.searchResults.querySelectorAll(".result-item").forEach(el => el.classList.remove("selected"));
+      const idx = lastSearchResults.indexOf(item);
+      const el = els.searchResults.querySelector('[data-idx="' + idx + '"]');
+      if (el) el.classList.add("selected");
+    }
+  }
+
+  /* ================= LYRICS: UNDUH KE PERANGKAT (.lrc / .txt) ================= */
+  function fmtLrcTime(t){
+    if (t == null) return null;
+    const m = Math.floor(t / 60);
+    const s = t - m * 60;
+    return String(m).padStart(2, "0") + ":" + s.toFixed(2).padStart(5, "0");
+  }
+  function buildLyricsFileText(lines, synced){
+    return lines.map(l => {
+      if (synced && l.time != null) return `[${fmtLrcTime(l.time)}] ${l.text || ""}`;
+      return l.text || "";
+    }).join("\n");
+  }
+  function downloadLyricsToDevice(artist, title, lines, synced){
+    const safeName = ((artist ? artist + " - " : "") + (title || "lirik"))
+      .replace(/[\\/:*?"<>|]+/g, "").trim() || "lirik";
+    const ext = synced ? "lrc" : "txt";
+    const blob = new Blob([buildLyricsFileText(lines, synced)], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = `${safeName}.${ext}`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  }
+
+  function saveSelectedLyrics(){
+    if (!selectedSearchItem || !selectedSearchMeta) return;
+    const item = selectedSearchItem, { artist, title } = selectedSearchMeta;
+    let lines, synced;
+    if (item.syncedLyrics){
+      lines = parseLRC(item.syncedLyrics).lines; synced = true;
+    } else if (item.plainLyrics){
+      lines = item.plainLyrics.split(/\r?\n/).filter(l => l.trim()).map(t => ({ time: null, text: t }));
+      synced = false;
+    } else {
+      return;
+    }
+    saveLyricsOffline(artist, title, lines, synced);
+    downloadLyricsToDevice(artist, title, lines, synced);
+    setStatus("ok", (synced ? "Tersimpan & diunduh: " : "Tersimpan & diunduh (belum tersinkron): ") +
+      (item.trackName || title) + " — " + (item.artistName || artist || "?"));
+  }
+  if (els.btnSaveSelected) els.btnSaveSelected.onclick = saveSelectedLyrics;
+
+  function renderSearchResults(results, artist, title){
+    lastSearchResults = results;
+    if (!els.searchResults) return;
+    els.searchResults.innerHTML = "";
+    if (!results.length){ els.searchResults.classList.remove("show"); return; }
+    results.slice(0, 8).forEach((r, i) => {
+      const div = document.createElement("div");
+      div.className = "result-item";
+      div.dataset.idx = i;
+      const dur = r.duration ? fmtTime(r.duration) : "";
+      const badgeText = r.instrumental ? "Instrumental" : r.syncedLyrics ? "Tersinkron" : r.plainLyrics ? "Teks saja" : "Tanpa lirik";
+      const badgeClass = r.syncedLyrics ? "ok" : r.plainLyrics ? "plain" : "none";
+      div.innerHTML =
+        `<div class="result-main"><span class="result-title"></span><span class="result-artist"></span></div>
+         <div class="result-meta"><span class="result-badge ${badgeClass}">${badgeText}</span>${dur ? `<span class="result-dur">${dur}</span>` : ""}</div>`;
+      div.querySelector(".result-title").textContent = r.trackName || title;
+      div.querySelector(".result-artist").textContent = (r.artistName || artist || "Artis tidak diketahui") + (r.albumName ? " · " + r.albumName : "");
+      div.onclick = () => applySearchResult(r, artist, title);
+      els.searchResults.appendChild(div);
+    });
+    els.searchResults.classList.add("show");
+  }
+
+  async function searchOnline(){
+    const artist = els.searchArtist.value.trim();
+    const title = els.searchTitle.value.trim();
+    if (!title){ setStatus("err", "Isi minimal judul lagu"); return; }
+    if (!navigator.onLine){ setStatus("err", "Sedang offline — coba unggah .lrc atau tempel manual"); return; }
+    setStatus("none", "Mencari lirik online…");
+    clearSearchResults();
+    try{
+      const url = "https://lrclib.net/api/search?" + new URLSearchParams({ artist_name: artist, track_name: title });
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("bad response");
+      const results = await res.json();
+      if (!Array.isArray(results) || !results.length){ setStatus("err", "Lirik tidak ditemukan online"); return; }
+      renderSearchResults(results, artist, title);
+      const best = results.find(r => r.syncedLyrics) || results.find(r => r.plainLyrics) || results[0];
+      applySearchResult(best, artist, title);
+      if (results.length > 1) setStatus("online", "Menampilkan hasil terbaik — pilih hasil lain di bawah bila kurang cocok");
+    }catch(err){
+      setStatus("err", "Gagal mengambil lirik — periksa koneksi");
+    }
+  }
+  els.btnSearchOnline.onclick = searchOnline;
+
+  /* ================= LYRICS: UPLOAD .lrc ================= */
+  els.btnUploadLrc.onclick = () => els.lrcInput.click();
+  els.lrcInput.onchange = e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const { lines, synced } = parseLRC(reader.result);
+      renderLyrics(lines, synced);
+      const artist = els.searchArtist.value.trim() || (playlist[currentIndex]?.artist || "");
+      const title = els.searchTitle.value.trim() || (playlist[currentIndex]?.title || "");
+      saveLyricsOffline(artist, title, lines, synced);
+      setStatus("ok", "Lirik dimuat dari file & disimpan offline");
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+
+  /* ================= LYRICS: PASTE MANUAL ================= */
+  els.btnPasteLyrics.onclick = () => { els.pasteArea.value = ""; els.pasteModal.classList.add("open"); };
+  els.btnPasteCancel.onclick = () => els.pasteModal.classList.remove("open");
+  els.btnPasteSave.onclick = () => {
+    const text = els.pasteArea.value;
+    if (!text.trim()){ els.pasteModal.classList.remove("open"); return; }
+    const { lines, synced } = parseLRC(text);
+    renderLyrics(lines, synced);
+    const artist = els.searchArtist.value.trim() || (playlist[currentIndex]?.artist || "");
+    const title = els.searchTitle.value.trim() || (playlist[currentIndex]?.title || "");
+    saveLyricsOffline(artist, title, lines, synced);
+    setStatus("ok", synced ? "Lirik manual tersinkron disimpan offline" : "Lirik manual disimpan offline");
+    els.pasteModal.classList.remove("open");
+  };
+
+  /* ================= TEMA TERANG / GELAP ================= */
+  const THEME_KEY = "nadaflow_theme";
+  function applyTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+    [els.btnToggleTheme, els.btnToggleThemeHome].forEach(btn => {
+      if (!btn) return;
+      btn.querySelector(".icon-sun").style.display = theme === "light" ? "" : "none";
+      btn.querySelector(".icon-moon").style.display = theme === "light" ? "none" : "";
+    });
+    try{ localStorage.setItem(THEME_KEY, theme); }catch(e){}
+  }
+  (function initTheme(){
+    let saved = "dark";
+    try{ saved = localStorage.getItem(THEME_KEY) || "dark"; }catch(e){}
+    applyTheme(saved);
+  })();
+  function toggleTheme(){
+    const cur = document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+    applyTheme(cur === "light" ? "dark" : "light");
+  }
+  els.btnToggleTheme.onclick = toggleTheme;
+  if (els.btnToggleThemeHome) els.btnToggleThemeHome.onclick = toggleTheme;
+
+  /* ================= SIDEBAR LIRIK: CIUTKAN/PERLUAS ================= */
+  const SIDEBAR_KEY = "nadaflow_sidebar_collapsed";
+  function applySidebarState(collapsed){
+    els.lyricsShell.classList.toggle("sidebar-collapsed", collapsed);
+    els.btnToggleSidebar.setAttribute("title", collapsed ? "Perluas panel" : "Ciutkan panel");
+    try{ localStorage.setItem(SIDEBAR_KEY, collapsed ? "1" : "0"); }catch(e){}
+  }
+  (function initSidebar(){
+    let collapsed = false;
+    try{ collapsed = localStorage.getItem(SIDEBAR_KEY) === "1"; }catch(e){}
+    applySidebarState(collapsed);
+  })();
+  els.btnToggleSidebar.onclick = () => {
+    applySidebarState(!els.lyricsShell.classList.contains("sidebar-collapsed"));
+  };
+
+  /* ================= FULLSCREEN TOGGLE ================= */
+  els.btnFullLyrics.onclick = () => {
+    els.lyricsOverlay.classList.add("open");
+    updateActiveLyric();
+    const activeEl = els.lyricsList.querySelector(".lyrics-line.active");
+    if (activeEl) requestAnimationFrame(() => activeEl.scrollIntoView({ block: "center" }));
+  };
+  els.closeLyrics.onclick = () => els.lyricsOverlay.classList.remove("open");
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape"){
+      els.lyricsOverlay.classList.remove("open");
+      els.pasteModal.classList.remove("open");
+    }
+    if (e.key === " " && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"){
+      e.preventDefault(); togglePlay();
+    }
+  });
+
+  /* init */
+  updateSeekFill();
+})();
+</script>
+</body>
+</html>

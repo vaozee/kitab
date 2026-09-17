@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shorof Lanjutan — Nazham Al-Maqshūd (Lengkap)</title>
+<style>
+:root{
+  --bg-0:#07140d; --bg-1:#0c2016; --bg-2:#12301f;
+  --panel:rgba(20,48,32,0.55); --panel-2:rgba(15,38,26,0.7);
+  --border:rgba(212,175,55,0.28);
+  --gold:#d4af37; --gold-light:#f0d580; --gold-dim:#a9862f;
+  --parchment:#f3ead2; --ink:#e9e4d4; --ink-dim:#b9c2b6;
+  --tip-bg:rgba(212,175,55,0.08); --tip-border:rgba(212,175,55,0.35);
+  --serif:'Amiri','Scheherazade New','Traditional Arabic','Georgia',serif;
+  --body:'Georgia','Iowan Old Style','Palatino Linotype',serif;
+  --ui:'Segoe UI',system-ui,-apple-system,sans-serif;
+}
+html[data-theme="light"]{
+  --bg-0:#f6efdc; --bg-1:#efe6cd; --bg-2:#e9dfc0;
+  --panel:rgba(255,253,246,0.72); --panel-2:rgba(255,255,255,0.55);
+  --border:rgba(122,90,20,0.28);
+  --gold:#8a6a14; --gold-light:#6e5310; --gold-dim:#a9862f;
+  --parchment:#2c2210; --ink:#2a2412; --ink-dim:#5b5136;
+  --tip-bg:rgba(138,106,20,0.08); --tip-border:rgba(138,106,20,0.35);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; font-family:var(--body); color:var(--ink);
+  background:
+    radial-gradient(ellipse at 15% -10%, rgba(212,175,55,0.10), transparent 45%),
+    radial-gradient(ellipse at 85% 0%, rgba(212,175,55,0.06), transparent 40%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 18%, var(--bg-2) 55%, var(--bg-1) 100%);
+  min-height:100vh; line-height:1.65; transition:background .3s, color .3s;
+}
+.rule{display:flex;align-items:center;gap:14px;margin:10px auto 0;max-width:520px;}
+.rule::before,.rule::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);}
+.rule svg{width:22px;height:22px;flex:none;}
+
+header{text-align:center;padding:56px 20px 34px;position:relative;}
+.theme-toggle{
+  position:absolute; top:22px; right:22px;
+  display:flex; align-items:center; gap:8px;
+  background:var(--panel-2); border:1px solid var(--border);
+  border-radius:999px; padding:8px 16px; cursor:pointer;
+  font-family:var(--ui); font-size:12.5px; color:var(--ink-dim);
+  backdrop-filter:blur(6px);
+}
+.theme-toggle:hover{color:var(--gold-light); border-color:var(--gold);}
+.kicker{font-family:var(--ui);letter-spacing:.32em;font-size:11px;text-transform:uppercase;color:var(--gold-light);opacity:.85;}
+h1.title-ar{font-family:var(--serif);direction:rtl;font-size:clamp(30px,5vw,52px);color:var(--gold-light);margin:14px 0 4px;text-shadow:0 0 24px rgba(212,175,55,0.18);font-weight:400;}
+h1.title-id{font-family:var(--body);font-style:italic;font-weight:400;font-size:clamp(17px,2.4vw,22px);color:var(--ink-dim);margin:2px 0 0;}
+.subtitle{max-width:660px;margin:22px auto 0;font-size:14.5px;color:var(--ink-dim);font-family:var(--ui);}
+
+.wrap{display:grid;grid-template-columns:260px 1fr;gap:26px;max-width:1180px;margin:0 auto;padding:0 20px 80px;}
+@media (max-width:880px){.wrap{grid-template-columns:1fr;} nav.toc{position:static !important;order:2;} main{order:1;}}
+
+nav.toc{position:sticky;top:20px;align-self:start;background:var(--panel-2);border:1px solid var(--border);border-radius:14px;padding:18px 16px;backdrop-filter:blur(6px);max-height:calc(100vh - 40px);overflow-y:auto;}
+nav.toc h3{font-family:var(--ui);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:0 0 12px;}
+nav.toc .grp{font-family:var(--ui);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);margin:14px 0 4px;opacity:.8;}
+nav.toc .grp:first-child{margin-top:0;}
+nav.toc a{display:block;color:var(--ink-dim);text-decoration:none;font-family:var(--ui);font-size:13px;padding:6px 8px;border-radius:8px;margin-bottom:1px;border-left:2px solid transparent;transition:.15s;}
+nav.toc a:hover, nav.toc a:focus-visible{color:var(--gold-light);background:var(--tip-bg);border-left-color:var(--gold);}
+nav.toc .n{color:var(--gold-dim);margin-right:6px;font-variant-numeric:tabular-nums;}
+
+main{min-width:0;}
+.intro-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;margin-bottom:30px;font-size:14.5px;color:var(--ink-dim);}
+.intro-card b{color:var(--gold-light);font-weight:600;}
+.intro-card ul{margin:10px 0 0;padding-left:20px;}
+.intro-card li{margin-bottom:5px;}
+
+section.bab{margin-bottom:34px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;scroll-margin-top:20px;}
+.bab-head{padding:20px 26px;background:linear-gradient(90deg, rgba(212,175,55,0.14), transparent 70%);border-bottom:1px solid var(--border);}
+.bab-eyebrow{font-family:var(--ui);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dim);}
+.bab-title-ar{direction:rtl;font-family:var(--serif);color:var(--gold-light);font-size:clamp(22px,3vw,30px);margin:6px 0 2px;font-weight:400;}
+.bab-title-id{font-family:var(--body);font-style:italic;color:var(--ink-dim);font-size:15px;}
+.bab-body{padding:20px 26px 26px;}
+.bab-note{font-size:13.8px;color:var(--ink-dim);margin:0 0 16px;border-left:2px solid var(--gold-dim);padding-left:14px;}
+.bab-note p{margin:0 0 8px;}
+.bab-note p:last-child{margin-bottom:0;}
+
+.subhead{font-family:var(--ui);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:28px 0 4px;padding-top:14px;border-top:1px dashed var(--border);}
+.subhead:first-child{border-top:none;padding-top:0;margin-top:8px;}
+.subhead-id{font-family:var(--body);font-style:italic;color:var(--ink-dim);font-size:13.5px;margin:0 0 12px;}
+
+table.bait{width:100%;border-collapse:separate;border-spacing:0 10px;}
+table.bait tr{background:var(--panel-2);}
+table.bait td{padding:14px 16px;vertical-align:top;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+table.bait td.no{width:34px;text-align:center;color:var(--gold-dim);font-family:var(--ui);font-size:12px;border-left:1px solid var(--border);border-radius:8px 0 0 8px;}
+table.bait td.ar{direction:rtl;font-family:var(--serif);font-size:19px;color:var(--parchment);width:46%;line-height:2;}
+table.bait td.id{font-family:var(--body);font-size:13.6px;color:var(--ink-dim);border-right:1px solid var(--border);border-radius:0 8px 8px 0;}
+table.bait td.ar .sep{color:var(--gold-dim);margin:0 6px;}
+
+.wazan-title{font-family:var(--ui);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:26px 0 12px;}
+.wazan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.wazan-card{background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.wazan-card .w-ar{direction:rtl;font-family:var(--serif);font-size:20px;color:var(--gold-light);margin-bottom:6px;}
+.wazan-card .w-row{font-family:var(--ui);font-size:12.3px;color:var(--ink-dim);display:flex;justify-content:space-between;padding:2px 0;border-top:1px dashed var(--border);}
+.wazan-card .w-row span:first-child{color:var(--gold-dim);}
+.wazan-card .w-row .arv{direction:rtl;font-family:var(--serif);font-size:14px;color:var(--parchment);}
+.wazan-card .w-meaning{font-size:12.3px;color:var(--ink-dim);margin-top:8px;font-style:italic;}
+
+/* tip / penjelasan mendalam box */
+.tip{background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:12px;padding:16px 18px;margin:16px 0;font-size:13.6px;color:var(--ink-dim);}
+.tip .tip-h{font-family:var(--ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.tip ol,.tip ul{margin:6px 0 0;padding-left:20px;}
+.tip li{margin-bottom:6px;}
+.tip b{color:var(--gold-light);}
+
+/* full conjugation table */
+table.tashrif{width:100%;border-collapse:collapse;margin:14px 0 6px;font-family:var(--ui);font-size:12.6px;}
+table.tashrif th{background:var(--tip-bg);color:var(--gold);font-weight:600;padding:8px 10px;text-align:center;border:1px solid var(--border);}
+table.tashrif td{padding:8px 10px;text-align:center;border:1px solid var(--border);color:var(--ink-dim);}
+table.tashrif td.ar{direction:rtl;font-family:var(--serif);font-size:16px;color:var(--parchment);}
+table.tashrif caption{caption-side:top;text-align:left;font-family:var(--ui);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);padding-bottom:8px;}
+
+footer{text-align:center;padding:30px 20px 60px;color:var(--ink-dim);font-family:var(--ui);font-size:12px;}
+footer .fa{direction:rtl;font-family:var(--serif);font-size:16px;color:var(--gold-dim);margin-top:8px;}
+
+::selection{background:rgba(212,175,55,.3);}
+::-webkit-scrollbar{width:9px;}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+</style>
+</head>
+<body>
+
+<header>
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ganti tema terang/gelap">
+    <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <span id="themeLabel">Tema Terang</span>
+  </button>
+  <div class="kicker">Pelajaran Lengkap · Ilmu Shorof</div>
+  <h1 class="title-ar">نَظْمُ الْمَقْصُوْدِ فِي عِلْمِ التَّصْرِيْفِ</h1>
+  <h1 class="title-id">Nazham Al-Maqshūd fī 'Ilmi at-Taṣrīf — Dasar sampai Tuntas</h1>
+  <div class="rule"><svg viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.2"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"/></svg></div>
+  <p class="subtitle">Susunan Aḥmad bin ‘Ābid ar-Raḥīm. Berkas ini memuat seluruh isi kitab: dari bab ruba‘ī &amp; ziyādah tsulātsī, mashdar, binā’ fi‘il, isim fā‘il-maf‘ūl, taṣrīf lughawi, fawā’id, hingga bab lengkap i‘lāl fi‘il mu‘tal, muḍā‘af, dan mahmūz — teks Arab asli, terjemahan, dan penjelasan mendalam untuk memudahkan santri memahami kaidahnya.</p>
+</header>
+
+<div class="wrap">
+<nav class="toc" aria-label="Daftar isi">
+  <h3>Daftar Isi</h3>
+  <div class="grp">Fondasi Lanjutan</div>
+  <a href="#bab1"><span class="n">01</span>Ruba‘ī Mujarrad</a>
+  <a href="#bab2"><span class="n">02</span>Ziyādah Tsulātsī (Mazīd)</a>
+  <a href="#bab3"><span class="n">03</span>Bab Mashdar &amp; Isytiqāq</a>
+  <a href="#bab4"><span class="n">04</span>Binā’ Fi‘il Māḍī &amp; Muḍāri‘</a>
+  <a href="#bab5"><span class="n">05</span>Isim Fā‘il &amp; Isim Maf‘ūl</a>
+  <a href="#bab6"><span class="n">06</span>Faṣl fī Taṣrīf Ṣaḥīḥ</a>
+  <a href="#bab7"><span class="n">07</span>Faṣl fī Fawā’id</a>
+  <a href="#bab8"><span class="n">08</span>Klasifikasi Fi‘il Mu‘tal</a>
+  <div class="grp">Bab Penutup (I‘lāl Rinci)</div>
+  <a href="#bab9a"><span class="n">09</span>I‘lāl Ajwaf &amp; Nāqiṣ</a>
+  <a href="#bab9b"><span class="n">10</span>Isim &amp; Amr dari Ajwaf-Nāqiṣ</a>
+  <a href="#bab9c"><span class="n">11</span>I‘lāl Fi‘il Mitsāl &amp; Lafīf</a>
+  <a href="#bab9d"><span class="n">12</span>Kaidah Muḍā‘af</a>
+  <a href="#bab9e"><span class="n">13</span>Kaidah Mahmūz</a>
+  <a href="#khatimah"><span class="n">14</span>Khātimah (Penutup)</a>
+  <div class="grp">Perluasan Wawasan</div>
+  <a href="#bab10"><span class="n">15</span>Perbandingan Antar-Kitab</a>
+</nav>
+
+<main>
+
+<div class="intro-card">
+  <b>Catatan penggunaan.</b> Berkas ini murni offline (tanpa font/CDN eksternal) dan memuat <b>keseluruhan</b> matan Nazham Al-Maqshūd — 107 bait, dari awal setelah bab dasar (tsulātsī mujarrad enam bab) sampai penutup kitab.
+  <ul>
+    <li>Tombol <b>Tema Terang</b> di pojok kanan atas mengganti tampilan gelap ↔ terang, tersimpan otomatis untuk kunjungan berikutnya.</li>
+    <li>Kolom kanan (Arab, tulisan besar) adalah <i>naṣh</i> asli bait nazham, dibaca kanan ke kiri; tanda ✽ memisahkan dua syathr (belahan bait).</li>
+    <li>Kolom kiri adalah terjemahan makna, bukan terjemah harfiah kata per kata, agar mudah dipahami maksud kaidahnya.</li>
+    <li>Kotak <b>bertanda bintang keterangan</b> ("Poin Penting" / "Contoh Lengkap") berisi penjelasan tambahan di luar teks nazham — disusun agar santri lebih mudah memahami dan mempraktikkan kaidah, bukan bagian dari matan asli.</li>
+  </ul>
+</div>
+
+<!-- ================= BAB 1 ================= -->
+<section class="bab" id="bab1">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 01</div>
+    <div class="bab-title-ar">بَابُ الرُّبَاعِيِّ الْمُجَرَّدِ</div>
+    <div class="bab-title-id">Fi‘il Ruba‘ī Mujarrad (empat huruf asli)</div>
+  </div>
+  <div class="bab-body">
+    <div class="bab-note">
+      <p>Setelah membahas fi‘il tsulātsī mujarrad (tiga huruf) dengan enam babnya, nazham beralih ke fi‘il yang huruf aslinya empat (ruba‘ī mujarrad). Disebut <i>mujarrad</i> (murni/telanjang) karena semua hurufnya asli — bukan tambahan yang membawa makna baru, berbeda dengan fi‘il <i>mazīd</i> yang akan dibahas di bab berikutnya.</p>
+      <p>Wazan pokoknya hanya satu (فَعْلَلَ), namun ada enam wazan tambahan yang tetap dianggap mujarrad karena hurufnya asli, bukan huruf ziyādah maknawiyah — hanya berbeda letak huruf illat/tambahannya.</p>
+    </div>
+    <table class="bait">
+      <tr><td class="no">1</td><td class="ar">ثُمَّ الرُّباعِيُّ بِبابٍ واحِدِ <span class="sep">✽</span> والْحِقْ بِهِ سِتًّا بِغَيْرِ زائِدِ</td>
+      <td class="id">Fi‘il ruba‘ī mujarrad hanya memiliki satu wazan pokok (فَعْلَلَ). Sertakan pula enam wazan lain yang hurufnya bukan tambahan (tetap dianggap asli empat huruf).</td></tr>
+      <tr><td class="no">2</td><td class="ar">فَوْعَلَ فَعْوَلَ كَذاكَ فَيْعَلا <span class="sep">✽</span> فَعْيَلَ فَعْلَى وَكَذاكَ فَعْلَلا</td>
+      <td class="id">Yaitu: فَوْعَلَ (faw‘ala), فَعْوَلَ (fa‘wala), begitu pula فَيْعَلَ (fay‘ala), فَعْيَلَ (fa‘yala), فَعْلَى (fa‘lā), dan فَعْلَلَ (fa‘lala).</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Poin Penting</div>
+      <ol>
+        <li>Cara membedakan ruba‘ī mujarrad dari tsulātsī mazīd: <b>timbang jumlah huruf pada wazan asal (māḍī)</b>. Bila empat huruf semuanya "asli" tanpa ada huruf tambahan yang bermakna (hamzah, tasydīd, dsb.), itu ruba‘ī mujarrad.</li>
+        <li>Wazan فَعْلَلَ adalah yang paling produktif dan sering dijumpai (دَحْرَجَ، وَسْوَسَ، زَلْزَلَ, dsb.); enam wazan lainnya jarang dipakai (murtajal) dan cukup dihafal contohnya saja.</li>
+      </ol>
+    </div>
+
+    <div class="wazan-title">Lampiran — Tujuh Wazan Ruba‘ī Mujarrad</div>
+    <div class="wazan-grid">
+      <div class="wazan-card"><div class="w-ar">فَعْلَلَ</div><div class="w-row"><span>Contoh</span><span class="arv">دَحْرَجَ</span></div><div class="w-row"><span>Arti</span><span>menggelindingkan</span></div><div class="w-meaning">Wazan pokok ruba‘ī mujarrad, empat huruf semuanya asli.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَوْعَلَ</div><div class="w-row"><span>Contoh</span><span class="arv">حَوْقَلَ</span></div><div class="w-meaning">Jarang dipakai (murtajal); huruf wawu di sini dianggap asli, bukan ziyādah.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعْوَلَ</div><div class="w-row"><span>Contoh</span><span class="arv">جَهْوَرَ</span></div><div class="w-meaning">Wawu terletak setelah huruf kedua, tetap dianggap huruf asli.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَيْعَلَ</div><div class="w-row"><span>Contoh</span><span class="arv">بَيْطَرَ</span></div><div class="w-meaning">Ya di posisi kedua, huruf asli (mengobati hewan).</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعْيَلَ</div><div class="w-row"><span>Contoh</span><span class="arv">عَثْيَرَ</span></div><div class="w-meaning">Ya di posisi ketiga.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعْلَى</div><div class="w-row"><span>Contoh</span><span class="arv">سَلْقَى</span></div><div class="w-meaning">Diakhiri alif maqshūrah.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 2 ================= -->
+<section class="bab" id="bab2">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 02</div>
+    <div class="bab-title-ar">زِيَادَةُ الثُّلاثِيِّ (الْفِعْلُ الْمَزِيْدُ)</div>
+    <div class="bab-title-id">Tsulātsī Mazīd — fi‘il tiga huruf dengan tambahan</div>
+  </div>
+  <div class="bab-body">
+    <div class="bab-note">
+      <p>Inilah inti pelajaran lanjutan: fi‘il tsulātsī yang mendapat huruf tambahan (ziyādah) sehingga maknanya berubah atau bertambah kekhususan. Terbagi tiga kelompok menurut jumlah tambahannya: <b>ruba‘ī mazīd</b> (+1 huruf), <b>khumāsī mazīd</b> (+2 huruf), dan <b>sudāsī mazīd</b> (+3 huruf). Total ada empat belas wazan.</p>
+      <p>Huruf tambahan pada semua wazan mazīd terkumpul dalam kalimat bantu hafalan <i dir="rtl" style="font-family:var(--serif);">سَأَلْتُمُونِيْهَا</i> (sa'altumūnīhā) — sepuluh huruf ziyādah: hamzah, sīn, alif, lām, tā, mīm, wāw, nūn, yā, hā.</p>
+    </div>
+    <table class="bait">
+      <tr><td class="no">3</td><td class="ar">زَيْدُ الثُّلاثِيْ أَرْبَعٌ مَعْ عَشْرِ <span class="sep">✽</span> وَهْيَ لِأَقْسامٍ ثَلاثٍ تَجْرِي</td>
+      <td class="id">Tambahan pada fi‘il tsulātsī berjumlah empat belas (wazan), dan ia terbagi menjadi tiga kelompok.</td></tr>
+      <tr><td class="no">4</td><td class="ar">أَوَّلُها الرُّباعِي مِثْلُ أَكْرَما <span class="sep">✽</span> وَفَعَّلا وَفاعَلا كَخاصَما</td>
+      <td class="id">Kelompok pertama adalah ruba‘ī (tambah satu huruf), seperti أَكْرَمَ (akrama), فَعَّلَ (fa‘‘ala), dan فَاعَلَ (fā‘ala) seperti خَاصَمَ (khāshama - bertengkar).</td></tr>
+      <tr><td class="no">5</td><td class="ar">واخْصُصْ خُماسِيًّا بِذِي الأَوْزانِ <span class="sep">✽</span> فَبَدْؤُها كانْكَسَرا والثّانِي</td>
+      <td class="id">Kelompok khumāsī (tambah dua huruf) dikhususkan dengan wazan-wazan yang permulaannya berupa hamzah waṣal berharakat kasrah, yaitu (lanjut ke bait berikut):</td></tr>
+      <tr><td class="no">6</td><td class="ar">اِفْتَعَلَ افْعَلَّ كَذا تَفَعَّلا <span class="sep">✽</span> نَحْوُ تَعَلَّمَ وَزِدْ تَفاعَلا</td>
+      <td class="id">افْتَعَلَ (ifta‘ala), افْعَلَّ (if‘alla), begitu pula تَفَعَّلَ (tafa‘‘ala) seperti تَعَلَّمَ (ta‘allama - belajar), dan tambahkan تَفَاعَلَ (tafā‘ala).</td></tr>
+      <tr><td class="no">7</td><td class="ar">ثُمَّ السُّداسِي اسْتَفْعَلا وافْعَوْعَلا <span class="sep">✽</span> وافْعَوَّلَ افْعَنْلَى يَلِيهِ افْعَنْلَلا</td>
+      <td class="id">Kemudian kelompok sudāsī (tambah tiga huruf): اسْتَفْعَلَ (istaf‘ala), افْعَوْعَلَ (if‘aw‘ala), افْعَوَّلَ (if‘awwala), افْعَنْلَى (if‘anlā), lalu افْعَنْلَلَ (if‘anlala),</td></tr>
+      <tr><td class="no">8</td><td class="ar">وافْعالَ ما قَدْ صاحَبَ اللّامَينِ <span class="sep">✽</span> زَيْدُ الرُّباعِيِّ عَلَى نَوْعَيْنِ</td>
+      <td class="id">dan افْعَالَّ (if‘ālla) yang huruf lam fi‘il-nya diulang dan diidghamkan. — Adapun tambahan pada fi‘il ruba‘ī sendiri terbagi dua jenis:</td></tr>
+      <tr><td class="no">9</td><td class="ar">ذِي سِتَّةٍ نَحْوُ افْعَلَلَّ افْعَنْلَلا <span class="sep">✽</span> ثُمَّ الْخُماسِيْ وَزْنُهُ تَفَعْلَلا</td>
+      <td class="id">Pertama, tambah dua huruf (enam huruf total) seperti افْعَلَلَّ (if‘alalla) dan افْعَنْلَلَ (if‘anlala); kemudian yang tambah satu huruf (lima huruf), wazannya تَفَعْلَلَ (tafa‘lala).</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Poin Penting — Cara Cepat Mengenali Kelompok Mazīd</div>
+      <ul>
+        <li><b>Ruba‘ī mazīd</b> selalu diawali salah satu dari tiga bentuk: hamzah qatha‘ (أَفْعَلَ), tasydīd pada ‘ain fi‘il (فَعَّلَ), atau alif setelah fā’ fi‘il (فَاعَلَ).</li>
+        <li><b>Khumāsī &amp; sudāsī mazīd</b> hampir selalu diawali <b>hamzah waṣal berharakat kasrah</b> (kecuali تَفَعَّلَ dan تَفَاعَلَ yang diawali tā). Inilah sebabnya bait ke-5 menyebut "بَدْؤُها كانْكَسَرا" — awalnya kasrah.</li>
+        <li>Kesalahan umum santri: menyamakan اِنْفَعَلَ dengan اِفْتَعَلَ karena sama-sama berawalan hamzah kasrah — bedakan dari huruf tambahan setelah fā’ fi‘il: nūn pada infa‘ala, tā pada ifta‘ala.</li>
+      </ul>
+    </div>
+
+    <div class="wazan-title">Lampiran — 14 Wazan Tsulātsī Mazīd (contoh taṣrīf)</div>
+    <div class="wazan-grid">
+      <div class="wazan-card"><div class="w-ar">أَفْعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يُفْعِلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">إِفْعَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">أَكْرَمَ</span></div><div class="w-meaning">memuliakan — ruba‘ī mazīd (+ hamzah).</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعَّلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يُفَعِّلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">تَفْعِيلًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">عَلَّمَ</span></div><div class="w-meaning">mengajarkan — ruba‘ī mazīd (‘ain digandakan).</div></div>
+      <div class="wazan-card"><div class="w-ar">فَاعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يُفَاعِلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">مُفَاعَلَةً</span></div><div class="w-row"><span>Contoh</span><span class="arv">قَاتَلَ</span></div><div class="w-meaning">memerangi — musyārakah (saling melakukan).</div></div>
+      <div class="wazan-card"><div class="w-ar">اِنْفَعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَنْفَعِلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِنْفِعَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِنْكَسَرَ</span></div><div class="w-meaning">menjadi patah — bermakna muṭāwa‘ah (akibat/lazim).</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْتَعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْتَعِلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِفْتِعَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِجْتَمَعَ</span></div><div class="w-meaning">berkumpul.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَلَّ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَلُّ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِفْعِلَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِحْمَرَّ</span></div><div class="w-meaning">menjadi merah — untuk warna/cacat.</div></div>
+      <div class="wazan-card"><div class="w-ar">تَفَعَّلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَتَفَعَّلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">تَفَعُّلًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">تَعَلَّمَ</span></div><div class="w-meaning">belajar (bertahap/berusaha).</div></div>
+      <div class="wazan-card"><div class="w-ar">تَفَاعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَتَفَاعَلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">تَفَاعُلًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">تَقَاتَلَ</span></div><div class="w-meaning">saling berperang / berpura-pura.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِسْتَفْعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَسْتَفْعِلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِسْتِفْعَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِسْتَغْفَرَ</span></div><div class="w-meaning">memohon ampun (thalab).</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَوْعَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَوْعِلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِفْعِيعَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِعْشَوْشَبَ</span></div><div class="w-meaning">tumbuh subur rerumputannya (mubālaghah).</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَوَّلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَوِّلُ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِفْعِوَّالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِجْلَوَّذَ</span></div><div class="w-meaning">bergegas cepat — wazan jarang dipakai.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَنْلَى</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَنْلِي</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِسْلَنْقَى</span></div><div class="w-meaning">berbaring telentang — wazan jarang dipakai.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَنْلَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَنْلِلُ</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِقْعَنْسَسَ</span></div><div class="w-meaning">menundukkan diri/mundur — wazan jarang dipakai.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَالَّ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَالُّ</span></div><div class="w-row"><span>Mashdar</span><span class="arv">اِفْعِيلَالًا</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِحْمَارَّ</span></div><div class="w-meaning">memerah sangat (mubālaghah dari if‘alla).</div></div>
+    </div>
+
+    <div class="wazan-title">Lampiran — Wazan Ruba‘ī Mazīd</div>
+    <div class="wazan-grid">
+      <div class="wazan-card"><div class="w-ar">تَفَعْلَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَتَفَعْلَلُ</span></div><div class="w-row"><span>Contoh</span><span class="arv">تَدَحْرَجَ</span></div><div class="w-meaning">menggelinding (muṭāwa‘ah dari dahraja) — mazīd 1 huruf.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَنْلَلَ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَنْلِلُ</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِحْرَنْجَمَ</span></div><div class="w-meaning">berkumpul rapat — mazīd 2 huruf.</div></div>
+      <div class="wazan-card"><div class="w-ar">اِفْعَلَلَّ</div><div class="w-row"><span>Muḍāri‘</span><span class="arv">يَفْعَلِلُّ</span></div><div class="w-row"><span>Contoh</span><span class="arv">اِطْمَأَنَّ</span></div><div class="w-meaning">menjadi tenang — mazīd 2 huruf.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 3 ================= -->
+<section class="bab" id="bab3">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 03</div>
+    <div class="bab-title-ar">بَابُ الْمَصْدَرِ وَمَا يُشْتَقُّ مِنْهُ</div>
+    <div class="bab-title-id">Mashdar dan isim-isim yang diturunkan darinya</div>
+  </div>
+  <div class="bab-body">
+    <div class="bab-note">
+      <p>Mashdar (kata benda abstrak yang menunjukkan kejadian, seperti "pemukulan" dari "memukul") menjadi induk dari seluruh kata turunan (musytaqqāt) lainnya dalam ilmu shorof: isim fā‘il, isim maf‘ūl, isim zamān, isim makān, dan seterusnya.</p>
+    </div>
+    <table class="bait">
+      <tr><td class="no">10</td><td class="ar">وَمَصْدَرٌ أَتَى عَلَى ضَرْبَيْنِ <span class="sep">✽</span> مِيمِيْ وَغَيْرِهِ عَلَى قِسْمَيْنِ</td>
+      <td class="id">Mashdar datang dalam dua jenis: mīmī (berawalan mim) dan selainnya, masing-masing terbagi menjadi dua bagian (samā‘ī dan qiyāsī).</td></tr>
+      <tr><td class="no">11</td><td class="ar">مِنْ ذِي الثَّلاَثِ فالْزَمِ الَّذِي سُمِعْ <span class="sep">✽</span> وَما عَداهُ فالْقِياسَ تَتَّبِعْ</td>
+      <td class="id">Untuk fi‘il tsulātsī, berpeganglah pada bentuk yang didengar dari orang Arab (samā‘ī); selain itu, ikutilah kaidah qiyās.</td></tr>
+      <tr><td class="no">12</td><td class="ar">مِيمِي الثُّلاثِيْ إِنْ يَكُنْ مِنْ أَجْوَفِ <span class="sep">✽</span> صَحِيحٍ اوْ مَهْمُوزٍ اوْ مُضَعَّفِ</td>
+      <td class="id">Mashdar mīmī dari fi‘il tsulātsī, jika berasal dari fi‘il ajwaf, ṣaḥīḥ, mahmūz, atau muḍā‘af,</td></tr>
+      <tr><td class="no">13</td><td class="ar">أَتَى كَمَفْعَلٍ بِفَتْحَتَيْنِ <span class="sep">✽</span> وَشَذَّ مِنْهُ ما بِكَسْرِ الْعَيْنِ</td>
+      <td class="id">datang dengan wazan مَفْعَل (mim dan ‘ain sama-sama fatḥah); bentuk yang ‘ainnya kasrah dianggap syādz (tak lazim, hanya dihafal).</td></tr>
+      <tr><td class="no">14</td><td class="ar">كَذا سِمُ الزَّمانِ والْمَكانِ مِنْ <span class="sep">✽</span> مُضارِعٍ إِنْ لا بِكَسْرِها يَبِنْ</td>
+      <td class="id">Begitu pula isim zamān (waktu) dan isim makān (tempat): diambil dari fi‘il muḍāri‘, memakai wazan مَفْعَل jika huruf sebelum akhir muḍāri‘-nya bukan kasrah.</td></tr>
+      <tr><td class="no">15</td><td class="ar">وافْتَحْ لَها مِنْ ناقِصٍ وَما قُرِنْ <span class="sep">✽</span> واعْكِسْ بِمُعْتَلٍّ كَمَفْرُوقٍ يَعِنْ</td>
+      <td class="id">Tetap fatḥahkan untuk fi‘il nāqiṣ (mu‘tal lam) dan yang serupa; sedangkan pada fi‘il mu‘tal lain seperti lafīf mafrūq, berlaku kebalikannya (wazan مَفْعِل).</td></tr>
+      <tr><td class="no">16</td><td class="ar">وَما عَدا الثُّلاثِي كُلاًّ اجْعَلا <span class="sep">✽</span> مِثْلَ مُضارِعٍ لَها قَدْ جُهِلا</td>
+      <td class="id">Selain fi‘il tsulātsī (yakni ruba‘ī, khumāsī, sudāsī), jadikan semua bentuk mashdar mīmī serta isim zamān-makān mengikuti wazan muḍāri‘-nya yang dijadikan majhūl (pasif).</td></tr>
+      <tr><td class="no">17</td><td class="ar">كَذا اسْمُ مَفْعُولٍ وَفاعِلٍ كُسِرْ <span class="sep">✽</span> عَيْنًا وَأَوَّلٌ لَها مِيمًا يَصِرْ</td>
+      <td class="id">Begitu pula isim maf‘ūl dan isim fā‘il (dari fi‘il selain tsulātsī): huruf sebelum akhir dikasrahkan dan huruf awalnya diganti mim berharakat ḍammah.</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Contoh Lengkap Selain Tsulātsī</div>
+      <p>Dari أَكْرَمَ (yukrimu) → isim fā‘il: <b dir="rtl" style="font-family:var(--serif);">مُكْرِمٌ</b> (yang memuliakan), isim maf‘ūl: <b dir="rtl" style="font-family:var(--serif);">مُكْرَمٌ</b> (yang dimuliakan), mashdar mīmī: <b dir="rtl" style="font-family:var(--serif);">مُكْرَمٌ</b> juga (sama wazan dengan isim maf‘ūl). Pola: buang huruf muḍāra‘ah dari fi‘il muḍāri‘ majhūl, ganti dengan mim ḍammah — itulah kaidah pada bait 16–17.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 4 ================= -->
+<section class="bab" id="bab4">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 04</div>
+    <div class="bab-title-ar">بِنَاءُ الْفِعْلِ الْمَاضِي وَالْمُضَارِعِ وَالْأَمْرِ</div>
+    <div class="bab-title-id">Struktur (binā’) fi‘il māḍī, muḍāri‘, amr, dan nahi</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">18</td><td class="ar">وَآخِرَ الْماضِي افْتَحَنْهُ مُطْلَقا <span class="sep">✽</span> وَضُمَّ إِنْ بِواوِ جَمْعٍ أُلْحِقا</td>
+      <td class="id">Akhir fi‘il māḍī selalu berharakat fatḥah; didhammahkan bila bersambung wāwu jamā‘ah (seperti فَعَلُوا).</td></tr>
+      <tr><td class="no">19</td><td class="ar">وَسَكِّنِ انْ ضَمِيرَ رَفْعٍ حُرِّكا <span class="sep">✽</span> وَبَدْءُ مَعْلُومٍ بِفَتْحٍ سُلِكا</td>
+      <td class="id">Disukunkan jika bersambung dhamīr rafa‘ yang berharakat (تُ، نَا، تُمْ, dst.); awal fi‘il ma‘lūm (aktif) selalu fatḥah,</td></tr>
+      <tr><td class="no">20</td><td class="ar">إِلاَّ الْخُماسِيْ والسُّداسِيْ فاكْسِرَنْ <span class="sep">✽</span> إِنْ بُدِئا بِهَمْزِ وَصْلٍ كامْتَحَنْ</td>
+      <td class="id">kecuali fi‘il khumāsī dan sudāsī — kasrahkan awalnya bila dimulai hamzah waṣal, seperti اِمْتَحَنَ.</td></tr>
+      <tr><td class="no">21</td><td class="ar">ثُبُوتُها فِي الِابْتِدا قَدِ الْتُزِمْ <span class="sep">✽</span> كَحَذْفِها فِي دَرْجِها مَعَ الكَلِمْ</td>
+      <td class="id">Hamzah waṣal tetap dibaca di awal kalimat, dan dihapus bunyinya ketika disambung dengan kata sebelumnya.</td></tr>
+      <tr><td class="no">22</td><td class="ar">كَهَمْزِ أَمْرٍ لَهُما وَمَصْدَرِ <span class="sep">✽</span> وَأَلْ وَأَيْمُنٍ وَهَمْزِ كاجْهَرِ</td>
+      <td class="id">Seperti hamzah pada fi‘il amr khumāsī/sudāsī dan mashdarnya, juga pada أَلْ (kata sandang), أَيْمُنٍ (lafal sumpah), dan hamzah pada kata seperti اِجْهَرْ,</td></tr>
+      <tr><td class="no">23</td><td class="ar">وابْنِمٍ ابْنٍ ابْنَةٍ واثْنَيْنِ <span class="sep">✽</span> وامْرِئٍ امْرَأَةٍ اثْنَتَيْنِ</td>
+      <td class="id">اِبْنِمٍ، اِبْنٍ، اِبْنَةٍ، اِثْنَيْنِ (anak, dua-mudzakkar), اِمْرِئٍ، اِمْرَأَةٍ، اِثْنَتَيْنِ (orang, dua-muannats).</td></tr>
+      <tr><td class="no">24</td><td class="ar">كَذا اسْمٌ اسْتٌ فِي الْجَمِيعِ فاكْسِرَنْ <span class="sep">✽</span> لَها سِوَى فِي أَيْمُنٍ أَلِ افْتَحَنْ</td>
+      <td class="id">Begitu pula اِسْم dan اِسْت. Semua hamzah waṣal di atas dibaca kasrah, kecuali pada أَيْمُن dan أَلْ yang dibaca fatḥah.</td></tr>
+      <tr><td class="no">25</td><td class="ar">وَأَمْرُ ذِي ثَلاَثَةٍ نَحْوُ اقْتُلا <span class="sep">✽</span> ضُمَّ كَما بِماضِيَيْنِ جُهِلا</td>
+      <td class="id">Hamzah fi‘il amr tsulātsī, seperti اُقْتُلْ, di-ḍammah-kan jika ‘ain fi‘ilnya ḍammah, sebagaimana pada bentuk yang dijadikan majhūl.</td></tr>
+      <tr><td class="no">26</td><td class="ar">وَبَدْءُ مَجْهُولٍ بِضَمٍّ حُتِما <span class="sep">✽</span> كَكَسْرِ سابِقِ الَّذِي قَدْ خَتَما</td>
+      <td class="id">Awal fi‘il majhūl (pasif) wajib ḍammah, dan huruf sebelum akhirnya wajib kasrah, seperti قُتِلَ.</td></tr>
+      <tr><td class="no">27</td><td class="ar">مُضارِعًا سِمْ بِحُرُوفِ نَأْتِي <span class="sep">✽</span> حَيْثُ لِمَشْهُورِ الْمَعانِي تَأْتِي</td>
+      <td class="id">Fi‘il muḍāri‘ ditandai huruf-huruf «نأتي» (hamzah, nūn, alif, tā’) sesuai makna yang lazim baginya.</td></tr>
+      <tr><td class="no">28</td><td class="ar">فَإِنْ بِمَعْلُومٍ فَفَتْحُها وَجَبْ <span class="sep">✽</span> إلّا الرُّباعِيْ غَيْرُ ضَمٍّ مُجْتَنَبْ</td>
+      <td class="id">Bila muḍāri‘ berbentuk ma‘lūm, huruf muḍāra‘ah wajib fatḥah, kecuali fi‘il ruba‘ī mazīd (seperti أَفْعَلَ) yang justru wajib ḍammah.</td></tr>
+      <tr><td class="no">29</td><td class="ar">وَما قُبَيْلَ الْآخِرِ اكْسِرْ أَبَدا <span class="sep">✽</span> مِنَ الَّذِي عَلَى ثَلاَثَةٍ عَدا</td>
+      <td class="id">Huruf sebelum akhir pada fi‘il yang hurufnya lebih dari tiga selalu dikasrahkan,</td></tr>
+      <tr><td class="no">30</td><td class="ar">فِيما عَدا ما جاءَ مِنْ تَفَعَّلا <span class="sep">✽</span> كالْآتِي مِنْ تَفاعَلَ اوْ تَفَعْلَلا</td>
+      <td class="id">kecuali yang berasal dari تَفَعَّلَ, begitu pula dari تَفَاعَلَ atau تَفَعْلَلَ (tetap fatḥah).</td></tr>
+      <tr><td class="no">31</td><td class="ar">وَإِنْ بِمَجْهُولٍ فَضَمُّها لَزِمْ <span class="sep">✽</span> كَفَتْحِ سابِقِ الَّذِي بِهِ اخْتُتِمْ</td>
+      <td class="id">Bila muḍāri‘ berbentuk majhūl, huruf muḍāra‘ah wajib ḍammah, dan huruf sebelum akhir yang sebelumnya berharakat kini dijadikan fatḥah.</td></tr>
+      <tr><td class="no">32</td><td class="ar">وَآخِرٌ لَهُ بِمُقْتَضَى الْعَمَلْ <span class="sep">✽</span> مِنْ رَفْعٍ اوْ نَصْبٍ كَذا جَزْمٌ حَصَلْ</td>
+      <td class="id">Akhir fi‘il muḍāri‘ berubah sesuai kedudukan i‘rāb-nya: rafa‘, naṣab, atau jazm.</td></tr>
+      <tr><td class="no">33</td><td class="ar">أَمْرٌ وَنَهْيٌ إِنْ بِهِ لامًا تَصِلْ <span class="sep">✽</span> أَوْ لا وَسَكِّنْ إِنْ يَصِحَّ كَلْتَمِلْ</td>
+      <td class="id">Fi‘il amr dan nahi mengikuti hukum jazm, baik bersambung lam amr maupun tidak; disukunkan bila memungkinkan, seperti لْتَمِلْ.</td></tr>
+      <tr><td class="no">34</td><td class="ar">والْآخِرَ احْذِفْ إنْ يُعَلّْ كالنُّونِ فِي <span class="sep">✽</span> أَمْثِلَةٍ وَنُونُ نِسْوَةٍ تَفِي</td>
+      <td class="id">Huruf akhir dihapus jika ia termasuk huruf yang di-i‘lāl (seperti nūn pada af‘āl al-khamsah); adapun nūn niswah (jamak muannats) tetap dipertahankan.</td></tr>
+      <tr><td class="no">35</td><td class="ar">وَبَدْأَهُ احْذِفْ يَكُ أَمْرَ حاضِرِ <span class="sep">✽</span> وَهَمْزًا انْ سُكِّنَ تالٍ صَيِّرِ</td>
+      <td class="id">Untuk membentuk amr mukhāthab, hapus huruf muḍāra‘ah dari muḍāri‘-nya; tambahkan hamzah waṣal bila huruf berikutnya sukun,</td></tr>
+      <tr><td class="no">36</td><td class="ar">أَوْ أَبْقِ إِنْ مُحَرَّكًا ثُمَّ الْتَزِمْ <span class="sep">✽</span> بِناءَهُ مِثْلَ مُضارِعٍ جُزِمْ</td>
+      <td class="id">atau tidak perlu ditambah bila huruf itu berharakat; strukturnya kemudian mengikuti hukum fi‘il muḍāri‘ yang di-jazm-kan.</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Ringkasan Alur Membentuk Fi‘il Amr Mukhāthab</div>
+      <ol>
+        <li>Ambil fi‘il muḍāri‘ mukhāthab, misalnya تَضْرِبُ (engkau memukul).</li>
+        <li>Buang huruf muḍāra‘ah (ت) → ضْرِبُ.</li>
+        <li>Jazm-kan akhirnya (buang ḍammah) → ضْرِبْ.</li>
+        <li>Karena huruf pertama sekarang sukun, tambahkan hamzah waṣal → اِضْرِبْ.</li>
+        <li>Harakat hamzah waṣal mengikuti harakat ‘ain fi‘il muḍāri‘-nya: kasrah (اِضْرِبْ), atau ḍammah bila ‘ainnya ḍammah (اُكْتُبْ dari يَكْتُبُ → sebenarnya kasrah pada kutub… catatan: pola umum yang dihafal santri adalah "ikuti harakat huruf ketiga mudhari'").</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 5 ================= -->
+<section class="bab" id="bab5">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 05</div>
+    <div class="bab-title-ar">اسْمُ الْفَاعِلِ وَاسْمُ الْمَفْعُولِ</div>
+    <div class="bab-title-id">Isim Fā‘il dan Isim Maf‘ūl (wazan qiyāsī)</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">37</td><td class="ar">كَفاعِلٍ جِئْ بِاسْمِ فاعِلٍ كَما <span class="sep">✽</span> يُجاءُ مِنْ عَلِمَ أَوْ مِنْ عَزَما</td>
+      <td class="id">Isim fā'il dari fi'il tsulātsī dibentuk dengan wazan فَاعِل, seperti dari عَلِمَ menjadi عَالِم, dari عَزَمَ menjadi عَازِم.</td></tr>
+      <tr><td class="no">38</td><td class="ar">وَماضٍ انْ بِضَمِّ عَيْنٍ اسْتَقَرّْ <span class="sep">✽</span> كَضَخْمٍ اوْ ظَرِيْفٍ الّا ما نَدَرْ</td>
+      <td class="id">Fi'il yang 'ainnya berharakat ḍammah (menunjukkan sifat tetap) memakai sifat musyabbahat seperti ضَخْم (besar), ظَرِيْف (elok), kecuali yang jarang (syādz).</td></tr>
+      <tr><td class="no">39</td><td class="ar">وَإِنْ بِكَسْرٍ لازِمًا جا كالْفَعِلْ <span class="sep">✽</span> والْأَفْعَلِ الْفَعْلاَنِ واحْفَظْ ما نُقِلْ</td>
+      <td class="id">Jika 'ainnya kasrah dan bermakna sifat lāzim (tetap), datang dengan wazan فَعِل, أَفْعَل–فَعْلاَء, atau فَعْلاَن — hafalkan yang telah didengar dari Arab.</td></tr>
+      <tr><td class="no">40</td><td class="ar">بِوَزْنِ مَفْعُولٍ كَذا فَعِيلُ <span class="sep">✽</span> جاءَ اسْمُ مَفْعُولٍ كَذا قَتِيلُ</td>
+      <td class="id">Isim maf'ūl dari fi'il tsulātsī datang dengan wazan مَفْعُول, begitu pula فَعِيل, seperti قَتِيل (yang dibunuh).</td></tr>
+      <tr><td class="no">41</td><td class="ar">لِكَثْرَةٍ فَعّالٌ اوْ فَعُولُ <span class="sep">✽</span> فَعِلٌ اوْ مِفْعالٌ اوْ فَعِيلُ</td>
+      <td class="id">Untuk makna mubālaghah (kesangatan): فَعَّال، فَعُول، فَعِل، مِفْعَال، atau فَعِيل.</td></tr>
+    </table>
+    <div class="wazan-title">Lampiran — Sighat Mubālaghah</div>
+    <div class="wazan-grid">
+      <div class="wazan-card"><div class="w-ar">فَعَّال</div><div class="w-row"><span>Contoh</span><span class="arv">أَكَّالٌ</span></div><div class="w-meaning">yang banyak makan.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعُول</div><div class="w-row"><span>Contoh</span><span class="arv">صَبُورٌ</span></div><div class="w-meaning">yang sangat sabar.</div></div>
+      <div class="wazan-card"><div class="w-ar">مِفْعَال</div><div class="w-row"><span>Contoh</span><span class="arv">مِعْطَاءٌ</span></div><div class="w-meaning">yang sangat dermawan.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعِيل</div><div class="w-row"><span>Contoh</span><span class="arv">رَحِيمٌ</span></div><div class="w-meaning">yang sangat penyayang.</div></div>
+      <div class="wazan-card"><div class="w-ar">فَعِل</div><div class="w-row"><span>Contoh</span><span class="arv">حَذِرٌ</span></div><div class="w-meaning">yang sangat waspada.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 6 ================= -->
+<section class="bab" id="bab6">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 06</div>
+    <div class="bab-title-ar">فَصْلٌ فِي تَصْرِيفِ الصَّحِيحِ</div>
+    <div class="bab-title-id">Jumlah bentuk (ṣīghah) dalam taṣrīf lughawi</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">42</td><td class="ar">وَماضٍ اوْ مُضارِعٌ تَصَرَّفا <span class="sep">✽</span> لِأَوْجُهٍ كالْأَمْرِ والنَّهْيِ اعْرِفا</td>
+      <td class="id">Fi'il māḍī dan muḍāri' ditaṣrīf ke beberapa bentuk (ṣīghah), demikian pula fi'il amr dan nahi — pahamilah.</td></tr>
+      <tr><td class="no">43</td><td class="ar">ثَلاَثَةٌ لِغائِبٍ كالْغائِبَهْ <span class="sep">✽</span> كَذا مُخاطَبٌ وَكالْمُخاطَبَهْ</td>
+      <td class="id">Tiga bentuk untuk ghā'ib (dia lk.: tunggal, dua, jamak), tiga bentuk untuk ghā'ibah (dia pr.), begitu pula mukhāthab dan mukhāthabah (masing-masing tiga bentuk),</td></tr>
+      <tr><td class="no">44</td><td class="ar">وَمُتَكَلِّمٌ لَهُ اثْنانِ هُما <span class="sep">✽</span> فِي غَيْرِ أَمْرٍ ثُمَّ نَهْيٍ عُلِما</td>
+      <td class="id">dan mutakallim memiliki dua bentuk (sendiri, bersama) — total 14 ṣīghah untuk māḍī/muḍāri'; hanya 12 untuk amr dan nahi (tanpa bentuk mutakallim).</td></tr>
+      <tr><td class="no">45</td><td class="ar">لِعَشْرَةٍ يُصَرَّفُ اسْمُ الْفاعِلِ <span class="sep">✽</span> فَعَلَةٍ وَفاعِلَيْنِ فاعِلِ</td>
+      <td class="id">Isim fā'il ditaṣrīf menjadi sepuluh bentuk: فَعَلَة (jamak taksir), فَاعِلَيْنِ (mutsanna), فَاعِل (mufrad),</td></tr>
+      <tr><td class="no">46</td><td class="ar">وَفاعِلِينَ فُعَّلٍ فُعّالِ <span class="sep">✽</span> وَفِيهِما اضْمُمْ فا وَشُدَّ التّالِي</td>
+      <td class="id">فَاعِلِينَ (jamak mudzakkar sālim), فُعَّل dan فُعَّال (jamak taksir — huruf fā' ḍammah, huruf berikutnya bertasydīd),</td></tr>
+      <tr><td class="no">47</td><td class="ar">فاعِلَةٍ فاعِلَتَيْنِ فاعِلا <span class="sep">✽</span> تِ وَفَواعِلَ كَما قَدْ نُقِلا</td>
+      <td class="id">فَاعِلَة (mufrad muannats), فَاعِلَتَيْنِ (mutsanna), فَاعِلَات (jamak sālim muannats), dan فَوَاعِل (jamak taksir muannats).</td></tr>
+      <tr><td class="no">48</td><td class="ar">ثُمَّ اسْمُ مَفْعُولٍ لِسَبْعٍ ياتِي <span class="sep">✽</span> مَفْعُولَةٍ وَثَنِّ مَفْعُولاتِ</td>
+      <td class="id">Isim maf'ūl ditaṣrīf untuk tujuh bentuk: مَفْعُولَة, dan bentuk mutsannanya مَفْعُولَتَيْنِ,</td></tr>
+      <tr><td class="no">49</td><td class="ar">كَذاكَ مَفْعُولٌ مُثَنّاهُ وَمَفْعُولُونَ <span class="sep">✽</span> ثُمَّ جَمْعُ تَكْسِيرٍ يُضَفْ</td>
+      <td class="id">begitu pula مَفْعُول (mufrad), bentuk mutsanna-nya, مَفْعُولُونَ (jamak mudzakkar sālim), dan ditambah bentuk jamak taksirnya.</td></tr>
+      <tr><td class="no">50</td><td class="ar">وَنُونَ تَوْكِيدٍ بِالامْرِ النَّهْيِ صِلْ <span class="sep">✽</span> وَذاتَ خِفٍّ مَعْ سُكُونٍ لا تَصِلْ</td>
+      <td class="id">Sambungkan nūn taukīd pada fi'il amr dan nahi untuk penegasan; adapun nūn taukīd khafīfah tidak boleh disambung pada bentuk yang berakhir sukun.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ================= BAB 7 ================= -->
+<section class="bab" id="bab7">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 07</div>
+    <div class="bab-title-ar">فَصْلٌ فِي فَوَائِدَ</div>
+    <div class="bab-title-id">Faidah-faidah tambahan: muta'addī-lāzim, makna hamzah &amp; sin, ibdāl</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">51</td><td class="ar">بِالْهَمْزِ والتَّضْعِيفِ عَدِّ ما لَزِمْ <span class="sep">✽</span> وَحَرْفِ جَرٍّ إِنْ ثُلاَثِيًّا وُسِمْ</td>
+      <td class="id">Anggap fi'il sebagai muta'addī (transitif) bila ia butuh hamzah tambahan atau tasydīd agar bisa muta'addī, atau (bila tsulātsī) bersanding langsung dengan ḥarf jar.</td></tr>
+      <tr><td class="no">52</td><td class="ar">وَغَيْرَهُ عَدِّ بِما تَأَخَّرا <span class="sep">✽</span> وَإِنْ حَذَفْتَها فَلاَزِمًا يُرَى</td>
+      <td class="id">Selain itu, hitung ke-muta'addī-annya dari maf'ūl yang datang setelahnya; bila tidak ada maf'ūl sama sekali, fi'il itu dianggap lāzim (intransitif).</td></tr>
+      <tr><td class="no">53</td><td class="ar">لِصادِرٍ مِنِ امْرَأَيْنِ فاعَلا <span class="sep">✽</span> وَقَلَّ كالْإِلَهُ زَيْدًا قاتَلا</td>
+      <td class="id">Wazan فَاعَلَ datang untuk perbuatan yang muncul dari dua pihak (musyārakah), dan jarang bermakna satu pihak saja — seperti «Allah memerangi/mematikan Zaid».</td></tr>
+      <tr><td class="no">54</td><td class="ar">وَلَهُما أَوْ زائِدٍ تَفاعَلا <span class="sep">✽</span> وَقَدْ أَتَى لِغَيْرِ واقِعٍ جَلا</td>
+      <td class="id">Wazan تَفَاعَلَ juga untuk musyārakah dua pihak, atau untuk makna berpura-pura (menampakkan sesuatu yang sebenarnya tidak terjadi) — sudah jelas maknanya.</td></tr>
+      <tr><td class="no">55</td><td class="ar">وابْدِلْ لِتاءِ الِافْتِعالِ طاءً انْ <span class="sep">✽</span> فاءٌ مِنَ احْرُفٍ لِإِطْباقٍ تَبِنْ</td>
+      <td class="id">Gantilah tā' pada wazan اِفْتَعَلَ menjadi ṭā' (ط) bila fā' fi'ilnya termasuk huruf iṭbāq (ص ض ط ظ),</td></tr>
+      <tr><td class="no">56</td><td class="ar">كَما تَصِيرُ دالًا انْ زايًا تَكُنْ <span class="sep">✽</span> أَوْ ذالًا اوْ دالًا كالِازْدِجارِ صُنْ</td>
+      <td class="id">sebagaimana ia menjadi dāl (د) bila fā'-nya zāy, atau menjadi dzāl/dāl bila fā'-nya dzāl/dāl — seperti اِزْدَجَرَ.</td></tr>
+      <tr><td class="no">57</td><td class="ar">وَإِنْ تَكُنْ فا الِافْتِعالِ يا سَكَنْ <span class="sep">✽</span> أَوْ واوًا اوْ ثا صَيِّرَنْ تا وادْغِمَنْ</td>
+      <td class="id">Bila fā' fi'ilnya yā, wāw, atau tsā, ubah menjadi tā' lalu idghām-kan (leburkan) dengan tā' wazan اِفْتَعَلَ.</td></tr>
+      <tr><td class="no">58</td><td class="ar">واحْكُمْ بِزَيْدٍ مِنْ أُوَيْسًا هَلْ تَنَمْ <span class="sep">✽</span> فَوْقَ الثَّلاثِ إِنْ بِذِي الْمَرامُ تَمّْ</td>
+      <td class="id">Tetapkanlah adanya huruf ziyādah pada suatu kata (seperti nama أُوَيْس) dengan cara menimbangnya terhadap wazan yang hurufnya lebih dari tiga, jika maksud penimbangan tercapai.</td></tr>
+      <tr><td class="no">59</td><td class="ar">وَغالِبَ الرُّباعِي عَدِّ ما عَدا <span class="sep">✽</span> فَعْلَلَ فاعْكِسَنْ كَدَرْبَخَ اهْتَدَى</td>
+      <td class="id">Umumnya huruf pada fi'il ruba'ī mujarrad dianggap semua asli (wazan فَعْلَلَ); berlaku kebalikannya pada kata yang menyerupai tsulātsī bertambah, seperti دَرْبَخَ.</td></tr>
+      <tr><td class="no">60</td><td class="ar">كُلُّ الْخُماسِيْ لاَزِمٌ إِلّا افْتَعَلْ <span class="sep">✽</span> تَفَعَّلَ اوْ تَفاعَلا قَدِ احْتَمَلْ</td>
+      <td class="id">Semua fi'il khumāsī bersifat lāzim, kecuali اِفْتَعَلَ yang bisa muta'addī, serta تَفَعَّلَ atau تَفَاعَلَ yang kadang juga muta'addī.</td></tr>
+      <tr><td class="no">61</td><td class="ar">كَذا السُّداسِيْ غَيْرَ بابِ اسْتَفْعَلا <span class="sep">✽</span> واسْرَنْدَى واغْرَنْدَى بِمَفْعُولٍ صِلا</td>
+      <td class="id">Begitu pula fi'il sudāsī bersifat lāzim, kecuali bab اِسْتَفْعَلَ, juga اِسْرَنْدَى dan اِغْرَنْدَى yang bisa bersambung dengan maf'ūl (muta'addī).</td></tr>
+      <tr><td class="no">62</td><td class="ar">لِهَمْزِ إِفْعالٍ مَعانٍ سَبْعَةُ <span class="sep">✽</span> تَعْدِيَةٌ صَيْرُورَةٌ وَكَثْرَةُ</td>
+      <td class="id">Hamzah pada wazan إِفْعَال memiliki tujuh makna: ta'diyah (menjadikan muta'addī), ṣairūrah (menjadi/berubah keadaan), katsrah (banyak/sering),</td></tr>
+      <tr><td class="no">63</td><td class="ar">حَيْنُونَةٌ إِزالَةٌ وِجْدانُ <span class="sep">✽</span> كَذاكَ تَعْرِيضٌ فَذا الْبَيانُ</td>
+      <td class="id">ḥainūnah (memasuki waktu tertentu), izālah (menghilangkan), wijdān (mendapati sesuatu bersifat tertentu), dan ta'rīḍ (menawarkan) — itulah penjelasannya.</td></tr>
+      <tr><td class="no">64</td><td class="ar">لِسِينِ الِاسْتِفْعالِ جا مَعانِي <span class="sep">✽</span> لِطَلَبٍ صَيْرُورَةٍ وِجْدانِ</td>
+      <td class="id">Huruf sīn pada wazan اِسْتِفْعَال datang dengan makna: ṭalab (meminta/memohon), ṣairūrah (menjadi), wijdān (mendapati),</td></tr>
+      <tr><td class="no">65</td><td class="ar">كَذا اعْتِقادٌ بَعْدَهُ التَّسْلِيمُ <span class="sep">✽</span> سُؤالُهُمْ كاسْتَخْبَرَ الكَرِيمُ</td>
+      <td class="id">i'tiqād (meyakini sesuatu bersifat tertentu) yang diikuti pengakuan, dan su'āl (bertanya/meminta informasi), seperti اسْتَخْبَرَ الكَرِيمُ (orang mulia itu meminta kabar).</td></tr>
+    </table>
+
+    <div class="wazan-title">Ringkasan — Tujuh Makna Hamzah pada إِفْعَال</div>
+    <div class="wazan-grid">
+      <div class="wazan-card"><div class="w-ar">تَعْدِيَة</div><div class="w-meaning">menjadikan muta'addī — أَذْهَبَ (menjadikan pergi/melenyapkan).</div></div>
+      <div class="wazan-card"><div class="w-ar">صَيْرُورَة</div><div class="w-meaning">menjadi suatu keadaan — أَغَدَّ الْبَعِيرُ (unta terkena penyakit ghuddah).</div></div>
+      <div class="wazan-card"><div class="w-ar">كَثْرَة</div><div class="w-meaning">banyak/sering — أَثْمَرَ الشَّجَرُ (pohon berbuah lebat).</div></div>
+      <div class="wazan-card"><div class="w-ar">حَيْنُونَة</div><div class="w-meaning">memasuki waktu tertentu — أَصْبَحَ (memasuki waktu pagi).</div></div>
+      <div class="wazan-card"><div class="w-ar">إِزَالَة</div><div class="w-meaning">menghilangkan — أَشْكَيْتُهُ (aku hilangkan keluhannya).</div></div>
+      <div class="wazan-card"><div class="w-ar">وِجْدان</div><div class="w-meaning">mendapati sesuatu bersifat tertentu — أَحْمَدْتُهُ (aku dapati dia terpuji).</div></div>
+      <div class="wazan-card"><div class="w-ar">تَعْرِيض</div><div class="w-meaning">menawarkan/menyodorkan — أَبَعْتُ الشَّيْءَ (aku tawarkan barang untuk dijual).</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 8 ================= -->
+<section class="bab" id="bab8">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 08</div>
+    <div class="bab-title-ar">بَابُ الْمُعْتَلَّاتِ وَالْمُضَاعَفِ وَالْمَهْمُوزِ</div>
+    <div class="bab-title-id">Klasifikasi fi'il menurut jenis hurufnya</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">66</td><td class="ar">حُرُوفُ وايٍ هِيْ حُرُوفُ الْعِلَّةِ <span class="sep">✽</span> والْمَدِّ ثُمَّ اللِّينِ والزِّيادَةِ</td>
+      <td class="id">Huruf-huruf «وايٍ» (wāw, alif, yā) adalah huruf illat: huruf mad, huruf līn, sekaligus huruf ziyādah.</td></tr>
+      <tr><td class="no">67</td><td class="ar">فَإِنْ يَكُنْ بِبَعْضِها الْماضِي افْتَتَحْ <span class="sep">✽</span> فَسَمِّ مُعْتَلًّا مِثالًا كَوَضَحْ</td>
+      <td class="id">Jika fi'il māḍī diawali salah satu huruf illat (pada fā' fi'il), disebut mu'tal mitsāl, seperti وَضَحَ (jelas).</td></tr>
+      <tr><td class="no">68</td><td class="ar">وَناقِصًا قُلْ كَغَزا إِنِ اخْتُتِمْ <span class="sep">✽</span> بِهِ وَإِنْ بِجَوْفِهِ اجْوَفا عُلِمْ</td>
+      <td class="id">Disebut nāqiṣ jika diakhiri huruf illat, seperti غَزَا (berperang); disebut ajwaf jika huruf illat berada di tengah ('ain fi'il).</td></tr>
+      <tr><td class="no">69</td><td class="ar">وَبِلَفِيفٍ ذِي اقْتِرانٍ سَمِّ إِنْ <span class="sep">✽</span> عَيْنٌ لَهُ مِنْها كَلامٍ تَسْتَبِنْ</td>
+      <td class="id">Disebut lafīf maqrūn jika 'ain dan lam fi'ilnya sama-sama huruf illat (berdekatan),</td></tr>
+      <tr><td class="no">70</td><td class="ar">وَإِنْ تَكُنْ فاءٌ لَهُ وَلامُ <span class="sep">✽</span> فَذُو افْتِراقٍ كَوَفَى الْغُلامُ</td>
+      <td class="id">dan jika fā' serta lam fi'ilnya sama-sama huruf illat (terpisah oleh 'ain), disebut lafīf mafrūq, seperti وَفَى الْغُلَامُ (anak itu menepati janji).</td></tr>
+      <tr><td class="no">71</td><td class="ar">وادْغِمْ لِمِثْلَيْ نَحْوِ يا زَيْدُ اكْفُفا <span class="sep">✽</span> فَكُفَّ قُلْ وَسَمِّهِ الْمُضاعَفا</td>
+      <td class="id">Idghāmkan (leburkan) dua huruf yang sama, seperti «Hai Zaid, cegahlah!» (اُكْفُفْ) menjadi كُفَّ — fi'il jenis ini disebut muḍā'af.</td></tr>
+      <tr><td class="no">72</td><td class="ar">مَهْمُوزٌ الَّذِي عَلَى الْهَمْزِ اشْتَمَلْ <span class="sep">✽</span> نَحْوُ قَرا سَأَلَ قَبْلَ ما أَفَلْ</td>
+      <td class="id">Mahmūz adalah fi'il yang mengandung huruf hamzah, seperti قَرَأَ (membaca), سَأَلَ (bertanya), dan أَفَلَ (terbenam — hamzah di fā' fi'il).</td></tr>
+      <tr><td class="no">73</td><td class="ar">ثُمَّ الصَّحِيحُ ما عَدا الَّذِي ذُكِرْ <span class="sep">✽</span> كاغْفِرْ لَنا رَبِّي كَمَنْ لَهُ غُفِرْ</td>
+      <td class="id">Adapun ṣaḥīḥ adalah fi'il selain jenis-jenis di atas, seperti اِغْفِرْ لَنَا رَبِّي (ampunilah kami, wahai Tuhanku) — sebagaimana kata yang telah diampuni baginya.</td></tr>
+    </table>
+
+    <div class="wazan-title">Peta Klasifikasi Fi'il Mu'tal</div>
+    <div class="wazan-grid">
+      <div class="wazan-card"><div class="w-ar">مِثَال</div><div class="w-row"><span>Contoh</span><span class="arv">وَعَدَ</span></div><div class="w-meaning">huruf illat di fā' fi'il (huruf pertama).</div></div>
+      <div class="wazan-card"><div class="w-ar">أَجْوَف</div><div class="w-row"><span>Contoh</span><span class="arv">قَالَ</span></div><div class="w-meaning">huruf illat di 'ain fi'il (huruf tengah).</div></div>
+      <div class="wazan-card"><div class="w-ar">نَاقِص</div><div class="w-row"><span>Contoh</span><span class="arv">غَزَا</span></div><div class="w-meaning">huruf illat di lam fi'il (huruf terakhir).</div></div>
+      <div class="wazan-card"><div class="w-ar">لَفِيف مَقْرُون</div><div class="w-row"><span>Contoh</span><span class="arv">طَوَى</span></div><div class="w-meaning">huruf illat di 'ain &amp; lam fi'il (berurutan).</div></div>
+      <div class="wazan-card"><div class="w-ar">لَفِيف مَفْرُوق</div><div class="w-row"><span>Contoh</span><span class="arv">وَفَى</span></div><div class="w-meaning">huruf illat di fā' &amp; lam fi'il (terpisah).</div></div>
+      <div class="wazan-card"><div class="w-ar">مُضَاعَف</div><div class="w-row"><span>Contoh</span><span class="arv">مَدَّ</span></div><div class="w-meaning">'ain dan lam fi'il berupa huruf sejenis (diidghamkan).</div></div>
+      <div class="wazan-card"><div class="w-ar">مَهْمُوز</div><div class="w-row"><span>Contoh</span><span class="arv">سَأَلَ</span></div><div class="w-meaning">mengandung huruf hamzah (di fā', 'ain, atau lam fi'il).</div></div>
+      <div class="wazan-card"><div class="w-ar">صَحِيح سَالِم</div><div class="w-row"><span>Contoh</span><span class="arv">كَتَبَ</span></div><div class="w-meaning">selain semua jenis di atas — bentuk paling beraturan.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 9A ================= -->
+<section class="bab" id="bab9a">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 09 · Rinci</div>
+    <div class="bab-title-ar">إِعْلَالُ الْأَجْوَفِ وَالنَّاقِصِ</div>
+    <div class="bab-title-id">Kaidah i'lāl (perubahan huruf illat) pada fi'il ajwaf &amp; nāqiṣ</div>
+  </div>
+  <div class="bab-body">
+    <div class="bab-note">
+      <p>Inilah bagian paling teknis dari ilmu shorof: bagaimana huruf illat (wāw/yā) berubah menjadi alif, atau saling bertukar, tergantung harakat di sekitarnya. Tiga kaidah dasar yang mendasari seluruh bab ini:</p>
+      <p><b>(1)</b> Wāw/yā berharakat yang didahului fatḥah → diubah jadi alif. <b>(2)</b> Wāw/yā sukun yang didahului harakat "tidak sejenis" (wāw didahului kasrah, atau yā didahului ḍammah) → saling bertukar. <b>(3)</b> Bila huruf illat berharakat namun huruf sebelumnya (yang shahih) sukun, harakatnya dipindah (naql) ke huruf shahih itu.</p>
+    </div>
+    <table class="bait">
+      <tr><td class="no">74</td><td class="ar">وَواوًا اوْ يا حُرِّكا اقْلِبْ أَلِفا <span class="sep">✽</span> مِنْ بَعْدِ فَتْحٍ كَغَزا الَّذِي كَفَى</td>
+      <td class="id">Wāw atau yā yang berharakat, ubahlah menjadi alif jika didahului huruf berharakat fatḥah — seperti pada غَزَا (asalnya غَزَوَ) dan كَفَى (asalnya كَفَيَ).</td></tr>
+      <tr><td class="no">75</td><td class="ar">ثُمَّ غَزَوْا وَغَزَتا كَذا غَزَتْ <span class="sep">✽</span> وَأَلِفٌ لِلسّاكِنَيْنِ حُذِفَتْ</td>
+      <td class="id">Kemudian pada غَزَوْا (mereka lk. berperang), غَزَتَا (mereka berdua pr.), begitu pula غَزَتْ (dia pr. berperang) — alif dihapus karena bertemu dua huruf sukun (iltiqā' sākinain).</td></tr>
+      <tr><td class="no">76</td><td class="ar">والْقَلْبُ فِي جَمْعِ الْإِناثِ مُنْتَفِي <span class="sep">✽</span> وَغَزَوا كَذا غَزَوْتُ فاقْتَفِي</td>
+      <td class="id">Perubahan (menjadi alif) tidak berlaku pada bentuk jamak muannats (غَزَوْنَ), begitu pula pada غَزَوْتُ (aku berperang) — huruf illat tetap asli karena bertemu dhamīr rafa' berharakat.</td></tr>
+      <tr><td class="no">77</td><td class="ar">وانْسُبْ لِأَجْوَفَ كَقالَ كالَ ما <span class="sep">✽</span> لِكَغَزا ثُمَّ كَفَى قَدِ انْتَمَى</td>
+      <td class="id">Nisbatkanlah kepada fi'il ajwaf hukum yang sama seperti قَالَ (qāla) dan كَالَ (kāla) — hukum yang berlaku pada غَزَا dan كَفَى tadi juga berlaku padanya.</td></tr>
+      <tr><td class="no">78</td><td class="ar">كَغَزَتِ احْذِفْ أَلِفًا مِنْ قُلْنَ أَوْ <span class="sep">✽</span> كِلْنَ بِضَمِّ فا وَكَسْرِها رَوَوْا</td>
+      <td class="id">Seperti غَزَتِ, hapus alif dari قُلْنَ (mereka pr. berkata) atau كِلْنَ (mereka pr. menakar) — huruf fā' fi'ilnya diriwayatkan boleh ḍammah atau kasrah.</td></tr>
+      <tr><td class="no">79</td><td class="ar">والْياءُ إِنْ ما قَبْلَها قَدِ انْكَسَرْ <span class="sep">✽</span> فابْقِ مِثالُهُ خَشِيتَ لِلضَّرَرْ</td>
+      <td class="id">Yā yang didahului huruf berharakat kasrah, biarkan tetap (tidak diubah) — contohnya خَشِيتَ (engkau takut), karena mengubahnya justru menyulitkan pelafalan.</td></tr>
+      <tr><td class="no">80</td><td class="ar">أَوْ ضُمَّ مَعْ سُكُونِها فَصَيِّرِ <span class="sep">✽</span> واوًا فَقُلْ يُوسِرُ فِي كَيُيْسِرِ</td>
+      <td class="id">Atau yā yang didahului ḍammah dan ia sendiri sukun, ubahlah menjadi wāw — maka ucapkan يُوسِرُ (asalnya يُيْسِرُ).</td></tr>
+      <tr><td class="no">81</td><td class="ar">وَواوٌ اثْرَ كَسْرٍ انْ تَسْكُنْ تَصِرْ <span class="sep">✽</span> ياءً كَجِيرَ بَعْدَ نَقْلٍ في جُوِرْ</td>
+      <td class="id">Wāw yang didahului kasrah dan ia sukun, berubah menjadi yā — seperti جِيرَ (asalnya جُوِرَ, setelah harakat 'ain dipindah ke fā').</td></tr>
+      <tr><td class="no">82</td><td class="ar">وَإِنْ تُحَرَّكْ وَهْيَ لاَمُ كِلْمَةِ <span class="sep">✽</span> كَذا فَقُلْ غَبِيْ مِنَ الْغَباوَةِ</td>
+      <td class="id">Jika wāw/yā berharakat dan ia sebagai lam fi'il (huruf akhir kata), tetap dibiarkan berharakat — seperti غَبِيَ (dari akar الْغَبَاوَة, bodoh).</td></tr>
+      <tr><td class="no">83</td><td class="ar">حَرَكَةٌ لِيا كَواوٍ إِنْ عَقِبْ <span class="sep">✽</span> ما صَحَّ ساكِنًا فَنَقْلُها يَجِبْ</td>
+      <td class="id">Harakat pada yā atau wāw, jika ia terletak setelah huruf shahih yang sukun, wajib dipindahkan (naql) ke huruf shahih itu.</td></tr>
+      <tr><td class="no">84</td><td class="ar">مِثالُ ذا يَقُولُ أَوْ يَكِيلُ ثُمّْ <span class="sep">✽</span> يَخافُ والْأَلِفُ عَنْ واوٍ تَقُمْ</td>
+      <td class="id">Contohnya يَقُولُ (asalnya يَقْوُلُ), يَكِيلُ (asalnya يَكْيِلُ), lalu يَخَافُ — dan huruf alifnya berasal dari wāw (asalnya يَخْوَفُ).</td></tr>
+      <tr><td class="no">85</td><td class="ar">وَإِنْ هُما مُحَرَّكَيْنِ فِي طَرَفْ <span class="sep">✽</span> مُضارِعٍ لَمْ يَنْتَصِبْ سَكِّنْ تُحَفّْ</td>
+      <td class="id">Jika wāw/yā keduanya berharakat di posisi akhir fi'il muḍāri' yang tidak dinashabkan, sukunkanlah agar ringan diucapkan.</td></tr>
+      <tr><td class="no">86</td><td class="ar">نَحْوُ الَّذِي جا مِنْ رَمَى أَوْ مِنْ عَفا <span class="sep">✽</span> أَوْ مِنْ خَشِيْ وَياءَ ذا اقْلِبْ أَلِفا</td>
+      <td class="id">Seperti bentuk muḍāri' dari رَمَى, عَفَا, atau خَشِيَ; dan yā pada kasus ini diubah menjadi alif bila didahului fatḥah (يَخْشَى).</td></tr>
+      <tr><td class="no">87</td><td class="ar">واحْذِفْهُما فِي جَمْعِهِ لا التَّثْنِيَهْ <span class="sep">✽</span> وَما كَتَغْزِينَ بِذا مُسْتَوِيَهْ</td>
+      <td class="id">Hapus keduanya (wāw/yā akhir) pada bentuk jamak mudzakkar (يَرْمُونَ), bukan pada mutsanna (يَرْمِيَانِ); begitu pula bentuk seperti تَغْزِينَ (mukhāthabah) mengikuti pola serupa.</td></tr>
+    </table>
+
+    <table class="tashrif">
+      <caption>Contoh Taṣrīf Lengkap Fi'il Ajwaf — قَالَ (berkata), asal قَوَلَ</caption>
+      <tr><th>Bentuk</th><th>Arab</th><th>Keterangan</th></tr>
+      <tr><td>Māḍī (dia)</td><td class="ar">قَالَ</td><td>wāw berharakat setelah fatḥah → jadi alif</td></tr>
+      <tr><td>Māḍī (mereka lk.)</td><td class="ar">قَالُوا</td><td>alif dibuang karena iltiqā' sākinain</td></tr>
+      <tr><td>Māḍī (aku)</td><td class="ar">قُلْتُ</td><td>harakat dipindah, wāw jadi tersembunyi (qultu, bukan qawaltu)</td></tr>
+      <tr><td>Muḍāri' (dia)</td><td class="ar">يَقُولُ</td><td>harakat 'ain dipindah ke fā', asalnya يَقْوُلُ</td></tr>
+      <tr><td>Muḍāri' majzūm</td><td class="ar">لَمْ يَقُلْ</td><td>huruf illat dibuang karena jazm</td></tr>
+      <tr><td>Amr</td><td class="ar">قُلْ</td><td>huruf illat dibuang, harakat dipindah ke fā'</td></tr>
+      <tr><td>Isim Fā'il</td><td class="ar">قَائِلٌ</td><td>wāw diganti hamzah setelah alif zā'idah</td></tr>
+      <tr><td>Isim Maf'ūl</td><td class="ar">مَقُولٌ</td><td>naql — asalnya مَقْوُولٌ</td></tr>
+    </table>
+
+    <table class="tashrif">
+      <caption>Contoh Taṣrīf Lengkap Fi'il Nāqiṣ — رَمَى (melempar) &amp; خَشِيَ (takut)</caption>
+      <tr><th>Bentuk</th><th>رَمَى</th><th>خَشِيَ</th></tr>
+      <tr><td>Muḍāri' (dia)</td><td class="ar">يَرْمِي</td><td class="ar">يَخْشَى</td></tr>
+      <tr><td>Muḍāri' majzūm</td><td class="ar">لَمْ يَرْمِ</td><td class="ar">لَمْ يَخْشَ</td></tr>
+      <tr><td>Jamak mudzakkar</td><td class="ar">يَرْمُونَ</td><td class="ar">يَخْشَوْنَ</td></tr>
+      <tr><td>Mutsanna</td><td class="ar">يَرْمِيَانِ</td><td class="ar">يَخْشَيَانِ</td></tr>
+      <tr><td>Isim Fā'il</td><td class="ar">رَامٍ</td><td class="ar">خَاشٍ</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ================= BAB 9B ================= -->
+<section class="bab" id="bab9b">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 09 · Rinci</div>
+    <div class="bab-title-ar">اسْمُ الْفَاعِلِ وَالْأَمْرُ مِنَ الْأَجْوَفِ وَالنَّاقِصِ</div>
+    <div class="bab-title-id">Isim fā'il/maf'ūl dan fi'il amr dari fi'il ajwaf &amp; nāqiṣ</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">88</td><td class="ar">وَفِي اسْمِ فاعِلِ اجْوَفٍ قُلْ قائِلا <span class="sep">✽</span> بِأَلِفٍ زَيْدٍ وَهَمْزِ ما تَلا</td>
+      <td class="id">Pada isim fā'il dari fi'il ajwaf, ucapkan قَائِل (qā'il) — dengan tambahan alif dan hamzah menggantikan huruf illat aslinya.</td></tr>
+      <tr><td class="no">89</td><td class="ar">فِي ناقِصٍ قُلْ غازٍ انْ لَمْ يَنْتَصِبْ <span class="sep">✽</span> وَلا بِأَلْ وَحَذْفُ يائِهِ يَجِبْ</td>
+      <td class="id">Pada fi'il nāqiṣ, ucapkan غَازٍ (ghāzin) bila tidak manshub dan tidak ber-"al" — huruf yā-nya wajib dihapus (rafa'/jar: غَازٍ, naṣab: غَازِيًا).</td></tr>
+      <tr><td class="no">90</td><td class="ar">وَكَمَقُولٍ اسْمَ مَفْعُولٍ خُذا <span class="sep">✽</span> بِالنَّقْلِ كالْمَكِيلِ واكْسِرْ فاءَ ذا</td>
+      <td class="id">Ambillah isim maf'ūl (dari ajwaf) seperti مَقُول (dengan pemindahan harakat), seperti مَكِيل, dan kasrahkan huruf fā'-nya.</td></tr>
+      <tr><td class="no">91</td><td class="ar">وَمِثْلَيِ الْمَغْزُوِّ حَتْمًا أَدْغِما <span class="sep">✽</span> كَذاكَ مَخْشِيْ بَعْدَ قَلْبٍ قُدِّما</td>
+      <td class="id">Dua huruf sama pada الْمَغْزُوّ wajib diidghamkan; begitu pula مَخْشِيّ setelah huruf illatnya diubah lebih dulu.</td></tr>
+      <tr><td class="no">92</td><td class="ar">وَأَمْرُ غائِبٍ أَتَى مِنْ أَجْوَفِ <span class="sep">✽</span> كَلِيَقُلْ وَأَصْلُهُ غَيْرُ خَفِي</td>
+      <td class="id">Fi'il amr untuk ghaib dari fi'il ajwaf datang seperti لِيَقُلْ (hendaklah dia berkata) — asalnya jelas (لِيَقْوُلْ).</td></tr>
+      <tr><td class="no">93</td><td class="ar">مُخاطَبٌ مِنْهُ كَقُلْ بِالنَّقْلِ <span class="sep">✽</span> وَحَذْفِ هَمْزِهِ وَعَيْنِ الْأَصْلِ</td>
+      <td class="id">Bentuk amr mukhāthab-nya seperti قُلْ (katakanlah!) — dengan pemindahan harakat, penghapusan hamzah waṣal, dan penghapusan 'ain fi'il aslinya.</td></tr>
+      <tr><td class="no">94</td><td class="ar">وَثَنِّهِ عَلَى كَقُولا والْتَزِمْ <span class="sep">✽</span> مِنْ ناقِصٍ فِي ذَيْنِ حَذْفًا لِلْمُتِمّْ</td>
+      <td class="id">Bentuk mutsannanya seperti قُولَا (katakanlah kalian berdua!); pada fi'il nāqiṣ, wajib menghapus huruf illat pada kedua bentuk (mufrad &amp; mutsanna) demi kesempurnaan lafal.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ================= BAB 9C ================= -->
+<section class="bab" id="bab9c">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 09 · Rinci</div>
+    <div class="bab-title-ar">إِعْلَالُ الْمِثَالِ وَاللَّفِيفِ</div>
+    <div class="bab-title-id">Kaidah fi'il mitsāl (huruf illat di awal) dan lafīf</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">95</td><td class="ar">وَحَذْفُ فا الْمُعْتَلِّ فِي مُسْتَقْبَلِ <span class="sep">✽</span> وَأَمْرٍ اوْ نَهْيٍ مَتَى تُعْلَمْ جَلِي</td>
+      <td class="id">Penghapusan fā' fi'il yang mu'tal (mitsal) pada bentuk muḍāri', amr, atau nahi — jelas diketahui,</td></tr>
+      <tr><td class="no">96</td><td class="ar">بِبابِ ما كَوَهَبَ اوْ كَوَعَدا <span class="sep">✽</span> وَرِثَ زِدْ وَقَلَّ ما قَدْ وَرَدا</td>
+      <td class="id">pada bab yang serupa وَهَبَ (memberi) atau وَعَدَ (berjanji); tambahkan pula وَرِثَ (mewarisi) — dan sedikit bentuk lain yang diriwayatkan (di luar kaidah umum).</td></tr>
+      <tr><td class="no">97</td><td class="ar">ثُمَّ اللَّفِيفُ لا بِقَيْدٍ قَدْ حُكِمْ <span class="sep">✽</span> لِلامِهِ بِما لِناقِصٍ عُلِمْ</td>
+      <td class="id">Kemudian fi'il lafīf, tanpa syarat khusus, hukum lam fi'ilnya sama seperti hukum yang berlaku pada fi'il nāqiṣ,</td></tr>
+      <tr><td class="no">98</td><td class="ar">وَكالصَّحِيحِ احْكُمْ لِعَيْنِ ما قُرِنْ <span class="sep">✽</span> وَفاءِ مَفْرُوقٍ كَمُعْتَلٍّ زُكِنْ</td>
+      <td class="id">dan berlakukan hukum seperti fi'il shahih untuk 'ain fi'il pada lafīf maqrūn; sedangkan fā' fi'il pada lafīf mafrūq dihukumi seperti fi'il mu'tal mitsal biasa.</td></tr>
+      <tr><td class="no">99</td><td class="ar">وَأَمْرُ ذا لِلْفَرْدِ قِهْ وَقِي قِيا <span class="sep">✽</span> لِاثْنَيْنِ قُوا وَقِينَ لِلْجَمْعِ ايتِيا</td>
+      <td class="id">Fi'il amr dari lafīf mafrūq (وَقَى - menjaga): untuk mufrad قِهْ atau قِ, untuk mutsanna قِيَا, untuk jamak mudzakkar قُوا, dan untuk jamak muannats قِينَ.</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Contoh Fi'il Mitsāl Yā'ī: وَعَدَ (berjanji)</div>
+      <p>Māḍī: <b dir="rtl" style="font-family:var(--serif);">وَعَدَ</b> (wāw tetap, tidak ada sebab dihapus) → Muḍāri': <b dir="rtl" style="font-family:var(--serif);">يَعِدُ</b> (wāw dihapus karena berada di antara yā muḍāra'ah dan kasrah — kaidah khusus mitsal wāwi) → Amr: <b dir="rtl" style="font-family:var(--serif);">عِدْ</b> → Mashdar: <b dir="rtl" style="font-family:var(--serif);">عِدَةً</b> (wāw diganti tā' marbūthah sebagai kompensasi).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 9D ================= -->
+<section class="bab" id="bab9d">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 09 · Rinci</div>
+    <div class="bab-title-ar">حُكْمُ الْمُضَاعَفِ</div>
+    <div class="bab-title-id">Kaidah idghām pada fi'il muḍā'af</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">100</td><td class="ar">وَما كَمَدٍّ مَصْدَرًا أَوْ مَدَّ مِنْ <span class="sep">✽</span> مُضاعَفٍ فَهْوَ بِإِدْغامٍ قَمِنْ</td>
+      <td class="id">Kata seperti مَدّ (mashdar) atau مَدَّ (fi'il māḍī dari fi'il muḍā'af) — layak diidghamkan (dua huruf sama dileburkan),</td></tr>
+      <tr><td class="no">101</td><td class="ar">أَوْ كَمَدَدْنَ أَوْ مَدَدْنا فاظْهِرِ <span class="sep">✽</span> وَفِي كَلَمْ يَمُدَّ جَوِّزْ كافْرِرِ</td>
+      <td class="id">tetapi pada bentuk seperti مَدَدْنَ (mereka pr. menarik) atau مَدَدْنَا (kami menarik), tampakkan (jangan diidghamkan, karena bertemu dhamīr sukun); dan pada lafaz seperti لَمْ يَمُدَّ, boleh dua cara (idghām atau iẓhār, seperti اُفْرُرْ).</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Kaidah Idghām Muḍā'af — Kapan Dilebur, Kapan Tidak</div>
+      <ul>
+        <li><b>Diidghamkan (dua huruf sama disatukan bertasydīd)</b> bila kedua huruf itu sama-sama berharakat, atau huruf pertama sukun bertemu huruf kedua berharakat — contoh: مَدَّ (bukan مَدَدَ), يَمُدُّ (bukan يَمْدُدُ).</li>
+        <li><b>Wajib ditampakkan (iẓhār, tidak diidghamkan)</b> bila bertemu dhamīr rafa' yang berharakat/sukun sehingga huruf kedua menjadi sukun — contoh: مَدَدْتُ، مَدَدْنَا، مَدَدْنَ.</li>
+        <li><b>Boleh dua-duanya (jawāz)</b> pada fi'il amr &amp; muḍāri' majzūm dari muḍā'af tsulātsī mujarrad — مُدَّ / اُمْدُدْ, لَمْ يَمُدَّ / لَمْ يَمْدُدْ.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 9E ================= -->
+<section class="bab" id="bab9e">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Bab 09 · Rinci</div>
+    <div class="bab-title-ar">حُكْمُ الْمَهْمُوزِ</div>
+    <div class="bab-title-id">Kaidah ibdāl (penggantian) hamzah pada fi'il mahmūz</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">102</td><td class="ar">مَهْمُوزٌ ابْدِلْ هَمْزَهُ مَتَى سَكَنْ <span class="sep">✽</span> بِمُقْتَضَى حَرَكَةٍ أَوِ اتْرُكَنْ</td>
+      <td class="id">Fi'il mahmūz: gantilah hamzahnya jika ia sukun, disesuaikan dengan harakat sebelumnya, atau boleh dibiarkan (tidak diganti).</td></tr>
+      <tr><td class="no">103</td><td class="ar">كَياكُلِ ايذَنْ يُومِنُوا واتْرُكْ مَتَى <span class="sep">✽</span> حَرَّكْتَهُ وَسابِقٌ كَذا أَتَى</td>
+      <td class="id">Seperti يَاكُلُ (asalnya يَأْكُلُ), اِيذَنْ (asalnya اِئْذَنْ), يُومِنُوا (asalnya يُؤْمِنُوا); dan biarkan (tidak diganti) bila hamzah berharakat, begitu pula bila huruf sebelumnya juga berharakat,</td></tr>
+      <tr><td class="no">104</td><td class="ar">نَحْوُ قَرا وَإِنْ يُحَرَّكْ هُوْ فَقَطْ <span class="sep">✽</span> كاسْأَلْ كَذا وَسَلْ أَجِزْ كَما انْضَبَطْ</td>
+      <td class="id">seperti قَرَأَ. Dan jika hanya hamzah saja yang berharakat (huruf sebelumnya sukun), seperti اِسْأَلْ, boleh juga diringankan menjadi سَلْ — kedua bentuk itu sah sebagaimana telah ditetapkan.</td></tr>
+      <tr><td class="no">105</td><td class="ar">وَحَذْفُ هَمْزِ خُذْ وَمُرْ كُلْ لا تَقِسْ <span class="sep">✽</span> وَكالصَّحِيحِ غَيْرَهُ صَرِّفْ وَقِسْ</td>
+      <td class="id">Penghapusan hamzah pada خُذْ (ambillah), مُرْ (perintahkanlah), dan كُلْ (makanlah) bersifat samā'ī (hanya dihafal, tidak dianalogikan); selain itu, taṣrīf-kanlah fi'il mahmūz seperti fi'il shahih biasa dan boleh dianalogikan.</td></tr>
+    </table>
+
+    <table class="tashrif">
+      <caption>Pola Ibdāl Hamzah Sukun (kaidah umum bahasa Arab)</caption>
+      <tr><th>Harakat sebelum hamzah</th><th>Hamzah sukun diganti</th><th>Contoh</th></tr>
+      <tr><td>Fatḥah</td><td>alif</td><td class="ar">يَاكُلُ ← يَأْكُلُ</td></tr>
+      <tr><td>Kasrah</td><td>yā</td><td class="ar">إِيذَنْ ← اِئْذَنْ</td></tr>
+      <tr><td>Ḍammah</td><td>wāw</td><td class="ar">يُومِنُوا ← يُؤْمِنُوا</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Tiga Fi'il yang Dihafal Luar Kepala (Sima'i)</div>
+      <p>خُذْ (ambillah, asal اُؤْخُذْ), مُرْ (perintahkanlah, asal اُؤْمُرْ), dan كُلْ (makanlah, asal اُؤْكُلْ) — hamzah waṣal dan hamzah aslinya sama-sama dihapus. Ini adalah bentuk yang tidak bisa dianalogikan (qiyāsī) ke fi'il lain; santri cukup menghafalnya.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KHATIMAH ================= -->
+<section class="bab" id="khatimah">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Penutup</div>
+    <div class="bab-title-ar">خَاتِمَةُ النَّظْمِ</div>
+    <div class="bab-title-id">Penutup nazham</div>
+  </div>
+  <div class="bab-body">
+    <table class="bait">
+      <tr><td class="no">106</td><td class="ar">قَد تَّمَّ ما رُمْنا مِنَ المقْصُودِ <span class="sep">✽</span> فاعْذِرْ حَدِيثَ السِّنِّ يا ذا الْجُودِ</td>
+      <td class="id">Telah sempurna apa yang kami maksudkan dari (nazham) Al-Maqshūd ini — maafkanlah (penulis yang masih) muda usia, wahai orang yang pemurah.</td></tr>
+      <tr><td class="no">107</td><td class="ar">وَأَحْمَدُ اللهَ مُصَلِّيًا عَلَى <span class="sep">✽</span> مُحَمَّدٍ وَآلِهِ وَمَنْ تَلا</td>
+      <td class="id">Dan aku memuji Allah seraya bershalawat kepada Nabi Muhammad, keluarganya, dan orang-orang yang mengikutinya.</td></tr>
+    </table>
+    <div class="tip">
+      <div class="tip-h">★ Untuk Santri — Alur Belajar yang Disarankan</div>
+      <ol>
+        <li>Hafalkan matan (bait-bait Arab) terlebih dahulu sebelum menghafal terjemahannya — ini tradisi pesantren agar lafal dan maknanya melekat bersamaan.</li>
+        <li>Praktikkan setiap wazan dengan men-taṣrīf-kan minimal tiga fi'il berbeda secara lisan, jangan hanya membaca tabel.</li>
+        <li>Setelah menguasai kitab ini, lanjutkan ke kitab syarah (misalnya <i>'Aunul Ma'bud</i> atau <i>Itḥāfu al-Wufūd</i>) untuk pendalaman dalil dan pengecualian yang belum tercakup di sini.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BAB 10 — PERBANDINGAN ================= -->
+<section class="bab" id="bab10">
+  <div class="bab-head">
+    <div class="bab-eyebrow">Perluasan · Perbandingan</div>
+    <div class="bab-title-ar">مُقَارَنَةٌ بَيْنَ كُتُبِ التَّصْرِيْفِ</div>
+    <div class="bab-title-id">Kedudukan Nazham Al-Maqshūd di antara kitab-kitab shorof lain</div>
+  </div>
+  <div class="bab-body">
+    <div class="bab-note">
+      <p>Nazham Al-Maqshūd bukan satu-satunya kitab shorof yang diajarkan di pesantren. Memahami posisinya di antara kitab lain membantu santri tahu <b>kapan</b> memakai kitab yang mana, dan <b>mengapa</b> Al-Maqshūd disusun dalam bentuk nazham yang padat seperti ini — bukan prosa panjang seperti Al-Amtsilah, dan bukan pula sepadat/serumit Lāmiyyatul Af‘āl.</p>
+    </div>
+
+    <div class="subhead">Silsilah Belajar Shorof di Pesantren</div>
+    <div class="subhead-id">Urutan yang umum dipakai, dari paling dasar ke paling mendalam</div>
+    <table class="tashrif">
+      <tr><th>Tahap</th><th>Kitab</th><th>Fokus &amp; Ciri</th></tr>
+      <tr><td>1 · Pemula</td><td>Al-Amtsilah At-Taṣrīfiyyah</td><td>Tabel tashrif penuh (14/12 shighah) untuk tiap wazan, tanpa nazham — santri menghafal <i>bunyi</i> perubahan kata lebih dulu, belum kaidah.</td></tr>
+      <tr><td>2 · Dasar–Menengah</td><td>Matn Bina’ (At-Taṣrīf al-‘Izzī, ringkas)</td><td>Prosa singkat berisi kaidah dasar wazan tsulātsī mujarrad &amp; klasifikasi fi‘il (shahih/mu‘tal).</td></tr>
+      <tr><td>3 · Menengah–Lanjutan</td><td><b>Nazham Al-Maqshūd</b> (kitab ini)</td><td>Kaidah dipadatkan jadi syair (nazham) agar mudah dihafal, mencakup mazīd, mashdar, binā’, isim musytaq, hingga i‘lāl — <i>menjembatani</i> hafalan wazan (tahap 1) dengan kaidah 'illah (tahap 4).</td></tr>
+      <tr><td>4 · Lanjutan Tinggi</td><td>Lāmiyyatul Af‘āl (Ibnu Mālik)</td><td>Nazham 66 bait yang jauh lebih padat &amp; berat istilahnya — fokus khusus pada 'illah i‘lāl &amp; ibdāl secara filosofis, biasa dipelajari <i>setelah</i> Al-Maqshūd.</td></tr>
+      <tr><td>5 · Syarah / Pendalaman</td><td>Syarah Al-Kailānī ‘ala Al-Maqshūd, atau Syarah Ibnu ‘Aqīl</td><td>Penjelasan prosa panjang atas nazham-nazham di atas, memuat dalil, khilāf ulama naḥwu-shorof, dan pengecualian (syādz) yang tak tertampung di matan.</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Kenapa Al-Maqshūd Berbentuk Nazham, Bukan Prosa?</div>
+      <p>Bentuk syair (nazham/manẓūmah) memudahkan hafalan lisan karena terikat wazan bahr rajaz dan qāfiyah (rima akhir tiap bait) — tradisi pesantren salaf umumnya mendahulukan hafalan matan sebelum memahami syarahnya secara detail. Al-Amtsilah At-Tashrifiyyah sengaja <i>tidak</i> berbentuk nazham karena tujuannya berbeda: melatih <i>refleks lisan</i> mengucapkan seluruh bentuk tashrif suatu kata, bukan menghafal kaidah abstrak.</p>
+    </div>
+
+    <div class="subhead">Perbandingan Cakupan Materi</div>
+    <div class="subhead-id">Bab yang sama, ditinjau dari tiga kitab berbeda</div>
+    <table class="tashrif">
+      <tr><th>Materi</th><th>Al-Amtsilah At-Taṣrīfiyyah</th><th>Nazham Al-Maqshūd</th><th>Lāmiyyatul Af‘āl</th></tr>
+      <tr><td>Tsulātsī mujarrad (6 bab)</td><td>✔ tabel penuh tiap bab, tiap dhamir</td><td>✔ kaidah wazan &amp; contoh (bab dasar)</td><td>— (dianggap sudah dikuasai)</td></tr>
+      <tr><td>Ruba‘ī &amp; Mazīd (14 wazan)</td><td>✔ tabel penuh per wazan</td><td>✔ kaidah + contoh ringkas (Bab 1–2 di sini)</td><td>disinggung sekilas, fokus i‘lālnya saja</td></tr>
+      <tr><td>Isim fā‘il / maf‘ūl</td><td>✔ dicontohkan per wazan</td><td>✔ kaidah wazan qiyāsī (Bab 5)</td><td>dibahas ulang khusus untuk kasus mu‘tal</td></tr>
+      <tr><td>Makna hamzah &amp; sīn</td><td>tidak dibahas</td><td>✔ lengkap 7 &amp; 5 makna (Bab 7)</td><td>tidak jadi fokus utama</td></tr>
+      <tr><td>I‘lāl ajwaf/nāqiṣ/lafīf</td><td>hanya tabel jadi (hasil akhir), tanpa kaidah</td><td>✔ kaidah proses perubahan (Bab 9)</td><td>✔✔ paling mendalam — istilah teknis 'illah lengkap</td></tr>
+      <tr><td>Muḍā‘af &amp; mahmūz</td><td>✔ tabel jadi tiap wazan</td><td>✔ kaidah idghām &amp; ibdāl (Bab 9)</td><td>✔ dengan variasi qirā’at &amp; syawāhid syi‘r</td></tr>
+    </table>
+
+    <div class="subhead">Padanan Istilah yang Sering Membingungkan Santri</div>
+    <table class="tashrif">
+      <tr><th>Istilah di Al-Maqshūd</th><th>Istilah lain yang setara</th><th>Catatan</th></tr>
+      <tr><td class="ar">الزِّيَادَة</td><td>مَزِيْد (mazīd)</td><td>Dua istilah untuk konsep yang sama: huruf tambahan di luar huruf asli.</td></tr>
+      <tr><td class="ar">الإِعْلَال</td><td>القَلْب، الإِبْدَال (dalam konteks tertentu)</td><td>I‘lāl mencakup qalb (penggantian huruf illat) dan ibdāl (penggantian huruf non-illat, misalnya tā’ iftā‘āl); banyak kitab pemula menyamakan ketiganya padahal cakupannya berbeda.</td></tr>
+      <tr><td class="ar">لَفِيْف مَقْرُوْن / مَفْرُوْق</td><td>di sebagian kitab disebut "لفيف متجانس / مفروق"</td><td>Nama berbeda, definisi sama: dua huruf illat berdekatan (maqrūn) atau terpisah (mafrūq).</td></tr>
+      <tr><td class="ar">صَحِيْح سَالِم</td><td>صحيح مجرد (di beberapa matn ringkas)</td><td>Fi‘il yang tidak mu‘tal, tidak muḍā‘af, tidak mahmūz — istilahnya konsisten di hampir semua kitab.</td></tr>
+    </table>
+
+    <div class="tip">
+      <div class="tip-h">★ Saran Praktis untuk Santri</div>
+      <ul>
+        <li>Jika baru mengenal shorof: kuasai dulu <b>Al-Amtsilah At-Tashrifiyyah</b> sampai lancar mengucapkan tashrif tanpa melihat buku, baru pindah ke Al-Maqshūd.</li>
+        <li>Gunakan Al-Maqshūd untuk memahami <b>alasan/kaidah di balik</b> tabel yang sudah dihafal — bukan untuk pertama kali mengenal kata-kata Arab.</li>
+        <li>Setelah lancar Al-Maqshūd, Lāmiyyatul Af‘āl akan terasa jauh lebih ringan karena istilah-istilah dasarnya (mitsāl, ajwaf, nāqiṣ, lafīf, muḍā‘af, mahmūz) sudah dikenal dari kitab ini.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  Diterjemahkan lengkap dari matan <i>Nazham al-Maqṣūd fī al-Taṣrīf</i> karya Aḥmad bin ‘Ābid ar-Raḥīm (107 bait) — mencakup seluruh isi kitab dari bab ruba‘ī mujarrad hingga khātimah, disertai perbandingan dengan kitab shorof lain.
+  <div class="fa">وَاللهُ أَعْلَمُ بِالصَّوَابِ</div>
+  <div style="margin-top:14px;opacity:.75;">© 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: vaozeei@gmail.com</div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var label = document.getElementById('themeLabel');
+  var saved = null;
+  try { saved = localStorage.getItem('shorof-theme'); } catch(e){}
+  if(saved === 'light' || saved === 'dark'){ root.setAttribute('data-theme', saved); }
+  function updateLabel(){
+    var t = root.getAttribute('data-theme');
+    label.textContent = (t === 'light') ? 'Tema Gelap' : 'Tema Terang';
+  }
+  updateLabel();
+  btn.addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme');
+    var next = (cur === 'light') ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('shorof-theme', next); } catch(e){}
+    updateLabel();
+  });
+})();
+</script>
+
+</body>
+</html>

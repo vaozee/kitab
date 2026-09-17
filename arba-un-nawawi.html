@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Arba'un An-Nawawiyah wa Tatimmatuha &mdash; Modul Pembelajaran Hadits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F6F0E1;
+    --parchment-deep:#EFE6CF;
+    --card:#FFFCF4;
+    --ink:#1E2A22;
+    --ink-soft:#4A5A4E;
+    --emerald:#173B31;
+    --emerald-soft:#2E5C4C;
+    --gold:#B4893F;
+    --gold-light:#D9B876;
+    --maroon:#7C2E2A;
+    --maroon-soft:#9C4A3F;
+    --line: rgba(30,42,34,0.14);
+    --shadow: 0 12px 30px -18px rgba(23,59,49,0.35);
+    --sidebar-w: 300px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 100% -10%, rgba(180,137,63,0.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(23,59,49,0.08), transparent 55%),
+      var(--parchment);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background: var(--gold-light); color:var(--emerald); }
+
+  a{ color:inherit; text-decoration:none; }
+
+  /* ===== Ornamental top band ===== */
+  .top-ornament{
+    height:6px;
+    background: repeating-linear-gradient(90deg, var(--gold) 0 18px, var(--maroon) 18px 22px, var(--emerald) 22px 40px);
+    opacity:0.85;
+  }
+
+  /* ===== Header ===== */
+  header.masthead{
+    padding:56px 32px 40px;
+    text-align:center;
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(23,59,49,0.04), transparent 70%);
+    border-bottom:1px solid var(--line);
+  }
+  .masthead-badge{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Inter'; font-size:12.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--maroon); font-weight:600;
+    padding:6px 16px; border:1px solid rgba(124,46,42,0.35); border-radius:999px;
+    background:rgba(124,46,42,0.05);
+    margin-bottom:22px;
+  }
+  .masthead-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--maroon);}
+  header.masthead h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    font-size:clamp(2.2rem, 5vw, 3.6rem);
+    line-height:1.08;
+    margin:0 0 6px;
+    color:var(--emerald);
+  }
+  header.masthead .arabic-title{
+    font-family:'Amiri', serif;
+    font-size:clamp(1.5rem, 3.4vw, 2.3rem);
+    color:var(--maroon);
+    margin:6px 0 18px;
+    direction:rtl;
+  }
+  header.masthead p.lede{
+    max-width:640px;
+    margin:0 auto;
+    color:var(--ink-soft);
+    font-size:1.02rem;
+    line-height:1.7;
+  }
+  .masthead-meta{
+    margin-top:26px;
+    display:flex; gap:28px; justify-content:center; flex-wrap:wrap;
+    font-size:.85rem; color:var(--emerald-soft); letter-spacing:.03em;
+  }
+  .masthead-meta span{ display:flex; align-items:center; gap:8px; }
+  .masthead-meta b{ color:var(--emerald); font-family:'Cormorant Garamond'; font-size:1.15rem; }
+
+  /* ===== Layout ===== */
+  .layout{
+    display:grid;
+    grid-template-columns: var(--sidebar-w) 1fr;
+    max-width:1280px;
+    margin:0 auto;
+    align-items:start;
+  }
+
+  /* ===== Sidebar ===== */
+  aside.sidebar{
+    position:sticky; top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:26px 14px 26px 26px;
+    border-right:1px solid var(--line);
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-light) transparent;
+  }
+  aside.sidebar::-webkit-scrollbar{ width:6px; }
+  aside.sidebar::-webkit-scrollbar-thumb{ background:var(--gold-light); border-radius:6px; }
+
+  .search-wrap{
+    position:relative;
+    margin-bottom:18px;
+  }
+  #searchInput{
+    width:100%;
+    padding:11px 14px 11px 38px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:var(--card);
+    font-family:'Inter'; font-size:.88rem;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  #searchInput:focus{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(180,137,63,0.15); }
+  .search-wrap svg{ position:absolute; left:12px; top:50%; transform:translateY(-50%); opacity:.55; }
+
+  .sidebar-title{
+    font-family:'Inter'; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--ink-soft); margin: 4px 2px 10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .sidebar-title::after{ content:""; flex:1; height:1px; background:var(--line); }
+
+  nav.nav-list{ display:flex; flex-direction:column; gap:3px; padding-bottom:20px; }
+  .nav-item{
+    display:flex; align-items:center; gap:11px;
+    padding:8px 10px;
+    border-radius:9px;
+    font-size:.86rem;
+    color:var(--ink-soft);
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover{ background:rgba(180,137,63,0.10); color:var(--emerald); }
+  .nav-item.active{ background:var(--emerald); color:#F6F0E1; }
+  .nav-item.active .nav-medal{ background:var(--gold-light); color:var(--emerald); border-color:var(--gold-light); }
+  .nav-medal{
+    flex:0 0 auto;
+    width:24px; height:24px; border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Cormorant Garamond'; font-weight:700; font-size:.8rem;
+    color:var(--maroon);
+  }
+  .nav-text{ line-height:1.3; }
+
+  /* ===== Main ===== */
+  main.content{ padding:36px 40px 100px; min-width:0; }
+
+  .intro-panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 28px;
+    margin-bottom:36px;
+    box-shadow:var(--shadow);
+    position:relative;
+    overflow:hidden;
+  }
+  .intro-panel::before{
+    content:"";
+    position:absolute; inset:0 0 auto 0; height:4px;
+    background:linear-gradient(90deg, var(--emerald), var(--gold), var(--maroon));
+  }
+  .intro-panel h3{
+    font-family:'Cormorant Garamond'; color:var(--emerald); font-size:1.3rem; margin:6px 0 10px;
+  }
+  .intro-panel p{ color:var(--ink-soft); line-height:1.75; font-size:.94rem; margin:0 0 10px;}
+  .intro-panel p:last-child{margin-bottom:0;}
+
+  .hadits-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:30px 32px 34px;
+    margin-bottom:26px;
+    box-shadow:var(--shadow);
+    scroll-margin-top:20px;
+    position:relative;
+  }
+  .card-head{
+    display:flex; align-items:flex-start; gap:18px;
+    padding-bottom:18px; margin-bottom:20px;
+    border-bottom:1px dashed rgba(180,137,63,0.45);
+  }
+  .medal{
+    flex:0 0 auto;
+    width:52px; height:52px; border-radius:50%;
+    background: radial-gradient(circle at 32% 28%, #fff7e6, var(--gold-light) 45%, var(--gold) 100%);
+    border:2px solid var(--maroon);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow: inset 0 0 0 3px rgba(255,255,255,0.5);
+  }
+  .medal-no{ font-family:'Cormorant Garamond'; font-weight:700; font-size:1.35rem; color:var(--maroon); }
+  .card-head-text{ padding-top:2px; }
+  .eyebrow{ margin:0 0 4px; font-size:.76rem; letter-spacing:.08em; text-transform:uppercase; color:var(--maroon-soft); font-weight:600;}
+  .card-head-text h2{ margin:0; font-family:'Cormorant Garamond'; font-weight:700; font-size:1.55rem; color:var(--emerald); line-height:1.2;}
+
+  .matan-panel{
+    background: linear-gradient(180deg, var(--parchment-deep), var(--parchment));
+    border:1px solid rgba(180,137,63,0.4);
+    border-radius:14px;
+    padding:22px 26px 24px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .matan-panel::before, .matan-panel::after{
+    content:"";
+    position:absolute; width:14px; height:14px;
+    border:2px solid var(--gold);
+  }
+  .matan-panel::before{ top:8px; left:8px; border-right:none; border-bottom:none; }
+  .matan-panel::after{ bottom:8px; right:8px; border-left:none; border-top:none; }
+  .matan-label{
+    margin:0 0 12px; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--gold); font-weight:700; text-align:center;
+  }
+  .arabic{
+    font-family:'Amiri', serif;
+    direction:rtl;
+    text-align:right;
+    font-size:clamp(1.25rem, 2vw, 1.5rem);
+    line-height:2.35;
+    color:var(--emerald);
+    margin:0;
+  }
+
+  .block-label{
+    margin:0 0 8px;
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700;
+    color:var(--emerald-soft);
+  }
+  .terjemah-block{ margin-bottom:20px; }
+  .terjemah-text{ margin:0; line-height:1.85; font-size:.98rem; color:var(--ink); }
+
+  .keterangan-block{
+    background:rgba(23,59,49,0.045);
+    border-left:3px solid var(--emerald);
+    border-radius:0 12px 12px 0;
+    padding:16px 20px;
+  }
+  .ket-label{ color:var(--maroon); }
+  .keterangan-text{ margin:0; line-height:1.8; font-size:.92rem; color:var(--ink-soft); }
+  .keterangan-text em{ color:var(--emerald); font-style:normal; font-weight:600; }
+
+  /* ===== Footer ===== */
+  footer.site-footer{
+    text-align:center;
+    padding:34px 20px 44px;
+    color:var(--ink-soft);
+    font-size:.82rem;
+    border-top:1px solid var(--line);
+  }
+  footer.site-footer .divider{
+    width:60px; height:2px; margin:0 auto 16px;
+    background:linear-gradient(90deg, var(--emerald), var(--gold), var(--maroon));
+    border-radius:2px;
+  }
+
+  /* ===== Mobile nav toggle ===== */
+  .mobile-bar{ display:none; }
+
+  @media (max-width: 920px){
+    .layout{ grid-template-columns: 1fr; }
+    aside.sidebar{
+      position:fixed; top:0; left:0; height:100vh; width:min(84vw, 320px);
+      background:var(--parchment); z-index:40;
+      transform:translateX(-100%);
+      transition:transform .25s ease;
+      border-right:1px solid var(--line);
+      box-shadow: 20px 0 40px -20px rgba(0,0,0,0.3);
+    }
+    aside.sidebar.open{ transform:translateX(0); }
+    .mobile-bar{
+      display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:30;
+      background:var(--parchment); padding:14px 18px;
+      border-bottom:1px solid var(--line);
+    }
+    .mobile-bar button{
+      display:flex; align-items:center; gap:8px;
+      background:var(--emerald); color:#F6F0E1; border:none;
+      padding:9px 14px; border-radius:9px; font-family:'Inter'; font-size:.85rem; font-weight:600;
+      cursor:pointer;
+    }
+    .mobile-bar .mb-title{ font-family:'Cormorant Garamond'; font-weight:700; color:var(--emerald); font-size:1.05rem; }
+    .scrim{ display:none; position:fixed; inset:0; background:rgba(20,25,20,0.4); z-index:35; }
+    .scrim.show{ display:block; }
+    main.content{ padding:26px 18px 80px; }
+    .hadits-card{ padding:22px 18px 26px; }
+    header.masthead{ padding:40px 20px 30px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-ornament"></div>
+
+<div class="mobile-bar">
+  <span class="mb-title">Al-Arba'un An-Nawawiyah</span>
+  <button id="navToggle" aria-label="Buka daftar hadits">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    Daftar Hadits
+  </button>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<header class="masthead">
+  <span class="masthead-badge"><span class="dot"></span> Modul Pembelajaran Santri</span>
+  <h1>Al-Arba'un An-Nawawiyah<br>wa Tatimmatuha</h1>
+  <p class="arabic-title">الأربعون النووية وتتمتها</p>
+  <p class="lede">Kumpulan 50 hadits pilihan &mdash; 42 hadits inti susunan Imam An-Nawawi rahimahullah, disempurnakan dengan 8 hadits tambahan yang dihimpun Al-Hafizh Ibnu Rajab Al-Hanbali rahimahullah. Setiap hadits disajikan lengkap dengan teks Arab, terjemah, dan keterangan tambahan untuk memudahkan santri memahami kandungannya.</p>
+  <div class="masthead-meta">
+    <span><b>50</b>&nbsp;Hadits</span>
+    <span><b>42+8</b>&nbsp;Susunan Nawawi &amp; Ibnu Rajab</span>
+    <span><b>ID</b>&nbsp;Teks Arab &amp; Terjemah</span>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="searchInput" placeholder="Cari hadits atau perawi...">
+    </div>
+    <p class="sidebar-title">Daftar 50 Hadits</p>
+    <nav class="nav-list" id="navList">
+      
+        <a href="#h1" class="nav-item" data-no="1" data-title="segalanya bergantung niat umar bin al-khaththab radhiyallahu 'anhu">
+          <span class="nav-medal">1</span>
+          <span class="nav-text">Segalanya Bergantung Niat</span>
+        </a>
+
+        <a href="#h2" class="nav-item" data-no="2" data-title="islam, iman, dan ihsan umar bin al-khaththab radhiyallahu 'anhu">
+          <span class="nav-medal">2</span>
+          <span class="nav-text">Islam, Iman, dan Ihsan</span>
+        </a>
+
+        <a href="#h3" class="nav-item" data-no="3" data-title="lima rukun islam abdullah bin umar radhiyallahu 'anhuma">
+          <span class="nav-medal">3</span>
+          <span class="nav-text">Lima Rukun Islam</span>
+        </a>
+
+        <a href="#h4" class="nav-item" data-no="4" data-title="fase penciptaan manusia dan takdir abdullah bin mas'ud radhiyallahu 'anhu">
+          <span class="nav-medal">4</span>
+          <span class="nav-text">Fase Penciptaan Manusia dan Takdir</span>
+        </a>
+
+        <a href="#h5" class="nav-item" data-no="5" data-title="bid'ah yang tertolak aisyah radhiyallahu 'anha">
+          <span class="nav-medal">5</span>
+          <span class="nav-text">Bid'ah yang Tertolak</span>
+        </a>
+
+        <a href="#h6" class="nav-item" data-no="6" data-title="yang halal dan haram itu jelas an-nu'man bin basyir radhiyallahu 'anhuma">
+          <span class="nav-medal">6</span>
+          <span class="nav-text">Yang Halal dan Haram itu Jelas</span>
+        </a>
+
+        <a href="#h7" class="nav-item" data-no="7" data-title="agama adalah nasihat tamim ad-dari radhiyallahu 'anhu">
+          <span class="nav-medal">7</span>
+          <span class="nav-text">Agama Adalah Nasihat</span>
+        </a>
+
+        <a href="#h8" class="nav-item" data-no="8" data-title="diperintahkan memerangi manusia hingga bersyahadat abdullah bin umar radhiyallahu 'anhuma">
+          <span class="nav-medal">8</span>
+          <span class="nav-text">Diperintahkan Memerangi Manusia hingga Bersyahadat</span>
+        </a>
+
+        <a href="#h9" class="nav-item" data-no="9" data-title="kerjakan sesuai kemampuan abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">9</span>
+          <span class="nav-text">Kerjakan Sesuai Kemampuan</span>
+        </a>
+
+        <a href="#h10" class="nav-item" data-no="10" data-title="allah itu baik, menerima yang baik abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">10</span>
+          <span class="nav-text">Allah itu Baik, Menerima yang Baik</span>
+        </a>
+
+        <a href="#h11" class="nav-item" data-no="11" data-title="tinggalkan yang meragukan al-hasan bin ali radhiyallahu 'anhuma">
+          <span class="nav-medal">11</span>
+          <span class="nav-text">Tinggalkan yang Meragukan</span>
+        </a>
+
+        <a href="#h12" class="nav-item" data-no="12" data-title="meninggalkan yang tidak bermanfaat abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">12</span>
+          <span class="nav-text">Meninggalkan yang Tidak Bermanfaat</span>
+        </a>
+
+        <a href="#h13" class="nav-item" data-no="13" data-title="mencintai saudara sebagaimana diri sendiri anas bin malik radhiyallahu 'anhu">
+          <span class="nav-medal">13</span>
+          <span class="nav-text">Mencintai Saudara Sebagaimana Diri Sendiri</span>
+        </a>
+
+        <a href="#h14" class="nav-item" data-no="14" data-title="sebab halalnya darah seorang muslim abdullah bin mas'ud radhiyallahu 'anhu">
+          <span class="nav-medal">14</span>
+          <span class="nav-text">Sebab Halalnya Darah Seorang Muslim</span>
+        </a>
+
+        <a href="#h15" class="nav-item" data-no="15" data-title="berkata baik atau diam abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">15</span>
+          <span class="nav-text">Berkata Baik atau Diam</span>
+        </a>
+
+        <a href="#h16" class="nav-item" data-no="16" data-title="jangan marah abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">16</span>
+          <span class="nav-text">Jangan Marah</span>
+        </a>
+
+        <a href="#h17" class="nav-item" data-no="17" data-title="ihsan dalam segala hal syaddad bin aus radhiyallahu 'anhu">
+          <span class="nav-medal">17</span>
+          <span class="nav-text">Ihsan dalam Segala Hal</span>
+        </a>
+
+        <a href="#h18" class="nav-item" data-no="18" data-title="bertakwa di mana saja berada abu dzar dan mu'adz bin jabal radhiyallahu 'anhuma">
+          <span class="nav-medal">18</span>
+          <span class="nav-text">Bertakwa di Mana Saja Berada</span>
+        </a>
+
+        <a href="#h19" class="nav-item" data-no="19" data-title="jagalah allah, niscaya allah menjagamu abdullah bin abbas radhiyallahu 'anhuma">
+          <span class="nav-medal">19</span>
+          <span class="nav-text">Jagalah Allah, Niscaya Allah Menjagamu</span>
+        </a>
+
+        <a href="#h20" class="nav-item" data-no="20" data-title="rasa malu sebagian dari iman abu mas'ud al-anshari radhiyallahu 'anhu">
+          <span class="nav-medal">20</span>
+          <span class="nav-text">Rasa Malu Sebagian dari Iman</span>
+        </a>
+
+        <a href="#h21" class="nav-item" data-no="21" data-title="katakan aku beriman, lalu istiqamahlah sufyan bin abdullah ats-tsaqafi radhiyallahu 'anhu">
+          <span class="nav-medal">21</span>
+          <span class="nav-text">Katakan Aku Beriman, Lalu Istiqamahlah</span>
+        </a>
+
+        <a href="#h22" class="nav-item" data-no="22" data-title="ketetapan kewajiban rukun islam membawa ke surga jabir bin abdullah radhiyallahu 'anhuma">
+          <span class="nav-medal">22</span>
+          <span class="nav-text">Ketetapan Kewajiban Rukun Islam Membawa ke Surga</span>
+        </a>
+
+        <a href="#h23" class="nav-item" data-no="23" data-title="bersuci setengah dari iman abu malik al-asy'ari radhiyallahu 'anhu">
+          <span class="nav-medal">23</span>
+          <span class="nav-text">Bersuci Setengah dari Iman</span>
+        </a>
+
+        <a href="#h24" class="nav-item" data-no="24" data-title="larangan berbuat zalim abu dzar radhiyallahu 'anhu">
+          <span class="nav-medal">24</span>
+          <span class="nav-text">Larangan Berbuat Zalim</span>
+        </a>
+
+        <a href="#h25" class="nav-item" data-no="25" data-title="tasbih dan dzikir sebagai sedekah abu dzar radhiyallahu 'anhu">
+          <span class="nav-medal">25</span>
+          <span class="nav-text">Tasbih dan Dzikir sebagai Sedekah</span>
+        </a>
+
+        <a href="#h26" class="nav-item" data-no="26" data-title="setiap ruas tubuh wajib bersedekah abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">26</span>
+          <span class="nav-text">Setiap Ruas Tubuh Wajib Bersedekah</span>
+        </a>
+
+        <a href="#h27" class="nav-item" data-no="27" data-title="kebajikan adalah akhlak yang baik an-nawwas bin sam'an radhiyallahu 'anhu">
+          <span class="nav-medal">27</span>
+          <span class="nav-text">Kebajikan adalah Akhlak yang Baik</span>
+        </a>
+
+        <a href="#h28" class="nav-item" data-no="28" data-title="wasiat perpisahan dan berpegang pada sunnah al-'irbadh bin sariyah radhiyallahu 'anhu">
+          <span class="nav-medal">28</span>
+          <span class="nav-text">Wasiat Perpisahan dan Berpegang pada Sunnah</span>
+        </a>
+
+        <a href="#h29" class="nav-item" data-no="29" data-title="amalan yang memasukkan ke surga mu'adz bin jabal radhiyallahu 'anhu">
+          <span class="nav-medal">29</span>
+          <span class="nav-text">Amalan yang Memasukkan ke Surga</span>
+        </a>
+
+        <a href="#h30" class="nav-item" data-no="30" data-title="batasan-batasan allah abu tsa'labah al-khusyani radhiyallahu 'anhu">
+          <span class="nav-medal">30</span>
+          <span class="nav-text">Batasan-Batasan Allah</span>
+        </a>
+
+        <a href="#h31" class="nav-item" data-no="31" data-title="zuhud terhadap dunia sahl bin sa'ad radhiyallahu 'anhu">
+          <span class="nav-medal">31</span>
+          <span class="nav-text">Zuhud terhadap Dunia</span>
+        </a>
+
+        <a href="#h32" class="nav-item" data-no="32" data-title="tidak boleh membahayakan diri dan orang lain abu sa'id al-khudri radhiyallahu 'anhu">
+          <span class="nav-medal">32</span>
+          <span class="nav-text">Tidak Boleh Membahayakan Diri dan Orang Lain</span>
+        </a>
+
+        <a href="#h33" class="nav-item" data-no="33" data-title="bukti bagi penuduh, sumpah bagi yang mengingkari abdullah bin abbas radhiyallahu 'anhuma">
+          <span class="nav-medal">33</span>
+          <span class="nav-text">Bukti bagi Penuduh, Sumpah bagi yang Mengingkari</span>
+        </a>
+
+        <a href="#h34" class="nav-item" data-no="34" data-title="mengubah kemungkaran sesuai kemampuan abu sa'id al-khudri radhiyallahu 'anhu">
+          <span class="nav-medal">34</span>
+          <span class="nav-text">Mengubah Kemungkaran Sesuai Kemampuan</span>
+        </a>
+
+        <a href="#h35" class="nav-item" data-no="35" data-title="larangan dengki dan memutus silaturahmi abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">35</span>
+          <span class="nav-text">Larangan Dengki dan Memutus Silaturahmi</span>
+        </a>
+
+        <a href="#h36" class="nav-item" data-no="36" data-title="melapangkan kesulitan sesama mukmin abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">36</span>
+          <span class="nav-text">Melapangkan Kesulitan Sesama Mukmin</span>
+        </a>
+
+        <a href="#h37" class="nav-item" data-no="37" data-title="balasan niat dan amal abdullah bin abbas radhiyallahu 'anhuma">
+          <span class="nav-medal">37</span>
+          <span class="nav-text">Balasan Niat dan Amal</span>
+        </a>
+
+        <a href="#h38" class="nav-item" data-no="38" data-title="wali-wali allah abu hurairah radhiyallahu 'anhu">
+          <span class="nav-medal">38</span>
+          <span class="nav-text">Wali-Wali Allah</span>
+        </a>
+
+        <a href="#h39" class="nav-item" data-no="39" data-title="dimaafkannya kesalahan, lupa, dan paksaan abdullah bin abbas radhiyallahu 'anhuma">
+          <span class="nav-medal">39</span>
+          <span class="nav-text">Dimaafkannya Kesalahan, Lupa, dan Paksaan</span>
+        </a>
+
+        <a href="#h40" class="nav-item" data-no="40" data-title="jadilah di dunia seperti perantau abdullah bin umar radhiyallahu 'anhuma">
+          <span class="nav-medal">40</span>
+          <span class="nav-text">Jadilah di Dunia Seperti Perantau</span>
+        </a>
+
+        <a href="#h41" class="nav-item" data-no="41" data-title="hawa nafsu tunduk pada syariat abdullah bin amr bin al-'ash radhiyallahu 'anhuma">
+          <span class="nav-medal">41</span>
+          <span class="nav-text">Hawa Nafsu Tunduk pada Syariat</span>
+        </a>
+
+        <a href="#h42" class="nav-item" data-no="42" data-title="luasnya ampunan allah anas bin malik radhiyallahu 'anhu">
+          <span class="nav-medal">42</span>
+          <span class="nav-text">Luasnya Ampunan Allah</span>
+        </a>
+
+        <a href="#h43" class="nav-item" data-no="43" data-title="bagikan warisan sesuai haknya abdullah bin abbas radhiyallahu 'anhuma">
+          <span class="nav-medal">43</span>
+          <span class="nav-text">Bagikan Warisan Sesuai Haknya</span>
+        </a>
+
+        <a href="#h44" class="nav-item" data-no="44" data-title="persusuan mengharamkan sebagaimana nasab aisyah radhiyallahu 'anha">
+          <span class="nav-medal">44</span>
+          <span class="nav-text">Persusuan Mengharamkan Sebagaimana Nasab</span>
+        </a>
+
+        <a href="#h45" class="nav-item" data-no="45" data-title="empat perkara yang diharamkan allah jabir bin abdullah radhiyallahu 'anhuma">
+          <span class="nav-medal">45</span>
+          <span class="nav-text">Empat Perkara yang Diharamkan Allah</span>
+        </a>
+
+        <a href="#h46" class="nav-item" data-no="46" data-title="setiap yang memabukkan itu haram abu musa al-asy'ari radhiyallahu 'anhu">
+          <span class="nav-medal">46</span>
+          <span class="nav-text">Setiap yang Memabukkan itu Haram</span>
+        </a>
+
+        <a href="#h47" class="nav-item" data-no="47" data-title="secukupnya dalam makan dan minum al-miqdam bin ma'dikarib radhiyallahu 'anhu">
+          <span class="nav-medal">47</span>
+          <span class="nav-text">Secukupnya dalam Makan dan Minum</span>
+        </a>
+
+        <a href="#h48" class="nav-item" data-no="48" data-title="empat tanda kemunafikan abdullah bin umar radhiyallahu 'anhuma">
+          <span class="nav-medal">48</span>
+          <span class="nav-text">Empat Tanda Kemunafikan</span>
+        </a>
+
+        <a href="#h49" class="nav-item" data-no="49" data-title="bertawakal sepenuhnya kepada allah umar bin al-khaththab radhiyallahu 'anhu">
+          <span class="nav-medal">49</span>
+          <span class="nav-text">Bertawakal Sepenuhnya kepada Allah</span>
+        </a>
+
+        <a href="#h50" class="nav-item" data-no="50" data-title="istiqamah lisan dalam berdzikir abdullah bin busr radhiyallahu 'anhu">
+          <span class="nav-medal">50</span>
+          <span class="nav-text">Istiqamah Lisan dalam Berdzikir</span>
+        </a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="intro-panel">
+      <h3>Petunjuk Belajar</h3>
+      <p>Modul ini disusun agar santri dapat mempelajari Al-Arba'un An-Nawawiyah secara bertahap. Gunakan panel pencarian di sebelah kiri untuk melompat langsung ke hadits tertentu berdasarkan nomor, judul, atau nama perawi.</p>
+      <p>Setiap hadits memuat empat bagian: <em>(1)</em> teks Arab asli lengkap sanad ringkas dan matan, <em>(2)</em> terjemah bahasa Indonesia, dan <em>(3)</em> keterangan tambahan berisi faedah dan pelajaran fikih/akidah/akhlak agar kandungan hadits lebih mudah dipahami dan diamalkan dalam kehidupan sehari-hari.</p>
+    </div>
+
+    
+      <article class="hadits-card" id="h1" data-no="1" data-title="segalanya bergantung niat umar bin al-khaththab radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">1</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-1 &middot; Diriwayatkan oleh Umar bin Al-Khaththab radhiyallahu 'anhu</p>
+            <h2>Segalanya Bergantung Niat</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى، فَمَنْ كَانَتْ هِجْرَتُهُ إِلَى اللهِ وَرَسُولِهِ فَهِجْرَتُهُ إِلَى اللهِ وَرَسُولِهِ، وَمَنْ كَانَتْ هِجْرَتُهُ لِدُنْيَا يُصِيبُهَا أَوِ امْرَأَةٍ يَنْكِحُهَا فَهِجْرَتُهُ إِلَى مَا هَاجَرَ إِلَيْهِ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Amirul Mukminin Abu Hafsh, Umar bin Al-Khaththab radhiyallahu 'anhu berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, "Sesungguhnya setiap amal itu tergantung niatnya, dan setiap orang hanya akan mendapatkan apa yang ia niatkan. Barangsiapa hijrahnya karena Allah dan Rasul-Nya, maka hijrahnya kepada Allah dan Rasul-Nya. Dan barangsiapa hijrahnya karena dunia yang ingin ia raih atau karena wanita yang ingin ia nikahi, maka hijrahnya sesuai dengan apa yang ia tuju." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini disebut oleh para ulama sebagai <em>tsuluts al-'ilmi</em> (sepertiga ilmu Islam) karena menjadi timbangan bagi amal batin. Niat adalah ruh dari setiap perbuatan: amal yang sama bisa bernilai ibadah atau sekadar kebiasaan tergantung niat pelakunya. Karena itu para ulama menganjurkan meletakkan hadits ini di awal setiap kitab, sebagai pengingat agar santri selalu meluruskan niat sebelum belajar maupun beramal. Faedah praktis: sebelum melakukan sesuatu, tanyakan pada diri, "untuk siapa aku melakukan ini?"</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h2" data-no="2" data-title="islam, iman, dan ihsan umar bin al-khaththab radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">2</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-2 &middot; Diriwayatkan oleh Umar bin Al-Khaththab radhiyallahu 'anhu</p>
+            <h2>Islam, Iman, dan Ihsan</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ عُمَرَ رَضِيَ اللهُ عَنْهُ أَيْضًا قَالَ: بَيْنَمَا نَحْنُ جُلُوسٌ عِنْدَ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ ذَاتَ يَوْمٍ إِذْ طَلَعَ عَلَيْنَا رَجُلٌ شَدِيدُ بَيَاضِ الثِّيَابِ، شَدِيدُ سَوَادِ الشَّعْرِ، لَا يُرَى عَلَيْهِ أَثَرُ السَّفَرِ وَلَا يَعْرِفُهُ مِنَّا أَحَدٌ، حَتَّى جَلَسَ إِلَى النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فَأَسْنَدَ رُكْبَتَيْهِ إِلَى رُكْبَتَيْهِ وَوَضَعَ كَفَّيْهِ عَلَى فَخِذَيْهِ، وَقَالَ: يَا مُحَمَّدُ أَخْبِرْنِي عَنِ الْإِسْلَامِ، فَقَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: الْإِسْلَامُ أَنْ تَشْهَدَ أَنْ لَا إِلَهَ إِلَّا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَتُقِيمَ الصَّلَاةَ، وَتُؤْتِيَ الزَّكَاةَ، وَتَصُومَ رَمَضَانَ، وَتَحُجَّ الْبَيْتَ إِنِ اسْتَطَعْتَ إِلَيْهِ سَبِيلًا. قَالَ: صَدَقْتَ. فَعَجِبْنَا لَهُ يَسْأَلُهُ وَيُصَدِّقُهُ! قَالَ: فَأَخْبِرْنِي عَنِ الْإِيمَانِ، قَالَ: أَنْ تُؤْمِنَ بِاللهِ، وَمَلَائِكَتِهِ، وَكُتُبِهِ، وَرُسُلِهِ، وَالْيَوْمِ الْآخِرِ، وَتُؤْمِنَ بِالْقَدَرِ خَيْرِهِ وَشَرِّهِ. قَالَ: صَدَقْتَ. قَالَ: فَأَخْبِرْنِي عَنِ الْإِحْسَانِ، قَالَ: أَنْ تَعْبُدَ اللهَ كَأَنَّكَ تَرَاهُ، فَإِنْ لَمْ تَكُنْ تَرَاهُ فَإِنَّهُ يَرَاكَ. قَالَ: فَأَخْبِرْنِي عَنِ السَّاعَةِ، قَالَ: مَا الْمَسْؤُولُ عَنْهَا بِأَعْلَمَ مِنَ السَّائِلِ. قَالَ: فَأَخْبِرْنِي عَنْ أَمَارَاتِهَا، قَالَ: أَنْ تَلِدَ الْأَمَةُ رَبَّتَهَا، وَأَنْ تَرَى الْحُفَاةَ الْعُرَاةَ الْعَالَةَ رِعَاءَ الشَّاءِ يَتَطَاوَلُونَ فِي الْبُنْيَانِ. ثُمَّ انْطَلَقَ، فَلَبِثْتُ مَلِيًّا، ثُمَّ قَالَ: يَا عُمَرُ أَتَدْرِي مَنِ السَّائِلُ؟ قُلْتُ: اللهُ وَرَسُولُهُ أَعْلَمُ. قَالَ: فَإِنَّهُ جِبْرِيلُ أَتَاكُمْ يُعَلِّمُكُمْ دِينَكُمْ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Umar radhiyallahu 'anhu berkata: Pada suatu hari ketika kami duduk di sisi Rasulullah shallallahu 'alaihi wa sallam, tiba-tiba muncul seorang laki-laki berpakaian sangat putih, berambut sangat hitam, tidak tampak padanya tanda bekas perjalanan, dan tak seorang pun di antara kami mengenalnya. Ia duduk di hadapan Nabi shallallahu 'alaihi wa sallam, menempelkan lututnya ke lutut Nabi, meletakkan kedua telapak tangannya di atas paha Nabi, lalu berkata, "Wahai Muhammad, kabarkan kepadaku tentang Islam." Rasulullah shallallahu 'alaihi wa sallam bersabda, "Islam adalah engkau bersaksi bahwa tiada Tuhan yang berhak disembah selain Allah dan bahwa Muhammad adalah utusan Allah, mendirikan shalat, menunaikan zakat, berpuasa Ramadhan, dan menunaikan haji ke Baitullah jika engkau mampu." Ia berkata, "Engkau benar." Kami pun heran, ia bertanya sekaligus membenarkan jawabannya. Ia bertanya lagi, "Kabarkan kepadaku tentang iman." Nabi bersabda, "Engkau beriman kepada Allah, malaikat-malaikat-Nya, kitab-kitab-Nya, rasul-rasul-Nya, hari akhir, dan beriman kepada takdir baik maupun buruk." Ia berkata, "Engkau benar." Ia bertanya, "Kabarkan kepadaku tentang ihsan." Nabi bersabda, "Engkau beribadah kepada Allah seakan-akan engkau melihat-Nya, jika engkau tidak mampu melihat-Nya maka sesungguhnya Dia melihatmu." Ia bertanya, "Kabarkan kepadaku tentang hari kiamat." Nabi bersabda, "Yang ditanya tidak lebih tahu dari yang bertanya." Ia berkata, "Kalau begitu kabarkan kepadaku tentang tanda-tandanya." Nabi bersabda, "Budak wanita melahirkan tuannya, dan engkau melihat orang-orang yang tak beralas kaki, tak berpakaian, miskin, dan pengembala kambing berlomba-lomba meninggikan bangunan." Kemudian orang itu pergi. Aku (Umar) terdiam sejenak, lalu Nabi bertanya, "Wahai Umar, tahukah engkau siapa yang bertanya tadi?" Aku menjawab, "Allah dan Rasul-Nya yang lebih tahu." Nabi bersabda, "Sesungguhnya itu adalah Jibril, ia datang untuk mengajarkan agama kepada kalian." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini dikenal sebagai <em>hadits Jibril</em> dan menjadi rangka besar seluruh ajaran Islam: Islam (amalan lahir), Iman (keyakinan batin), dan Ihsan (puncak kesempurnaan ibadah, yakni ikhlas dan muraqabah/merasa diawasi Allah). Ketiga tingkatan ini disebut para ulama sebagai <em>martabatud-din</em> (tingkatan agama). Menariknya, Jibril datang menyamar sebagai manusia agar para sahabat mendapat pelajaran langsung tanpa perlu bertanya sendiri — menunjukkan besarnya kasih sayang Allah dalam menyampaikan ilmu agama.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h3" data-no="3" data-title="lima rukun islam abdullah bin umar radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">3</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-3 &middot; Diriwayatkan oleh Abdullah bin Umar radhiyallahu 'anhuma</p>
+            <h2>Lima Rukun Islam</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللهِ بْنِ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «بُنِيَ الْإِسْلَامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لَا إِلَهَ إِلَّا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلَاةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ الْبَيْتِ، وَصَوْمِ رَمَضَانَ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abdullah bin Umar bin Al-Khaththab radhiyallahu 'anhuma berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, "Islam dibangun di atas lima perkara: bersaksi bahwa tiada Tuhan yang berhak disembah selain Allah dan bahwa Muhammad adalah utusan Allah, mendirikan shalat, menunaikan zakat, haji ke Baitullah, dan puasa Ramadhan." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menegaskan lima tiang utama bangunan Islam. Diibaratkan sebuah bangunan, syahadat adalah fondasinya sedangkan empat rukun lainnya adalah tiang penyangga; jika salah satu tiang goyah, bangunan menjadi lemah. Urutan penyebutan bukan berarti urutan wajib dikerjakan berdasarkan waktu, melainkan urutan kepentingan dan kedudukannya dalam agama.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h4" data-no="4" data-title="fase penciptaan manusia dan takdir abdullah bin mas'ud radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">4</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-4 &middot; Diriwayatkan oleh Abdullah bin Mas'ud radhiyallahu 'anhu</p>
+            <h2>Fase Penciptaan Manusia dan Takdir</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي عَبْدِ الرَّحْمَنِ عَبْدِ اللهِ بْنِ مَسْعُودٍ رَضِيَ اللهُ عَنْهُ قَالَ: حَدَّثَنَا رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ وَهُوَ الصَّادِقُ الْمَصْدُوقُ: «إِنَّ أَحَدَكُمْ يُجْمَعُ خَلْقُهُ فِي بَطْنِ أُمِّهِ أَرْبَعِينَ يَوْمًا نُطْفَةً، ثُمَّ يَكُونُ عَلَقَةً مِثْلَ ذَلِكَ، ثُمَّ يَكُونُ مُضْغَةً مِثْلَ ذَلِكَ، ثُمَّ يُرْسَلُ إِلَيْهِ الْمَلَكُ فَيَنْفُخُ فِيهِ الرُّوحَ، وَيُؤْمَرُ بِأَرْبَعِ كَلِمَاتٍ: بِكَتْبِ رِزْقِهِ، وَأَجَلِهِ، وَعَمَلِهِ، وَشَقِيٌّ أَوْ سَعِيدٌ. فَوَاللهِ الَّذِي لَا إِلَهَ غَيْرُهُ إِنَّ أَحَدَكُمْ لَيَعْمَلُ بِعَمَلِ أَهْلِ الْجَنَّةِ حَتَّى مَا يَكُونُ بَيْنَهُ وَبَيْنَهَا إِلَّا ذِرَاعٌ فَيَسْبِقُ عَلَيْهِ الْكِتَابُ فَيَعْمَلُ بِعَمَلِ أَهْلِ النَّارِ فَيَدْخُلُهَا، وَإِنَّ أَحَدَكُمْ لَيَعْمَلُ بِعَمَلِ أَهْلِ النَّارِ حَتَّى مَا يَكُونُ بَيْنَهُ وَبَيْنَهَا إِلَّا ذِرَاعٌ فَيَسْبِقُ عَلَيْهِ الْكِتَابُ فَيَعْمَلُ بِعَمَلِ أَهْلِ الْجَنَّةِ فَيَدْخُلُهَا»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abdullah bin Mas'ud radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam menceritakan kepada kami, dan beliau adalah orang yang jujur lagi dibenarkan, "Sesungguhnya setiap kalian dikumpulkan penciptaannya dalam perut ibunya selama empat puluh hari berupa nutfah (setetes mani), kemudian menjadi 'alaqah (segumpal darah) selama itu pula, kemudian menjadi mudhghah (segumpal daging) selama itu pula. Kemudian diutus kepadanya malaikat untuk meniupkan ruh, dan diperintahkan menuliskan empat perkara: rezekinya, ajalnya, amalnya, serta apakah ia celaka atau bahagia. Demi Allah yang tiada Tuhan selain-Nya, sungguh salah seorang di antara kalian benar-benar beramal dengan amalan penghuni surga hingga jarak antara dirinya dan surga tinggal sehasta, namun catatan takdir mendahuluinya sehingga ia beramal dengan amalan penghuni neraka lalu ia masuk ke dalamnya. Dan sungguh salah seorang di antara kalian benar-benar beramal dengan amalan penghuni neraka hingga jarak antara dirinya dan neraka tinggal sehasta, namun catatan takdir mendahuluinya sehingga ia beramal dengan amalan penghuni surga lalu ia masuk ke dalamnya." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini adalah rujukan utama dalam bab akidah tentang penciptaan manusia dan takdir. Empat fase kehamilan (nutfah, 'alaqah, mudhghah, peniupan ruh) sejalan dengan penjelasan embriologi dalam Al-Qur'an surat Al-Mu'minun. Pelajaran pentingnya: catatan takdir bersifat rahasia dan akhir kehidupan (husnul/su'ul khatimah) menentukan, sehingga seorang muslim tidak boleh ujub dengan amalnya maupun putus asa dari rahmat Allah, melainkan senantiasa berdoa memohon keistiqamahan hingga akhir hayat.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h5" data-no="5" data-title="bid'ah yang tertolak aisyah radhiyallahu 'anha">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">5</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-5 &middot; Diriwayatkan oleh Aisyah radhiyallahu 'anha</p>
+            <h2>Bid'ah yang Tertolak</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أُمِّ الْمُؤْمِنِينَ أُمِّ عَبْدِ اللهِ عَائِشَةَ رَضِيَ اللهُ عَنْهَا قَالَتْ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «مَنْ أَحْدَثَ فِي أَمْرِنَا هَذَا مَا لَيْسَ مِنْهُ فَهُوَ رَدٌّ» وَفِي رِوَايَةٍ لِمُسْلِمٍ: «مَنْ عَمِلَ عَمَلًا لَيْسَ عَلَيْهِ أَمْرُنَا فَهُوَ رَدٌّ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ummul Mukminin, Ummu Abdillah Aisyah radhiyallahu 'anha berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Barangsiapa mengada-adakan sesuatu yang baru dalam urusan (agama) kami ini, yang bukan berasal darinya, maka ia tertolak." Dalam riwayat Muslim, "Barangsiapa melakukan suatu amalan yang tidak ada tuntunannya dari kami, maka ia tertolak." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini adalah kaidah agung dalam menilai sah tidaknya suatu amal ibadah dari sisi kesesuaiannya dengan tuntunan syariat (mizanul a'mal min al-batin/dhahir). Bersama hadits pertama (tentang niat, yang menjadi timbangan batin), hadits ini menjadi timbangan lahir: sebuah amal baru diterima jika sesuai dua syarat, yaitu ikhlas karena Allah dan mengikuti tuntunan Rasulullah shallallahu 'alaihi wa sallam. Inilah dasar penolakan segala bentuk bid'ah dalam ibadah.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h6" data-no="6" data-title="yang halal dan haram itu jelas an-nu'man bin basyir radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">6</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-6 &middot; Diriwayatkan oleh An-Nu'man bin Basyir radhiyallahu 'anhuma</p>
+            <h2>Yang Halal dan Haram itu Jelas</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي عَبْدِ اللهِ النُّعْمَانِ بْنِ بَشِيرٍ رَضِيَ اللهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «إِنَّ الْحَلَالَ بَيِّنٌ وَإِنَّ الْحَرَامَ بَيِّنٌ، وَبَيْنَهُمَا أُمُورٌ مُشْتَبِهَاتٌ لَا يَعْلَمُهُنَّ كَثِيرٌ مِنَ النَّاسِ، فَمَنِ اتَّقَى الشُّبُهَاتِ فَقَدِ اسْتَبْرَأَ لِدِينِهِ وَعِرْضِهِ، وَمَنْ وَقَعَ فِي الشُّبُهَاتِ وَقَعَ فِي الْحَرَامِ، كَالرَّاعِي يَرْعَى حَوْلَ الْحِمَى يُوشِكُ أَنْ يَرْتَعَ فِيهِ، أَلَا وَإِنَّ لِكُلِّ مَلِكٍ حِمًى، أَلَا وَإِنَّ حِمَى اللهِ مَحَارِمُهُ، أَلَا وَإِنَّ فِي الْجَسَدِ مُضْغَةً إِذَا صَلَحَتْ صَلَحَ الْجَسَدُ كُلُّهُ، وَإِذَا فَسَدَتْ فَسَدَ الْجَسَدُ كُلُّهُ، أَلَا وَهِيَ الْقَلْبُ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">An-Nu'man bin Basyir radhiyallahu 'anhuma berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, "Sesungguhnya yang halal itu jelas dan yang haram pun jelas, dan di antara keduanya terdapat perkara-perkara yang samar yang tidak diketahui oleh kebanyakan manusia. Maka barangsiapa menjaga diri dari perkara syubhat, ia telah membersihkan agama dan kehormatannya. Dan barangsiapa terjerumus ke dalam syubhat, ia telah terjerumus ke dalam yang haram, ibarat penggembala yang menggembala di sekitar tanah larangan, hampir-hampir ia terjerumus ke dalamnya. Ketahuilah, setiap raja memiliki tanah larangan, dan ketahuilah tanah larangan Allah adalah segala yang diharamkan-Nya. Ketahuilah, dalam tubuh terdapat segumpal daging, apabila ia baik maka baiklah seluruh tubuh, dan apabila ia rusak maka rusaklah seluruh tubuh. Ketahuilah, segumpal daging itu adalah hati." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits agung ini membagi hukum perbuatan menjadi tiga: halal yang jelas, haram yang jelas, dan syubhat (samar) di antara keduanya. Sikap wara' (kehati-hatian) terhadap perkara syubhat menjadi pelindung agama dan kehormatan diri. Penutup hadits menegaskan bahwa kualitas hati menentukan kualitas seluruh anggota badan — sehingga menjaga kebersihan hati dari penyakit seperti dengki dan cinta dunia berlebihan adalah kunci istiqamah lahiriah.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h7" data-no="7" data-title="agama adalah nasihat tamim ad-dari radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">7</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-7 &middot; Diriwayatkan oleh Tamim Ad-Dari radhiyallahu 'anhu</p>
+            <h2>Agama Adalah Nasihat</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي رُقَيَّةَ تَمِيمِ بْنِ أَوْسٍ الدَّارِيِّ رَضِيَ اللهُ عَنْهُ أَنَّ النَّبِيَّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «الدِّينُ النَّصِيحَةُ» قُلْنَا: لِمَنْ؟ قَالَ: «لِلَّهِ، وَلِكِتَابِهِ، وَلِرَسُولِهِ، وَلِأَئِمَّةِ الْمُسْلِمِينَ وَعَامَّتِهِمْ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Ruqayyah Tamim bin Aus Ad-Dari radhiyallahu 'anhu meriwayatkan bahwa Nabi shallallahu 'alaihi wa sallam bersabda, "Agama adalah nasihat." Kami bertanya, "Untuk siapa?" Beliau menjawab, "Untuk Allah, kitab-Nya, Rasul-Nya, para pemimpin kaum muslimin, dan seluruh kaum muslimin." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Nasihat (an-nashihah) dalam hadits ini mencakup makna luas: tulus, memberi hak sepenuhnya, dan mengharap kebaikan. Nasihat untuk Allah berarti beriman dan taat murni kepada-Nya; untuk kitab-Nya berarti membaca, memahami, dan mengamalkannya; untuk Rasul-Nya berarti membela dan meneladani sunnahnya; untuk pemimpin berarti taat dalam kebaikan dan menasihati dengan cara yang baik; untuk kaum muslimin berarti mencintai kebaikan bagi mereka sebagaimana bagi diri sendiri.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h8" data-no="8" data-title="diperintahkan memerangi manusia hingga bersyahadat abdullah bin umar radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">8</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-8 &middot; Diriwayatkan oleh Abdullah bin Umar radhiyallahu 'anhuma</p>
+            <h2>Diperintahkan Memerangi Manusia hingga Bersyahadat</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ عُمَرَ رَضِيَ اللهُ عَنْهُمَا أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «أُمِرْتُ أَنْ أُقَاتِلَ النَّاسَ حَتَّى يَشْهَدُوا أَنْ لَا إِلَهَ إِلَّا اللهُ، وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَيُقِيمُوا الصَّلَاةَ، وَيُؤْتُوا الزَّكَاةَ، فَإِذَا فَعَلُوا ذَلِكَ عَصَمُوا مِنِّي دِمَاءَهُمْ وَأَمْوَالَهُمْ إِلَّا بِحَقِّ الْإِسْلَامِ، وَحِسَابُهُمْ عَلَى اللهِ تَعَالَى»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Umar radhiyallahu 'anhuma meriwayatkan bahwa Rasulullah shallallahu 'alaihi wa sallam bersabda, "Aku diperintahkan untuk memerangi manusia hingga mereka bersaksi bahwa tiada Tuhan yang berhak disembah selain Allah dan bahwa Muhammad adalah utusan Allah, mendirikan shalat, dan menunaikan zakat. Apabila mereka telah melakukan hal itu, maka terjagalah dariku darah dan harta mereka, kecuali dengan hak Islam, dan perhitungan mereka terserah kepada Allah Ta'ala." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjelaskan sebab dibolehkannya memerangi kaum yang menolak Islam pada masa Nabi (khususnya kaum musyrikin Arab), bukan dalil umum untuk memaksa keyakinan siapapun secara sembarangan. Kalimat "kecuali dengan hak Islam" menunjukkan bahwa nyawa dan harta seorang muslim tetap dapat dikenai hukum syar'i (qishas, hudud, dll) bila melanggar aturan agama. Adapun urusan batin dan keikhlasan seseorang, itu sepenuhnya diserahkan kepada Allah.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h9" data-no="9" data-title="kerjakan sesuai kemampuan abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">9</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-9 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Kerjakan Sesuai Kemampuan</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ عَبْدِ الرَّحْمَنِ بْنِ صَخْرٍ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «مَا نَهَيْتُكُمْ عَنْهُ فَاجْتَنِبُوهُ، وَمَا أَمَرْتُكُمْ بِهِ فَأْتُوا مِنْهُ مَا اسْتَطَعْتُمْ، فَإِنَّمَا أَهْلَكَ الَّذِينَ مِنْ قَبْلِكُمْ كَثْرَةُ مَسَائِلِهِمْ، وَاخْتِلَافُهُمْ عَلَى أَنْبِيَائِهِمْ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah, Abdurrahman bin Shakhr radhiyallahu 'anhu berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, "Apa yang aku larang, jauhilah. Dan apa yang aku perintahkan, kerjakanlah semampu kalian. Sesungguhnya yang membinasakan umat sebelum kalian adalah banyaknya pertanyaan mereka dan perselisihan mereka terhadap nabi-nabi mereka." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Kaidah ini membedakan sikap terhadap larangan dan perintah: larangan wajib dijauhi secara mutlak (kecuali dalam kondisi darurat), sedangkan perintah dikerjakan semampu kemampuan seseorang, sehingga syariat memberi keringanan pada perintah namun tegas pada larangan. Peringatan terhadap banyak bertanya di luar kebutuhan dan berselisih terhadap ajaran nabi mengajarkan agar ilmu ditujukan pada amal, bukan sekadar perdebatan yang menimbulkan perpecahan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h10" data-no="10" data-title="allah itu baik, menerima yang baik abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">10</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-10 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Allah itu Baik, Menerima yang Baik</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «إِنَّ اللهَ تَعَالَى طَيِّبٌ لَا يَقْبَلُ إِلَّا طَيِّبًا، وَإِنَّ اللهَ أَمَرَ الْمُؤْمِنِينَ بِمَا أَمَرَ بِهِ الْمُرْسَلِينَ، فَقَالَ تَعَالَى: يَا أَيُّهَا الرُّسُلُ كُلُوا مِنَ الطَّيِّبَاتِ وَاعْمَلُوا صَالِحًا، وَقَالَ تَعَالَى: يَا أَيُّهَا الَّذِينَ آمَنُوا كُلُوا مِنْ طَيِّبَاتِ مَا رَزَقْنَاكُمْ. ثُمَّ ذَكَرَ الرَّجُلَ يُطِيلُ السَّفَرَ أَشْعَثَ أَغْبَرَ يَمُدُّ يَدَيْهِ إِلَى السَّمَاءِ: يَا رَبِّ، يَا رَبِّ، وَمَطْعَمُهُ حَرَامٌ، وَمَشْرَبُهُ حَرَامٌ، وَمَلْبَسُهُ حَرَامٌ، وَغُذِيَ بِالْحَرَامِ، فَأَنَّى يُسْتَجَابُ لَهُ؟!»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Sesungguhnya Allah Ta'ala itu Maha Baik, tidak menerima kecuali yang baik. Sesungguhnya Allah memerintahkan orang-orang beriman sebagaimana Dia memerintahkan para rasul. Allah berfirman, 'Wahai para rasul, makanlah dari makanan yang baik-baik dan beramallah shalih,' dan Allah berfirman, 'Wahai orang-orang yang beriman, makanlah dari rezeki baik yang Kami berikan kepada kalian.' Kemudian Nabi menyebutkan seorang laki-laki yang menempuh perjalanan jauh, rambutnya kusut, badannya berdebu, ia menengadahkan kedua tangannya ke langit sambil berkata, 'Ya Rabb, ya Rabb', sedangkan makanannya haram, minumannya haram, pakaiannya haram, dan ia dibesarkan dengan yang haram, maka bagaimana mungkin doanya dikabulkan?" (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini mengaitkan erat antara kehalalan rezeki dengan terkabulnya doa. Allah Maha Suci dan hanya menerima amal serta harta yang baik dan halal. Gambaran seorang musafir yang berdoa penuh harap namun tertolak doanya karena makanan, minuman, dan pakaiannya bersumber dari yang haram menjadi peringatan keras agar seorang muslim senantiasa memastikan sumber penghasilannya bersih, karena harta haram menjadi penghalang dikabulkannya doa.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h11" data-no="11" data-title="tinggalkan yang meragukan al-hasan bin ali radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">11</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-11 &middot; Diriwayatkan oleh Al-Hasan bin Ali radhiyallahu 'anhuma</p>
+            <h2>Tinggalkan yang Meragukan</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي مُحَمَّدٍ الْحَسَنِ بْنِ عَلِيِّ بْنِ أَبِي طَالِبٍ سِبْطِ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ وَرَيْحَانَتِهِ رَضِيَ اللهُ عَنْهُمَا قَالَ: حَفِظْتُ مِنْ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «دَعْ مَا يَرِيبُكَ إِلَى مَا لَا يَرِيبُكَ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Muhammad Al-Hasan bin Ali bin Abi Thalib radhiyallahu 'anhuma, cucu dan buah hati Rasulullah shallallahu 'alaihi wa sallam, berkata: Aku menghafal dari Rasulullah shallallahu 'alaihi wa sallam, "Tinggalkan apa yang meragukanmu menuju apa yang tidak meragukanmu." (HR. Tirmidzi, ia berkata: hadits hasan shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Kaidah ini mengajarkan prinsip kehati-hatian (wara') ketika seseorang dihadapkan pada dua pilihan yang satu diyakini dan satu meragukan. Ketenangan hati adalah tanda kebenaran, sedangkan keraguan adalah tanda perlu berhati-hati, sebagaimana disebutkan pula dalam hadits ke-27 tentang kebajikan. Kaidah ini sangat luas cakupannya, mulai dari urusan ibadah, muamalah, hingga hubungan sosial sehari-hari.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h12" data-no="12" data-title="meninggalkan yang tidak bermanfaat abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">12</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-12 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Meninggalkan yang Tidak Bermanfaat</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «مِنْ حُسْنِ إِسْلَامِ الْمَرْءِ تَرْكُهُ مَا لَا يَعْنِيهِ» حَدِيثٌ حَسَنٌ رَوَاهُ التِّرْمِذِيُّ وَغَيْرُهُ هَكَذَا</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Di antara tanda kebaikan Islam seseorang adalah ia meninggalkan apa yang tidak bermanfaat baginya." (Hadits hasan, riwayat Tirmidzi dan lainnya)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits singkat ini menjadi salah satu kaidah pokok dalam akhlak Islam: kualitas keislaman seseorang tercermin dari kemampuannya menjaga waktu, lisan, dan perhatiannya hanya pada hal yang berfaedah, baik untuk urusan dunia maupun akhirat. Termasuk di dalamnya menjauhi obrolan sia-sia, ikut campur urusan orang lain yang tidak perlu, serta rasa ingin tahu berlebihan yang tak membawa manfaat.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h13" data-no="13" data-title="mencintai saudara sebagaimana diri sendiri anas bin malik radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">13</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-13 &middot; Diriwayatkan oleh Anas bin Malik radhiyallahu 'anhu</p>
+            <h2>Mencintai Saudara Sebagaimana Diri Sendiri</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي حَمْزَةَ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللهُ عَنْهُ خَادِمِ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hamzah, Anas bin Malik radhiyallahu 'anhu, pelayan Rasulullah shallallahu 'alaihi wa sallam, meriwayatkan dari Nabi shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Tidak sempurna iman salah seorang dari kalian hingga ia mencintai untuk saudaranya apa yang ia cintai untuk dirinya sendiri." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menegaskan bahwa kesempurnaan iman berbanding lurus dengan luasnya rasa cinta seorang muslim terhadap kebaikan bagi saudaranya. "Saudara" di sini mencakup sesama muslim secara umum. Sikap ini melahirkan sifat mulia seperti tidak dengki, senang melihat orang lain sukses, dan ringan tangan membantu — lawan dari sifat egois yang hanya memikirkan kepentingan diri sendiri.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h14" data-no="14" data-title="sebab halalnya darah seorang muslim abdullah bin mas'ud radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">14</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-14 &middot; Diriwayatkan oleh Abdullah bin Mas'ud radhiyallahu 'anhu</p>
+            <h2>Sebab Halalnya Darah Seorang Muslim</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ مَسْعُودٍ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «لَا يَحِلُّ دَمُ امْرِئٍ مُسْلِمٍ إِلَّا بِإِحْدَى ثَلَاثٍ: الثَّيِّبُ الزَّانِي، وَالنَّفْسُ بِالنَّفْسِ، وَالتَّارِكُ لِدِينِهِ الْمُفَارِقُ لِلْجَمَاعَةِ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Mas'ud radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Tidak halal darah seorang muslim kecuali dengan salah satu dari tiga sebab: janda/duda yang berzina, jiwa dibalas dengan jiwa (pembunuhan yang sengaja), dan orang yang meninggalkan agamanya serta memisahkan diri dari jamaah (murtad)." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjelaskan bahwa nyawa seorang muslim sangat mulia dan dilindungi syariat, tidak boleh ditumpahkan kecuali melalui proses hukum resmi (peradilan Islam/qadhi) atas tiga sebab tersebut. Ini bukan izin bagi individu untuk main hakim sendiri, melainkan penjelasan hukum pidana Islam yang pelaksanaannya berada di tangan pemerintah/hakim yang sah, guna menjaga ketertiban dan mencegah kekacauan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h15" data-no="15" data-title="berkata baik atau diam abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">15</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-15 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Berkata Baik atau Diam</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «مَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ، وَمَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ جَارَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ ضَيْفَهُ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu meriwayatkan bahwa Rasulullah shallallahu 'alaihi wa sallam bersabda, "Barangsiapa beriman kepada Allah dan hari akhir, hendaklah ia berkata baik atau diam. Barangsiapa beriman kepada Allah dan hari akhir, hendaklah ia memuliakan tetangganya. Dan barangsiapa beriman kepada Allah dan hari akhir, hendaklah ia memuliakan tamunya." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Tiga wasiat dalam hadits ini — menjaga lisan, memuliakan tetangga, dan memuliakan tamu — semuanya dikaitkan langsung dengan keimanan kepada Allah dan hari akhir, menunjukkan betapa pentingnya kedudukannya. Kaidah "berkata baik atau diam" menjadi rem alami sebelum berbicara: jika ucapan itu tidak membawa kebaikan atau bahkan berpotensi menyakiti, lebih baik memilih diam.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h16" data-no="16" data-title="jangan marah abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">16</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-16 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Jangan Marah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ: أَنَّ رَجُلًا قَالَ لِلنَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: أَوْصِنِي؛ قَالَ: «لَا تَغْضَبْ» فَرَدَّدَ مِرَارًا؛ قَالَ: «لَا تَغْضَبْ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu meriwayatkan bahwa seorang laki-laki berkata kepada Nabi shallallahu 'alaihi wa sallam, "Berilah aku wasiat." Nabi bersabda, "Jangan marah." Orang itu mengulangi permintaannya berkali-kali, namun Nabi tetap menjawab, "Jangan marah." (HR. Bukhari)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Pengulangan permintaan wasiat namun jawaban Nabi tetap sama menunjukkan betapa besarnya bahaya sifat marah dan betapa pentingnya mengendalikannya. Para ulama menjelaskan, larangan ini mencakup dua hal: usaha mencegah timbulnya sebab-sebab marah (misalnya melatih kesabaran dan rendah hati), dan menahan diri dari akibat marah seperti berkata kasar atau bertindak menyakiti orang lain ketika amarah telah muncul.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h17" data-no="17" data-title="ihsan dalam segala hal syaddad bin aus radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">17</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-17 &middot; Diriwayatkan oleh Syaddad bin Aus radhiyallahu 'anhu</p>
+            <h2>Ihsan dalam Segala Hal</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي يَعْلَى شَدَّادِ بْنِ أَوْسٍ رَضِيَ اللهُ عَنْهُ عَنْ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «إِنَّ اللهَ كَتَبَ الْإِحْسَانَ عَلَى كُلِّ شَيْءٍ، فَإِذَا قَتَلْتُمْ فَأَحْسِنُوا الْقِتْلَةَ، وَإِذَا ذَبَحْتُمْ فَأَحْسِنُوا الذَّبْحَةَ، وَلْيُحِدَّ أَحَدُكُمْ شَفْرَتَهُ، وَلْيُرِحْ ذَبِيحَتَهُ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Ya'la Syaddad bin Aus radhiyallahu 'anhu meriwayatkan dari Rasulullah shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Sesungguhnya Allah mewajibkan berbuat ihsan (kebaikan/kesempurnaan) dalam segala hal. Apabila kalian membunuh, bunuhlah dengan cara yang baik. Apabila kalian menyembelih, sembelihlah dengan cara yang baik. Hendaklah salah seorang dari kalian menajamkan pisaunya dan menenangkan sembelihannya." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menunjukkan bahwa perintah ihsan mencakup segala aspek kehidupan, bahkan dalam kondisi yang keras seperti hukuman mati (qishas/hudud) dan penyembelihan hewan sekalipun, seorang muslim tetap diperintahkan meminimalkan rasa sakit. Ini adalah bukti nyata bahwa Islam adalah agama rahmat yang menjunjung kasih sayang bahkan kepada makhluk yang akan dihilangkan nyawanya, apalagi dalam interaksi sesama manusia.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h18" data-no="18" data-title="bertakwa di mana saja berada abu dzar dan mu'adz bin jabal radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">18</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-18 &middot; Diriwayatkan oleh Abu Dzar dan Mu'adz bin Jabal radhiyallahu 'anhuma</p>
+            <h2>Bertakwa di Mana Saja Berada</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي ذَرٍّ جُنْدُبِ بْنِ جُنَادَةَ، وَأَبِي عَبْدِ الرَّحْمَنِ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللهُ عَنْهُمَا عَنْ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «اتَّقِ اللهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا، وَخَالِقِ النَّاسَ بِخُلُقٍ حَسَنٍ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Dzar Jundub bin Junadah dan Abu Abdurrahman Mu'adz bin Jabal radhiyallahu 'anhuma meriwayatkan dari Rasulullah shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Bertakwalah kepada Allah di mana pun engkau berada, iringilah keburukan dengan kebaikan niscaya ia akan menghapusnya, dan pergaulilah manusia dengan akhlak yang baik." (HR. Tirmidzi, ia berkata: hadits hasan, dan pada sebagian naskah: hasan shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Tiga wasiat ini merangkum hubungan seorang hamba dengan Allah (takwa di mana pun berada, bukan hanya di tempat ibadah), dengan dirinya sendiri (segera bertaubat dan beramal shalih setelah berbuat dosa), dan dengan sesama manusia (akhlak yang baik). Ketiganya menjadi resep ringkas namun mendalam untuk kehidupan yang lurus dan harmonis.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h19" data-no="19" data-title="jagalah allah, niscaya allah menjagamu abdullah bin abbas radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">19</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-19 &middot; Diriwayatkan oleh Abdullah bin Abbas radhiyallahu 'anhuma</p>
+            <h2>Jagalah Allah, Niscaya Allah Menjagamu</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي الْعَبَّاسِ عَبْدِ اللهِ بْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا قَالَ: كُنْتُ خَلْفَ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَوْمًا فَقَالَ: «يَا غُلَامُ إِنِّي أُعَلِّمُكَ كَلِمَاتٍ: احْفَظِ اللهَ يَحْفَظْكَ، احْفَظِ اللهَ تَجِدْهُ تُجَاهَكَ، إِذَا سَأَلْتَ فَاسْأَلِ اللهَ، وَإِذَا اسْتَعَنْتَ فَاسْتَعِنْ بِاللهِ، وَاعْلَمْ أَنَّ الْأُمَّةَ لَوِ اجْتَمَعَتْ عَلَى أَنْ يَنْفَعُوكَ بِشَيْءٍ لَمْ يَنْفَعُوكَ إِلَّا بِشَيْءٍ قَدْ كَتَبَهُ اللهُ لَكَ، وَإِنِ اجْتَمَعُوا عَلَى أَنْ يَضُرُّوكَ بِشَيْءٍ لَمْ يَضُرُّوكَ إِلَّا بِشَيْءٍ قَدْ كَتَبَهُ اللهُ عَلَيْكَ، رُفِعَتِ الْأَقْلَامُ وَجَفَّتِ الصُّحُفُ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abul Abbas Abdullah bin Abbas radhiyallahu 'anhuma berkata: Suatu hari aku berada di belakang Nabi shallallahu 'alaihi wa sallam, lalu beliau bersabda, "Wahai anak muda, sesungguhnya aku akan mengajarkan kepadamu beberapa kalimat: Jagalah Allah, niscaya Dia menjagamu. Jagalah Allah, niscaya engkau akan mendapati-Nya di hadapanmu. Apabila engkau meminta, mintalah kepada Allah. Apabila engkau memohon pertolongan, mohonlah pertolongan kepada Allah. Ketahuilah, seandainya seluruh umat berkumpul untuk memberimu manfaat, mereka tidak akan mampu memberimu manfaat kecuali dengan sesuatu yang telah Allah tetapkan bagimu. Dan seandainya mereka berkumpul untuk membahayakanmu, mereka tidak akan mampu membahayakanmu kecuali dengan sesuatu yang telah Allah tetapkan atasmu. Pena-pena (pencatat takdir) telah diangkat dan lembaran-lembaran (catatan takdir) telah kering." (HR. Tirmidzi, ia berkata: hadits hasan shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini adalah pelajaran akidah tauhid yang sangat mendalam, mengajarkan agar hati seorang muslim hanya bergantung kepada Allah semata dalam meminta dan memohon pertolongan, bukan kepada makhluk. "Menjaga Allah" bermakna menjaga hak-hak-Nya, batasan syariat, dan perintah-larangan-Nya, sehingga Allah pun akan menjaga agama, dunia, dan akhirat orang tersebut. Keyakinan bahwa takdir telah tertulis membebaskan hati dari kecemasan berlebihan terhadap makhluk.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h20" data-no="20" data-title="rasa malu sebagian dari iman abu mas'ud al-anshari radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">20</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-20 &middot; Diriwayatkan oleh Abu Mas'ud Al-Anshari radhiyallahu 'anhu</p>
+            <h2>Rasa Malu Sebagian dari Iman</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي مَسْعُودٍ عُقْبَةَ بْنِ عَمْرٍو الْأَنْصَارِيِّ الْبَدْرِيِّ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «إِنَّ مِمَّا أَدْرَكَ النَّاسُ مِنْ كَلَامِ النُّبُوَّةِ الْأُولَى: إِذَا لَمْ تَسْتَحْيِ فَاصْنَعْ مَا شِئْتَ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Mas'ud Uqbah bin Amr Al-Anshari Al-Badri radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Sesungguhnya di antara perkataan kenabian terdahulu yang masih diketahui manusia adalah: jika engkau tidak lagi memiliki rasa malu, maka berbuatlah sesukamu." (HR. Bukhari)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Kalimat ini bukan izin untuk berbuat semaunya, melainkan ancaman keras: ketika rasa malu telah hilang dari hati seseorang, ia akan berani melakukan apa saja tanpa batas, termasuk dosa dan maksiat, karena rasa malu adalah salah satu benteng utama pengendali perilaku. Para ulama juga memaknainya sebagai perintah: jika suatu perbuatan tidak memalukan menurut syariat dan akal sehat, silakan lakukan; namun jika memalukan, tinggalkanlah. Karena itu, rasa malu disebut sebagai cabang keimanan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h21" data-no="21" data-title="katakan aku beriman, lalu istiqamahlah sufyan bin abdullah ats-tsaqafi radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">21</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-21 &middot; Diriwayatkan oleh Sufyan bin Abdullah Ats-Tsaqafi radhiyallahu 'anhu</p>
+            <h2>Katakan Aku Beriman, Lalu Istiqamahlah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي عَمْرٍو، وَقِيلَ: أَبِي عَمْرَةَ سُفْيَانَ بْنِ عَبْدِ اللهِ رَضِيَ اللهُ عَنْهُ قَالَ: قُلْتُ: يَا رَسُولَ اللهِ، قُلْ لِي فِي الْإِسْلَامِ قَوْلًا لَا أَسْأَلُ عَنْهُ أَحَدًا غَيْرَكَ، قَالَ: «قُلْ: آمَنْتُ بِاللهِ ثُمَّ اسْتَقِمْ»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Amr, ada yang mengatakan Abu Amrah, Sufyan bin Abdullah radhiyallahu 'anhu berkata: Aku berkata, "Wahai Rasulullah, katakan kepadaku suatu perkataan tentang Islam yang tidak perlu aku tanyakan lagi kepada seorang pun selainmu." Nabi bersabda, "Katakanlah: aku beriman kepada Allah, kemudian istiqamahlah." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Permintaan sahabat ini menunjukkan keinginan mendapatkan nasihat ringkas namun komprehensif, dan Rasulullah menjawabnya dengan dua kata kunci: iman dan istiqamah. Beriman saja tidak cukup tanpa konsistensi menjalankannya dalam kehidupan sehari-hari; istiqamah adalah ujian sesungguhnya karena jauh lebih berat daripada sekadar memulai. Hadits ini sering dijadikan pengingat bahwa kualitas seorang mukmin dinilai dari keteguhannya, bukan sekadar semangat di awal.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h22" data-no="22" data-title="ketetapan kewajiban rukun islam membawa ke surga jabir bin abdullah radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">22</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-22 &middot; Diriwayatkan oleh Jabir bin Abdullah radhiyallahu 'anhuma</p>
+            <h2>Ketetapan Kewajiban Rukun Islam Membawa ke Surga</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي عَبْدِ اللهِ جَابِرِ بْنِ عَبْدِ اللهِ الْأَنْصَارِيِّ رَضِيَ اللهُ عَنْهُمَا: أَنَّ رَجُلًا سَأَلَ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فَقَالَ: أَرَأَيْتَ إِذَا صَلَّيْتُ الْمَكْتُوبَاتِ، وَصُمْتُ رَمَضَانَ، وَأَحْلَلْتُ الْحَلَالَ، وَحَرَّمْتُ الْحَرَامَ، وَلَمْ أَزِدْ عَلَى ذَلِكَ شَيْئًا، أَأَدْخُلُ الْجَنَّةَ؟ قَالَ: «نَعَمْ» رَوَاهُ مُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Abdillah Jabir bin Abdullah Al-Anshari radhiyallahu 'anhuma meriwayatkan bahwa seorang laki-laki bertanya kepada Rasulullah shallallahu 'alaihi wa sallam, "Bagaimana pendapatmu jika aku mendirikan shalat wajib, berpuasa Ramadhan, menghalalkan yang halal, mengharamkan yang haram, dan tidak menambah sedikit pun selain itu, apakah aku akan masuk surga?" Nabi menjawab, "Ya." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini memberi kabar gembira bahwa siapa saja yang menjalankan kewajiban pokok agama secara konsisten — shalat, puasa, dan menjaga batas halal-haram — telah berhak masuk surga, sekalipun tanpa amalan sunnah tambahan. Ini menunjukkan luasnya rahmat Allah, sekaligus menekankan bahwa yang wajib jauh lebih penting untuk dijaga dibanding sekadar memperbanyak amalan sunnah tanpa memperhatikan kewajiban.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h23" data-no="23" data-title="bersuci setengah dari iman abu malik al-asy'ari radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">23</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-23 &middot; Diriwayatkan oleh Abu Malik Al-Asy'ari radhiyallahu 'anhu</p>
+            <h2>Bersuci Setengah dari Iman</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي مَالِكٍ الْحَارِثِ بْنِ عَاصِمٍ الْأَشْعَرِيِّ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «الطُّهُورُ شَطْرُ الْإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلَأُ الْمِيزَانَ، وَسُبْحَانَ اللهِ وَالْحَمْدُ لِلَّهِ تَمْلَآنِ - أَوْ تَمْلَأُ - مَا بَيْنَ السَّمَاءِ وَالْأَرْضِ، وَالصَّلَاةُ نُورٌ، وَالصَّدَقَةُ بُرْهَانٌ، وَالصَّبْرُ ضِيَاءٌ، وَالْقُرْآنُ حُجَّةٌ لَكَ أَوْ عَلَيْكَ، كُلُّ النَّاسِ يَغْدُو فَبَائِعٌ نَفْسَهُ فَمُعْتِقُهَا أَوْ مُوبِقُهَا»</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Malik Al-Harits bin 'Ashim Al-Asy'ari radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Bersuci adalah setengah dari iman. (Ucapan) Alhamdulillah memenuhi timbangan (kebaikan). Subhanallah dan Alhamdulillah memenuhi ruang antara langit dan bumi. Shalat adalah cahaya. Sedekah adalah bukti (keimanan). Sabar adalah sinar. Al-Qur'an adalah hujjah (bukti) bagimu atau (menjadi bukti yang memberatkan) atasmu. Setiap manusia berangkat di pagi hari, lalu ia menjual dirinya sendiri, sehingga ia membebaskannya (dari azab) atau justru membinasakannya." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini mengumpulkan berbagai keutamaan ibadah dalam kalimat-kalimat padat: bersuci menyempurnakan separuh keimanan (karena membersihkan lahir sebagaimana taubat membersihkan batin), dzikir memiliki bobot pahala besar, shalat menerangi hati, sedekah membuktikan keimanan yang sesungguhnya (karena berat bagi jiwa yang cinta harta), dan sabar menjadi sumber cahaya dalam menghadapi ujian. Al-Qur'an bisa menjadi pembela atau pendakwa tergantung bagaimana seseorang memperlakukannya.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h24" data-no="24" data-title="larangan berbuat zalim abu dzar radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">24</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-24 &middot; Diriwayatkan oleh Abu Dzar radhiyallahu 'anhu</p>
+            <h2>Larangan Berbuat Zalim</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي ذَرٍّ الْغِفَارِيِّ رَضِيَ اللهُ عَنْهُ عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ عَزَّ وَجَلَّ أَنَّهُ قَالَ: «يَا عِبَادِي إِنِّي حَرَّمْتُ الظُّلْمَ عَلَى نَفْسِي وَجَعَلْتُهُ بَيْنَكُمْ مُحَرَّمًا فَلَا تَظَالَمُوا، يَا عِبَادِي كُلُّكُمْ ضَالٌّ إِلَّا مَنْ هَدَيْتُهُ فَاسْتَهْدُونِي أَهْدِكُمْ، يَا عِبَادِي كُلُّكُمْ جَائِعٌ إِلَّا مَنْ أَطْعَمْتُهُ فَاسْتَطْعِمُونِي أُطْعِمْكُمْ، يَا عِبَادِي كُلُّكُمْ عَارٍ إِلَّا مَنْ كَسَوْتُهُ فَاسْتَكْسُونِي أَكْسُكُمْ، يَا عِبَادِي إِنَّكُمْ تُخْطِئُونَ بِاللَّيْلِ وَالنَّهَارِ وَأَنَا أَغْفِرُ الذُّنُوبَ جَمِيعًا فَاسْتَغْفِرُونِي أَغْفِرْ لَكُمْ، يَا عِبَادِي إِنَّكُمْ لَنْ تَبْلُغُوا ضَرِّي فَتَضُرُّونِي، وَلَنْ تَبْلُغُوا نَفْعِي فَتَنْفَعُونِي، يَا عِبَادِي لَوْ أَنَّ أَوَّلَكُمْ وَآخِرَكُمْ وَإِنْسَكُمْ وَجِنَّكُمْ كَانُوا عَلَى أَتْقَى قَلْبِ رَجُلٍ وَاحِدٍ مِنْكُمْ مَا زَادَ ذَلِكَ فِي مُلْكِي شَيْئًا، يَا عِبَادِي لَوْ أَنَّ أَوَّلَكُمْ وَآخِرَكُمْ وَإِنْسَكُمْ وَجِنَّكُمْ كَانُوا عَلَى أَفْجَرِ قَلْبِ رَجُلٍ وَاحِدٍ مَا نَقَصَ ذَلِكَ مِنْ مُلْكِي شَيْئًا، يَا عِبَادِي لَوْ أَنَّ أَوَّلَكُمْ وَآخِرَكُمْ وَإِنْسَكُمْ وَجِنَّكُمْ قَامُوا فِي صَعِيدٍ وَاحِدٍ فَسَأَلُونِي فَأَعْطَيْتُ كُلَّ وَاحِدٍ مَسْأَلَتَهُ مَا نَقَصَ ذَلِكَ مِمَّا عِنْدِي إِلَّا كَمَا يَنْقُصُ الْمِخْيَطُ إِذَا أُدْخِلَ الْبَحْرَ، يَا عِبَادِي إِنَّمَا هِيَ أَعْمَالُكُمْ أُحْصِيهَا لَكُمْ ثُمَّ أُوَفِّيكُمْ إِيَّاهَا، فَمَنْ وَجَدَ خَيْرًا فَلْيَحْمَدِ اللهَ، وَمَنْ وَجَدَ غَيْرَ ذَلِكَ فَلَا يَلُومَنَّ إِلَّا نَفْسَهُ» رَوَاهُ مُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Dzar Al-Ghifari radhiyallahu 'anhu meriwayatkan dari Nabi shallallahu 'alaihi wa sallam, dari apa yang beliau riwayatkan dari Rabbnya 'Azza wa Jalla, bahwa Allah berfirman, "Wahai hamba-hamba-Ku, sesungguhnya Aku mengharamkan kezaliman atas diri-Ku, dan Aku menjadikannya haram di antara kalian, maka janganlah kalian saling menzalimi. Wahai hamba-hamba-Ku, kalian semua sesat kecuali orang yang Aku beri petunjuk, maka mintalah petunjuk kepada-Ku niscaya Aku akan menunjuki kalian. Wahai hamba-hamba-Ku, kalian semua lapar kecuali orang yang Aku beri makan, maka mintalah makan kepada-Ku niscaya Aku akan memberi kalian makan. Wahai hamba-hamba-Ku, kalian semua telanjang kecuali orang yang Aku beri pakaian, maka mintalah pakaian kepada-Ku niscaya Aku akan memberi kalian pakaian. Wahai hamba-hamba-Ku, sesungguhnya kalian berbuat salah siang dan malam, dan Aku mengampuni semua dosa, maka mintalah ampun kepada-Ku niscaya Aku akan mengampuni kalian. Wahai hamba-hamba-Ku, kalian tidak akan mampu mencapai bahaya-Ku sehingga kalian membahayakan-Ku, dan kalian tidak akan mampu mencapai manfaat-Ku sehingga kalian memberi manfaat kepada-Ku. Wahai hamba-hamba-Ku, seandainya orang pertama dan terakhir dari kalian, manusia dan jin kalian, seluruhnya berada pada ketakwaan hati orang yang paling bertakwa di antara kalian, hal itu tidak akan menambah kerajaan-Ku sedikit pun. Wahai hamba-hamba-Ku, seandainya orang pertama dan terakhir dari kalian, manusia dan jin kalian, seluruhnya berada pada kejahatan hati orang yang paling jahat di antara kalian, hal itu tidak akan mengurangi kerajaan-Ku sedikit pun. Wahai hamba-hamba-Ku, seandainya orang pertama dan terakhir dari kalian, manusia dan jin kalian, semuanya berdiri di satu tempat lalu meminta kepada-Ku, kemudian Aku memberi setiap orang permintaannya, hal itu tidak akan mengurangi apa yang ada di sisi-Ku kecuali seperti berkurangnya air laut ketika sebatang jarum dicelupkan ke dalamnya. Wahai hamba-hamba-Ku, sesungguhnya itu hanyalah amal-amal kalian yang Aku catat untuk kalian kemudian Aku akan membalasnya secara sempurna. Barangsiapa mendapati kebaikan, hendaklah ia memuji Allah, dan barangsiapa mendapati selain itu, janganlah ia mencela kecuali dirinya sendiri." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits qudsi yang agung ini merangkum sifat-sifat mulia Allah: Maha Menjauhi kezaliman, Maha Pemberi Petunjuk, Maha Pemberi Rezeki, Maha Pengampun, dan Maha Kaya tak butuh apapun dari makhluk-Nya. Perumpamaan jarum yang dicelup ke laut menggambarkan betapa tak terbatasnya karunia Allah dibanding permintaan seluruh makhluk sekaligus. Pesan intinya: jauhi kezaliman antar sesama, dan gantungkan segala kebutuhan hanya kepada Allah karena Dia-lah sumber segala kebaikan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h25" data-no="25" data-title="tasbih dan dzikir sebagai sedekah abu dzar radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">25</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-25 &middot; Diriwayatkan oleh Abu Dzar radhiyallahu 'anhu</p>
+            <h2>Tasbih dan Dzikir sebagai Sedekah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">وَعَنْهُ أَيْضًا أَنَّ نَاسًا مِنْ أَصْحَابِ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالُوا لِلنَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: يَا رَسُولَ اللهِ ذَهَبَ أَهْلُ الدُّثُورِ بِالْأُجُورِ، يُصَلُّونَ كَمَا نُصَلِّي، وَيَصُومُونَ كَمَا نَصُومُ، وَيَتَصَدَّقُونَ بِفُضُولِ أَمْوَالِهِمْ! قَالَ: أَوَلَيْسَ قَدْ جَعَلَ اللهُ لَكُمْ مَا تَصَّدَّقُونَ؟ إِنَّ بِكُلِّ تَسْبِيحَةٍ صَدَقَةً، وَكُلِّ تَكْبِيرَةٍ صَدَقَةً، وَكُلِّ تَحْمِيدَةٍ صَدَقَةً، وَكُلِّ تَهْلِيلَةٍ صَدَقَةً، وَأَمْرٌ بِالْمَعْرُوفِ صَدَقَةٌ، وَنَهْيٌ عَنْ مُنْكَرٍ صَدَقَةٌ، وَفِي بُضْعِ أَحَدِكُمْ صَدَقَةٌ، قَالُوا: يَا رَسُولَ اللهِ أَيَأْتِي أَحَدُنَا شَهْوَتَهُ وَيَكُونُ لَهُ فِيهَا أَجْرٌ؟ قَالَ: أَرَأَيْتُمْ لَوْ وَضَعَهَا فِي حَرَامٍ أَكَانَ عَلَيْهِ وِزْرٌ؟ فَكَذَلِكَ إِذَا وَضَعَهَا فِي الْحَلَالِ كَانَ لَهُ أَجْرٌ رَوَاهُ مُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Diriwayatkan pula darinya (Abu Dzar) bahwa sebagian sahabat Rasulullah shallallahu 'alaihi wa sallam berkata kepada Nabi, "Wahai Rasulullah, orang-orang kaya pergi membawa pahala. Mereka shalat sebagaimana kami shalat, mereka puasa sebagaimana kami puasa, dan mereka bersedekah dari kelebihan harta mereka!" Nabi bersabda, "Bukankah Allah telah menjadikan bagi kalian sesuatu yang bisa kalian sedekahkan? Sesungguhnya setiap tasbih adalah sedekah, setiap takbir adalah sedekah, setiap tahmid adalah sedekah, setiap tahlil adalah sedekah, menyuruh kepada kebaikan adalah sedekah, mencegah kemungkaran adalah sedekah, dan pada hubungan suami-istri salah seorang dari kalian pun terdapat sedekah." Mereka bertanya, "Wahai Rasulullah, apakah salah seorang dari kami memenuhi syahwatnya lalu ia mendapat pahala?" Nabi menjawab, "Bagaimana pendapat kalian jika ia menyalurkannya pada yang haram, bukankah ia berdosa? Demikian pula jika ia menyalurkannya pada yang halal, ia mendapat pahala." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini membuka pandangan luas bahwa pintu sedekah dan pahala tidak terbatas pada harta, sehingga orang yang kurang mampu secara materi tetap memiliki kesempatan sama besarnya untuk meraih pahala melalui dzikir, amar ma'ruf nahi munkar, bahkan hubungan suami-istri yang halal. Ini membantah anggapan bahwa hanya orang kaya yang bisa mengejar pahala berlipat, sekaligus mengajarkan bahwa setiap perbuatan mubah bisa bernilai ibadah jika diniatkan dan dijalankan sesuai syariat.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h26" data-no="26" data-title="setiap ruas tubuh wajib bersedekah abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">26</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-26 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Setiap Ruas Tubuh Wajib Bersedekah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «كُلُّ سُلَامَى مِنَ النَّاسِ عَلَيْهِ صَدَقَةٌ، كُلَّ يَوْمٍ تَطْلُعُ فِيهِ الشَّمْسُ، تَعْدِلُ بَيْنَ اثْنَيْنِ صَدَقَةٌ، وَتُعِينُ الرَّجُلَ فِي دَابَّتِهِ فَتَحْمِلُهُ عَلَيْهَا أَوْ تَرْفَعُ لَهُ عَلَيْهَا مَتَاعَهُ صَدَقَةٌ، وَالْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ، وَبِكُلِّ خَطْوَةٍ تَمْشِيهَا إِلَى الصَّلَاةِ صَدَقَةٌ، وَتُمِيطُ الْأَذَى عَنِ الطَّرِيقِ صَدَقَةٌ» رَوَاهُ الْبُخَارِيُّ وَمُسْلِمٌ",</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Setiap ruas tulang manusia wajib atasnya sedekah pada setiap hari terbitnya matahari. Mendamaikan dua orang yang bersengketa adalah sedekah. Membantu seseorang menaiki tunggangannya atau mengangkatkan barangnya ke atas tunggangan adalah sedekah. Perkataan yang baik adalah sedekah. Setiap langkah menuju shalat adalah sedekah. Dan menyingkirkan gangguan dari jalan adalah sedekah." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini memperluas makna sedekah jauh melampaui pemberian harta, mencakup segala kebaikan fisik dan lisan yang dapat dilakukan setiap hari, sebagai bentuk syukur atas nikmat ratusan ruas tulang dalam tubuh manusia yang berfungsi normal. Ini mengajarkan bahwa tidak ada alasan bagi siapapun untuk absen dari amal kebaikan harian, karena kesempatan bersedekah terbuka luas dalam bentuk apapun, bahkan sesederhana menyingkirkan duri dari jalan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h27" data-no="27" data-title="kebajikan adalah akhlak yang baik an-nawwas bin sam'an radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">27</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-27 &middot; Diriwayatkan oleh An-Nawwas bin Sam'an radhiyallahu 'anhu</p>
+            <h2>Kebajikan adalah Akhlak yang Baik</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ النَّوَّاسِ بْنِ سَمْعَانَ رَضِيَ اللهُ عَنْهُ عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «الْبِرُّ حُسْنُ الْخُلُقِ، وَالْإِثْمُ مَا حَاكَ فِي نَفْسِكَ وَكَرِهْتَ أَنْ يَطَّلِعَ عَلَيْهِ النَّاسُ» رَوَاهُ مُسْلِمٌ. وَعَنْ وَابِصَةَ بْنِ مَعْبَدٍ رَضِيَ اللهُ عَنْهُ قَالَ: أَتَيْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فَقَالَ: جِئْتَ تَسْأَلُ عَنِ الْبِرِّ؟ قُلْتُ: نَعَمْ، فَقَالَ: اسْتَفْتِ قَلْبَكَ؛ الْبِرُّ مَا اطْمَأَنَّتْ إِلَيْهِ النَّفْسُ وَاطْمَأَنَّ إِلَيْهِ الْقَلْبُ، وَالْإِثْمُ مَا حَاكَ فِي النَّفْسِ وَتَرَدَّدَ فِي الصَّدْرِ، وَإِنْ أَفْتَاكَ النَّاسُ وَأَفْتَوْكَ حَدِيثٌ حَسَنٌ رَوَيْنَاهُ فِي مُسْنَدَيِ الْإِمَامَيْنِ أَحْمَدَ بْنِ حَنْبَلٍ وَالدَّارِمِيِّ بِإِسْنَادٍ حَسَنٍ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">An-Nawwas bin Sam'an radhiyallahu 'anhu meriwayatkan dari Nabi shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Kebajikan adalah akhlak yang baik, dan dosa adalah sesuatu yang mengganjal di dadamu serta engkau tidak suka jika orang lain mengetahuinya." (HR. Muslim). Dan dari Wabishah bin Ma'bad radhiyallahu 'anhu, ia berkata: Aku mendatangi Rasulullah shallallahu 'alaihi wa sallam, lalu beliau bertanya, "Engkau datang untuk bertanya tentang kebajikan?" Aku menjawab, "Benar." Beliau bersabda, "Mintalah fatwa pada hatimu. Kebajikan adalah apa yang membuat jiwa dan hati tenang, sedangkan dosa adalah apa yang mengganjal dalam jiwa dan meragukan dalam dada, meskipun orang-orang berulang kali memberimu fatwa (membolehkannya)." (Hadits hasan, diriwayatkan dalam Musnad Ahmad dan Ad-Darimi dengan sanad hasan)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini memberikan tolok ukur praktis untuk membedakan kebaikan dan dosa, terutama pada perkara yang belum jelas hukumnya secara tegas: rasakan ketenangan atau kegelisahan dalam hati. Namun kaidah ini berlaku bagi hati yang telah terdidik dengan ilmu agama dan bersih dari hawa nafsu, bukan sembarang perasaan, karena hati yang rusak bisa saja merasa tenang dengan kemaksiatan. Karena itu kaidah ini melengkapi, bukan menggantikan, dalil syar'i yang jelas.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h28" data-no="28" data-title="wasiat perpisahan dan berpegang pada sunnah al-'irbadh bin sariyah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">28</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-28 &middot; Diriwayatkan oleh Al-'Irbadh bin Sariyah radhiyallahu 'anhu</p>
+            <h2>Wasiat Perpisahan dan Berpegang pada Sunnah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي نَجِيحٍ الْعِرْبَاضِ بْنِ سَارِيَةَ رَضِيَ اللهُ عَنْهُ قَالَ: وَعَظَنَا رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ مَوْعِظَةً وَجِلَتْ مِنْهَا الْقُلُوبُ وَذَرَفَتْ مِنْهَا الْعُيُونُ، فَقُلْنَا: يَا رَسُولَ اللهِ كَأَنَّهَا مَوْعِظَةُ مُوَدِّعٍ فَأَوْصِنَا، قَالَ: أُوصِيكُمْ بِتَقْوَى اللهِ عَزَّ وَجَلَّ، وَالسَّمْعِ وَالطَّاعَةِ وَإِنْ تَأَمَّرَ عَلَيْكُمْ عَبْدٌ؛ فَإِنَّهُ مَنْ يَعِشْ مِنْكُمْ فَسَيَرَى اخْتِلَافًا كَثِيرًا، فَعَلَيْكُمْ بِسُنَّتِي وَسُنَّةِ الْخُلَفَاءِ الرَّاشِدِينَ الْمَهْدِيِّينَ، عَضُّوا عَلَيْهَا بِالنَّوَاجِذِ، وَإِيَّاكُمْ وَمُحْدَثَاتِ الْأُمُورِ، فَإِنَّ كُلَّ بِدْعَةٍ ضَلَالَةٌ رَوَاهُ أَبُو دَاوُدَ وَالتِّرْمِذِيُّ وَقَالَ: حَدِيثٌ حَسَنٌ صَحِيحٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Najih Al-'Irbadh bin Sariyah radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam pernah memberi kami nasihat yang membuat hati bergetar dan air mata berlinang. Kami berkata, "Wahai Rasulullah, sepertinya ini nasihat perpisahan, maka berilah kami wasiat." Beliau bersabda, "Aku wasiatkan kepada kalian untuk bertakwa kepada Allah 'Azza wa Jalla, mendengar dan taat sekalipun yang memimpin kalian seorang budak. Sesungguhnya siapa di antara kalian yang hidup (lama), ia akan melihat banyak perselisihan. Maka wajib bagi kalian berpegang teguh pada sunnahku dan sunnah Khulafaur Rasyidin yang mendapat petunjuk, gigitlah ia dengan gigi geraham (pegang erat-erat). Dan jauhilah perkara-perkara baru (dalam agama), karena setiap bid'ah adalah kesesatan." (HR. Abu Dawud dan Tirmidzi, ia berkata: hadits hasan shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjadi rujukan pokok dalam memahami pentingnya ketaatan pada pemimpin yang sah selama tidak bermaksiat, serta pentingnya berpegang teguh pada sunnah Nabi dan para sahabat senior (Khulafaur Rasyidin) ketika umat menghadapi perselisihan dan perpecahan pendapat di kemudian hari. Ungkapan "gigitlah dengan gigi geraham" adalah kiasan untuk berpegang teguh sekuat mungkin, sedangkan larangan bid'ah menegaskan kembali kaidah hadits kelima tentang tertolaknya amalan yang tidak bersumber dari tuntunan Nabi.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h29" data-no="29" data-title="amalan yang memasukkan ke surga mu'adz bin jabal radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">29</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-29 &middot; Diriwayatkan oleh Mu'adz bin Jabal radhiyallahu 'anhu</p>
+            <h2>Amalan yang Memasukkan ke Surga</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ مُعَاذِ بْنِ جَبَلٍ رَضِيَ اللهُ عَنْهُ قَالَ: قُلْتُ: يَا رَسُولَ اللهِ أَخْبِرْنِي بِعَمَلٍ يُدْخِلُنِي الْجَنَّةَ وَيُبَاعِدُنِي عَنِ النَّارِ؛ قَالَ: لَقَدْ سَأَلْتَ عَنْ عَظِيمٍ، وَإِنَّهُ لَيَسِيرٌ عَلَى مَنْ يَسَّرَهُ اللهُ تَعَالَى عَلَيْهِ: تَعْبُدُ اللهَ لَا تُشْرِكُ بِهِ شَيْئًا، وَتُقِيمُ الصَّلَاةَ، وَتُؤْتِي الزَّكَاةَ، وَتَصُومُ رَمَضَانَ، وَتَحُجُّ الْبَيْتَ؛ ثُمَّ قَالَ: أَلَا أَدُلُّكَ عَلَى أَبْوَابِ الْخَيْرِ؟ الصَّوْمُ جُنَّةٌ، وَالصَّدَقَةُ تُطْفِئُ الْخَطِيئَةَ كَمَا يُطْفِئُ الْمَاءُ النَّارَ، وَصَلَاةُ الرَّجُلِ فِي جَوْفِ اللَّيْلِ، ثُمَّ تَلَا: (تَتَجَافَى جُنُوبُهُمْ عَنِ الْمَضَاجِعِ - حَتَّى بَلَغَ - يَعْمَلُونَ)؛ ثُمَّ قَالَ: أَلَا أُخْبِرُكَ بِرَأْسِ الْأَمْرِ وَعَمُودِهِ وَذِرْوَةِ سَنَامِهِ؟ قُلْتُ: بَلَى يَا رَسُولَ اللهِ، قَالَ: رَأْسُ الْأَمْرِ الْإِسْلَامُ، وَعَمُودُهُ الصَّلَاةُ، وَذِرْوَةُ سَنَامِهِ الْجِهَادُ؛ ثُمَّ قَالَ: أَلَا أُخْبِرُكَ بِمِلَاكِ ذَلِكَ كُلِّهِ؟ قُلْتُ: بَلَى يَا رَسُولَ اللهِ، فَأَخَذَ بِلِسَانِهِ وَقَالَ: كُفَّ عَلَيْكَ هَذَا؛ قُلْتُ: يَا نَبِيَّ اللهِ وَإِنَّا لَمُؤَاخَذُونَ بِمَا نَتَكَلَّمُ بِهِ؟ فَقَالَ: ثَكِلَتْكَ أُمُّكَ! وَهَلْ يَكُبُّ النَّاسَ فِي النَّارِ عَلَى وُجُوهِهِمْ - أَوْ عَلَى مَنَاخِرِهِمْ - إِلَّا حَصَائِدُ أَلْسِنَتِهِمْ رَوَاهُ التِّرْمِذِيُّ وَقَالَ: حَدِيثٌ صَحِيحٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Mu'adz bin Jabal radhiyallahu 'anhu berkata: Aku bertanya, "Wahai Rasulullah, kabarkan kepadaku suatu amalan yang memasukkanku ke surga dan menjauhkanku dari neraka." Beliau bersabda, "Sungguh engkau bertanya tentang perkara besar, dan sesungguhnya itu mudah bagi orang yang Allah mudahkan baginya: engkau beribadah kepada Allah tanpa menyekutukan-Nya dengan sesuatu apapun, mendirikan shalat, menunaikan zakat, berpuasa Ramadhan, dan berhaji ke Baitullah." Kemudian beliau bersabda, "Maukah kutunjukkan pintu-pintu kebaikan? Puasa adalah perisai, sedekah memadamkan dosa sebagaimana air memadamkan api, dan shalat seseorang di tengah malam." Lalu beliau membaca ayat (yang artinya): "Lambung mereka jauh dari tempat tidurnya... hingga ayat ...yang mereka kerjakan." Kemudian beliau bersabda, "Maukah kukabarkan kepadamu pokok perkara, tiangnya, dan puncaknya?" Aku menjawab, "Tentu, wahai Rasulullah." Beliau bersabda, "Pokok perkara adalah Islam, tiangnya adalah shalat, dan puncaknya adalah jihad." Kemudian beliau bersabda, "Maukah kukabarkan kepadamu kunci dari semua itu?" Aku menjawab, "Tentu, wahai Rasulullah." Beliau memegang lidahnya sendiri seraya bersabda, "Jagalah ini." Aku bertanya, "Wahai Nabi Allah, apakah kami akan disiksa karena apa yang kami ucapkan?" Beliau bersabda, "Celaka engkau (ungkapan kasih sayang), bukankah manusia terjerembab ke dalam neraka di atas wajah mereka -atau hidung mereka- tidak lain disebabkan oleh hasil lisan mereka?" (HR. Tirmidzi, ia berkata: hadits shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits panjang ini merangkum tingkatan amal secara berjenjang: rukun Islam sebagai fondasi, ibadah sunnah (puasa, sedekah, shalat malam) sebagai pintu-pintu tambahan kebaikan, lalu shalat sebagai tiang agama dan jihad sebagai puncaknya, dan yang terpenting adalah menjaga lisan sebagai kunci dari semuanya. Penekanan di akhir hadits tentang bahaya lisan mengingatkan bahwa sebagian besar penyebab manusia masuk neraka justru berasal dari ucapan yang tidak terjaga, meski amal-amal lain telah dikerjakan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h30" data-no="30" data-title="batasan-batasan allah abu tsa'labah al-khusyani radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">30</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-30 &middot; Diriwayatkan oleh Abu Tsa'labah Al-Khusyani radhiyallahu 'anhu</p>
+            <h2>Batasan-Batasan Allah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي ثَعْلَبَةَ الْخُشَنِيِّ جُرْثُومِ بْنِ نَاشِرٍ رَضِيَ اللهُ عَنْهُ عَنْ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «إِنَّ اللهَ تَعَالَى فَرَضَ فَرَائِضَ فَلَا تُضَيِّعُوهَا، وَحَدَّ حُدُودًا فَلَا تَعْتَدُوهَا، وَحَرَّمَ أَشْيَاءَ فَلَا تَنْتَهِكُوهَا، وَسَكَتَ عَنْ أَشْيَاءَ رَحْمَةً لَكُمْ غَيْرَ نِسْيَانٍ فَلَا تَبْحَثُوا عَنْهَا» حَدِيثٌ حَسَنٌ رَوَاهُ الدَّارَقُطْنِيُّ وَغَيْرُهُ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Tsa'labah Al-Khusyani, Jurtsum bin Nasyir radhiyallahu 'anhu meriwayatkan dari Rasulullah shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Sesungguhnya Allah Ta'ala telah mewajibkan beberapa kewajiban, maka jangan kalian sia-siakan. Dia telah menetapkan beberapa batasan, maka jangan kalian melampauinya. Dia telah mengharamkan beberapa hal, maka jangan kalian melanggarnya. Dan Dia telah mendiamkan beberapa hal sebagai bentuk kasih sayang bagi kalian, bukan karena lupa, maka jangan kalian mencari-cari (hukumnya)." (Hadits hasan, riwayat Ad-Daraquthni dan lainnya)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini membagi hukum syariat menjadi empat kategori praktis: kewajiban yang harus ditunaikan, batasan yang tidak boleh dilampaui, larangan yang harus dijauhi, dan area yang sengaja tidak dijelaskan secara rinci sebagai rahmat sehingga hukumnya kembali kepada asal (mubah). Kaidah ini mengajarkan agar seorang muslim tidak berlebihan mempersulit diri dengan mencari-cari hukum atas perkara yang memang sengaja tidak dirinci syariat.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h31" data-no="31" data-title="zuhud terhadap dunia sahl bin sa'ad radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">31</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-31 &middot; Diriwayatkan oleh Sahl bin Sa'ad radhiyallahu 'anhu</p>
+            <h2>Zuhud terhadap Dunia</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي الْعَبَّاسِ سَهْلِ بْنِ سَعْدٍ السَّاعِدِيِّ رَضِيَ اللهُ عَنْهُ قَالَ: جَاءَ رَجُلٌ إِلَى النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فَقَالَ: يَا رَسُولَ اللهِ دُلَّنِي عَلَى عَمَلٍ إِذَا عَمِلْتُهُ أَحَبَّنِي اللهُ وَأَحَبَّنِي النَّاسُ؛ فَقَالَ: ازْهَدْ فِي الدُّنْيَا يُحِبَّكَ اللهُ، وَازْهَدْ فِيمَا عِنْدَ النَّاسِ يُحِبَّكَ النَّاسُ حَدِيثٌ حَسَنٌ رَوَاهُ ابْنُ مَاجَهْ وَغَيْرُهُ بِأَسَانِيدَ حَسَنَةٍ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abul Abbas Sahl bin Sa'ad As-Sa'idi radhiyallahu 'anhu berkata: Seorang laki-laki datang kepada Nabi shallallahu 'alaihi wa sallam dan berkata, "Wahai Rasulullah, tunjukkan kepadaku suatu amalan yang jika aku melakukannya, Allah mencintaiku dan manusia pun mencintaiku." Nabi bersabda, "Berzuhudlah terhadap dunia, niscaya Allah akan mencintaimu, dan berzuhudlah terhadap apa yang dimiliki manusia, niscaya manusia akan mencintaimu." (Hadits hasan, riwayat Ibnu Majah dan lainnya dengan sanad-sanad hasan)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Zuhud bukan berarti meninggalkan dunia sama sekali, melainkan tidak menjadikannya sebagai tujuan utama hati sehingga seseorang tidak terikat dan rakus terhadapnya. Dua bentuk zuhud disebutkan di sini: zuhud terhadap dunia secara umum yang mendatangkan cinta Allah, dan zuhud terhadap harta orang lain (tidak tamak/iri terhadap apa yang dimiliki orang lain) yang mendatangkan cinta sesama manusia karena tidak ada rasa iri dan persaingan yang merusak hubungan sosial.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h32" data-no="32" data-title="tidak boleh membahayakan diri dan orang lain abu sa'id al-khudri radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">32</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-32 &middot; Diriwayatkan oleh Abu Sa'id Al-Khudri radhiyallahu 'anhu</p>
+            <h2>Tidak Boleh Membahayakan Diri dan Orang Lain</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي سَعِيدٍ سَعْدِ بْنِ مَالِكِ بْنِ سِنَانٍ الْخُدْرِيِّ رَضِيَ اللهُ عَنْهُ أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «لَا ضَرَرَ وَلَا ضِرَارَ» حَدِيثٌ حَسَنٌ رَوَاهُ ابْنُ مَاجَهْ وَالدَّارَقُطْنِيُّ وَغَيْرُهُمَا مُسْنَدًا</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Sa'id, Sa'ad bin Malik bin Sinan Al-Khudri radhiyallahu 'anhu meriwayatkan bahwa Rasulullah shallallahu 'alaihi wa sallam bersabda, "Tidak boleh membahayakan diri sendiri dan tidak boleh pula membahayakan orang lain." (Hadits hasan, riwayat Ibnu Majah, Ad-Daraquthni, dan lainnya secara musnad)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Kaidah fikih yang sangat masyhur ini menjadi dasar bagi banyak hukum dalam muamalah, seperti larangan monopoli yang merugikan, larangan membangun yang mengganggu tetangga, hingga aturan tentang wasiat yang tidak boleh menzalimi ahli waris. Kaidah ini melahirkan prinsip besar dalam fikih Islam: bahaya harus dihilangkan (adh-dhararu yuzal), dan mudarat yang lebih besar didahulukan untuk dicegah daripada mudarat yang lebih kecil.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h33" data-no="33" data-title="bukti bagi penuduh, sumpah bagi yang mengingkari abdullah bin abbas radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">33</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-33 &middot; Diriwayatkan oleh Abdullah bin Abbas radhiyallahu 'anhuma</p>
+            <h2>Bukti bagi Penuduh, Sumpah bagi yang Mengingkari</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا: أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «لَوْ يُعْطَى النَّاسُ بِدَعْوَاهُمْ لَادَّعَى رِجَالٌ أَمْوَالَ قَوْمٍ وَدِمَاءَهُمْ، لَكِنِ الْبَيِّنَةُ عَلَى الْمُدَّعِي وَالْيَمِينُ عَلَى مَنْ أَنْكَرَ» حَدِيثٌ حَسَنٌ رَوَاهُ الْبَيْهَقِيُّ وَغَيْرُهُ هَكَذَا، وَبَعْضُهُ فِي الصَّحِيحَيْنِ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Abbas radhiyallahu 'anhuma meriwayatkan bahwa Rasulullah shallallahu 'alaihi wa sallam bersabda, "Seandainya manusia diberikan (haknya) hanya berdasarkan pengakuan/tuduhan mereka, tentu banyak orang akan mengklaim harta dan darah suatu kaum (dengan sembarangan). Akan tetapi, bukti wajib bagi yang menuduh, dan sumpah wajib bagi yang mengingkari." (Hadits hasan, riwayat Al-Baihaqi dan lainnya, sebagiannya terdapat dalam Shahih Bukhari-Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjadi kaidah dasar dalam hukum peradilan Islam: pihak yang menuduh atau mengklaim sesuatu harus membawa bukti (al-bayyinah), sedangkan pihak yang mengingkari tuduhan cukup bersumpah jika tidak ada bukti dari penuduh. Kaidah ini melindungi hak-hak setiap orang agar tidak sembarangan dirampas hanya berdasarkan tuduhan tanpa dasar, dan menjadi fondasi sistem peradilan yang adil hingga saat ini.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h34" data-no="34" data-title="mengubah kemungkaran sesuai kemampuan abu sa'id al-khudri radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">34</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-34 &middot; Diriwayatkan oleh Abu Sa'id Al-Khudri radhiyallahu 'anhu</p>
+            <h2>Mengubah Kemungkaran Sesuai Kemampuan</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي سَعِيدٍ الْخُدْرِيِّ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «مَنْ رَأَى مِنْكُمْ مُنْكَرًا فَلْيُغَيِّرْهُ بِيَدِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِلِسَانِهِ، فَإِنْ لَمْ يَسْتَطِعْ فَبِقَلْبِهِ، وَذَلِكَ أَضْعَفُ الْإِيمَانِ» رَوَاهُ مُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Sa'id Al-Khudri radhiyallahu 'anhu berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, "Barangsiapa di antara kalian melihat suatu kemungkaran, hendaklah ia mengubahnya dengan tangannya. Jika ia tidak mampu, maka dengan lisannya. Jika ia tidak mampu, maka dengan hatinya (mengingkari dalam hati serta membenci kemungkaran itu), dan itulah selemah-lemah iman." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjelaskan tiga tingkatan mengubah kemungkaran sesuai kemampuan dan wewenang masing-masing orang: dengan kekuasaan/tindakan (misalnya oleh penguasa atau yang berwenang), dengan nasihat lisan, atau minimal dengan membenci kemungkaran tersebut dalam hati tanpa meridhainya. Kaidah ini menunjukkan bahwa amar ma'ruf nahi munkar adalah kewajiban bertingkat, dan tidak ada alasan bagi seorang mukmin untuk sepenuhnya diam serta ridha terhadap kemaksiatan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h35" data-no="35" data-title="larangan dengki dan memutus silaturahmi abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">35</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-35 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Larangan Dengki dan Memutus Silaturahmi</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «لَا تَحَاسَدُوا، وَلَا تَنَاجَشُوا، وَلَا تَبَاغَضُوا، وَلَا تَدَابَرُوا، وَلَا يَبِعْ بَعْضُكُمْ عَلَى بَيْعِ بَعْضٍ، وَكُونُوا عِبَادَ اللهِ إِخْوَانًا؛ اَلْمُسْلِمُ أَخُو الْمُسْلِمِ، لَا يَظْلِمُهُ وَلَا يَخْذُلُهُ، وَلَا يَكْذِبُهُ، وَلَا يَحْقِرُهُ؛ اَلتَّقْوَى هَاهُنَا -وَيُشِيرُ إِلَى صَدْرِهِ ثَلَاثَ مَرَّاتٍ- بِحَسْبِ امْرِئٍ مِنَ الشَّرِّ أَنْ يَحْقِرَ أَخَاهُ الْمُسْلِمَ؛ كُلُّ الْمُسْلِمِ عَلَى الْمُسْلِمِ حَرَامٌ: دَمُهُ، وَمَالُهُ، وَعِرْضُهُ» رَوَاهُ مُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Janganlah kalian saling mendengki, jangan saling menipu dalam jual beli (najasy), jangan saling membenci, jangan saling membelakangi (memutus hubungan), dan janganlah sebagian kalian menjual di atas penjualan sebagian yang lain. Jadilah kalian hamba-hamba Allah yang bersaudara. Seorang muslim adalah saudara bagi muslim lainnya, tidak boleh menzaliminya, tidak boleh membiarkannya (dalam kesulitan tanpa dibantu), tidak boleh mendustainya, dan tidak boleh merendahkannya. Takwa itu ada di sini -sambil menunjuk ke dadanya sebanyak tiga kali-. Cukuplah seseorang dikatakan buruk apabila ia merendahkan saudaranya sesama muslim. Setiap muslim atas muslim lainnya haram: darahnya, hartanya, dan kehormatannya." (HR. Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini merinci berbagai penyakit hati dan perbuatan yang merusak persaudaraan sesama muslim, seperti dengki, penipuan, kebencian, dan sikap merendahkan. Sebaliknya, hadits ini menegaskan hak-hak dasar seorang muslim atas muslim lainnya yang wajib dijaga: darah (nyawa), harta, dan kehormatan (nama baik). Isyarat Nabi ke dadanya menegaskan bahwa sumber ketakwaan sejati adalah kondisi hati, bukan sekadar penampilan lahiriah.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h36" data-no="36" data-title="melapangkan kesulitan sesama mukmin abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">36</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-36 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Melapangkan Kesulitan Sesama Mukmin</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «مَنْ نَفَّسَ عَنْ مُؤْمِنٍ كُرْبَةً مِنْ كُرَبِ الدُّنْيَا نَفَّسَ اللهُ عَنْهُ كُرْبَةً مِنْ كُرَبِ يَوْمِ الْقِيَامَةِ، وَمَنْ يَسَّرَ عَلَى مُعْسِرٍ يَسَّرَ اللهُ عَلَيْهِ فِي الدُّنْيَا وَالْآخِرَةِ، وَمَنْ سَتَرَ مُسْلِمًا سَتَرَهُ اللهُ فِي الدُّنْيَا وَالْآخِرَةِ، وَاللهُ فِي عَوْنِ الْعَبْدِ مَا كَانَ الْعَبْدُ فِي عَوْنِ أَخِيهِ، وَمَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ، وَمَا اجْتَمَعَ قَوْمٌ فِي بَيْتٍ مِنْ بُيُوتِ اللهِ يَتْلُونَ كِتَابَ اللهِ وَيَتَدَارَسُونَهُ بَيْنَهُمْ إِلَّا نَزَلَتْ عَلَيْهِمُ السَّكِينَةُ، وَغَشِيَتْهُمُ الرَّحْمَةُ، وَحَفَّتْهُمُ الْمَلَائِكَةُ، وَذَكَرَهُمُ اللهُ فِيمَنْ عِنْدَهُ، وَمَنْ بَطَّأَ بِهِ عَمَلُهُ لَمْ يُسْرِعْ بِهِ نَسَبُهُ» رَوَاهُ مُسْلِمٌ بِهَذَا اللَّفْظِ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu meriwayatkan dari Nabi shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Barangsiapa melapangkan satu kesulitan dunia dari seorang mukmin, Allah akan melapangkan darinya satu kesulitan pada hari kiamat. Barangsiapa memudahkan orang yang kesulitan, Allah akan memudahkannya di dunia dan akhirat. Barangsiapa menutupi (aib) seorang muslim, Allah akan menutupinya di dunia dan akhirat. Allah senantiasa menolong seorang hamba selama hamba itu menolong saudaranya. Barangsiapa menempuh suatu jalan untuk mencari ilmu, Allah akan memudahkan baginya jalan menuju surga. Tidaklah suatu kaum berkumpul di salah satu rumah Allah untuk membaca Kitabullah dan mempelajarinya bersama-sama, kecuali ketenangan akan turun kepada mereka, rahmat akan menyelimuti mereka, para malaikat akan mengelilingi mereka, dan Allah akan menyebut mereka di hadapan para malaikat yang ada di sisi-Nya. Dan barangsiapa yang amalnya membuatnya lambat (dalam meraih derajat tinggi), maka nasabnya tidak akan mempercepatnya." (HR. Muslim dengan lafazh ini)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini mengaitkan balasan Allah dengan jenis pertolongan yang diberikan kepada sesama: melapangkan kesulitan dibalas kelapangan, memudahkan urusan dibalas kemudahan, dan menutup aib dibalas tertutupnya aib — sesuai kaidah <em>al-jaza min jinsil 'amal</em> (balasan sejenis dengan perbuatan). Penutup hadits menegaskan bahwa kedudukan seseorang di sisi Allah ditentukan oleh amal, bukan garis keturunan atau status sosial, sehingga tidak ada keistimewaan turun-temurun tanpa disertai amal shalih.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h37" data-no="37" data-title="balasan niat dan amal abdullah bin abbas radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">37</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-37 &middot; Diriwayatkan oleh Abdullah bin Abbas radhiyallahu 'anhuma</p>
+            <h2>Balasan Niat dan Amal</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا عَنْ رَسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ تَبَارَكَ وَتَعَالَى قَالَ: «إِنَّ اللهَ كَتَبَ الْحَسَنَاتِ وَالسَّيِّئَاتِ، ثُمَّ بَيَّنَ ذَلِكَ: فَمَنْ هَمَّ بِحَسَنَةٍ فَلَمْ يَعْمَلْهَا كَتَبَهَا اللهُ عِنْدَهُ حَسَنَةً كَامِلَةً، وَإِنْ هَمَّ بِهَا فَعَمِلَهَا كَتَبَهَا اللهُ عِنْدَهُ عَشْرَ حَسَنَاتٍ إِلَى سَبْعِمِائَةِ ضِعْفٍ إِلَى أَضْعَافٍ كَثِيرَةٍ، وَإِنْ هَمَّ بِسَيِّئَةٍ فَلَمْ يَعْمَلْهَا كَتَبَهَا اللهُ عِنْدَهُ حَسَنَةً كَامِلَةً، وَإِنْ هَمَّ بِهَا فَعَمِلَهَا كَتَبَهَا اللهُ سَيِّئَةً وَاحِدَةً» رَوَاهُ الْبُخَارِيُّ وَمُسْلِمٌ فِي صَحِيحَيْهِمَا بِهَذِهِ الْحُرُوفِ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Abbas radhiyallahu 'anhuma meriwayatkan dari Rasulullah shallallahu 'alaihi wa sallam, dari apa yang beliau riwayatkan dari Rabbnya Tabaraka wa Ta'ala, bahwa Allah berfirman, "Sesungguhnya Allah mencatat kebaikan-kebaikan dan keburukan-keburukan, kemudian menjelaskannya: barangsiapa berniat melakukan kebaikan namun tidak jadi melakukannya, Allah mencatatnya di sisi-Nya sebagai satu kebaikan yang sempurna. Jika ia berniat lalu benar-benar melakukannya, Allah mencatatnya di sisi-Nya sepuluh kebaikan hingga tujuh ratus kali lipat, bahkan hingga berlipat ganda yang lebih banyak lagi. Dan jika seseorang berniat melakukan keburukan namun tidak jadi melakukannya, Allah mencatatnya di sisi-Nya sebagai satu kebaikan yang sempurna. Jika ia berniat lalu benar-benar melakukannya, Allah mencatatnya sebagai satu keburukan saja." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits qudsi ini menunjukkan betapa luasnya rahmat Allah dalam sistem pembalasan-Nya: niat baik yang belum terlaksana tetap dicatat pahala penuh, amal baik yang terlaksana dilipatgandakan hingga ratusan kali, sedangkan niat buruk yang diurungkan justru dicatat sebagai kebaikan, dan amal buruk yang terlanjur dilakukan hanya dicatat satu dosa saja (tanpa dilipatgandakan). Ini menjadi motivasi besar bagi seorang muslim untuk terus berniat baik dan segera meninggalkan niat buruk sebelum terlaksana.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h38" data-no="38" data-title="wali-wali allah abu hurairah radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">38</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-38 &middot; Diriwayatkan oleh Abu Hurairah radhiyallahu 'anhu</p>
+            <h2>Wali-Wali Allah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللهُ عَنْهُ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «إِنَّ اللهَ تَعَالَى قَالَ: مَنْ عَادَى لِي وَلِيًّا فَقَدْ آذَنْتُهُ بِالْحَرْبِ، وَمَا تَقَرَّبَ إِلَيَّ عَبْدِي بِشَيْءٍ أَحَبَّ إِلَيَّ مِمَّا افْتَرَضْتُهُ عَلَيْهِ، وَلَا يَزَالُ عَبْدِي يَتَقَرَّبُ إِلَيَّ بِالنَّوَافِلِ حَتَّى أُحِبَّهُ، فَإِذَا أَحْبَبْتُهُ كُنْتُ سَمْعَهُ الَّذِي يَسْمَعُ بِهِ، وَبَصَرَهُ الَّذِي يُبْصِرُ بِهِ، وَيَدَهُ الَّتِي يَبْطِشُ بِهَا، وَرِجْلَهُ الَّتِي يَمْشِي بِهَا، وَإِنْ سَأَلَنِي لَأُعْطِيَنَّهُ، وَلَئِنِ اسْتَعَاذَنِي لَأُعِيذَنَّهُ» رَوَاهُ الْبُخَارِيُّ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Hurairah radhiyallahu 'anhu berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Sesungguhnya Allah Ta'ala berfirman, 'Barangsiapa memusuhi wali-Ku, maka sungguh Aku umumkan perang kepadanya. Tidaklah hamba-Ku mendekatkan diri kepada-Ku dengan sesuatu yang lebih Aku cintai daripada apa yang telah Aku wajibkan atasnya. Hamba-Ku senantiasa mendekatkan diri kepada-Ku dengan amalan-amalan sunnah hingga Aku mencintainya. Apabila Aku telah mencintainya, Aku menjadi pendengarannya yang dengannya ia mendengar, penglihatannya yang dengannya ia melihat, tangannya yang dengannya ia memukul (bertindak), dan kakinya yang dengannya ia berjalan. Jika ia memohon kepada-Ku, pasti Aku akan mengabulkannya, dan jika ia memohon perlindungan kepada-Ku, pasti Aku akan melindunginya.'" (HR. Bukhari)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Wali Allah bukanlah orang yang memiliki kesaktian tertentu, melainkan setiap mukmin yang bertakwa dan konsisten mendekatkan diri kepada Allah, pertama melalui amalan wajib (yang paling dicintai Allah), kemudian dilanjutkan dengan amalan sunnah hingga mencapai derajat kecintaan Allah. Ungkapan "Aku menjadi pendengarannya..." adalah kiasan bahwa seluruh gerak-gerik wali Allah senantiasa terbimbing dan diberkahi sehingga selaras dengan yang diridhai-Nya, bukan bermakna penyatuan dzat Allah dengan makhluk sebagaimana dipahami sebagian kalangan sesat.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h39" data-no="39" data-title="dimaafkannya kesalahan, lupa, dan paksaan abdullah bin abbas radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">39</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-39 &middot; Diriwayatkan oleh Abdullah bin Abbas radhiyallahu 'anhuma</p>
+            <h2>Dimaafkannya Kesalahan, Lupa, dan Paksaan</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا: أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «إِنَّ اللهَ تَجَاوَزَ لِي عَنْ أُمَّتِي: الْخَطَأَ، وَالنِّسْيَانَ، وَمَا اسْتُكْرِهُوا عَلَيْهِ» حَدِيثٌ حَسَنٌ رَوَاهُ ابْنُ مَاجَهْ وَالْبَيْهَقِيُّ وَغَيْرُهُمَا</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Abbas radhiyallahu 'anhuma meriwayatkan bahwa Rasulullah shallallahu 'alaihi wa sallam bersabda, "Sesungguhnya Allah memaafkan untuk umatku: perbuatan yang tidak sengaja (khilaf), lupa, dan apa yang mereka lakukan karena dipaksa." (Hadits hasan, riwayat Ibnu Majah, Al-Baihaqi, dan lainnya)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini adalah salah satu kaidah fikih pokok yang meringankan beban umat Islam: dosa tidak dikenakan atas perbuatan yang dilakukan tanpa kesengajaan, karena lupa, atau di bawah paksaan yang tidak bisa dihindari. Meski demikian, para ulama menjelaskan bahwa pemaafan ini khusus untuk dosanya, sedangkan konsekuensi duniawi seperti ganti rugi atas kerusakan tetap berlaku dalam beberapa keadaan, sebagai bentuk keadilan terhadap pihak yang dirugikan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h40" data-no="40" data-title="jadilah di dunia seperti perantau abdullah bin umar radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">40</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-40 &middot; Diriwayatkan oleh Abdullah bin Umar radhiyallahu 'anhuma</p>
+            <h2>Jadilah di Dunia Seperti Perantau</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ عُمَرَ رَضِيَ اللهُ عَنْهُمَا قَالَ: أَخَذَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ بِمَنْكِبِي فَقَالَ: «كُنْ فِي الدُّنْيَا كَأَنَّكَ غَرِيبٌ أَوْ عَابِرُ سَبِيلٍ» وَكَانَ ابْنُ عُمَرَ رَضِيَ اللهُ عَنْهُمَا يَقُولُ: إِذَا أَمْسَيْتَ فَلَا تَنْتَظِرِ الصَّبَاحَ، وَإِذَا أَصْبَحْتَ فَلَا تَنْتَظِرِ الْمَسَاءَ، وَخُذْ مِنْ صِحَّتِكَ لِمَرَضِكَ، وَمِنْ حَيَاتِكَ لِمَوْتِكَ رَوَاهُ الْبُخَارِيُّ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Umar radhiyallahu 'anhuma berkata: Rasulullah shallallahu 'alaihi wa sallam memegang pundakku, lalu bersabda, "Jadilah engkau di dunia ini seakan-akan orang asing (perantau) atau musafir yang sekadar lewat." Dan Ibnu Umar radhiyallahu 'anhuma biasa berkata, "Apabila engkau berada di sore hari, jangan menunggu datangnya pagi. Apabila engkau berada di pagi hari, jangan menunggu datangnya sore. Manfaatkan masa sehatmu sebelum datang sakitmu, dan manfaatkan masa hidupmu sebelum datang matimu." (HR. Bukhari)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini mengajarkan sikap zuhud sekaligus kesadaran akan singkatnya hidup di dunia. Seorang perantau tidak akan terlalu terikat dan berlebihan mencintai tempat singgahnya karena sadar ia akan segera pergi, demikian pula seharusnya sikap seorang muslim terhadap dunia. Nasihat Ibnu Umar yang menyertainya mendorong seorang muslim untuk senantiasa mempersiapkan diri menghadapi kematian dan tidak menunda-nunda amal shalih, karena kesempatan hidup dan sehat tidak akan bertahan selamanya.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h41" data-no="41" data-title="hawa nafsu tunduk pada syariat abdullah bin amr bin al-'ash radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">41</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-41 &middot; Diriwayatkan oleh Abdullah bin Amr bin Al-'Ash radhiyallahu 'anhuma</p>
+            <h2>Hawa Nafsu Tunduk pada Syariat</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي مُحَمَّدٍ عَبْدِ اللهِ بْنِ عَمْرِو بْنِ الْعَاصِ رَضِيَ اللهُ عَنْهُمَا قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يَكُونَ هَوَاهُ تَبَعًا لِمَا جِئْتُ بِهِ» حَدِيثٌ صَحِيحٌ رَوَيْنَاهُ فِي كِتَابِ الْحُجَّةِ بِإِسْنَادٍ صَحِيحٍ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Muhammad Abdullah bin Amr bin Al-'Ash radhiyallahu 'anhuma berkata: Rasulullah shallallahu 'alaihi wa sallam bersabda, "Tidak sempurna iman salah seorang di antara kalian hingga hawa nafsunya tunduk mengikuti apa yang aku bawa (syariat)." (Hadits shahih, kami riwayatkan dalam Kitab Al-Hujjah dengan sanad shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menegaskan bahwa kesempurnaan iman menuntut penundukan seluruh keinginan, selera, dan kecenderungan pribadi (hawa nafsu) di bawah bimbingan wahyu, bukan sebaliknya menafsirkan agama sesuai selera pribadi. Ini adalah prinsip fundamental yang membedakan seorang muslim sejati dari orang yang hanya mengambil bagian agama yang sesuai kepentingannya semata, sementara meninggalkan bagian lain yang tidak disukai hawa nafsunya.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h42" data-no="42" data-title="luasnya ampunan allah anas bin malik radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">42</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-42 &middot; Diriwayatkan oleh Anas bin Malik radhiyallahu 'anhu</p>
+            <h2>Luasnya Ampunan Allah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَنَسٍ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: قَالَ اللهُ تَعَالَى: «يَا ابْنَ آدَمَ إِنَّكَ مَا دَعَوْتَنِي وَرَجَوْتَنِي غَفَرْتُ لَكَ عَلَى مَا كَانَ مِنْكَ وَلَا أُبَالِي، يَا ابْنَ آدَمَ لَوْ بَلَغَتْ ذُنُوبُكَ عَنَانَ السَّمَاءِ ثُمَّ اسْتَغْفَرْتَنِي غَفَرْتُ لَكَ، يَا ابْنَ آدَمَ إِنَّكَ لَوْ أَتَيْتَنِي بِقُرَابِ الْأَرْضِ خَطَايَا ثُمَّ لَقِيتَنِي لَا تُشْرِكُ بِي شَيْئًا لَأَتَيْتُكَ بِقُرَابِهَا مَغْفِرَةً» رَوَاهُ التِّرْمِذِيُّ وَقَالَ: حَدِيثٌ حَسَنٌ صَحِيحٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Anas radhiyallahu 'anhu berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, Allah Ta'ala berfirman, "Wahai anak Adam, selama engkau berdoa dan berharap kepada-Ku, Aku akan mengampunimu atas apa yang telah engkau lakukan dan Aku tidak peduli (sebanyak apapun dosamu). Wahai anak Adam, seandainya dosa-dosamu mencapai awan di langit, kemudian engkau memohon ampun kepada-Ku, niscaya Aku akan mengampunimu. Wahai anak Adam, seandainya engkau datang kepada-Ku dengan membawa dosa sepenuh bumi, kemudian engkau menjumpai-Ku dalam keadaan tidak menyekutukan-Ku dengan sesuatu apapun, niscaya Aku akan mendatangimu dengan ampunan sepenuh itu pula." (HR. Tirmidzi, ia berkata: hadits hasan shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits qudsi penutup dari 42 hadits inti Imam Nawawi ini menjadi penyeimbang yang indah setelah berbagai kewajiban dan larangan yang telah disebutkan sebelumnya, mengingatkan bahwa betapa pun besarnya dosa seorang hamba, pintu ampunan Allah senantiasa terbuka lebar selama ia tidak berbuat syirik dan mau kembali bertaubat serta berharap kepada-Nya. Ini menjadi motivasi agar seorang muslim tidak pernah berputus asa dari rahmat Allah sekaligus tidak menjadikannya alasan untuk meremehkan dosa.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h43" data-no="43" data-title="bagikan warisan sesuai haknya abdullah bin abbas radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">43</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-43 &middot; Diriwayatkan oleh Abdullah bin Abbas radhiyallahu 'anhuma</p>
+            <h2>Bagikan Warisan Sesuai Haknya</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ ابْنِ عَبَّاسٍ رَضِيَ اللهُ عَنْهُمَا أَنَّ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «أَلْحِقُوا الْفَرَائِضَ بِأَهْلِهَا، فَمَا أَبْقَتِ الْفَرَائِضُ فَلِأَوْلَى رَجُلٍ ذَكَرٍ» خَرَّجَهُ الْبُخَارِيُّ وَمُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Ibnu Abbas radhiyallahu 'anhuma meriwayatkan bahwa Rasulullah shallallahu 'alaihi wa sallam bersabda, "Berikanlah bagian-bagian warisan yang telah ditetapkan kepada ahlinya (yang berhak). Adapun sisanya, maka itu menjadi hak kerabat laki-laki terdekat (dari pihak ayah)." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjadi salah satu dasar utama ilmu faraidh (ilmu waris Islam). Langkah pertama dalam membagi warisan adalah menunaikan bagian-bagian yang telah ditentukan Al-Qur'an (dzawil furudh, seperti anak perempuan, istri, ibu, dan lainnya), baru kemudian sisa harta diberikan kepada 'ashabah, yaitu kerabat laki-laki terdekat dari garis keturunan ayah. Ketelitian dalam ilmu faraidh sangat ditekankan karena berkaitan langsung dengan hak-hak harta yang mudah menimbulkan perselisihan keluarga jika salah dibagikan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h44" data-no="44" data-title="persusuan mengharamkan sebagaimana nasab aisyah radhiyallahu 'anha">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">44</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-44 &middot; Diriwayatkan oleh Aisyah radhiyallahu 'anha</p>
+            <h2>Persusuan Mengharamkan Sebagaimana Nasab</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ عَائِشَةَ رَضِيَ اللهُ عَنْهَا عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «الرَّضَاعَةُ تُحَرِّمُ مَا تُحَرِّمُ الْوِلَادَةُ» خَرَّجَهُ الْبُخَارِيُّ وَمُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Aisyah radhiyallahu 'anha meriwayatkan dari Nabi shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Hubungan persusuan mengharamkan (pernikahan) sebagaimana hubungan kelahiran/nasab mengharamkannya." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjadi dasar hukum tentang <em>radha'ah</em> (persusuan) dalam fikih munakahat: seorang anak yang disusui oleh seorang wanita dalam kadar dan waktu tertentu (sesuai rincian ulama fikih) akan menjadi mahram (haram dinikahi) bagi wanita tersebut beserta keluarganya, sama seperti hubungan nasab kandung. Hal ini melahirkan istilah 'saudara sepersusuan', yang statusnya setara dengan saudara kandung dalam hal keharaman pernikahan dan sebagian hukum lain terkait mahram.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h45" data-no="45" data-title="empat perkara yang diharamkan allah jabir bin abdullah radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">45</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-45 &middot; Diriwayatkan oleh Jabir bin Abdullah radhiyallahu 'anhuma</p>
+            <h2>Empat Perkara yang Diharamkan Allah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ جَابِرٍ رَضِيَ اللهُ عَنْهُ أَنَّهُ سَمِعَ النَّبِيَّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ عَامَ الْفَتْحِ وَهُوَ بِمَكَّةَ يَقُولُ: «إِنَّ اللهَ عَزَّ وَجَلَّ وَرَسُولَهُ حَرَّمَ بَيْعَ الْخَمْرِ وَالْمَيْتَةِ وَالْخِنْزِيرِ وَالْأَصْنَامِ»؛ فَقِيلَ: يَا رَسُولَ اللهِ أَرَأَيْتَ شُحُومَ الْمَيْتَةِ فَإِنَّهَا تُطْلَى بِهَا السُّفُنُ، وَتُدْهَنُ بِهَا الْجُلُودُ، وَيَسْتَصْبِحُ بِهَا النَّاسُ؟ فَقَالَ: لَا، هُوَ حَرَامٌ. ثُمَّ قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ عِنْدَ ذَلِكَ: قَاتَلَ اللهُ الْيَهُودَ، إِنَّ اللهَ لَمَّا حَرَّمَ عَلَيْهِمْ شُحُومَهَا جَمَلُوهُ ثُمَّ بَاعُوهُ فَأَكَلُوا ثَمَنَهُ رَوَاهُ الْبُخَارِيُّ وَمُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Jabir radhiyallahu 'anhu meriwayatkan bahwa ia mendengar Nabi shallallahu 'alaihi wa sallam pada tahun Fathu Makkah, saat berada di Makkah, bersabda, "Sesungguhnya Allah 'Azza wa Jalla dan Rasul-Nya mengharamkan jual beli khamar, bangkai, babi, dan berhala." Ditanyakan, "Wahai Rasulullah, bagaimana pendapatmu tentang lemak bangkai? Sebab lemak itu digunakan untuk melapisi kapal, meminyaki kulit, dan dijadikan penerangan (lampu) oleh manusia." Nabi menjawab, "Tidak boleh, itu tetap haram." Kemudian Rasulullah shallallahu 'alaihi wa sallam bersabda saat itu, "Semoga Allah membinasakan orang-orang Yahudi. Sesungguhnya ketika Allah mengharamkan lemak bangkai atas mereka, mereka justru mencairkannya lalu menjualnya dan memakan hasil penjualannya." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menegaskan bahwa keharaman suatu barang mencakup juga keharaman memperjualbelikannya, tidak dibolehkan mencari celah dengan mengubah bentuk atau memanfaatkannya secara tidak langsung sebagaimana dilakukan sebagian Bani Israil terhadap lemak bangkai. Ini menjadi kaidah penting: apa yang haram dikonsumsi/digunakan, haram pula diperjualbelikan dan dijadikan sumber penghasilan, karena hasil dari jual beli barang haram tetap haram meskipun bentuknya telah diubah.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h46" data-no="46" data-title="setiap yang memabukkan itu haram abu musa al-asy'ari radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">46</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-46 &middot; Diriwayatkan oleh Abu Musa Al-Asy'ari radhiyallahu 'anhu</p>
+            <h2>Setiap yang Memabukkan itu Haram</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ أَبِي بُرْدَةَ عَنْ أَبِيهِ أَبِي مُوسَى الْأَشْعَرِيِّ رَضِيَ اللهُ عَنْهُ: أَنَّ النَّبِيَّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ بَعَثَهُ إِلَى الْيَمَنِ فَسَأَلَهُ عَنْ أَشْرِبَةٍ تُصْنَعُ بِهَا، فَقَالَ: وَمَا هِيَ؟ قَالَ: الْبِتْعُ، وَالْمِزْرُ، فَقِيلَ لِأَبِي بُرْدَةَ: مَا الْبِتْعُ؟ قَالَ: نَبِيذُ الْعَسَلِ، وَالْمِزْرُ نَبِيذُ الشَّعِيرِ، فَقَالَ: كُلُّ مُسْكِرٍ حَرَامٌ خَرَّجَهُ الْبُخَارِيُّ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abu Burdah meriwayatkan dari ayahnya, Abu Musa Al-Asy'ari radhiyallahu 'anhu, bahwa Nabi shallallahu 'alaihi wa sallam mengutusnya ke Yaman, lalu ia (Abu Musa) bertanya kepada Nabi tentang beberapa jenis minuman yang dibuat di sana. Nabi bertanya, "Apa itu?" Ia menjawab, "Al-Bit' dan Al-Mizr." Ditanyakan kepada Abu Burdah, "Apa itu Al-Bit'?" Ia menjawab, "Minuman fermentasi dari madu." Adapun Al-Mizr adalah minuman fermentasi dari jelai (gandum). Nabi kemudian bersabda, "Setiap yang memabukkan itu haram." (HR. Bukhari)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menetapkan kaidah umum dalam hukum keharaman khamar: bukan nama atau jenis bahan minumannya yang menjadi patokan, melainkan sifat 'memabukkan' (iskar) itu sendiri. Sehingga apapun bentuknya, entah terbuat dari anggur, madu, gandum, atau bahan lain, jika sifatnya memabukkan maka hukumnya haram. Kaidah ini juga relevan diterapkan pada berbagai zat memabukkan atau menghilangkan akal di masa sekarang, meskipun namanya berbeda-beda.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h47" data-no="47" data-title="secukupnya dalam makan dan minum al-miqdam bin ma'dikarib radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">47</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-47 &middot; Diriwayatkan oleh Al-Miqdam bin Ma'dikarib radhiyallahu 'anhu</p>
+            <h2>Secukupnya dalam Makan dan Minum</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنِ الْمِقْدَامِ بْنِ مَعْدِيكَرِبَ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَقُولُ: «مَا مَلَأَ ابْنُ آدَمَ وِعَاءً شَرًّا مِنْ بَطْنٍ، بِحَسْبِ ابْنِ آدَمَ أُكُلَاتٌ يُقِمْنَ صُلْبَهُ، فَإِنْ كَانَ لَا مَحَالَةَ فَثُلُثٌ لِطَعَامِهِ، وَثُلُثٌ لِشَرَابِهِ، وَثُلُثٌ لِنَفَسِهِ» رَوَاهُ أَحْمَدُ وَالتِّرْمِذِيُّ وَالنَّسَائِيُّ وَابْنُ مَاجَهْ، وَقَالَ التِّرْمِذِيُّ: حَدِيثٌ حَسَنٌ",</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Al-Miqdam bin Ma'dikarib radhiyallahu 'anhu berkata: Aku mendengar Rasulullah shallallahu 'alaihi wa sallam bersabda, "Tidak ada wadah yang lebih buruk yang dipenuhi oleh anak Adam melebihi perutnya sendiri. Cukuplah bagi anak Adam beberapa suapan yang dapat menegakkan tulang punggungnya (menjaga staminanya). Namun jika terpaksa (harus makan lebih banyak), maka sepertiga untuk makanannya, sepertiga untuk minumannya, dan sepertiga untuk nafasnya (ruang bernapas/lambung kosong)." (HR. Ahmad, Tirmidzi, An-Nasa'i, dan Ibnu Majah; Tirmidzi berkata: hadits hasan)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjadi salah satu dasar ajaran kesehatan dalam Islam, mengajarkan pola makan sederhana (qana'ah) dan menghindari berlebihan (israf), yang selaras dengan berbagai penelitian medis modern tentang bahaya makan berlebihan bagi tubuh. Pembagian sepertiga-sepertiga-sepertiga (makanan, minuman, udara/ruang kosong) menjadi panduan praktis agar tubuh tetap ringan untuk beribadah dan beraktivitas, tanpa dikuasai rasa kantuk atau lesu akibat perut yang terlalu penuh.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h48" data-no="48" data-title="empat tanda kemunafikan abdullah bin umar radhiyallahu 'anhuma">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">48</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-48 &middot; Diriwayatkan oleh Abdullah bin Umar radhiyallahu 'anhuma</p>
+            <h2>Empat Tanda Kemunafikan</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ عَبْدِ اللهِ بْنِ عُمَرَ عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «أَرْبَعٌ مَنْ كُنَّ فِيهِ كَانَ مُنَافِقًا، وَمَنْ كَانَتْ فِيهِ خَصْلَةٌ مِنْهُنَّ كَانَتْ فِيهِ خَصْلَةٌ مِنَ النِّفَاقِ حَتَّى يَدَعَهَا: إِذَا حَدَّثَ كَذَبَ، وَإِذَا وَعَدَ أَخْلَفَ، وَإِذَا خَاصَمَ فَجَرَ، وَإِذَا عَاهَدَ غَدَرَ» خَرَّجَهُ الْبُخَارِيُّ وَمُسْلِمٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abdullah bin Umar meriwayatkan dari Nabi shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Empat perkara, siapa yang memiliki keempatnya maka ia adalah munafik sejati (tulen), dan siapa yang memiliki salah satu darinya maka ada padanya satu ciri kemunafikan hingga ia meninggalkannya: apabila berbicara ia berdusta, apabila berjanji ia mengingkari, apabila berselisih (bertengkar) ia curang/melampaui batas, dan apabila membuat perjanjian ia berkhianat." (HR. Bukhari dan Muslim)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini menjelaskan tentang nifaq 'amali (kemunafikan dalam perbuatan, bukan nifaq i'tiqadi/akidah yang mengeluarkan dari Islam). Empat sifat ini — berdusta, mengingkari janji, curang saat berselisih, dan berkhianat pada perjanjian — adalah ciri-ciri yang merusak kepercayaan sosial dan menjadi peringatan keras bagi setiap muslim agar senantiasa introspeksi diri serta membersihkan akhlaknya dari sifat-sifat tersebut, karena sekecil apapun sifat ini yang tersisa tetap tergolong cabang kemunafikan.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h49" data-no="49" data-title="bertawakal sepenuhnya kepada allah umar bin al-khaththab radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">49</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-49 &middot; Diriwayatkan oleh Umar bin Al-Khaththab radhiyallahu 'anhu</p>
+            <h2>Bertawakal Sepenuhnya kepada Allah</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ، عَنِ النَّبِيِّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ قَالَ: «لَوْ أَنَّكُمْ تَتَوَكَّلُونَ عَلَى اللهِ حَقَّ تَوَكُّلِهِ لَرَزَقَكُمْ كَمَا يَرْزُقُ الطَّيْرَ، تَغْدُو خِمَاصًا وَتَرُوحُ بِطَانًا» رَوَاهُ الْإِمَامُ أَحْمَدُ وَالتِّرْمِذِيُّ وَالنَّسَائِيُّ وَابْنُ مَاجَهْ وَابْنُ حِبَّانَ فِي صَحِيحِهِ، وَالْحَاكِمُ، وَقَالَ التِّرْمِذِيُّ: حَسَنٌ صَحِيحٌ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Umar bin Al-Khaththab radhiyallahu 'anhu meriwayatkan dari Nabi shallallahu 'alaihi wa sallam bahwa beliau bersabda, "Seandainya kalian bertawakal kepada Allah dengan sebenar-benar tawakal, niscaya Dia akan memberi kalian rezeki sebagaimana Dia memberi rezeki kepada burung: ia berangkat pagi dalam keadaan lapar (perut kosong) dan pulang sore hari dalam keadaan kenyang." (HR. Ahmad, Tirmidzi, An-Nasa'i, Ibnu Majah, Ibnu Hibban dalam Shahih-nya, dan Al-Hakim; Tirmidzi berkata: hasan shahih)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits ini mengajarkan makna tawakal yang benar: bukan berpangku tangan tanpa berusaha, melainkan menyandarkan hasil sepenuhnya kepada Allah setelah melakukan sebab/usaha yang wajar, sebagaimana perumpamaan burung yang tetap terbang mencari makan (berusaha) di pagi hari namun hatinya bergantung pada rezeki dari Allah. Tawakal yang benar memadukan antara ikhtiar lahiriah dan penyerahan hati sepenuhnya kepada ketentuan Allah, bukan sekadar diam menunggu tanpa usaha.</p>
+        </div>
+      </article>
+
+      <article class="hadits-card" id="h50" data-no="50" data-title="istiqamah lisan dalam berdzikir abdullah bin busr radhiyallahu 'anhu">
+        <header class="card-head">
+          <div class="medal">
+            <span class="medal-no">50</span>
+          </div>
+          <div class="card-head-text">
+            <p class="eyebrow">Hadits ke-50 &middot; Diriwayatkan oleh Abdullah bin Busr radhiyallahu 'anhu</p>
+            <h2>Istiqamah Lisan dalam Berdzikir</h2>
+          </div>
+        </header>
+
+        <div class="matan-panel">
+          <p class="matan-label">النَّصُّ الأَصْلِيّ &mdash; Teks Asli</p>
+          <p class="arabic">عَنْ عَبْدِ اللهِ بْنِ بُسْرٍ رَضِيَ اللهُ عَنْهُ قَالَ: أَتَى النَّبِيَّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ رَجُلٌ، فَقَالَ: يَا رَسُولَ اللهِ إِنَّ شَرَائِعَ الْإِسْلَامِ قَدْ كَثُرَتْ عَلَيَّ، فَأَخْبِرْنِي بِشَيْءٍ أَتَشَبَّثُ بِهِ، قَالَ: «لَا يَزَالُ لِسَانُكَ رَطْبًا مِنْ ذِكْرِ اللهِ» خَرَّجَهُ الْإِمَامُ أَحْمَدُ بِهَذَا اللَّفْظِ</p>
+        </div>
+
+        <div class="terjemah-block">
+          <p class="block-label">Terjemah</p>
+          <p class="terjemah-text">Abdullah bin Busr radhiyallahu 'anhu berkata: Seorang laki-laki mendatangi Nabi shallallahu 'alaihi wa sallam dan berkata, "Wahai Rasulullah, sesungguhnya syariat-syariat Islam telah begitu banyak bagiku (aku khawatir tidak mampu menghafal semuanya), maka kabarkan kepadaku sesuatu yang bisa kupegang teguh." Nabi bersabda, "Jangan biarkan lisanmu berhenti dari senantiasa basah karena berdzikir kepada Allah." (HR. Ahmad dengan lafazh ini)</p>
+        </div>
+
+        <div class="keterangan-block">
+          <p class="block-label ket-label">Keterangan &amp; Faedah bagi Santri</p>
+          <p class="keterangan-text">Hadits penutup dari kitab Al-Arba'in wa Tatimmatuha ini memberikan solusi ringkas dan mudah diamalkan siapa saja: memperbanyak dzikir kepada Allah dalam kondisi apapun. Dzikir yang konsisten (lisan senantiasa 'basah' menyebut nama Allah) menjadi amalan yang ringan diucapkan namun berat timbangannya, sekaligus menjadi benteng hati dari kelalaian di tengah kesibukan dunia. Hadits ini menutup rangkaian 50 hadits dengan pesan universal: dekatkan diri kepada Allah kapan pun dan di mana pun berada.</p>
+        </div>
+      </article>
+
+    <footer class="site-footer">
+      <div class="divider"></div>
+      &copy; 2026 by Achmad Fauzi &middot; Email: vaozeei@gmail.com
+    </footer>
+  </main>
+</div>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const sidebar = document.getElementById('sidebar');
+  const scrim = document.getElementById('scrim');
+  if(toggle){
+    toggle.addEventListener('click', ()=>{
+      sidebar.classList.toggle('open');
+      scrim.classList.toggle('show');
+    });
+  }
+  if(scrim){
+    scrim.addEventListener('click', ()=>{
+      sidebar.classList.remove('open');
+      scrim.classList.remove('show');
+    });
+  }
+
+  // close mobile nav on link click
+  document.querySelectorAll('.nav-item').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      sidebar.classList.remove('open');
+      scrim.classList.remove('show');
+    });
+  });
+
+  // search filter
+  const searchInput = document.getElementById('searchInput');
+  const navItems = Array.from(document.querySelectorAll('.nav-item'));
+  searchInput.addEventListener('input', (e)=>{
+    const q = e.target.value.trim().toLowerCase();
+    navItems.forEach(item=>{
+      const t = item.getAttribute('data-title') || '';
+      const no = item.getAttribute('data-no');
+      const match = t.includes(q) || no.includes(q);
+      item.style.display = match ? 'flex' : 'none';
+    });
+  });
+
+  // active state on scroll
+  const cards = Array.from(document.querySelectorAll('.hadits-card'));
+  const navMap = {};
+  navItems.forEach(n=> navMap[n.getAttribute('href').slice(1)] = n);
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      const id = entry.target.id;
+      const navEl = navMap[id];
+      if(!navEl) return;
+      if(entry.isIntersecting){
+        navItems.forEach(n=>n.classList.remove('active'));
+        navEl.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  cards.forEach(c=> observer.observe(c));
+</script>
+
+</body>
+</html>

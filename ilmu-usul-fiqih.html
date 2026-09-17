@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ilmu Ushul Fikih — Syekh Abdul Wahab Khallaf</title>
+<style>
+:root{
+  --paper:#FBF6EA;
+  --paper-panel:#F5EDDC;
+  --paper-panel-2:#EFE1C3;
+  --ink:#2A2016;
+  --ink-soft:#5C4B3A;
+  --ink-faint:#8B7A63;
+  --maroon:#7A2430;
+  --maroon-deep:#4E1620;
+  --gold:#A9822F;
+  --gold-light:#D9BC7A;
+  --sage:#55694A;
+  --sage-light:#EDF1E6;
+  --border:#DECDA1;
+  --shadow:rgba(78,22,32,.14);
+  --font-arab:"Traditional Arabic","Scheherazade New","Amiri","Noto Naskh Arabic","Times New Roman",serif;
+  --font-display:Georgia,"Iowan Old Style","Palatino Linotype","Book Antiqua",serif;
+  --font-body:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  line-height:1.7;
+}
+::selection{background:var(--gold-light);color:var(--maroon-deep);}
+
+/* ===== layout ===== */
+.app{display:flex;min-height:100vh;}
+.sidebar{
+  width:300px;flex:0 0 300px;
+  background:linear-gradient(180deg,#3E1319,#4E1620 55%,#3E1319);
+  color:#EFE2C6;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  padding:26px 18px 40px;
+  border-right:6px solid var(--gold);
+}
+.sidebar::-webkit-scrollbar{width:8px;}
+.sidebar::-webkit-scrollbar-thumb{background:#6b2530;border-radius:4px;}
+.brand{
+  display:flex;flex-direction:column;gap:4px;margin-bottom:22px;
+  padding-bottom:16px;border-bottom:1px solid rgba(217,188,122,.35);
+}
+.brand .kicker{
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-light);
+}
+.brand h1{
+  font-family:var(--font-display);font-size:22px;margin:2px 0 0;color:#FBF6EA;font-weight:700;
+}
+.brand .arab{font-family:var(--font-arab);font-size:22px;color:var(--gold-light);margin-top:4px;direction:rtl;}
+.brand .author{font-size:12.5px;color:#CBB88C;margin-top:6px;font-style:italic;}
+
+.search-box{margin-bottom:16px;}
+.search-box input{
+  width:100%;padding:9px 12px;border-radius:8px;border:1px solid rgba(217,188,122,.4);
+  background:rgba(255,255,255,.06);color:#F5EDDC;font-size:13px;font-family:var(--font-body);
+}
+.search-box input::placeholder{color:#B9A47C;}
+.search-box input:focus{outline:2px solid var(--gold-light);background:rgba(255,255,255,.1);}
+
+nav.toc details{margin-bottom:4px;}
+nav.toc summary{
+  cursor:pointer;list-style:none;padding:9px 10px;border-radius:7px;
+  font-family:var(--font-display);font-size:14.5px;font-weight:700;color:#F5EDDC;
+  display:flex;align-items:center;gap:8px;
+}
+nav.toc summary::-webkit-details-marker{display:none;}
+nav.toc summary:hover{background:rgba(217,188,122,.14);}
+nav.toc summary .num{
+  font-family:var(--font-body);font-size:11px;font-weight:700;color:var(--maroon-deep);
+  background:var(--gold-light);border-radius:50%;width:20px;height:20px;
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 20px;
+}
+nav.toc details[open] summary{color:var(--gold-light);}
+nav.toc ul{list-style:none;margin:2px 0 10px 0;padding-left:30px;border-left:1px dashed rgba(217,188,122,.3);}
+nav.toc ul li{margin:0;}
+nav.toc a{
+  display:block;padding:6px 10px;font-size:13px;color:#D8C7A0;text-decoration:none;border-radius:6px;
+}
+nav.toc a:hover{background:rgba(217,188,122,.12);color:#FBF6EA;}
+nav.toc a.active{background:var(--gold);color:var(--maroon-deep);font-weight:700;}
+.menu-toggle{
+  display:none;position:fixed;top:14px;left:14px;z-index:60;
+  background:var(--maroon-deep);color:var(--gold-light);border:1px solid var(--gold);
+  border-radius:8px;padding:9px 12px;font-size:14px;cursor:pointer;box-shadow:0 4px 10px var(--shadow);
+}
+
+.content{flex:1;min-width:0;padding:0 0 60px;}
+.masthead{
+  position:relative;padding:56px 56px 40px;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(169,130,47,.10), transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(122,36,48,.08), transparent 45%),
+    var(--paper);
+  border-bottom:3px double var(--gold);
+}
+.masthead .kicker{
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--maroon);font-weight:700;
+}
+.masthead h1{
+  font-family:var(--font-display);font-size:40px;margin:8px 0 4px;color:var(--maroon-deep);
+}
+.masthead .arab-title{font-family:var(--font-arab);font-size:34px;color:var(--gold);direction:rtl;margin:2px 0 14px;}
+.masthead p.lead{max-width:640px;color:var(--ink-soft);font-size:15.5px;}
+.masthead .meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px;}
+.pill{
+  font-size:12px;padding:5px 12px;border-radius:999px;background:var(--paper-panel);
+  border:1px solid var(--border);color:var(--ink-soft);
+}
+
+/* signature diagram */
+.pillars-wrap{padding:20px 56px 44px;background:var(--paper);}
+.pillars-caption{text-align:center;font-size:13px;color:var(--ink-faint);margin-top:6px;font-style:italic;}
+svg.pillars{display:block;margin:0 auto;max-width:820px;width:100%;height:auto;}
+
+section{padding:44px 56px;border-bottom:1px solid var(--border);scroll-margin-top:20px;}
+section:nth-of-type(odd){background:var(--paper);}
+section.alt{background:var(--paper-panel);}
+
+.section-eyebrow{
+  display:flex;align-items:center;gap:10px;margin-bottom:6px;
+}
+.section-eyebrow .tag{
+  font-family:var(--font-display);font-weight:700;color:#fff;background:var(--maroon);
+  border-radius:6px;padding:4px 10px;font-size:13px;
+}
+.section-eyebrow .arab-tag{font-family:var(--font-arab);color:var(--gold);font-size:19px;direction:rtl;}
+h2.sec-title{font-family:var(--font-display);font-size:28px;color:var(--maroon-deep);margin:4px 0 6px;}
+p.sec-intro{color:var(--ink-soft);max-width:820px;font-size:15.5px;}
+
+/* term cards */
+.grid-terms{display:flex;flex-direction:column;gap:22px;margin-top:26px;}
+.term-card{
+  background:#fff;border:1px solid var(--border);border-left:5px solid var(--maroon);
+  border-radius:10px;padding:22px 26px;box-shadow:0 3px 10px var(--shadow);
+  scroll-margin-top:20px;
+}
+.term-card.secondary{border-left-color:var(--sage);}
+.term-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;justify-content:space-between;}
+.term-head .th-left{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+.term-num{
+  font-family:var(--font-display);font-weight:700;color:var(--gold);font-size:13px;
+  background:var(--paper-panel-2);border:1px solid var(--border);border-radius:50%;
+  width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;
+}
+.term-arab{font-family:var(--font-arab);font-size:27px;color:var(--maroon-deep);direction:rtl;}
+.term-translit{font-family:var(--font-display);font-size:19px;color:var(--ink);font-weight:700;}
+.term-tag{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#fff;background:var(--sage);padding:3px 9px;border-radius:5px;}
+.term-tag.disputed{background:var(--ink-faint);}
+.term-lit{font-size:13.5px;color:var(--ink-faint);margin-top:2px;font-style:italic;}
+
+.term-def{margin-top:14px;font-size:15px;}
+.term-def b{color:var(--maroon-deep);}
+
+.box{
+  margin-top:14px;border-radius:8px;padding:14px 16px;font-size:14.3px;
+}
+.box-label{
+  font-family:var(--font-display);font-weight:700;font-size:12.5px;text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:6px;display:flex;align-items:center;gap:6px;
+}
+.box.detail{background:var(--sage-light);border:1px solid #CFDBC3;}
+.box.detail .box-label{color:var(--sage);}
+.box.example{background:#FBF0E4;border:1px solid #ECD5AE;}
+.box.example .box-label{color:#8A5A17;}
+.box.note{background:var(--paper-panel);border:1px solid var(--border);}
+.box.note .box-label{color:var(--maroon);}
+.box ul{margin:6px 0 0 18px;padding:0;}
+.box li{margin-bottom:4px;}
+
+/* kaidah numbered list style (bab III & IV) */
+.kaidah-card{counter-increment:kaidah;}
+.kaidah-list{counter-reset:kaidah;}
+.kaidah-badge{
+  font-family:var(--font-display);font-size:12px;font-weight:700;color:var(--maroon-deep);
+  background:var(--gold-light);padding:3px 10px;border-radius:999px;
+}
+
+/* recap box */
+.recap{
+  margin-top:30px;background:linear-gradient(135deg,#FBF0E4,#F5EDDC);
+  border:1px solid var(--gold-light);border-radius:12px;padding:20px 26px;
+}
+.recap h3{
+  font-family:var(--font-display);color:var(--maroon-deep);margin:0 0 10px;font-size:17px;
+  display:flex;align-items:center;gap:8px;
+}
+.recap ul{margin:0;padding-left:20px;}
+.recap li{margin-bottom:6px;font-size:14.3px;}
+
+/* table style */
+table.hukum-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px;background:#fff;}
+table.hukum-table th, table.hukum-table td{border:1px solid var(--border);padding:9px 12px;text-align:left;vertical-align:top;}
+table.hukum-table th{background:var(--maroon);color:#fff;font-family:var(--font-display);font-weight:700;}
+table.hukum-table tr:nth-child(even){background:var(--paper-panel);}
+
+/* five pillars mini grid (dharuriyat) */
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px;}
+.mini-card{
+  background:#fff;border:1px solid var(--border);border-top:4px solid var(--gold);border-radius:8px;
+  padding:14px;text-align:center;
+}
+.mini-card .arab{font-family:var(--font-arab);font-size:22px;color:var(--maroon-deep);direction:rtl;}
+.mini-card .lat{font-weight:700;font-size:13.5px;margin-top:4px;}
+.mini-card .desc{font-size:12.5px;color:var(--ink-faint);margin-top:4px;}
+
+footer{
+  padding:34px 56px;background:var(--maroon-deep);color:#EFE2C6;text-align:center;font-size:13px;
+}
+footer .arab-foot{font-family:var(--font-arab);font-size:20px;color:var(--gold-light);margin-bottom:10px;direction:rtl;}
+footer a{color:var(--gold-light);}
+
+.back-top{
+  position:fixed;bottom:22px;right:22px;background:var(--maroon);color:#fff;border:none;
+  width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 4px 12px var(--shadow);
+  display:none;z-index:50;
+}
+.back-top.show{display:block;}
+
+@media (max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-102%);transition:transform .25s ease;z-index:55;width:82%;max-width:320px;}
+  .sidebar.open{transform:translateX(0);}
+  .menu-toggle{display:block;}
+  .masthead,.pillars-wrap,section,footer{padding-left:22px;padding-right:22px;}
+  .masthead{padding-top:70px;}
+  .masthead h1{font-size:28px;}
+}
+@media print{
+  .sidebar,.menu-toggle,.back-top{display:none!important;}
+  .content{padding:0;}
+  section{break-inside:avoid;border-bottom:none;}
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle">☰ Daftar Isi</button>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="kicker">Resume &amp; Penjelasan Kitab</span>
+      <h1>Ilmu Ushul Fikih</h1>
+      <div class="arab">عِلْمُ أُصُولِ الْفِقْهِ</div>
+      <div class="author">Karangan Syekh Abdul Wahab Khallaf</div>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="tocSearch" placeholder="Cari istilah / kaidah…">
+    </div>
+
+    <nav class="toc" id="tocNav">
+      <details open>
+        <summary><span class="num">0</span> Pendahuluan</summary>
+        <ul>
+          <li><a href="#pendahuluan">Pengertian Fikih &amp; Ushul Fikih</a></li>
+          <li><a href="#p-tujuan">Objek &amp; Tujuan Ilmu</a></li>
+          <li><a href="#p-sejarah">Sejarah Pembukuan Ushul Fikih</a></li>
+        </ul>
+      </details>
+
+      <details open>
+        <summary><span class="num">1</span> Bab I — Dalil Syariat</summary>
+        <ul>
+          <li><a href="#dalil-pengantar">Pengantar: Sepuluh Sumber Hukum</a></li>
+          <li><a href="#d-quran">1. Al-Qur'an</a></li>
+          <li><a href="#d-sunnah">2. As-Sunnah</a></li>
+          <li><a href="#d-ijma">3. Al-Ijma'</a></li>
+          <li><a href="#d-qiyas">4. Al-Qiyas</a></li>
+          <li><a href="#d-istihsan">5. Al-Istihsan</a></li>
+          <li><a href="#d-maslahah">6. Al-Mashlahah al-Mursalah</a></li>
+          <li><a href="#d-urf">7. Al-'Urf</a></li>
+          <li><a href="#d-istishab">8. Al-Istishab</a></li>
+          <li><a href="#d-qablana">9. Syar'u Man Qablana</a></li>
+          <li><a href="#d-sahabat">10. Madzhab Shahabat</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary><span class="num">2</span> Bab II — Hukum Syariat</summary>
+        <ul>
+          <li><a href="#h-hakim">1. Al-Hakim</a></li>
+          <li><a href="#h-hukum">2. Al-Hukm (Taklifi &amp; Wadh'i)</a></li>
+          <li><a href="#h-mahkumfih">3. Mahkum Fih</a></li>
+          <li><a href="#h-mahkumalaih">4. Mahkum 'Alaih</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary><span class="num">3</span> Bab III — Kaidah Bahasa</summary>
+        <ul>
+          <li><a href="#l-1">Kaidah 1 — Cara Memahami Nash</a></li>
+          <li><a href="#l-2">Kaidah 2 — Mafhum Mukhalafah</a></li>
+          <li><a href="#l-3">Kaidah 3 — Wadhihud Dalalah</a></li>
+          <li><a href="#l-4">Kaidah 4 — Ghairu Wadhihid Dalalah</a></li>
+          <li><a href="#l-5">Kaidah 5 — Al-Musytarak</a></li>
+          <li><a href="#l-6">Kaidah 6 — 'Am &amp; Takhsis</a></li>
+          <li><a href="#l-7">Kaidah 7 — Khas, Muthlak &amp; Muqayyad</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary><span class="num">4</span> Bab IV — Kaidah Maksud Syariat</summary>
+        <ul>
+          <li><a href="#t-1">Kaidah 1 — Maqashid Tasyri'</a></li>
+          <li><a href="#t-2">Kaidah 2 — Haqqullah &amp; Haqqul 'Abd</a></li>
+          <li><a href="#t-3">Kaidah 3 — Lapangan Ijtihad</a></li>
+          <li><a href="#t-4">Kaidah 4 — An-Naskh</a></li>
+          <li><a href="#t-5">Kaidah 5 — Ta'arudh &amp; Tarjih</a></li>
+        </ul>
+      </details>
+
+      <details>
+        <summary><span class="num">5</span> Penutup</summary>
+        <ul>
+          <li><a href="#rangkuman">Peta Konsep &amp; Glosarium</a></li>
+        </ul>
+      </details>
+    </nav>
+  </aside>
+
+  <main class="content">
+
+    <header class="masthead">
+      <span class="kicker">Modul Belajar-Mengajar · Terjemah &amp; Syarah Ringkas</span>
+      <h1>Ilmu Ushul Fikih</h1>
+      <div class="arab-title">عِلْمُ أُصُولِ الْفِقْهِ</div>
+      <p class="lead">Disusun ulang dari resume kitab <i>Ilmu Ushul Fikih</i> karya <b>Syekh Abdul Wahab Khallaf</b>, dilengkapi istilah Arab, transliterasi, terjemah, dan penjelasan rinci per-bab agar mudah dipakai untuk mengajar maupun belajar mandiri.</p>
+      <div class="meta">
+        <span class="pill">Bab I — 10 Dalil Syariat</span>
+        <span class="pill">Bab II — Hukum Syariat</span>
+        <span class="pill">Bab III — 7 Kaidah Lughawiyah</span>
+        <span class="pill">Bab IV — 5 Kaidah Tasyri'iyah</span>
+      </div>
+    </header>
+
+    <div class="pillars-wrap">
+      <svg class="pillars" viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- pediment -->
+        <polygon points="410,10 620,90 200,90" fill="#7A2430"/>
+        <text x="410" y="58" text-anchor="middle" fill="#F5EDDC" font-size="18" font-weight="700" font-family="Georgia,serif">الأحكام الشرعية</text>
+        <text x="410" y="78" text-anchor="middle" fill="#EFD9AE" font-size="12" font-family="Segoe UI,sans-serif">Hukum-Hukum Syar'i (bangunan fikih)</text>
+        <!-- entablature -->
+        <rect x="150" y="90" width="520" height="16" fill="#A9822F"/>
+        <!-- four main pillars -->
+        <g font-family="Segoe UI,sans-serif">
+          <!-- pillar template repeated -->
+          <g>
+            <rect x="178" y="106" width="46" height="150" fill="#B8925C"/>
+            <rect x="170" y="106" width="62" height="10" fill="#7A2430"/>
+            <rect x="170" y="246" width="62" height="10" fill="#7A2430"/>
+            <text x="201" y="140" text-anchor="middle" fill="#4E1620" font-size="15" font-weight="700">القرآن</text>
+            <text x="201" y="230" text-anchor="middle" fill="#4E1620" font-size="11">Al-Qur'an</text>
+          </g>
+          <g>
+            <rect x="288" y="106" width="46" height="150" fill="#B8925C"/>
+            <rect x="280" y="106" width="62" height="10" fill="#7A2430"/>
+            <rect x="280" y="246" width="62" height="10" fill="#7A2430"/>
+            <text x="311" y="140" text-anchor="middle" fill="#4E1620" font-size="15" font-weight="700">السنة</text>
+            <text x="311" y="230" text-anchor="middle" fill="#4E1620" font-size="11">As-Sunnah</text>
+          </g>
+          <g>
+            <rect x="398" y="106" width="46" height="150" fill="#B8925C"/>
+            <rect x="390" y="106" width="62" height="10" fill="#7A2430"/>
+            <rect x="390" y="246" width="62" height="10" fill="#7A2430"/>
+            <text x="421" y="140" text-anchor="middle" fill="#4E1620" font-size="15" font-weight="700">الإجماع</text>
+            <text x="421" y="230" text-anchor="middle" fill="#4E1620" font-size="11">Al-Ijma'</text>
+          </g>
+          <g>
+            <rect x="508" y="106" width="46" height="150" fill="#B8925C"/>
+            <rect x="500" y="106" width="62" height="10" fill="#7A2430"/>
+            <rect x="500" y="246" width="62" height="10" fill="#7A2430"/>
+            <text x="531" y="140" text-anchor="middle" fill="#4E1620" font-size="15" font-weight="700">القياس</text>
+            <text x="531" y="230" text-anchor="middle" fill="#4E1620" font-size="11">Al-Qiyas</text>
+          </g>
+        </g>
+        <!-- base/foundation stones: the 6 disputed sources -->
+        <rect x="150" y="256" width="520" height="14" fill="#55694A"/>
+        <g font-size="10" fill="#F5EDDC" font-family="Segoe UI,sans-serif" text-anchor="middle">
+          <text x="197" y="266">Istihsan</text>
+          <text x="284" y="266">Mashlahah</text>
+          <text x="371" y="266">'Urf</text>
+          <text x="458" y="266">Istishab</text>
+          <text x="545" y="266">Syar'u Qablana</text>
+          <text x="632" y="266">Madzhab Shahabi</text>
+        </g>
+        <rect x="140" y="270" width="540" height="10" fill="#3E1319"/>
+      </svg>
+      <p class="pillars-caption">Empat dalil yang disepakati (mutafaq) menjadi tiang utama bangunan hukum syar'i; enam dalil lain (mukhtalaf) menjadi fondasi pelengkap yang diperselisihkan ulama.</p>
+    </div>
+
+    <!-- ============ PENDAHULUAN ============ -->
+    <section id="pendahuluan">
+      <div class="section-eyebrow"><span class="tag">Pendahuluan</span><span class="arab-tag">مُقَدِّمَة</span></div>
+      <h2 class="sec-title">Pengertian Fikih dan Ushul Fikih</h2>
+      <p class="sec-intro">Sebelum masuk ke pembahasan dalil dan kaidah, penting memahami dua istilah dasar yang sering tertukar: <b>fikih</b> (produk hukum) dan <b>ushul fikih</b> (metode/alat untuk menghasilkan hukum itu).</p>
+
+      <div class="grid-terms">
+        <div class="term-card">
+          <div class="term-head">
+            <div class="th-left">
+              <span class="term-num">أ</span>
+              <span class="term-arab">اَلْفِقْه</span>
+              <span class="term-translit">Al-Fiqh</span>
+            </div>
+          </div>
+          <p class="term-lit">Secara istilah syar'i.</p>
+          <p class="term-def">Fikih ialah <b>ilmu tentang hukum-hukum syar'i yang bersifat amaliah</b> (berkaitan dengan perbuatan mukallaf), yang digali secara terperinci dari dalil-dalilnya. Objek kajiannya (<i>maudhu'</i>) adalah perbuatan mukallaf itu sendiri — agar diketahui apa yang wajib ia pikul menurut syariat.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Penjelasan untuk Pengajaran</div>
+            Ibaratkan fikih sebagai <i>hasil panen</i>: kumpulan hukum-hukum konkret seperti "wajib shalat", "haram riba", "sah jual-beli ini". Tekankan ke siswa bahwa fikih itu produk akhir, bukan cara memperolehnya.
+          </div>
+        </div>
+
+        <div class="term-card">
+          <div class="term-head">
+            <div class="th-left">
+              <span class="term-num">ب</span>
+              <span class="term-arab">أُصُولُ الْفِقْه</span>
+              <span class="term-translit">Ushul al-Fiqh</span>
+            </div>
+          </div>
+          <p class="term-def">Ushul fikih ialah <b>ilmu tentang kaidah dan pembahasan yang menjadi sarana untuk mengeluarkan hukum syar'i amaliah dari dalil-dalilnya secara terperinci</b>. Objek kajiannya adalah dalil syar'i yang bersifat kulli (universal) — seperti kaidah tentang perintah (amar), larangan (nahi), lafadz umum ('am), dan qiyas — agar dengannya bisa ditetapkan hukum yang bersifat kulli.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Penjelasan untuk Pengajaran</div>
+            Jika fikih adalah "panen", ushul fikih adalah <i>alat bertani dan aturan bertaninya</i> — bagaimana cara membaca lafadz Al-Qur'an dan Sunnah, kapan qiyas boleh dipakai, bagaimana menyelesaikan dalil yang tampak bertentangan. Ushul fikih menjawab pertanyaan "bagaimana hukum ini digali?", sedangkan fikih menjawab "apa hukumnya?".
+          </div>
+          <div class="box example">
+            <div class="box-label">📌 Contoh Perbandingan</div>
+            <b>Fikih:</b> "Riba hukumnya haram." &nbsp;|&nbsp; <b>Ushul Fikih:</b> "Larangan (nahi) dalam nash pada dasarnya menunjukkan keharaman" — inilah kaidah yang dipakai untuk sampai pada kesimpulan fikih di atas.
+          </div>
+        </div>
+      </div>
+
+      <div class="recap" id="p-tujuan">
+        <h3>🎯 Objek &amp; Tujuan Ilmu</h3>
+        <ul>
+          <li><b>Tujuan fikih:</b> menerapkan hukum syar'i pada perbuatan manusia — menjadi rujukan hakim dalam mengadili, mufti dalam berfatwa, dan mukallaf dalam mengetahui kewajibannya.</li>
+          <li><b>Tujuan ushul fikih:</b> menyediakan kaidah dan metode penyelidikan agar seseorang mampu memahami nash-nash syar'i, memahami kesimpulan para imam mujtahid, serta mampu menimbang (tarjih) di antara pendapat yang berbeda — sesuatu yang mustahil dilakukan tanpa berpijak pada dalil dan kaidahnya.</li>
+        </ul>
+      </div>
+
+      <div class="grid-terms" id="p-sejarah" style="margin-top:34px;">
+        <div class="term-card secondary">
+          <div class="term-head"><div class="th-left"><span class="term-arab">التَّدْوِين</span><span class="term-translit">Sejarah Pembukuan Ushul Fikih</span></div></div>
+          <p class="term-def">Hukum fikih lahir bersamaan dengan Islam, bersumber dari Al-Qur'an dan fatwa/keputusan Rasulullah ﷺ. Namun <b>ilmu ushul fikih baru muncul pada abad ke-2 Hijriah</b>. Alasannya: pada masa Rasul, beliau berfatwa langsung dengan wahyu dan ijtihadnya sendiri sehingga belum perlu "kaidah"; para sahabat pun memahami nash dengan naluri bahasa Arab murni tanpa perlu tata-bahasa formal.</p>
+          <div class="box note">
+            <div class="box-label">📜 Tokoh Kunci</div>
+            <ul>
+              <li><b>Imam Muhammad bin Idris Asy-Syafi'i</b> (w. 204 H) — orang pertama yang membukukan ushul fikih secara sistematis dan mandiri lewat kitab <i>Ar-Risalah</i>, diriwayatkan oleh muridnya, Ar-Rabi' al-Muradi.</li>
+              <li><b>Metode Mutakallimin</b> (dianut mayoritas ulama Syafi'iyah &amp; Malikiyah) — menetapkan kaidah murni berdasarkan dalil akal &amp; nash tanpa terikat pendapat furu' madzhab. Kitab rujukan: <i>Al-Mustashfa</i> (Al-Ghazali, w. 505 H — catatan: teks sumber menuliskan angka tahun berbeda), <i>Al-Ihkam</i> (Al-Amidi), <i>Al-Minhaj</i> (Al-Baidhawi).</li>
+              <li><b>Metode Hanafiyah</b> — menyusun kaidah ushul berdasarkan furu' fikih yang telah ditetapkan imam-imam mazhab mereka melalui ijtihad, sehingga kaidah "menyesuaikan" hukum yang sudah ada.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BAB I ============ -->
+    <section class="alt" id="dalil-pengantar">
+      <div class="section-eyebrow"><span class="tag">Bab I</span><span class="arab-tag">أَدِلَّةُ الشَّرِيعَة</span></div>
+      <h2 class="sec-title">Dalil-Dalil Syariat</h2>
+      <p class="sec-intro"><b>Dalil</b> (bentuk jamak: <i>adillah</i>) secara bahasa berarti "penunjuk". Menurut istilah ushul, dalil syar'i adalah <b>apa yang dijadikan sandaran untuk menetapkan hukum syar'i amaliah, baik secara pasti (qath'i) maupun secara dugaan kuat (dzanni)</b>.</p>
+      <p class="sec-intro">Ulama sepakat, dalil hukum amaliah kembali kepada <b>empat perkara pokok</b>: Al-Qur'an, Sunnah, Ijma', dan Qiyas. Di luar itu, ada <b>enam dalil tambahan</b> yang diperselisihkan kehujjahannya: Istihsan, Mashlahah Mursalah, Al-'Urf, Istishab, Madzhab Shahabat, dan Syariat sebelum kita (Syar'u Man Qablana) — sehingga totalnya menjadi sepuluh dalil.</p>
+      <table class="hukum-table">
+        <tr><th>#</th><th>Dalil</th><th>Status</th><th>Keterangan Singkat</th></tr>
+        <tr><td>1</td><td>Al-Qur'an</td><td>Disepakati</td><td>Sumber utama &amp; tertinggi</td></tr>
+        <tr><td>2</td><td>As-Sunnah</td><td>Disepakati</td><td>Penjelas &amp; pelengkap Al-Qur'an</td></tr>
+        <tr><td>3</td><td>Al-Ijma'</td><td>Disepakati</td><td>Konsensus mujtahid</td></tr>
+        <tr><td>4</td><td>Al-Qiyas</td><td>Disepakati (mayoritas)</td><td>Analogi hukum</td></tr>
+        <tr><td>5</td><td>Al-Istihsan</td><td>Diperselisihkan</td><td>Berpindah dari qiyas jali ke qiyas khafi</td></tr>
+        <tr><td>6</td><td>Mashlahah Mursalah</td><td>Diperselisihkan</td><td>Kemaslahatan yang tak dinash</td></tr>
+        <tr><td>7</td><td>Al-'Urf</td><td>Diperselisihkan</td><td>Kebiasaan masyarakat yang sah</td></tr>
+        <tr><td>8</td><td>Al-Istishab</td><td>Diperselisihkan</td><td>Melanggengkan hukum asal</td></tr>
+        <tr><td>9</td><td>Syar'u Man Qablana</td><td>Diperselisihkan</td><td>Syariat umat terdahulu</td></tr>
+        <tr><td>10</td><td>Madzhab Shahabat</td><td>Diperselisihkan</td><td>Fatwa/ijtihad sahabat Nabi</td></tr>
+      </table>
+    </section>
+
+    <section id="d-quran">
+      <div class="section-eyebrow"><span class="tag">Dalil 1</span></div>
+      <div class="term-card">
+        <div class="term-head">
+          <div class="th-left">
+            <span class="term-arab">اَلْقُرْآنُ الْكَرِيْم</span>
+            <span class="term-translit">Al-Qur'an al-Karim</span>
+          </div>
+          <span class="term-tag">Disepakati</span>
+        </div>
+        <p class="term-def">Al-Qur'an adalah <b>kalam (perkataan) Allah</b> yang diturunkan oleh Malaikat Jibril (Ruhul Amin) ke dalam hati Rasulullah Muhammad ﷺ, dengan lafadz dan makna berbahasa Arab, sebagai bukti kerasulan beliau dan menjadi undang-undang dasar bagi orang yang mengikuti petunjuk Allah.</p>
+
+        <div class="box detail">
+          <div class="box-label">🎓 Tiga Keistimewaan Utama Al-Qur'an</div>
+          <ul>
+            <li><b>Lafadz dan makna dari Allah</b> — tugas Rasul hanyalah menyampaikan, bukan menyusun kata-katanya. Karena itu, tafsir (penjelasan makna dengan bahasa Arab) dan terjemah (pengalihan ke bahasa asing) tidak dianggap sebagai "Al-Qur'an" itu sendiri.</li>
+            <li><b>Periwayatan yang qath'i (pasti)</b> — sampai kepada kita secara mutawatir, sehingga tidak diragukan keasliannya.</li>
+            <li><b>Kemukjizatan (i'jaz)</b> — kelemahan manusia untuk menandinginya. Sifat i'jaz baru dapat dinyatakan bila terpenuhi tiga syarat: <i>(1)</i> ada tantangan untuk menandingi, <i>(2)</i> ada dorongan/motif untuk menandingi, <i>(3)</i> tidak ada penghalang untuk mencoba menandinginya — namun tetap tidak seorang pun mampu.</li>
+          </ul>
+        </div>
+
+        <div class="box note">
+          <div class="box-label">📖 Tiga Macam Hukum dalam Al-Qur'an</div>
+          <table class="hukum-table">
+            <tr><th>Jenis</th><th>Objek</th></tr>
+            <tr><td><b>I'tiqadiyah</b></td><td>Keyakinan kepada Allah, malaikat, kitab, rasul, dan hari akhir</td></tr>
+            <tr><td><b>Khuluqiyah</b></td><td>Akhlak, budi pekerti, dan menjauhi sifat tercela</td></tr>
+            <tr><td><b>Amaliyah</b></td><td>Perkataan, perbuatan, perjanjian, dan tindakan mukallaf — terbagi menjadi <i>ibadat</i> dan <i>muamalat</i></td></tr>
+          </table>
+        </div>
+
+        <div class="box example">
+          <div class="box-label">📌 Tujuh Cabang Hukum Muamalat</div>
+          Ahwal Syakhshiyah (keluarga, ±70 ayat) · Madaniyah (transaksi harta) · Jinayah (pidana, ±30 ayat) · Murafa'at (peradilan &amp; kesaksian, ±13 ayat) · Dusturiyah (ketatanegaraan, ±10 ayat) · Dauliyah (hubungan antarnegara, ±25 ayat) · Iqtishadiyah wal Maliyah (ekonomi &amp; harta, ±10 ayat).
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="d-sunnah">
+      <div class="section-eyebrow"><span class="tag">Dalil 2</span></div>
+      <div class="term-card">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلسُّنَّة</span><span class="term-translit">As-Sunnah</span></div>
+          <span class="term-tag">Disepakati</span>
+        </div>
+        <p class="term-def">Sunnah adalah segala sesuatu yang bersumber dari Rasulullah ﷺ selain Al-Qur'an, berupa <b>perkataan, perbuatan, atau ketetapan (taqrir)</b> beliau.</p>
+
+        <div class="box detail">
+          <div class="box-label">🎓 Tiga Macam Sunnah Berdasarkan Bentuknya</div>
+          <ul>
+            <li><b>Qauliyah</b> — sabda/hadits yang diucapkan Nabi ﷺ, mis. larangan berbuat kerusakan.</li>
+            <li><b>Fi'liyah</b> — perbuatan Nabi ﷺ, mis. tata cara mengerjakan shalat lima waktu beserta rukun-rukunnya.</li>
+            <li><b>Taqririyah</b> — ketetapan/diamnya Nabi ﷺ atas perkataan atau perbuatan sahabat tanpa mengingkarinya, sehingga dianggap sebagai persetujuan.</li>
+          </ul>
+        </div>
+
+        <div class="box note">
+          <div class="box-label">🔗 Kedudukan Sunnah terhadap Al-Qur'an</div>
+          <ul>
+            <li><b>Muakkid</b> — menguatkan dan menegaskan kembali hukum yang sudah ada dalam Al-Qur'an.</li>
+            <li><b>Mubayyin/Mufassir</b> — menjelaskan/merinci ayat yang masih global (mujmal).</li>
+            <li><b>Musyarri' Mustaqil</b> — menetapkan hukum baru yang tidak diatur Al-Qur'an (karena Al-Qur'an bersikap diam/sukut pada masalah tersebut).</li>
+          </ul>
+        </div>
+
+        <div class="box example">
+          <div class="box-label">📊 Pembagian dari Segi Kekuatan Periwayatan</div>
+          <table class="hukum-table">
+            <tr><th>Tingkatan</th><th>Ciri Perawi</th></tr>
+            <tr><td><b>Mutawatir</b></td><td>Diriwayatkan banyak perawi di setiap tingkatan sanad, mustahil sepakat berdusta</td></tr>
+            <tr><td><b>Masyhur</b></td><td>Diterima Rasul oleh satu/dua/tiga perawi, lalu menyebar luas (mutawatir) pada tingkatan berikutnya</td></tr>
+            <tr><td><b>Ahad</b></td><td>Diriwayatkan satu atau beberapa perawi di semua tingkatan sanad, tidak mencapai derajat mutawatir</td></tr>
+          </table>
+        </div>
+
+        <div class="box note">
+          <div class="box-label">⚠️ Bukan Bagian dari Tasyri' (Bukan Sunnah Syar'i)</div>
+          <ul>
+            <li>Perbuatan yang bersifat tabiat manusiawi biasa — duduk, berdiri, berjalan.</li>
+            <li>Perbuatan yang berasal dari pengalaman/keahlian duniawi — berdagang, bertani.</li>
+            <li>Kekhususan pribadi Rasulullah ﷺ yang ditunjukkan dalil khusus untuk beliau semata.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="d-ijma">
+      <div class="section-eyebrow"><span class="tag">Dalil 3</span></div>
+      <div class="term-card">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلْإِجْمَاع</span><span class="term-translit">Al-Ijma'</span></div>
+          <span class="term-tag">Disepakati</span>
+        </div>
+        <p class="term-def">Ijma' adalah <b>kesepakatan seluruh mujtahid muslim</b> pada suatu masa — setelah wafatnya Rasulullah ﷺ — mengenai hukum syar'i atas suatu peristiwa.</p>
+        <div class="box detail">
+          <div class="box-label">🎓 Empat Rukun Ijma'</div>
+          <ul>
+            <li>Mujtahid yang terlibat lebih dari satu orang pada masa terjadinya peristiwa.</li>
+            <li>Kesepakatan terjadi atas hukum syar'i suatu peristiwa, bukan masalah lain.</li>
+            <li>Setiap mujtahid menyatakan pendapatnya secara terang-terangan.</li>
+            <li>Kesepakatan itu mencakup seluruh mujtahid yang ada, bukan sebagian.</li>
+          </ul>
+        </div>
+        <div class="box example">
+          <div class="box-label">📊 Dua Klasifikasi Ijma'</div>
+          <b>Dari segi cara terbentuknya:</b> <i>Ijma' Sharih</i> (setiap mujtahid menyatakan pendapat secara terang-terangan) vs <i>Ijma' Sukuti</i> (sebagian menyatakan fatwa, sebagian diam tanpa menyanggah). <br>
+          <b>Dari segi kekuatan hukum:</b> <i>Ijma' Qath'i</i> (kepastian mutlak, tak boleh diperselisihkan lagi) vs <i>Ijma' Dzanni</i> (masih berupa dugaan kuat, terutama pada ijma' sukuti).
+        </div>
+        <div class="box note"><div class="box-label">📖 Dasar Kehujjahan</div>Antara lain firman Allah agar mentaati Allah, Rasul, dan <i>Ulil Amri</i> (QS. An-Nisa': 59, 83, 115) — ditafsirkan sebagian ulama mencakup kesepakatan para ahli (mujtahid) umat.</div>
+      </div>
+    </section>
+
+    <section class="alt" id="d-qiyas">
+      <div class="section-eyebrow"><span class="tag">Dalil 4</span></div>
+      <div class="term-card">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلْقِيَاس</span><span class="term-translit">Al-Qiyas</span></div>
+          <span class="term-tag">Disepakati mayoritas</span>
+        </div>
+        <p class="term-def">Qiyas adalah <b>menyamakan hukum suatu peristiwa yang tidak ada nash-nya dengan peristiwa lain yang ada nash hukumnya</b>, karena keduanya memiliki kesamaan 'illat (sebab/alasan hukum).</p>
+        <div class="box example">
+          <div class="box-label">📌 Contoh Klasik</div>
+          Khamar diharamkan (QS. Al-Maidah: 90) karena sifat memabukkan (<i>'illat</i>-nya adalah memabukkan). Maka setiap minuman lain yang memabukkan — meski bukan khamar secara nama — diqiyaskan haram karena memiliki 'illat yang sama.
+        </div>
+        <div class="box detail">
+          <div class="box-label">🎓 Empat Rukun Qiyas</div>
+          <table class="hukum-table">
+            <tr><th>Rukun</th><th>Arab</th><th>Penjelasan</th></tr>
+            <tr><td>Ashl (pokok)</td><td>الأَصْل</td><td>Kasus yang sudah ada nash hukumnya</td></tr>
+            <tr><td>Far' (cabang)</td><td>الفَرْع</td><td>Kasus baru yang belum ada nash, hendak disamakan dengan ashl</td></tr>
+            <tr><td>Hukum Ashl</td><td>حُكْمُ الأَصْل</td><td>Hukum syar'i yang telah ditetapkan nash pada ashl, yang hendak dipindahkan ke far'</td></tr>
+            <tr><td>'Illat</td><td>العِلَّة</td><td>Sifat/alasan yang menjadi dasar hukum ashl dan ditemukan pula pada far' — inilah rukun terpenting</td></tr>
+          </table>
+        </div>
+        <div class="box note">
+          <div class="box-label">📋 Syarat 'Illat &amp; Jalan Mengetahuinya (Masalik al-'Illah)</div>
+          Syarat 'illat: sifatnya jelas, konsisten/kuat, sesuai dengan tujuan syariat (munasib), dan tidak sempit/terbatas hanya pada ashl. 'Illat diketahui melalui: <b>nash</b> (Al-Qur'an/Sunnah secara langsung menyebutnya), <b>ijma'</b>, atau <b>sabr wa taqsim</b> (menguji dan menyaring sifat-sifat yang mungkin menjadi 'illat).
+        </div>
+        <div class="box note">
+          <div class="box-label">⚖️ Perbedaan Pendapat</div>
+          Mayoritas ulama menjadikan qiyas hujjah syar'i pada tingkat keempat setelah Al-Qur'an, Sunnah, dan Ijma'. Namun mazhab Nizhamiyah, Zhahiriyah, dan sebagian cabang Syi'ah menolak qiyas sebagai hujjah.
+        </div>
+      </div>
+    </section>
+
+    <section id="d-istihsan">
+      <div class="section-eyebrow"><span class="tag">Dalil 5</span></div>
+      <div class="term-card secondary">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلْاِسْتِحْسَان</span><span class="term-translit">Al-Istihsan</span></div>
+          <span class="term-tag disputed">Diperselisihkan</span>
+        </div>
+        <p class="term-def">Secara bahasa berarti "menganggap/mengembalikan sesuatu pada yang baik". Menurut istilah ushul: <b>perpindahan mujtahid dari qiyas jali (jelas/tampak) menuju qiyas khafi (tersembunyi)</b>, atau dari hukum yang bersifat umum (kulli) kepada hukum pengecualian (istitsna'i), karena ada dalil yang lebih kuat menuntutnya.</p>
+        <div class="box example">
+          <div class="box-label">📌 Contoh: Sisa Air Minum Burung Buas</div>
+          <b>Jalur qiyas zahir (jali):</b> burung buas haram dagingnya, maka air liur/sisa minumnya najis — disamakan dengan hukum daging binatang buas lainnya. <br>
+          <b>Jalur istihsan (qiyas khafi):</b> paruh burung buas terbuat dari tulang (bukan daging), sehingga air liurnya dianggap suci — inilah pendapat yang diistihsankan sebagian ulama Hanafiyah.
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="d-maslahah">
+      <div class="section-eyebrow"><span class="tag">Dalil 6</span></div>
+      <div class="term-card secondary">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلْمَصْلَحَةُ الْمُرْسَلَة</span><span class="term-translit">Al-Mashlahah al-Mursalah</span></div>
+          <span class="term-tag disputed">Diperselisihkan</span>
+        </div>
+        <p class="term-def">Secara bahasa "mursalah" berarti mutlak/lepas. Menurut istilah: <b>kemaslahatan yang tidak ada dalil khusus yang mengakuinya maupun membatalkannya</b> — disebut "lepas" karena tidak terikat dalil tertentu.</p>
+        <div class="box detail">
+          <div class="box-label">🎓 Tiga Syarat Kehujjahan</div>
+          <ul>
+            <li>Kemaslahatan itu <b>hakiki</b> (nyata), bukan sekadar dugaan/angan-angan (wahamiyah).</li>
+            <li>Bersifat <b>umum</b> untuk masyarakat, bukan kepentingan perorangan.</li>
+            <li>Tidak <b>bertentangan</b> dengan nash atau ijma' yang sudah ada.</li>
+          </ul>
+        </div>
+        <div class="box note">
+          <div class="box-label">📖 Dalil Pendukung</div>
+          Praktik sahabat, tabi'in, dan imam mujtahid dalam menetapkan hukum baru demi kemaslahatan umum yang berkembang, tanpa dilarang oleh generasi berikutnya, menunjukkan bahwa syariat memelihara kemaslahatan secara mutlak.
+        </div>
+      </div>
+    </section>
+
+    <section id="d-urf">
+      <div class="section-eyebrow"><span class="tag">Dalil 7</span></div>
+      <div class="term-card secondary">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلْعُرْف</span><span class="term-translit">Al-'Urf (Adat)</span></div>
+          <span class="term-tag disputed">Diperselisihkan</span>
+        </div>
+        <p class="term-def">'Urf adalah <b>apa yang telah dikenal dan dijalani oleh masyarakat</b>, baik berupa perkataan, perbuatan, maupun sikap meninggalkan sesuatu. Disebut juga adat.</p>
+        <div class="box example">
+          <div class="box-label">📌 Dua Macam 'Urf</div>
+          <b>'Urf Shahih</b> — kebiasaan yang tidak menyalahi dalil syariat, tidak menghalalkan yang haram, dan tidak membatalkan yang wajib → boleh dijadikan pertimbangan hukum. <br>
+          <b>'Urf Fasid</b> — kebiasaan yang bertentangan dengan syariat, menghalalkan yang haram, atau membatalkan yang wajib → tidak boleh dijadikan sandaran hukum.
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="d-istishab">
+      <div class="section-eyebrow"><span class="tag">Dalil 8</span></div>
+      <div class="term-card secondary">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">اَلْاِسْتِصْحَاب</span><span class="term-translit">Al-Istishab</span></div>
+          <span class="term-tag disputed">Diperselisihkan</span>
+        </div>
+        <p class="term-def">Menurut istilah ushul: <b>menetapkan hukum atas sesuatu berdasarkan keadaan yang telah ada sebelumnya, sampai ditemukan dalil yang mengubah keadaan tersebut</b>.</p>
+        <div class="box detail">
+          <div class="box-label">🎓 Kaidah Pokok</div>
+          Prinsip ushul yang lahir dari istishab: <i>"Hukum asal sesuatu tetap sebagaimana adanya, selama belum ada dalil yang mengubahnya."</i> Kaidah ini banyak dipakai dalam fikih ibadah (mis. seseorang yang ragu apakah sudah berwudhu batal atau belum, tetap dianggap suci karena keadaan asalnya suci) maupun muamalah.
+        </div>
+      </div>
+    </section>
+
+    <section id="d-qablana">
+      <div class="section-eyebrow"><span class="tag">Dalil 9</span></div>
+      <div class="term-card secondary">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">شَرْعُ مَنْ قَبْلَنَا</span><span class="term-translit">Syar'u Man Qablana</span></div>
+          <span class="term-tag disputed">Diperselisihkan</span>
+        </div>
+        <p class="term-def">Syariat umat-umat sebelum kita, yang dikisahkan Al-Qur'an atau Sunnah shahih, dan tidak dinasakh (dihapus) oleh syariat Islam.</p>
+        <div class="box note">
+          <div class="box-label">⚖️ Dua Pendapat Ulama</div>
+          <b>Mazhab Hanafi</b> dan sebagian ulama Maliki-Syafi'i: syariat umat terdahulu tetap wajib diikuti selama diceritakan kepada kita dan tidak dihapus. <br>
+          <b>Pendapat lain:</b> tidak berlaku bagi kita, karena syariat Islam pada dasarnya menghapus (menasakh) syariat sebelumnya, kecuali bila syariat Islam sendiri menegaskan berlakunya suatu hukum tersebut.
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="d-sahabat">
+      <div class="section-eyebrow"><span class="tag">Dalil 10</span></div>
+      <div class="term-card secondary">
+        <div class="term-head">
+          <div class="th-left"><span class="term-arab">مَذْهَبُ الصَّحَابِيّ</span><span class="term-translit">Madzhab Shahabat</span></div>
+          <span class="term-tag disputed">Diperselisihkan</span>
+        </div>
+        <p class="term-def">Fatwa atau keputusan hukum yang bersumber dari sahabat Nabi ﷺ, yang memahami langsung Al-Qur'an, Sunnah, dan konteks turunnya (asbabun nuzul/wurud).</p>
+        <div class="box note">
+          <div class="box-label">📖 Alasan Kehujjahan</div>
+          Sahabat menyampaikan fatwa dalam hal yang tidak dapat dijangkau oleh akal/rasio semata (bukan ranah ijtihad murni), sehingga diduga kuat perkataan mereka bersumber dari apa yang mereka dengar langsung dari Rasulullah ﷺ walau tidak selalu disandarkan (marfu') secara eksplisit.
+        </div>
+      </div>
+
+      <div class="recap">
+        <h3>🧭 Ringkasan Bab I</h3>
+        <ul>
+          <li>Empat dalil pokok (Qur'an, Sunnah, Ijma', Qiyas) disepakati sebagai sumber hukum utama dan berurutan tingkat kekuatannya.</li>
+          <li>Enam dalil tambahan bersifat pelengkap ketika nash "diam" (sukut) atas suatu peristiwa, dan kehujjahannya diperselisihkan antar-mazhab.</li>
+          <li>Semua dalil tambahan pada dasarnya tetap harus kembali/tidak bertentangan dengan empat dalil pokok.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ BAB II ============ -->
+    <section id="h-hakim">
+      <div class="section-eyebrow"><span class="tag">Bab II</span><span class="arab-tag">أَحْكَامُ الشَّرِيعَة</span></div>
+      <h2 class="sec-title">Hukum Syariat</h2>
+      <p class="sec-intro">Setelah memahami sumber-sumber dalil, Bab II membahas <b>anatomi hukum syar'i</b> itu sendiri: siapa yang menetapkan hukum (Al-Hakim), apa hukum itu (Al-Hukm), objek hukum (Mahkum Fih), dan subjek/pemikul hukum (Mahkum 'Alaih).</p>
+
+      <div class="grid-terms">
+        <div class="term-card">
+          <div class="term-head"><div class="th-left"><span class="term-num">1</span><span class="term-arab">اَلْحَاكِم</span><span class="term-translit">Al-Hakim</span></div></div>
+          <p class="term-def">Al-Hakim adalah <b>sumber/pembuat hukum</b>. Seluruh ulama sepakat bahwa Hakim hakiki adalah Allah SWT. Perbedaan pendapat hanya pada: <i>bagaimana cara manusia mengetahui</i> baik-buruknya suatu perbuatan.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Tiga Aliran Kalam</div>
+            <table class="hukum-table">
+              <tr><th>Mazhab</th><th>Tokoh</th><th>Pandangan</th></tr>
+              <tr><td><b>Asy'ariyah</b></td><td>Abu Hasan Al-Asy'ari</td><td>Akal tidak mampu mengetahui hukum Allah tanpa perantaraan wahyu (Rasul &amp; Kitab); baik-buruk murni ditentukan syar'i.</td></tr>
+              <tr><td><b>Mu'tazilah</b></td><td>Washil bin Atha'</td><td>Akal manusia mampu mengetahui baik-buruk suatu perbuatan secara mandiri, tanpa wahyu.</td></tr>
+              <tr><td><b>Maturidiyah</b></td><td>Abu Manshur Al-Maturidi</td><td>Jalan tengah — menguatkan peran akal namun tetap dalam koridor syariat.</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="term-card" id="h-hukum">
+          <div class="term-head"><div class="th-left"><span class="term-num">2</span><span class="term-arab">اَلْحُكْمُ الشَّرْعِيّ</span><span class="term-translit">Al-Hukm Asy-Syar'i</span></div></div>
+          <p class="term-def">Hukum syar'i adalah <b>pembicaraan/titah Allah (khithab) yang berkaitan dengan perbuatan mukallaf</b>, baik berupa tuntutan, pilihan, maupun penetapan (sebab, syarat, penghalang). Terbagi dua: <b>Hukum Taklifi</b> dan <b>Hukum Wadh'i</b>.</p>
+
+          <div class="box detail">
+            <div class="box-label">🎓 A. Hukum Taklifi — Lima Kategori (Al-Ahkam Al-Khamsah)</div>
+            <table class="hukum-table">
+              <tr><th>Istilah</th><th>Arab</th><th>Pengertian</th></tr>
+              <tr><td><b>Wajib</b></td><td>الوَاجِب</td><td>Tuntutan mengerjakan secara pasti — berdosa bila ditinggalkan. Ditinjau dari 4 sisi: waktu (mutlak/mu'aqqad), pelaksana (aini/kifa'i), kadar (terbatas/tidak terbatas), objek (mu'ayyan/mukhayyar).</td></tr>
+              <tr><td><b>Mandub (Sunnah)</b></td><td>المَنْدُوب</td><td>Tuntutan mengerjakan namun tidak pasti — berpahala bila dikerjakan, tidak berdosa bila ditinggalkan.</td></tr>
+              <tr><td><b>Haram</b></td><td>الحَرَام</td><td>Tuntutan meninggalkan secara pasti — berdosa bila dikerjakan.</td></tr>
+              <tr><td><b>Makruh</b></td><td>المَكْرُوه</td><td>Tuntutan meninggalkan namun tidak pasti — dianjurkan ditinggalkan, tidak berdosa bila dikerjakan.</td></tr>
+              <tr><td><b>Mubah</b></td><td>المُبَاح</td><td>Diberi pilihan bebas oleh syar'i antara mengerjakan dan meninggalkan.</td></tr>
+            </table>
+          </div>
+
+          <div class="box example">
+            <div class="box-label">🎓 B. Hukum Wadh'i — Lima Unsur Penetapan</div>
+            <ul>
+              <li><b>Sabab (sebab)</b> — tanda yang mengaitkan ada/tidaknya hukum, mis. tergelincirnya matahari sebagai sebab wajib shalat Dzuhur.</li>
+              <li><b>Syarat</b> — sesuatu yang wujud hukumnya bergantung padanya (tanpa syarat, hukum tidak berlaku), mis. wudhu sebagai syarat sah shalat.</li>
+              <li><b>Mani' (penghalang)</b> — sesuatu yang keberadaannya mencegah berlakunya hukum meski sebab &amp; syarat sudah lengkap, mis. haid mencegah kewajiban shalat.</li>
+              <li><b>Rukhshah &amp; 'Azimah</b> — rukhshah adalah keringanan yang disyariatkan pada kondisi khusus (mis. jamak-qashar shalat saat safar); azimah adalah hukum umum/asal yang tidak dikhususkan.</li>
+              <li><b>Shah &amp; Bathal</b> — sah bila perbuatan memenuhi rukun &amp; syarat sehingga berlaku efeknya; batal bila sebaliknya.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="term-card" id="h-mahkumfih">
+          <div class="term-head"><div class="th-left"><span class="term-num">3</span><span class="term-arab">اَلْمَحْكُوْمُ فِيْه</span><span class="term-translit">Mahkum Fih</span></div></div>
+          <p class="term-def">Mahkum Fih adalah <b>objek hukum</b> — yakni perbuatan mukallaf yang menjadi sasaran titah syar'i.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Tiga Syarat Sahnya Taklif</div>
+            <ul>
+              <li>Perbuatan tersebut <b>diketahui/dapat dipahami</b> oleh mukallaf — baik langsung maupun dengan bertanya kepada ahlinya; ketidaktahuan tidak dianggap sebagai udzur dalam wilayah hukum syar'i yang sudah masyhur.</li>
+              <li>Taklif bersumber dari <b>pihak yang memiliki otoritas</b> untuk membebankan kewajiban (yakni Allah SWT melalui syariat-Nya).</li>
+              <li>Perbuatan itu secara nyata <b>mungkin dilaksanakan</b> — syariat tidak sah membebankan hal yang mustahil, maupun sesuatu di luar kesanggupan mukallaf.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="term-card" id="h-mahkumalaih">
+          <div class="term-head"><div class="th-left"><span class="term-num">4</span><span class="term-arab">اَلْمَحْكُوْمُ عَلَيْه</span><span class="term-translit">Mahkum 'Alaih</span></div></div>
+          <p class="term-def">Mahkum 'Alaih adalah <b>subjek hukum</b> — yaitu mukallaf itu sendiri yang menanggung beban hukum syar'i.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Dua Syarat Keabsahan Taklif bagi Mukallaf</div>
+            <ul>
+              <li>Mampu memahami dalil taklif — memahami maksud Al-Qur'an dan Sunnah yang membebaninya.</li>
+              <li>Memiliki <b>ahliyah</b> (kelayakan/kecakapan hukum), yang terbagi dua: <b>Ahliyatul Wujub</b> (kecakapan menyandang hak &amp; kewajiban, dimiliki manusia sejak janin meski belum sempurna) dan <b>Ahliyatul Ada'</b> (kecakapan bertindak hukum secara sah — hilang/tidak ada pada anak kecil &amp; orang gila, dan tidak sempurna pada anak yang mumayyiz namun belum baligh).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BAB III ============ -->
+    <section class="alt" id="l-1">
+      <div class="section-eyebrow"><span class="tag">Bab III</span><span class="arab-tag">القَوَاعِدُ الأُصُولِيَّةُ اللُّغَوِيَّة</span></div>
+      <h2 class="sec-title">Kaidah-Kaidah Ushul Kebahasaan</h2>
+      <p class="sec-intro">Bab ini berisi kaidah untuk <b>memahami lafadz/redaksi nash</b> — bagaimana suatu kata dalam Al-Qur'an dan Sunnah menunjukkan makna dan hukumnya. Disusun tujuh kaidah pokok.</p>
+
+      <div class="grid-terms kaidah-list">
+        <div class="term-card kaidah-card">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 1</span><span class="term-translit">Cara Memahami Nash</span></div></div>
+          <p class="term-def">Nash syar'i wajib diamalkan sesuai apa yang dipahami melalui <b>empat jalur pemahaman</b> — semuanya merupakan hujjah:</p>
+          <div class="box detail">
+            <ul>
+              <li><b>Ibarah an-Nash</b> — makna yang langsung tertangkap dari susunan kalimat itu sendiri.</li>
+              <li><b>Isyarah an-Nash</b> — makna yang tersirat, tidak langsung tertangkap, namun tetap dikandung lafadz.</li>
+              <li><b>Dalalah an-Nash</b> (mafhum muwafaqah) — makna yang dipahami dari 'illat/maksud di balik lafadz.</li>
+              <li><b>Iqtidha' an-Nash</b> — makna yang baru bisa dipahami dengan menambahkan kata yang tersirat (taqdir) agar kalimat menjadi logis/sah secara syar'i.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="l-2">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 2</span><span class="term-translit">Mafhum Mukhalafah</span></div></div>
+          <p class="term-def">Nash syar'i pada dasarnya <b>tidak memiliki dalil untuk hukum kebalikan (mukhalafah)</b> dari apa yang disebutkan secara eksplisit (manthuq), kecuali bila memang jelas ditunjukkan oleh salah satu dari empat jalur di Kaidah 1.</p>
+          <div class="box example">
+            <div class="box-label">📊 Lima Macam Mafhum Mukhalafah</div>
+            Mafhum Washaf (berdasar sifat) · Mafhum Ghayah (berdasar batas akhir) · Mafhum Syarat (berdasar syarat) · Mafhum 'Adad (berdasar bilangan) · Mafhum Laqab (berdasar nama/gelar).
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="l-3">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 3</span><span class="term-translit">Wadhihud Dalalah (Nash yang Jelas)</span></div></div>
+          <p class="term-def">Kaidah: setiap nash yang <b>jelas maknanya (wadhihud dalalah)</b> wajib diamalkan sesuai kejelasannya, dan tidak boleh ditakwil kecuali ada dalil pendukung. Terbagi empat tingkatan:</p>
+          <div class="box detail">
+            <table class="hukum-table">
+              <tr><th>Tingkat</th><th>Ciri</th></tr>
+              <tr><td><b>Zahir</b></td><td>Makna tertangkap dari lafadz itu sendiri, tanpa faktor luar, namun masih mengandung kemungkinan takwil pada makna bukan pokok pembicaraan.</td></tr>
+              <tr><td><b>Nash</b></td><td>Makna tertangkap jelas sebagai maksud pokok pembicaraan, meski secara teori masih bisa ditakwil.</td></tr>
+              <tr><td><b>Mufassar</b></td><td>Makna sudah terperinci &amp; jelas sedemikian rupa hingga tidak ada ruang takwil lagi (namun secara teori masih bisa dinasakh).</td></tr>
+              <tr><td><b>Muhkam</b></td><td>Makna sudah pasti, tidak menerima takwil maupun naskh — tingkat kejelasan tertinggi.</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="l-4">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 4</span><span class="term-translit">Ghairu Wadhihid Dalalah (Nash yang Tidak Jelas)</span></div></div>
+          <p class="term-def">Kebalikan Kaidah 3 — nash yang maknanya <b>tidak langsung jelas</b>, membutuhkan pendalaman/qarinah dari luar lafadz. Terbagi empat tingkatan (dari yang paling mungkin disingkap hingga paling tersembunyi):</p>
+          <div class="box detail">
+            <table class="hukum-table">
+              <tr><th>Tingkat</th><th>Ciri</th></tr>
+              <tr><td><b>Khafi</b></td><td>Maknanya tertutup pada sebagian cakupan (ifrad) tertentu, perlu diteliti dengan cermat.</td></tr>
+              <tr><td><b>Musykil</b></td><td>Ketersembunyian ada pada lafadz itu sendiri, membutuhkan pembahasan &amp; qarinah luar untuk menyingkapnya.</td></tr>
+              <tr><td><b>Mujmal</b></td><td>Tidak ada qarinah yang menerangkan; hanya bisa dijelaskan oleh penjelasan Syar'i sendiri (mis. lafadz "shalat", "zakat" yang butuh penjelasan detail dari Sunnah).</td></tr>
+              <tr><td><b>Mutasyabih</b></td><td>Sama sekali tidak ada jalan untuk mengetahui maksudnya (hanya Allah yang tahu hakikatnya).</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="l-5">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 5</span><span class="term-translit">Al-Musytarak (Lafadz Bermakna Ganda)</span></div></div>
+          <p class="term-def">Musytarak adalah <b>lafadz yang memiliki lebih dari satu makna</b> pada konteks berbeda, mis. kata "tahun" yang bisa bermakna tahun Hijriah atau tahun Masehi.</p>
+          <div class="box example">
+            <div class="box-label">📋 Istilah Terkait</div>
+            <b>'Am</b> — lafadz bermakna tunggal namun mencakup banyak individu (ifrad) sekaligus. <b>Khas</b> — lafadz bermakna tunggal untuk satu ifrad/kelompok ifrad tertentu. <b>Umum</b> — lafadz yang meliputi seluruh ifrad tanpa batas. <b>Khusus</b> — lafadz yang terbatas pada ifrad tertentu saja.
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="l-6">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 6</span><span class="term-translit">'Am (Lafadz Umum) &amp; Takhsis</span></div></div>
+          <p class="term-def">'Am adalah lafadz yang secara bahasa mencakup <b>seluruh individu (ifrad)</b> tanpa batas jumlah, berbeda dari <i>muthlak</i> yang hanya menunjuk satu/beberapa individu tak tertentu (bukan keseluruhan).</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Tiga Macam 'Am</div>
+            <ul>
+              <li><b>'Am Qath'i 'Umum</b> — disertai qarinah yang menegaskan cakupannya benar-benar umum, menolak segala pengkhususan (takhsis).</li>
+              <li><b>'Am Qath'i Khusus</b> — disertai qarinah yang menunjukkan sebagian ifrad tertentu saja yang dimaksud.</li>
+              <li><b>'Am Makhsush</b> — lafadz umum tanpa qarinah penegas, sehingga masih terbuka kemungkinan ditakhsis (dikhususkan) oleh dalil lain.</li>
+            </ul>
+          </div>
+          <div class="box note">
+            <div class="box-label">✂️ Takhsis (Pengkhususan)</div>
+            Takhsis adalah menjelaskan bahwa maksud syar'i dari lafadz umum hanya mencakup sebagian ifrad, bukan seluruhnya. Sarana takhsis: <b>akal</b>, <b>'urf</b>, dan <b>nash</b> lain yang lebih spesifik.
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="l-7">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 7</span><span class="term-translit">Khas, Muthlak &amp; Muqayyad</span></div></div>
+          <p class="term-def"><b>Khas</b> adalah lafadz yang menunjuk satu individu tertentu, mis. nama "Muhammad". Bila nash syar'i menunjukkan dalil qath'i pada makna khas ini, hukumnya bersifat pasti (qath'i), bukan dugaan (dzanni).</p>
+          <div class="box example">
+            <div class="box-label">⚖️ Muthlak vs Muqayyad</div>
+            <b>Muthlak</b> — lafadz yang menunjuk satu individu/beberapa individu secara bebas, tanpa dikaitkan sifat/batasan apa pun. <br>
+            <b>Muqayyad</b> — lafadz yang sama namun telah diikat oleh suatu sifat, syarat, atau batasan tertentu.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BAB IV ============ -->
+    <section id="t-1">
+      <div class="section-eyebrow"><span class="tag">Bab IV</span><span class="arab-tag">القَوَاعِدُ الأُصُولِيَّةُ التَّشْرِيعِيَّة</span></div>
+      <h2 class="sec-title">Kaidah-Kaidah Ushul tentang Maksud Syariat</h2>
+      <p class="sec-intro">Jika Bab III berbicara soal <i>bahasa</i> nash, Bab IV berbicara soal <b>ruh &amp; tujuan (maqashid)</b> di balik penetapan syariat — mengapa hukum ditetapkan, hak siapa yang dilindungi, kapan ijtihad boleh dilakukan, kapan hukum bisa dihapus (naskh), dan bagaimana menyelesaikan dalil yang tampak bertentangan.</p>
+
+      <div class="grid-terms kaidah-list">
+        <div class="term-card kaidah-card">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 1</span><span class="term-translit">Maqashid 'Ammah Tasyri'</span></div></div>
+          <p class="term-def">Maksud umum penetapan seluruh hukum syar'i adalah <b>merealisasikan kemaslahatan umat</b> dan memenuhi kebutuhan hidup bermasyarakat, pada tiga tingkatan:</p>
+          <div class="box detail">
+            <ul>
+              <li><b>Dharuriyat</b> — kebutuhan pokok/primer yang wajib ada demi tegaknya kehidupan.</li>
+              <li><b>Hajiyat</b> — kebutuhan sekunder untuk kemudahan &amp; menghilangkan kesulitan.</li>
+              <li><b>Tahsiniyat</b> — kebutuhan pelengkap terkait adab, kepatutan, dan kesempurnaan.</li>
+            </ul>
+          </div>
+          <div class="box example">
+            <div class="box-label">🕋 Lima Perkara Dharuriyat (Al-Kulliyat al-Khams)</div>
+            <div class="mini-grid">
+              <div class="mini-card"><div class="arab">اَلدِّيْن</div><div class="lat">Agama</div><div class="desc">Akidah, ibadah &amp; hubungan dengan Allah</div></div>
+              <div class="mini-card"><div class="arab">اَلنَّفْس</div><div class="lat">Jiwa</div><div class="desc">Keselamatan nyawa &amp; keturunan</div></div>
+              <div class="mini-card"><div class="arab">اَلْعَقْل</div><div class="lat">Akal</div><div class="desc">Larangan khamar demi memelihara akal</div></div>
+              <div class="mini-card"><div class="arab">اَلنَّسْل</div><div class="lat">Keturunan/Kehormatan</div><div class="desc">Pernikahan, larangan zina &amp; khalwat</div></div>
+              <div class="mini-card"><div class="arab">اَلْمَال</div><div class="lat">Harta</div><div class="desc">Jual-beli, larangan riba &amp; penipuan</div></div>
+            </div>
+          </div>
+          <div class="box note">
+            <div class="box-label">🌤️ Prinsip Menghilangkan Kesulitan</div>
+            Tujuh sebab yang melahirkan keringanan (rukhshah) dalam syariat: <b>perjalanan</b> (safar), <b>sakit</b>, <b>keterpaksaan</b> (ikrah), <b>lupa</b>, <b>ketidaktahuan</b> (jahl), <b>kondisi umum yang merata</b>, dan <b>kekurangan</b> (naqsh, mis. pada anak-anak).
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="t-2">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 2</span><span class="term-translit">Haqqullah &amp; Haqqul 'Abd</span></div></div>
+          <p class="term-def">Hukum syar'i dibedakan berdasarkan kepada siapa hak/manfaatnya kembali: <b>Haqqullah</b> (hak murni Allah/kepentingan umum masyarakat — tidak boleh digugurkan mukallaf secara sepihak) dan <b>Haqqul 'Abd</b> (hak pribadi individu — bisa dimaafkan/digugurkan pemiliknya).</p>
+          <div class="box example">
+            <div class="box-label">📋 Contoh Termasuk Haqqullah</div>
+            Ibadah inti (shalat, zakat, puasa, haji) · Zakat fitrah · Pajak tanah pertanian ('usyriyah/khirajiyah) · Ghanimah &amp; harta rikaz · Sanksi hudud (zina, mencuri, hirabah) · Larangan waris bagi pembunuh (sebagai sanksi ringan) · Kafarat pelanggaran sumpah.
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="t-3">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 3</span><span class="term-translit">Lapangan Ijtihad</span></div></div>
+          <p class="term-def">Ijtihad adalah <b>mencurahkan segenap kemampuan untuk sampai pada hukum syar'i melalui dalil, secara terperinci sesuai syariat</b>. Ijtihad tidak berlaku pada perkara yang sudah ada nash qath'i-nya.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Dua Lapangan Ijtihad</div>
+            <ul>
+              <li>Peristiwa yang <b>tidak ada nash sama sekali</b> sebagai dasar hukumnya.</li>
+              <li>Peristiwa yang ada nash-nya, namun nash tersebut bersifat <b>dzanni</b> (bukan qath'i) — sehingga masih terbuka ruang penafsiran melalui qiyas, istihsan, istishab, 'urf, atau mashalih mursalah.</li>
+            </ul>
+          </div>
+          <div class="box example">
+            <div class="box-label">📋 Empat Syarat Mujtahid</div>
+            Menguasai bahasa Arab · Menguasai Al-Qur'an (termasuk asbabun nuzul &amp; nasikh-mansukh) · Menguasai Sunnah · Memahami metode qiyas.
+          </div>
+          <div class="box note">
+            <div class="box-label">📌 Tiga Catatan Penting</div>
+            <ul>
+              <li>Ijtihad seorang mujtahid tidak boleh dipilah per-bab (tidak logis "mujtahid hanya dalam bab talak" tanpa menguasai bab lain).</li>
+              <li>Mujtahid tetap mendapat pahala meski ijtihadnya keliru — dua pahala bila benar, satu pahala bila salah (kaidah masyhur: <i>"ijtihad tidak pernah gugur tanpa pahala"</i>).</li>
+              <li>Keputusan ijtihad seorang mujtahid tidak boleh dibatalkan hanya oleh ijtihad lain yang sederajat.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="t-4">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 4</span><span class="term-translit">An-Naskh (Penghapusan Hukum)</span></div></div>
+          <p class="term-def">Naskh adalah <b>pembatalan/penggantian suatu hukum syar'i dengan hukum syar'i lain yang datang kemudian</b>. Naskh hanya berlaku <b>pada masa Rasulullah ﷺ masih hidup</b> — setelah wafat beliau, tidak ada lagi naskh terhadap Al-Qur'an dan Sunnah.</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Klasifikasi Naskh</div>
+            <table class="hukum-table">
+              <tr><th>Sudut Pandang</th><th>Macam</th><th>Keterangan</th></tr>
+              <tr><td rowspan="2">Cara penyampaian</td><td><b>Sharih</b></td><td>Dinyatakan terang-terangan bahwa hukum baru membatalkan hukum lama</td></tr>
+              <tr><td><b>Dhimni</b></td><td>Tidak dinyatakan eksplisit, tetapi hukum baru bertentangan isi dengan hukum lama</td></tr>
+              <tr><td rowspan="2">Cakupan</td><td><b>Kulli</b></td><td>Membatalkan hukum lama secara keseluruhan bagi semua mukallaf</td></tr>
+              <tr><td><b>Juz'i</b></td><td>Membatalkan hukum lama hanya pada sebagian cakupan/kondisi tertentu</td></tr>
+            </table>
+          </div>
+          <div class="box note">
+            <div class="box-label">🛡️ Nash Muhkamat (Tidak Bisa Dinasakh)</div>
+            <ul>
+              <li>Nash berisi hukum asasi/akidah yang tidak berubah oleh perbedaan zaman &amp; keadaan (mis. wajib iman kepada Allah, Rasul, Kitab, Hari Akhir).</li>
+              <li>Nash yang lafadznya sendiri sudah menegaskan berlaku selama-lamanya (mis. penegasan "untuk selama-lamanya" pada hukum qadzaf).</li>
+              <li>Nash yang berisi pemberitaan suatu peristiwa (bukan hukum taklif), karena sifatnya laporan fakta, bukan perintah yang bisa diganti.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="term-card kaidah-card" id="t-5">
+          <div class="term-head"><div class="th-left"><span class="kaidah-badge">Kaidah 5</span><span class="term-translit">Ta'arudh wa Tarjih (Pertentangan &amp; Penguatan Dalil)</span></div></div>
+          <p class="term-def">Ta'arudh terjadi ketika <b>dua dalil syar'i tampak menetapkan hukum berbeda pada satu peristiwa yang sama</b>. Ushul fikih menyusun langkah penyelesaian secara berurutan:</p>
+          <div class="box detail">
+            <div class="box-label">🎓 Langkah Penyelesaian (Al-Jam'u → At-Tarjih → An-Naskh → At-Tawaqquf)</div>
+            <ul>
+              <li><b>1) Al-Jam'u wat-Taufiq</b> — mengompromikan kedua dalil bila memungkinkan, sehingga keduanya tetap berlaku pada konteks masing-masing.</li>
+              <li><b>2) At-Tarjih</b> — bila tidak bisa dikompromikan, menguatkan salah satu dalil berdasarkan kriteria tertentu (mis. kekuatan sanad, kesesuaian dengan prinsip syariat lain).</li>
+              <li><b>3) An-Naskh</b> — bila diketahui kronologi turunnya, dalil yang datang lebih akhir menghapus dalil yang lebih dahulu.</li>
+              <li><b>4) At-Tawaqquf</b> — bila kronologi tidak diketahui dan tarjih tidak memungkinkan, kedua dalil untuk sementara ditangguhkan pengamalannya sampai ditemukan penjelas.</li>
+            </ul>
+          </div>
+          <div class="box example">
+            <div class="box-label">📌 Contoh: Iddah Wanita Hamil yang Suaminya Wafat</div>
+            QS. Al-Baqarah: 234 menetapkan iddah wanita ditinggal wafat suami adalah <b>4 bulan 10 hari</b> (berlaku umum). QS. Ath-Thalaq: 4 menetapkan iddah wanita hamil adalah <b>sampai melahirkan</b> (berlaku umum, baik cerai maupun wafat). Ketika seorang janda hamil ditinggal wafat suaminya, kedua nash "bertemu" pada satu peristiwa — ulama umumnya mentarjih dalil iddah "sampai melahirkan" sebagai yang lebih diutamakan (lebih khusus) dalam kasus ini.
+          </div>
+        </div>
+      </div>
+
+      <div class="recap">
+        <h3>🧭 Ringkasan Bab IV</h3>
+        <ul>
+          <li>Seluruh syariat pada akhirnya bermuara pada satu tujuan: menjaga lima perkara dharuri (agama, jiwa, akal, keturunan, harta).</li>
+          <li>Ijtihad hanya terbuka di ruang yang belum diatur nash qath'i — bukan ajang menafsirkan ulang hukum yang sudah pasti.</li>
+          <li>Naskh adalah fenomena masa Nabi ﷺ hidup, bukan alat untuk "membatalkan" hukum di masa sekarang.</li>
+          <li>Pertentangan dalil diselesaikan berjenjang: kompromikan dulu, baru tarjih, baru naskh, baru tawaqquf.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ PENUTUP ============ -->
+    <section class="alt" id="rangkuman">
+      <div class="section-eyebrow"><span class="tag">Penutup</span><span class="arab-tag">خَاتِمَة</span></div>
+      <h2 class="sec-title">Peta Konsep &amp; Glosarium Singkat</h2>
+      <p class="sec-intro">Empat bab di atas membentuk satu kesatuan alur berpikir ushul fikih:</p>
+      <div class="mini-grid" style="margin-top:10px;">
+        <div class="mini-card"><div class="lat">Bab I</div><div class="desc">Dari mana hukum digali? (Sumber/Dalil)</div></div>
+        <div class="mini-card"><div class="lat">Bab II</div><div class="desc">Apa bentuk &amp; siapa pelaku hukum? (Anatomi Hukum)</div></div>
+        <div class="mini-card"><div class="lat">Bab III</div><div class="desc">Bagaimana membaca redaksi nash? (Kaidah Bahasa)</div></div>
+        <div class="mini-card"><div class="lat">Bab IV</div><div class="desc">Untuk apa &amp; bagaimana menerapkan hukum? (Maksud Syariat)</div></div>
+      </div>
+
+      <div class="box note" style="margin-top:28px;">
+        <div class="box-label">📚 Glosarium Cepat</div>
+        <ul>
+          <li><b>Mukallaf</b> — orang yang sudah dibebani tanggung jawab hukum syar'i (baligh &amp; berakal).</li>
+          <li><b>Nash</b> — teks Al-Qur'an atau Sunnah.</li>
+          <li><b>Qath'i</b> — pasti, tidak mengandung keraguan/penafsiran lain.</li>
+          <li><b>Dzanni</b> — bersifat dugaan kuat, masih terbuka ruang penafsiran.</li>
+          <li><b>Furu'</b> — cabang-cabang hukum fikih praktis (lawan dari ushul/pokok).</li>
+          <li><b>Ifrad</b> — satuan-satuan individu yang tercakup dalam suatu lafadz umum.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <div class="arab-foot">وَاللَّهُ أَعْلَمُ بِالصَّوَاب</div>
+      Disusun sebagai modul belajar-mengajar berdasarkan resume kitab <i>Ilmu Ushul Fikih</i> karya Syekh Abdul Wahab Khallaf.<br>
+      © 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: vaozeei@gmail.com
+    </footer>
+
+  </main>
+</div>
+
+<button class="back-top" id="backTop" title="Kembali ke atas">↑</button>
+
+<script>
+// mobile sidebar toggle
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+document.querySelectorAll('.toc a').forEach(a => a.addEventListener('click', () => {
+  if (window.innerWidth <= 900) sidebar.classList.remove('open');
+}));
+
+// scrollspy: highlight active nav link
+const navLinks = Array.from(document.querySelectorAll('.toc a'));
+const targets = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = '#' + entry.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      const activeLink = navLinks.find(a => a.getAttribute('href') === id);
+      if (activeLink) {
+        const parentDetails = activeLink.closest('details');
+        if (parentDetails) parentDetails.open = true;
+      }
+    }
+  });
+}, { rootMargin: '-15% 0px -70% 0px' });
+targets.forEach(t => io.observe(t));
+
+// search filter in TOC
+const tocSearch = document.getElementById('tocSearch');
+tocSearch.addEventListener('input', () => {
+  const q = tocSearch.value.trim().toLowerCase();
+  document.querySelectorAll('.toc details').forEach(det => {
+    let anyVisible = false;
+    det.querySelectorAll('li').forEach(li => {
+      const text = li.textContent.toLowerCase();
+      const match = q === '' || text.includes(q);
+      li.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+    if (q !== '') det.open = anyVisible;
+    det.style.display = (q === '' || anyVisible) ? '' : 'none';
+  });
+});
+
+// back to top button
+const backTop = document.getElementById('backTop');
+window.addEventListener('scroll', () => {
+  backTop.classList.toggle('show', window.scrollY > 500);
+});
+backTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+</script>
+</body>
+</html>

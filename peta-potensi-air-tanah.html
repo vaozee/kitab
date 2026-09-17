@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Peta Potensi Air Tanah — Perencanaan Sumur Bor</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/SheetJS-style/0.15.7/xlsx.full.min.js"></script>
+
+<style>
+:root{
+  --ink-950:#07120d;
+  --ink-900:#0b1a12;
+  --ink-850:#0f2318;
+  --forest-800:#123420;
+  --forest-700:#17452a;
+  --forest-600:#1f5c37;
+  --forest-500:#2a7a48;
+  --gold-500:#cf9f3f;
+  --gold-400:#e3b957;
+  --gold-300:#f0d089;
+  --water-400:#4fb3c9;
+  --water-300:#7dd3e0;
+  --paper:#f4efe0;
+  --ink-text:#e9e6d8;
+  --muted:#9db5a2;
+  --danger:#c85c4a;
+  --ok:#4c9a5f;
+  --warn:#cf9f3f;
+  --glass-bg: rgba(15,35,24,0.68);
+  --glass-brd: rgba(227,185,87,0.18);
+  --radius: 14px;
+  --font-display: 'Zilla Slab', 'Georgia', serif;
+  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-body);
+  background:
+    radial-gradient(ellipse at 20% -10%, rgba(42,122,72,0.25), transparent 55%),
+    radial-gradient(ellipse at 100% 110%, rgba(207,159,63,0.10), transparent 50%),
+    var(--ink-950);
+  color:var(--ink-text);
+  overflow:hidden;
+}
+
+/* ---------- topbar (floating capsule) ---------- */
+.topbar{
+  position:fixed; top:12px; left:12px; right:12px; height:56px; z-index:1000;
+  display:flex; align-items:center; gap:16px;
+  padding:0 16px;
+  background:rgba(11,26,18,0.38);
+  border:1px solid var(--glass-brd);
+  border-radius:999px;
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 8px 26px rgba(0,0,0,.35);
+  transition:background .25s ease, box-shadow .25s ease, top .25s ease;
+}
+.topbar.scrolled{
+  background:rgba(7,18,13,0.22);
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+.topbar.dragging{ transition:none; cursor:grabbing; }
+.drag-handle{
+  flex-shrink:0; width:20px; align-self:stretch; display:flex; align-items:center; justify-content:center;
+  color:var(--muted); font-size:15px; cursor:grab; letter-spacing:-1px; user-select:none; touch-action:none;
+  border-radius:8px; margin-left:-6px;
+}
+.drag-handle:hover{ color:var(--gold-300); background:rgba(255,255,255,0.06); }
+.brand{ display:flex; align-items:center; gap:11px; white-space:nowrap;}
+.brand-mark{
+  width:36px; height:36px; border-radius:10px;
+  background:radial-gradient(circle at 30% 25%, var(--gold-300), var(--gold-500) 55%, #8a6a1f 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; box-shadow:0 3px 10px rgba(0,0,0,.4), inset 0 1px 1px rgba(255,255,255,.35);
+}
+.brand-txt h1{ font-family:var(--font-display); font-size:16.5px; font-weight:600; letter-spacing:.2px; color:var(--gold-300);}
+.brand-txt p{ font-size:10.5px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; margin-top:1px;}
+
+.search-wrap{
+  flex:1; max-width:520px; position:relative;
+}
+.search-wrap input{
+  width:100%; height:38px; border-radius:10px; border:1px solid var(--glass-brd);
+  background:rgba(255,255,255,0.05); color:var(--ink-text); padding:0 14px 0 38px;
+  font-size:13.5px; font-family:var(--font-body);
+  transition:.15s;
+}
+.search-wrap input:focus{ outline:none; border-color:var(--gold-500); background:rgba(255,255,255,0.08);}
+.search-wrap input::placeholder{ color:var(--muted);}
+.search-icon{
+  position:absolute; left:13px; top:50%; transform:translateY(-50%);
+  color:var(--muted); font-size:14px; pointer-events:none;
+}
+.search-results{
+  position:absolute; top:44px; left:0; right:0;
+  background:var(--ink-900); border:1px solid var(--glass-brd); border-radius:10px;
+  max-height:260px; overflow-y:auto; display:none; z-index:1200;
+  box-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+.search-results.show{ display:block;}
+.search-item{ padding:9px 13px; font-size:12.5px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,.04); color:var(--ink-text);}
+.search-item:hover{ background:rgba(207,159,63,0.12);}
+.search-item:last-child{ border-bottom:none;}
+
+.mode-toggle{
+  display:flex; gap:2px; background:rgba(255,255,255,0.05); padding:3px; border-radius:10px; border:1px solid var(--glass-brd);
+}
+.mode-btn{
+  border:none; background:transparent; color:var(--muted); font-size:12px; font-weight:600;
+  padding:7px 13px; border-radius:8px; cursor:pointer; transition:.15s; font-family:var(--font-body);
+  display:flex; align-items:center; gap:6px; white-space:nowrap;
+}
+.mode-btn.active{ background:linear-gradient(180deg,var(--forest-600),var(--forest-700)); color:var(--gold-300); box-shadow:inset 0 1px 1px rgba(255,255,255,.08);}
+.mode-btn:hover:not(.active){ color:var(--ink-text);}
+
+.topbar-actions{ display:flex; gap:8px; margin-left:auto;}
+.icon-btn{
+  width:38px; height:38px; border-radius:10px; border:1px solid var(--glass-brd);
+  background:rgba(255,255,255,0.04); color:var(--muted); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:15px; transition:.15s;
+}
+.icon-btn:hover{ background:rgba(207,159,63,0.14); color:var(--gold-300); border-color:var(--gold-500);}
+
+/* ---------- layout ---------- */
+.app{ position:fixed; top:0; left:0; right:0; bottom:0; display:flex;}
+#map{ flex:1; height:100%; background:#0a1710;}
+
+.sidebar{
+  width:400px; height:100%; overflow-y:auto;
+  background:rgba(9,22,15,0.42);
+  backdrop-filter:blur(14px) saturate(130%);
+  -webkit-backdrop-filter:blur(14px) saturate(130%);
+  border-left:1px solid var(--glass-brd);
+  padding:86px 16px 46px;
+  scrollbar-width:thin; scrollbar-color: var(--forest-600) transparent;
+  transition:width .25s ease, padding .25s ease, opacity .2s ease;
+  position:relative;
+  flex-shrink:0;
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{ background:var(--forest-600); border-radius:6px;}
+
+/* collapsed (desktop) */
+.sidebar.collapsed{
+  width:0; padding-left:0; padding-right:0; overflow:hidden; border-left:none; opacity:0;
+}
+
+.sidebar-collapse-tab{
+  position:fixed; top:50%; right:400px; transform:translateY(-50%);
+  width:16px; height:56px; border-radius:8px 0 0 8px;
+  background:rgba(11,26,18,0.78); border:1px solid var(--glass-brd); border-right:none;
+  backdrop-filter:blur(10px);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold-300); font-size:11px; cursor:pointer; z-index:1050;
+  transition:right .25s ease;
+}
+.sidebar-collapse-tab:hover{ background:rgba(207,159,63,0.18); }
+.sidebar.collapsed ~ .sidebar-collapse-tab{ right:0; border-radius:8px 0 0 8px; }
+
+.panel{
+  background:var(--glass-bg); border:1px solid var(--glass-brd); border-radius:var(--radius);
+  padding:15px; margin-bottom:14px;
+}
+.panel-title{
+  font-family:var(--font-display); font-size:14.5px; color:var(--gold-300); font-weight:600;
+  display:flex; align-items:center; gap:8px; margin-bottom:11px;
+}
+.panel-title .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold-500);}
+
+.hint{ font-size:11.5px; color:var(--muted); line-height:1.55; margin-bottom:10px;}
+
+.step-row{ display:flex; gap:9px; align-items:flex-start; margin-bottom:9px;}
+.step-num{
+  width:20px; height:20px; border-radius:6px; background:rgba(207,159,63,0.16); border:1px solid var(--glass-brd);
+  color:var(--gold-400); font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+}
+.step-txt{ font-size:12px; color:var(--ink-text); line-height:1.5;}
+.step-txt b{ color:var(--gold-300);}
+
+.btn{
+  border:none; border-radius:9px; padding:9px 14px; font-size:12.5px; font-weight:600; cursor:pointer;
+  font-family:var(--font-body); transition:.15s; display:inline-flex; align-items:center; gap:6px; justify-content:center;
+}
+.btn-gold{ background:linear-gradient(180deg,var(--gold-400),var(--gold-500)); color:#241a05; box-shadow:0 2px 8px rgba(207,159,63,.25);}
+.btn-gold:hover{ filter:brightness(1.08);}
+.btn-ghost{ background:rgba(255,255,255,0.05); color:var(--ink-text); border:1px solid var(--glass-brd);}
+.btn-ghost:hover{ background:rgba(255,255,255,0.09);}
+.btn-danger{ background:rgba(200,92,74,0.15); color:#e28a78; border:1px solid rgba(200,92,74,.35);}
+.btn-danger:hover{ background:rgba(200,92,74,0.25);}
+.btn-block{ width:100%;}
+.btn-row{ display:flex; gap:8px; flex-wrap:wrap;}
+
+/* candidate detail panel */
+.empty-state{ text-align:center; padding:26px 10px; color:var(--muted);}
+.empty-state .glyph{ font-size:30px; margin-bottom:8px; opacity:.6;}
+.empty-state p{ font-size:12px; line-height:1.6;}
+
+.score-hero{
+  display:flex; align-items:center; gap:14px; padding:12px; border-radius:11px; margin-bottom:12px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-brd);
+}
+.score-ring{
+  width:64px; height:64px; border-radius:50%; flex-shrink:0; position:relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.score-ring svg{ position:absolute; top:0; left:0; transform:rotate(-90deg);}
+.score-ring .num{ font-family:var(--font-display); font-size:19px; font-weight:700; z-index:1;}
+.score-meta .label{ font-size:14px; font-weight:700; font-family:var(--font-display); margin-bottom:2px;}
+.score-meta .sub{ font-size:11px; color:var(--muted); line-height:1.5;}
+
+.factor-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+.factor{
+  display:flex; align-items:center; gap:9px; padding:8px 10px; background:rgba(255,255,255,0.025);
+  border-radius:9px; border:1px solid rgba(255,255,255,0.05);
+}
+.factor .ficon{ width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;}
+.factor .ftxt{ flex:1; min-width:0;}
+.factor .ftxt .fname{ font-size:11.5px; color:var(--ink-text); font-weight:600;}
+.factor .ftxt .fval{ font-size:10.5px; color:var(--muted); margin-top:1px;}
+.factor .fscore{ font-family:var(--font-mono); font-size:12px; font-weight:600; flex-shrink:0;}
+
+.coord-box{
+  font-family:var(--font-mono); font-size:11px; color:var(--water-300); background:rgba(79,179,201,0.08);
+  border:1px solid rgba(79,179,201,0.2); border-radius:8px; padding:8px 10px; margin-bottom:10px;
+}
+
+.field-group{ margin-bottom:10px;}
+.field-group label{ display:block; font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; font-weight:600;}
+.field-group input, .field-group select, .field-group textarea{
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-brd); border-radius:8px;
+  padding:8px 10px; color:var(--ink-text); font-size:12.5px; font-family:var(--font-body);
+}
+.field-group textarea{ resize:vertical; min-height:56px;}
+.field-group input:focus, .field-group select:focus, .field-group textarea:focus{ outline:none; border-color:var(--gold-500);}
+
+/* list of saved points */
+.point-item{
+  display:flex; gap:10px; align-items:flex-start; padding:10px; border-radius:10px;
+  background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; cursor:pointer; transition:.15s;
+}
+.point-item:hover{ background:rgba(207,159,63,0.08); border-color:var(--glass-brd);}
+.point-item.active{ border-color:var(--gold-500); background:rgba(207,159,63,0.1);}
+.point-badge{
+  width:30px; height:30px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff;
+}
+.point-info{ flex:1; min-width:0;}
+.point-info .pname{ font-size:12.5px; font-weight:600; color:var(--ink-text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.point-info .pmeta{ font-size:10.5px; color:var(--muted); margin-top:2px; font-family:var(--font-mono);}
+.point-del{ background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; padding:2px 4px; flex-shrink:0;}
+.point-del:hover{ color:var(--danger);}
+
+.legend-row{ display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--muted); margin-bottom:6px;}
+.legend-swatch{ width:11px; height:11px; border-radius:3px; flex-shrink:0;}
+
+/* map controls */
+.map-overlay-controls{
+  position:absolute; top:82px; left:14px; z-index:900; display:flex; flex-direction:column; gap:8px;
+  transition:top .25s ease;
+}
+.layer-pill{
+  background:var(--glass-bg); border:1px solid var(--glass-brd); border-radius:11px; padding:6px;
+  backdrop-filter:blur(8px); display:flex; gap:4px;
+}
+.layer-btn{
+  border:none; background:transparent; color:var(--muted); font-size:11px; font-weight:600; padding:7px 11px;
+  border-radius:8px; cursor:pointer; font-family:var(--font-body); white-space:nowrap;
+}
+.layer-btn.active{ background:var(--forest-600); color:var(--gold-300);}
+
+.crosshair-badge{
+  position:absolute; bottom:16px; left:66px; z-index:900;
+  background:var(--glass-bg); border:1px solid var(--glass-brd); border-radius:11px; padding:9px 13px;
+  font-family:var(--font-mono); font-size:11px; color:var(--muted); backdrop-filter:blur(8px);
+  display:flex; align-items:center; gap:9px;
+}
+.crosshair-badge b{ color:var(--gold-300);}
+.leaflet-control-zoom{ margin-bottom:16px !important; margin-left:14px !important;}
+
+.status-toast{
+  position:absolute; top:14px; left:50%; transform:translateX(-50%) translateY(-140%);
+  background:var(--ink-900); border:1px solid var(--gold-500); border-radius:10px; padding:9px 16px;
+  font-size:12px; color:var(--gold-300); z-index:1300; box-shadow:0 8px 24px rgba(0,0,0,.5);
+  transition:transform .3s ease; display:flex; align-items:center; gap:8px; white-space:nowrap;
+}
+.status-toast.show{ transform:translateX(-50%) translateY(0);}
+.spinner{
+  width:12px; height:12px; border-radius:50%; border:2px solid rgba(227,185,87,.25); border-top-color:var(--gold-400);
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* leaflet marker custom */
+.wpin{ display:flex; align-items:center; justify-content:center; }
+.wpin-core{
+  width:30px; height:30px; border-radius:50% 50% 50% 0; transform:rotate(-45deg);
+  border:2px solid rgba(255,255,255,0.85); box-shadow:0 3px 8px rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center;
+}
+.wpin-core span{ transform:rotate(45deg); font-size:11px; font-weight:700; color:#fff; font-family:var(--font-mono);}
+
+.leaflet-popup-content-wrapper{ background:var(--ink-900); color:var(--ink-text); border-radius:10px; border:1px solid var(--glass-brd);}
+.leaflet-popup-tip{ background:var(--ink-900);}
+.leaflet-popup-content{ font-family:var(--font-body); font-size:12.5px; margin:11px 13px; max-height:64vh; overflow-y:auto; overflow-x:hidden; scrollbar-width:thin; scrollbar-color: var(--forest-600) transparent; }
+.leaflet-popup-content::-webkit-scrollbar{ width:5px; }
+.leaflet-popup-content::-webkit-scrollbar-thumb{ background:var(--forest-600); border-radius:6px; }
+.leaflet-popup-content-wrapper{ max-height:70vh; }
+.factor-list.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.factor-list.two-col .factor{ position:relative; flex-direction:column; align-items:flex-start; padding:8px 8px 7px; }
+.factor-list.two-col .factor .ficon{ margin-bottom:4px; width:22px; height:22px; font-size:11px;}
+.factor-list.two-col .factor .fscore{ position:absolute; top:7px; right:8px; font-size:10.5px;}
+.factor-list.two-col .factor .ftxt .fname{ font-size:10.5px; padding-right:26px;}
+.factor-list.two-col .factor .fval{ font-size:9.5px;}
+.leaflet-popup-content b{ color:var(--gold-300);}
+.leaflet-control-attribution{ background:rgba(7,18,13,0.75)!important; color:var(--muted)!important; font-size:9.5px!important;}
+.leaflet-control-attribution a{ color:var(--water-300)!important;}
+.leaflet-control-zoom a{ background:var(--ink-900)!important; color:var(--gold-300)!important; border-color:var(--glass-brd)!important;}
+
+.footer-note{
+  font-size:10px; color:var(--muted); line-height:1.6; padding:12px 4px 0; border-top:1px solid var(--glass-brd); margin-top:6px;
+}
+
+.region-btn{
+  border:1px solid var(--glass-brd); background:rgba(255,255,255,0.04); color:var(--ink-text);
+  border-radius:9px; padding:8px 11px; font-size:11.5px; font-weight:600; cursor:pointer; font-family:var(--font-body);
+  display:flex; align-items:center; gap:7px; transition:.15s;
+}
+.region-btn:hover{ background:rgba(207,159,63,0.12); border-color:var(--gold-500);}
+.region-card{
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-brd); border-radius:10px; padding:11px 12px; margin-top:2px;
+}
+.region-card .rtitle{ font-family:var(--font-display); font-size:13px; color:var(--gold-300); font-weight:600; margin-bottom:5px; display:flex; align-items:center; gap:7px;}
+.region-card .rtag{
+  font-size:9.5px; text-transform:uppercase; letter-spacing:.4px; font-weight:700; padding:2px 7px; border-radius:5px;
+}
+.region-card .rtext{ font-size:11.5px; color:var(--ink-text); line-height:1.6;}
+.region-card .rtext + .rtext{ margin-top:6px; }
+.region-card .rsource{ font-size:10px; color:var(--muted); margin-top:7px; font-style:italic;}
+.karst-note{
+  display:flex; gap:8px; align-items:flex-start; background:rgba(207,159,63,0.1); border:1px solid rgba(207,159,63,0.3);
+  border-radius:9px; padding:9px 10px; margin:10px 0; font-size:11.5px; color:var(--gold-300); line-height:1.55;
+}
+.karst-note .kicon{ flex-shrink:0; font-size:14px;}
+
+.depth-reco{
+  background:rgba(90,159,196,0.1); border:1px solid rgba(90,159,196,0.35);
+  border-radius:9px; padding:10px 12px; margin:10px 0; color:var(--water-300, #9fd0e6); line-height:1.5;
+}
+.depth-reco b{ color:#cfe9f5; }
+.depth-reco .dr-title{ display:flex; align-items:center; gap:8px; margin-bottom:4px; font-size:12.5px;}
+.depth-reco .dr-note{ font-size:11.5px; color:var(--muted);}
+
+.app-footer{
+  position:fixed; bottom:8px; right:14px; z-index:960;
+  font-size:10px; color:var(--muted); letter-spacing:.2px;
+  background:rgba(11,26,18,0.35); backdrop-filter:blur(6px);
+  padding:4px 10px; border-radius:8px; pointer-events:auto;
+}
+.app-footer a{ color:var(--water-300); text-decoration:none;}
+.app-footer a:hover{ text-decoration:underline;}
+
+@media print{
+  .topbar,.sidebar,.map-overlay-controls,.crosshair-badge,.leaflet-control,.sidebar-collapse-tab,.app-footer{ display:none !important;}
+}
+
+/* mobile */
+@media (max-width: 860px){
+  .search-wrap{ display:none; }
+  .sidebar{ width:100%; position:fixed; right:0; top:0; bottom:0; padding-top:82px; transform:translateX(100%); transition:.25s; z-index:1100;}
+  .sidebar.open{ transform:translateX(0);}
+  .sidebar.collapsed{ width:100%; opacity:1; overflow-y:auto; padding:82px 16px 46px;}
+  .brand-txt p{ display:none;}
+  .sidebar-collapse-tab{ display:none;}
+  .app-footer{ right:8px; bottom:8px; font-size:9px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <div class="drag-handle" id="dragHandle" title="Tahan & geser untuk memindahkan header">⠿</div>
+  <div class="brand">
+    <div class="brand-mark">💧</div>
+    <div class="brand-txt">
+      <h1>Peta Potensi Air Tanah</h1>
+      <p>Perencanaan Titik Sumur Bor</p>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔎</span>
+    <input id="searchInput" type="text" placeholder="Cari lokasi / desa / kebun... (contoh: Katingan, Kalimantan Tengah)">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="modeMark" onclick="setMode('mark')">📍 Tandai Titik</button>
+    <button class="mode-btn" id="modeGrid" onclick="setMode('grid')">▦ Pindai Area</button>
+  </div>
+
+  <div class="topbar-actions">
+    <button class="icon-btn" title="Impor data (.json)" onclick="document.getElementById('fileImport').click()">📂</button>
+    <input type="file" id="fileImport" accept=".json" style="display:none" onchange="importData(event)">
+    <button class="icon-btn" title="Ekspor Excel" onclick="exportExcel()">📊</button>
+    <button class="icon-btn" title="Ekspor JSON" onclick="exportJSON()">💾</button>
+    <button class="icon-btn" title="Cetak laporan" onclick="window.print()">🖨️</button>
+    <button class="icon-btn" id="sidebarToggle" title="Panel" onclick="toggleSidebar()" style="display:none">☰</button>
+  </div>
+</div>
+
+<div class="app">
+  <div id="map">
+    <div class="map-overlay-controls">
+      <div class="layer-pill">
+        <button class="layer-btn active" id="layerSat" onclick="setBaseLayer('sat')">🛰️ Satelit</button>
+        <button class="layer-btn" id="layerTopo" onclick="setBaseLayer('topo')">⛰️ Topografi</button>
+        <button class="layer-btn" id="layerStreet" onclick="setBaseLayer('street')">🗺️ Jalan</button>
+      </div>
+      <div class="layer-pill">
+        <button class="layer-btn active" id="toggleRivers" onclick="toggleRivers()">〰️ Sungai/Air</button>
+        <button class="layer-btn active" id="toggleRefs" onclick="toggleRefs()">🪣 Sumur/Karst</button>
+      </div>
+    </div>
+    <div class="crosshair-badge" id="coordBadge">Klik peta untuk menandai <b>titik calon sumur bor</b></div>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Cara Pakai</div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-txt">Cari lokasi kebun/area di kotak pencarian, atau geser & zoom peta secara manual.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-txt">Klik titik di peta pada lokasi calon sumur. Sistem otomatis mengambil <b>elevasi</b>, <b>jarak ke sungai/badan air terdekat</b>, dan <b>kondisi cekungan lokal</b> dari data satelit & OpenStreetMap.</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-txt">Skor potensi air tanah (0–100) muncul di panel kanan beserta rincian faktor penilaian.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-txt">Simpan titik, beri catatan, lalu ekspor ke Excel/JSON untuk dibawa ke tim survei geolistrik.</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Lokasi Cepat & Info Regional</div>
+      <div class="hint" style="margin-bottom:9px">Lompat ke area kerja, lengkap dengan catatan hidrogeologi umum daerah tersebut.</div>
+      <div id="regionButtons" class="btn-row" style="margin-bottom:10px"></div>
+      <div id="regionInfoBox"></div>
+    </div>
+
+    <div class="panel" id="detailPanel">
+      <div class="panel-title"><span class="dot"></span>Detail Titik Terpilih</div>
+      <div class="empty-state" id="detailEmpty">
+        <div class="glyph">📍</div>
+        <p>Belum ada titik dipilih.<br>Klik di peta untuk mulai analisis.</p>
+      </div>
+      <div id="detailContent" style="display:none"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Titik Tersimpan (<span id="pointCount">0</span>)</div>
+      <div id="pointList"></div>
+      <div class="hint" id="pointListEmpty">Titik yang disimpan akan tampil di sini, diurutkan dari skor potensi tertinggi.</div>
+      <div class="btn-row" style="margin-top:8px" id="pointListActions" hidden>
+        <button class="btn btn-ghost" onclick="clearAllPoints()">🗑️ Hapus Semua</button>
+        <button class="btn btn-ghost" onclick="fitAllPoints()">🎯 Tampilkan Semua</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Legenda Skor</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#4c9a5f"></div>Tinggi (≥70) — layak diprioritaskan untuk survei lanjutan</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#cf9f3f"></div>Sedang (40–69) — perlu kajian tambahan</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#c85c4a"></div>Rendah (&lt;40) — kurang disarankan</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#7dd3e0"></div>Titik biru kecil di peta — sumur/bor/titik air warga (OSM)</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#e3b957"></div>Titik emas kecil di peta — mata air/gua/dolina (khusus zona karst)</div>
+      <div class="hint" style="margin:10px 0 2px; font-weight:600; color:var(--ink-text)">Sumber data yang digabungkan:</div>
+      <div class="legend-row">🛰️ Citra satelit — Esri World Imagery</div>
+      <div class="legend-row">⛰️ Elevasi — Open-Elevation (model SRTM)</div>
+      <div class="legend-row">〰️ Sungai, badan air, lahan basah, tutupan lahan — OpenStreetMap</div>
+      <div class="legend-row">🪣 Sumur/bor/titik air eksisting — OpenStreetMap (pemetaan komunitas)</div>
+      <div class="legend-row">🌧️ Curah hujan 1 tahun terakhir — Open-Meteo Historical Weather</div>
+      <div class="legend-row">🕳️ Fitur karst (khusus Grobogan) — OpenStreetMap + kajian karst Kendeng Utara/Bapeda Grobogan</div>
+      <div class="footer-note">
+        <b>Catatan penting:</b> Skor di aplikasi ini adalah <b>indikasi awal berbasis data terbuka</b> — bukan pengukuran bawah permukaan. Data OpenStreetMap (sungai, sumur eksisting, tutupan lahan) bergantung pada pemetaan komunitas sehingga bisa tidak lengkap di area terpencil; ketiadaan data di peta <b>tidak berarti fitur itu tidak ada</b>. Untuk kepastian titik bor, tetap wajib dilakukan <b>survei geolistrik (resistivitas)</b> oleh tenaga ahli hidrogeologi sebelum pengeboran.
+      </div>
+    </div>
+
+  </div>
+
+  <button class="sidebar-collapse-tab" id="sidebarCollapseTab" title="Ciutkan/lebarkan panel" onclick="toggleSidebarCollapse()">‹</button>
+</div>
+
+<div class="status-toast" id="toast"><span class="spinner"></span><span id="toastText">Memuat data...</span></div>
+
+<div class="app-footer">© 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+let map, baseLayers = {}, riverLayer = null, refLayer = null, currentBase = 'sat';
+let showRivers = true, showRefs = true;
+let mode = 'mark'; // 'mark' | 'grid'
+let points = [];          // saved analyzed points
+let activeMarker = null;  // temp marker while analyzing
+let activePointId = null; // id of point shown in detail panel
+let markersLayer;
+let idCounter = 1;
+
+const DEFAULT_CENTER = [-2.55, 112.95]; // Sampit / Kalimantan Tengah area
+const DEFAULT_ZOOM = 10;
+
+/* ============================================================
+   REGIONAL REFERENCE DATA
+   Catatan umum hidrogeologi per wilayah kerja, dipakai sebagai
+   konteks tambahan (bukan pengganti data resmi ESDM/BAPPEDA setempat).
+   ============================================================ */
+const REGION_DATA = [
+  {
+    id:'kalteng',
+    name:'Katingan – Sampit, Kalimantan Tengah',
+    icon:'🌴',
+    center:[-2.55,112.95], zoom:10,
+    bounds:{ south:-3.6, north:-1.2, west:111.6, east:113.6 },
+    tag:'Dataran aluvial & gambut',
+    tagColor:'#4c9a5f',
+    aquiferType:'aquifer-alluvial',
+    notes:[
+      'Wilayah ini umumnya berupa dataran rendah aluvial dan lahan gambut pesisir/pedalaman Kalimantan, dengan muka air tanah dangkal namun sangat dipengaruhi pasang-surut sungai dan musim.',
+      'Air tanah dangkal di area gambut sering bersifat asam (pH rendah) dan berwarna — perlu diperhitungkan untuk kebutuhan air bersih, sedangkan untuk kebutuhan operasional non-konsumsi (pabrik/kebun) umumnya masih memadai.',
+      'Kedekatan dengan sungai/anak sungai adalah indikator kuat di wilayah ini karena sebagian besar akuifer dangkal menyatu dengan sistem sungai dan rawa.'
+    ],
+    source:'Karakteristik umum dataran gambut/aluvial Kalimantan Tengah — untuk data akuifer resmi per blok, rujuk peta hidrogeologi Badan Geologi ESDM lembar setempat.'
+  },
+  {
+    id:'grobogan',
+    name:'Kabupaten Grobogan, Jawa Tengah',
+    icon:'⛰️',
+    center:[-7.05,110.95], zoom:11,
+    bounds:{ south:-7.35, north:-6.85, west:110.55, east:111.35 },
+    tag:'Karst & rawan kering',
+    tagColor:'#cf9f3f',
+    aquiferType:'aquifer-karst',
+    notes:[
+      'Grobogan dikenal sebagai kabupaten yang kekurangan air terutama saat musim kemarau, meskipun memiliki kawasan karst yang secara alami menyimpan air dalam gua dan sungai bawah tanah.',
+      'Bagian timur/tenggara berbatasan dengan Kabupaten Pati/Blora termasuk kawasan Bentang Alam Karst Kendeng Utara (± 112 km², mencakup beberapa kecamatan) — akuifer di sini bertipe akuifer celah/rekahan batugamping, bukan akuifer butiran biasa, sehingga lokasi sumur produktif bisa sangat setempat (tergantung jalur rekahan/gua).',
+      'Studi geolistrik di bagian barat Grobogan (Kec. Tanggungharjo & Kedungjati) menemukan air tanah dalam pada kedalaman sekitar 50–105 meter, pada formasi aluvium, batugamping, dan sedimen Miosen–Pliosen.',
+      'Klasifikasi produktivitas akuifer di kabupaten ini bervariasi: dari akuifer produktif luas, produktif sedang/kecil/setempat, hingga zona langka air tanah — sehingga survei geolistrik per titik jauh lebih krusial di sini dibanding daerah aluvial biasa.'
+    ],
+    source:'Bapeda/Dinas LH Kab. Grobogan; Koesuma dkk., "Analisa Cekungan Air Tanah Dalam di Bagian Barat Kabupaten Grobogan", Indonesian Journal of Applied Physics (2018); kajian karst Kendeng Utara Grobogan–Pati (UGM, 2010).'
+  }
+];
+
+function findRegionFor(lat,lng){
+  return REGION_DATA.find(r => lat>=r.bounds.south && lat<=r.bounds.north && lng>=r.bounds.west && lng<=r.bounds.east) || null;
+}
+
+/* ============================================================
+   MAP INIT
+   ============================================================ */
+function renderRegionButtons(){
+  const wrap = document.getElementById('regionButtons');
+  wrap.innerHTML = REGION_DATA.map(r =>
+    `<button class="region-btn" onclick="goToRegion('${r.id}')">${r.icon} ${r.name.split(',')[0]}</button>`
+  ).join('');
+}
+
+function goToRegion(id){
+  const r = REGION_DATA.find(x=>x.id===id);
+  if(!r) return;
+  map.setView(r.center, r.zoom);
+  renderRegionCard(r);
+}
+
+function renderRegionCard(r){
+  const box = document.getElementById('regionInfoBox');
+  if(!r){ box.innerHTML=''; return; }
+  box.innerHTML = `<div class="region-card">
+    <div class="rtitle">${r.icon} ${r.name} <span class="rtag" style="background:${r.tagColor}22;color:${r.tagColor}">${r.tag}</span></div>
+    ${r.notes.map(n=>`<div class="rtext">${n}</div>`).join('')}
+    <div class="rsource">Sumber: ${r.source}</div>
+  </div>`;
+}
+
+function initMap(){
+  map = L.map('map', { zoomControl:false, attributionControl:true, maxZoom:21 }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  L.control.zoom({ position:'bottomleft' }).addTo(map);
+
+  baseLayers.sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution:'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics', maxZoom:21, maxNativeZoom:19
+  });
+  baseLayers.topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution:'&copy; OpenTopoMap (CC-BY-SA) &copy; OpenStreetMap contributors', maxZoom:21, maxNativeZoom:17
+  });
+  baseLayers.street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'&copy; OpenStreetMap contributors', maxZoom:21, maxNativeZoom:19
+  });
+  baseLayers.sat.addTo(map);
+
+  markersLayer = L.layerGroup().addTo(map);
+  riverLayer = L.layerGroup().addTo(map);
+  refLayer = L.layerGroup().addTo(map);
+
+  map.on('click', onMapClick);
+  map.on('mousemove', e => {
+    document.getElementById('coordBadge').innerHTML =
+      `Lat <b>${e.latlng.lat.toFixed(5)}</b>, Lng <b>${e.latlng.lng.toFixed(5)}</b> — klik untuk analisis`;
+  });
+  map.on('mouseout', () => {
+    document.getElementById('coordBadge').innerHTML = 'Klik peta untuk menandai <b>titik calon sumur bor</b>';
+  });
+
+  let satLimitHintShown = false;
+  map.on('zoomend', ()=>{
+    if(currentBase === 'sat' && map.getZoom() > baseLayers.sat.options.maxNativeZoom && !satLimitHintShown){
+      satLimitHintShown = true;
+      showToast('Resolusi citra satelit di lokasi ini sudah maksimal. Coba layer 🗺️ Jalan untuk tetap detail saat zoom lebih jauh.');
+      setTimeout(hideToast, 3200);
+    }
+  });
+
+  loadRiversForView();
+  map.on('moveend', debounce(loadRiversForView, 900));
+}
+
+function setBaseLayer(key){
+  if(key === currentBase) return;
+  map.removeLayer(baseLayers[currentBase]);
+  baseLayers[key].addTo(map);
+  currentBase = key;
+  ['Sat','Topo','Street'].forEach(k=>{
+    document.getElementById('layer'+k).classList.toggle('active', k.toLowerCase() === key);
+  });
+}
+
+function toggleRivers(){
+  showRivers = !showRivers;
+  document.getElementById('toggleRivers').classList.toggle('active', showRivers);
+  if(showRivers){ map.addLayer(riverLayer); } else { map.removeLayer(riverLayer); }
+}
+
+function toggleRefs(){
+  showRefs = !showRefs;
+  document.getElementById('toggleRefs').classList.toggle('active', showRefs);
+  if(showRefs){ map.addLayer(refLayer); } else { map.removeLayer(refLayer); }
+}
+
+function drawReferenceFeatures(refs){
+  (refs||[]).forEach(r=>{
+    const isWell = r.kind === 'well';
+    const color = isWell ? '#7dd3e0' : '#e3b957';
+    const icon = L.divIcon({
+      className:'', iconSize:[16,16], iconAnchor:[8,8],
+      html:`<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2px solid rgba(7,18,13,.8);box-shadow:0 2px 5px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:8px;"></div>`
+    });
+    L.marker([r.lat, r.lng], { icon })
+      .bindPopup(`<b>${isWell?'🪣':'🕳️'} ${escapeHtml(r.label)}</b><br><span style="color:var(--muted);font-size:11px">${isWell?'Sumber: OpenStreetMap (data warga/pemetaan komunitas)':'Fitur karst — OpenStreetMap'}</span>`)
+      .addTo(refLayer);
+  });
+}
+
+function setMode(m){
+  mode = m;
+  document.getElementById('modeMark').classList.toggle('active', m==='mark');
+  document.getElementById('modeGrid').classList.toggle('active', m==='grid');
+}
+
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+if(window.innerWidth <= 860){ document.getElementById('sidebarToggle').style.display='flex'; }
+
+function toggleSidebarCollapse(){
+  const sb = document.getElementById('sidebar');
+  const tab = document.getElementById('sidebarCollapseTab');
+  sb.classList.toggle('collapsed');
+  tab.textContent = sb.classList.contains('collapsed') ? '›' : '‹';
+  setTimeout(()=>{ if(map) map.invalidateSize(); }, 260);
+}
+
+/* header capsule jadi lebih tembus pandang saat panel/peta discroll */
+(function(){
+  const topbar = document.querySelector('.topbar');
+  const sidebarEl = document.getElementById('sidebar');
+  const applyScrolled = ()=> topbar.classList.toggle('scrolled', sidebarEl.scrollTop > 4);
+  sidebarEl.addEventListener('scroll', applyScrolled);
+})();
+
+/* header kapsul bisa digeser bebas via grip (⠿) */
+(function(){
+  const topbar = document.getElementById('topbar');
+  const handle = document.getElementById('dragHandle');
+  let dragging = false, startX=0, startY=0, startLeft=0, startTop=0;
+
+  function clamp(val, min, max){ return Math.min(Math.max(val, min), max); }
+
+  function onDown(e){
+    dragging = true;
+    const pt = e.touches ? e.touches[0] : e;
+    const rect = topbar.getBoundingClientRect();
+    // kunci lebar & posisi saat ini supaya tidak melompat saat lepas dari mode "left+right"
+    topbar.style.width = rect.width + 'px';
+    topbar.style.left = rect.left + 'px';
+    topbar.style.right = 'auto';
+    topbar.style.top = rect.top + 'px';
+    startX = pt.clientX; startY = pt.clientY;
+    startLeft = rect.left; startTop = rect.top;
+    topbar.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  }
+  function onMove(e){
+    if(!dragging) return;
+    const pt = e.touches ? e.touches[0] : e;
+    const rect = topbar.getBoundingClientRect();
+    let newLeft = startLeft + (pt.clientX - startX);
+    let newTop = startTop + (pt.clientY - startY);
+    newLeft = clamp(newLeft, 4, window.innerWidth - rect.width - 4);
+    newTop = clamp(newTop, 4, window.innerHeight - rect.height - 4);
+    topbar.style.left = newLeft + 'px';
+    topbar.style.top = newTop + 'px';
+  }
+  function onUp(){
+    if(!dragging) return;
+    dragging = false;
+    topbar.classList.remove('dragging');
+    document.body.style.userSelect = '';
+  }
+  handle.addEventListener('mousedown', onDown);
+  handle.addEventListener('touchstart', onDown, {passive:false});
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('mouseup', onUp);
+  window.addEventListener('touchend', onUp);
+})();
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(text){
+  document.getElementById('toastText').textContent = text;
+  document.getElementById('toast').classList.add('show');
+}
+function hideToast(){ document.getElementById('toast').classList.remove('show'); }
+
+function debounce(fn, ms){
+  let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), ms); };
+}
+
+/* ============================================================
+   SEARCH (Nominatim) — mendukung pencarian sampai level desa/kecamatan
+   di seluruh Indonesia, dengan fallback bertahap jika kueri detail
+   (mis. "Desa X, Kec Y, Kab Z") tidak langsung ditemukan.
+   ============================================================ */
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+function normalizeAdminQuery(q){
+  return q
+    .replace(/\bds\.?\b/gi,'Desa')
+    .replace(/\bdesa\.?\b/gi,'Desa')
+    .replace(/\bdsn\.?\b/gi,'Dusun')
+    .replace(/\bkel\.?\b/gi,'Kelurahan')
+    .replace(/\bkec\.?\b/gi,'Kecamatan')
+    .replace(/\bkab\.?\b/gi,'Kabupaten')
+    .replace(/\bkot\.?\b/gi,'Kota')
+    .replace(/\bprov\.?\b/gi,'Provinsi')
+    .replace(/,\s*/g, ', ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+async function nominatimSearch(q){
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=8&addressdetails=1&countrycodes=id&dedupe=1&q=${encodeURIComponent(q)}`;
+  const res = await fetch(url, { headers: { 'Accept-Language': 'id' } });
+  if(!res.ok) return [];
+  return res.json();
+}
+
+searchInput.addEventListener('input', debounce(async (e)=>{
+  const raw = e.target.value.trim();
+  if(raw.length < 3){ searchResults.classList.remove('show'); return; }
+  try{
+    const normalized = normalizeAdminQuery(raw);
+    let data = await nominatimSearch(normalized);
+
+    // Kueri detail (desa/dusun/kecamatan) kadang tak langsung cocok di Nominatim.
+    // Lepas bertahap bagian paling spesifik (dari kiri) sampai ada hasil.
+    if(!data.length){
+      const parts = normalized.split(',').map(s=>s.trim()).filter(Boolean);
+      for(let i=1; i<parts.length && !data.length; i++){
+        data = await nominatimSearch(parts.slice(i).join(', '));
+      }
+    }
+
+    if(!data.length){ searchResults.innerHTML = '<div class="search-item">Tidak ditemukan. Coba tulis nama wilayah lebih sederhana, mis. "Pulokulon, Grobogan".</div>'; searchResults.classList.add('show'); return; }
+    searchResults.innerHTML = data.map(d => `<div class="search-item" onclick='goToSearchResult(${d.lat},${d.lon},"${(d.display_name||'').replace(/"/g,'')}")'>${d.display_name}</div>`).join('');
+    searchResults.classList.add('show');
+  }catch(err){ console.error(err); }
+}, 500));
+
+function goToSearchResult(lat, lon, name){
+  map.setView([lat, lon], 14);
+  searchResults.classList.remove('show');
+  searchInput.value = name;
+}
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.search-wrap')) searchResults.classList.remove('show');
+});
+
+/* ============================================================
+   RIVERS / WATER BODIES (Overpass API)
+   ============================================================ */
+async function loadRiversForView(){
+  if(map.getZoom() < 11) { riverLayer.clearLayers(); return; }
+  const b = map.getBounds();
+  const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+  const query = `[out:json][timeout:25];(
+    way["waterway"~"river|stream|canal"](${bbox});
+    way["natural"="water"](${bbox});
+    way["natural"="wetland"](${bbox});
+    relation["natural"="water"](${bbox});
+  );out geom;`;
+  try{
+    const res = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body: query });
+    const data = await res.json();
+    riverLayer.clearLayers();
+    (data.elements||[]).forEach(el=>{
+      if(!el.geometry) return;
+      const latlngs = el.geometry.map(g=>[g.lat, g.lon]);
+      const isWaterway = el.tags && el.tags.waterway;
+      const isWetland = el.tags && el.tags.natural === 'wetland';
+      const style = isWaterway
+        ? { color:'#7dd3e0', weight:2.5, opacity:.85 }
+        : isWetland
+          ? { color:'#8fbf7f', weight:1, opacity:.6, fillColor:'#8fbf7f', fillOpacity:.18 }
+          : { color:'#4fb3c9', weight:1, opacity:.7, fillColor:'#4fb3c9', fillOpacity:.25 };
+      const layer = el.type === 'way' && el.tags && (el.tags.natural==='water'||el.tags.natural==='wetland') && latlngs.length>2
+        ? L.polygon(latlngs, style)
+        : L.polyline(latlngs, style);
+      layer.addTo(riverLayer);
+    });
+  }catch(err){
+    console.warn('Overpass gagal dimuat (mungkin batas rate/limit jaringan):', err);
+  }
+}
+
+/* ============================================================
+   MAP CLICK -> ANALYZE POINT
+   ============================================================ */
+async function onMapClick(e){
+  if(mode === 'grid'){ return runAreaScan(e.latlng); }
+  await analyzePoint(e.latlng.lat, e.latlng.lng);
+}
+
+async function analyzePoint(lat, lng){
+  if(activeMarker){ map.removeLayer(activeMarker); }
+  activeMarker = L.marker([lat,lng], { icon: pulseIcon() }).addTo(map);
+
+  showToast('Mengambil data elevasi & jaringan air...');
+  try{
+    const result = await computeScore(lat, lng);
+    hideToast();
+    renderDetailPanel(result, null);
+    ensureDetailVisible();
+    drawReferenceFeatures(result.foundRefs);
+    const reg = REGION_DATA.find(r=>r.id===result.regionId);
+    if(reg) renderRegionCard(reg);
+    map.removeLayer(activeMarker);
+    activeMarker = colorMarker(lat, lng, result.total).addTo(map);
+    activeMarker.pendingResult = result;
+  }catch(err){
+    hideToast();
+    console.error(err);
+    showToast('Gagal mengambil sebagian data (jaringan). Coba lagi.');
+    setTimeout(hideToast, 2500);
+  }
+}
+
+/* ============================================================
+   SCORING ENGINE
+   ============================================================ */
+async function computeScore(lat, lng){
+  // 1. Elevation grid sample (center + 8 surrounding points ~400m radius) — sumber: Open-Elevation (SRTM/derivatif)
+  const offsets = [
+    [0,0],[0.0036,0],[-0.0036,0],[0,0.0036],[0,-0.0036],
+    [0.0025,0.0025],[-0.0025,0.0025],[0.0025,-0.0025],[-0.0025,-0.0025]
+  ];
+  const gridPts = offsets.map(([dlat,dlng]) => ({ latitude: lat+dlat, longitude: lng+dlng }));
+  let elevations = null;
+  try{
+    const res = await fetch('https://api.open-elevation.com/api/v1/lookup', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ locations: gridPts })
+    });
+    const data = await res.json();
+    elevations = data.results.map(r=>r.elevation);
+  }catch(err){ console.warn('Elevation API gagal:', err); }
+
+  const centerElev = elevations ? elevations[0] : null;
+  const neighborAvg = elevations ? (elevations.slice(1).reduce((a,b)=>a+b,0) / (elevations.length-1)) : null;
+  const depression = (centerElev!=null && neighborAvg!=null) ? (neighborAvg - centerElev) : 0; // positive = local low point
+
+  const region = findRegionFor(lat, lng);
+  const isKarst = !!(region && region.aquiferType === 'aquifer-karst');
+
+  // 2. Satu query gabungan ke OpenStreetMap/Overpass: sungai & badan air, sumur/bor eksisting,
+  //    tutupan lahan sekitar, dan (khusus zona karst) mata air/gua/dolina — meminimalkan jumlah request.
+  let nearestWaterDist=null, nearestWaterType=null, wetlandNearby=false;
+  let existingWellDist=null, existingWellType=null, existingWellCount=0;
+  let landcoverTag=null, landcoverDist=null;
+  let karstFeature=null, karstDist=null;
+  const foundRefs = []; // {lat,lng,kind,label} untuk ditampilkan di peta referensi
+
+  try{
+    const q = `[out:json][timeout:25];(
+      way["waterway"~"river|stream|canal"](around:3000,${lat},${lng});
+      way["natural"="water"](around:3000,${lat},${lng});
+      way["natural"="wetland"](around:1500,${lat},${lng});
+      node["man_made"="water_well"](around:3000,${lat},${lng});
+      node["man_made"="borehole"](around:3000,${lat},${lng});
+      node["amenity"="drinking_water"](around:2000,${lat},${lng});
+      way["landuse"](around:400,${lat},${lng});
+      ${isKarst ? `node["natural"="spring"](around:2500,${lat},${lng});
+      node["natural"="cave_entrance"](around:2500,${lat},${lng});
+      node["natural"="sinkhole"](around:2500,${lat},${lng});` : ''}
+    );out geom;`;
+    const res = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:q });
+    const data = await res.json();
+    let minWaterDist=Infinity, minWaterType=null;
+    let minWellDist=Infinity, minWellType=null;
+    let minLandDist=Infinity, minLandTag=null;
+    let minKarstDist=Infinity, minKarstType=null;
+
+    (data.elements||[]).forEach(el=>{
+      const t = el.tags||{};
+      if(el.type==='way' && el.geometry && (t.waterway || t.natural==='water' || t.natural==='wetland')){
+        if(t.natural==='wetland') wetlandNearby = true;
+        el.geometry.forEach(g=>{
+          const d = haversine(lat,lng,g.lat,g.lon);
+          if(d < minWaterDist){ minWaterDist=d; minWaterType = t.waterway ? 'sungai/anak sungai' : (t.natural==='wetland' ? 'lahan basah/gambut' : 'badan air'); }
+        });
+      }
+      else if(el.type==='way' && el.geometry && t.landuse){
+        el.geometry.forEach(g=>{
+          const d = haversine(lat,lng,g.lat,g.lon);
+          if(d < minLandDist){ minLandDist=d; minLandTag=t.landuse; }
+        });
+      }
+      else if(el.type==='node' && (t.man_made==='water_well' || t.man_made==='borehole' || t.amenity==='drinking_water')){
+        existingWellCount++;
+        const d = haversine(lat,lng,el.lat,el.lon);
+        const label = t.man_made==='water_well' ? 'sumur gali' : t.man_made==='borehole' ? 'sumur bor' : 'titik air minum';
+        foundRefs.push({ lat:el.lat, lng:el.lon, kind:'well', label });
+        if(d < minWellDist){ minWellDist=d; minWellType=label; }
+      }
+      else if(el.type==='node' && isKarst && (t.natural==='spring' || t.natural==='cave_entrance' || t.natural==='sinkhole')){
+        const d = haversine(lat,lng,el.lat,el.lon);
+        const label = t.natural==='spring' ? 'mata air' : t.natural==='cave_entrance' ? 'mulut gua' : 'dolina/sinkhole';
+        foundRefs.push({ lat:el.lat, lng:el.lon, kind:'karst', label });
+        if(d < minKarstDist){ minKarstDist=d; minKarstType=label; }
+      }
+    });
+
+    if(minWaterDist!==Infinity){ nearestWaterDist=minWaterDist; nearestWaterType=minWaterType; }
+    if(minWellDist!==Infinity){ existingWellDist=minWellDist; existingWellType=minWellType; }
+    if(minLandDist!==Infinity){ landcoverDist=minLandDist; landcoverTag=minLandTag; }
+    if(minKarstDist!==Infinity){ karstDist=minKarstDist; karstFeature=minKarstType; }
+  }catch(err){ console.warn('Overpass gabungan gagal:', err); }
+
+  // 3. Curah hujan tahunan (Open-Meteo Historical Weather, data 1 tahun terakhir) — indikator imbuhan air tanah
+  let annualRainfall = null;
+  try{
+    const end = new Date(); end.setDate(end.getDate()-4); // hindari data H- terlalu baru yang belum lengkap
+    const start = new Date(end); start.setFullYear(start.getFullYear()-1);
+    const fmt = d => d.toISOString().slice(0,10);
+    const rres = await fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lng}&start_date=${fmt(start)}&end_date=${fmt(end)}&daily=precipitation_sum&timezone=auto`);
+    const rdata = await rres.json();
+    if(rdata.daily && rdata.daily.precipitation_sum){
+      annualRainfall = rdata.daily.precipitation_sum.reduce((a,b)=> a + (b||0), 0);
+    }
+  }catch(err){ console.warn('Open-Meteo curah hujan gagal:', err); }
+
+  // ---- Scoring ----
+  let scoreWater = 0;
+  if(nearestWaterDist != null){
+    if(nearestWaterDist <= 200) scoreWater = 40;
+    else if(nearestWaterDist <= 500) scoreWater = 33;
+    else if(nearestWaterDist <= 1000) scoreWater = 24;
+    else if(nearestWaterDist <= 2000) scoreWater = 14;
+    else scoreWater = 5;
+  } else {
+    scoreWater = 8; // unknown -> low-mid uncertainty, not zero
+  }
+
+  let scoreElev = 15; // baseline
+  if(centerElev != null){
+    if(centerElev <= 15) scoreElev = 28;        // dataran rendah/aluvial, khas pesisir Kalteng
+    else if(centerElev <= 50) scoreElev = 22;
+    else if(centerElev <= 150) scoreElev = 14;
+    else scoreElev = 7;
+  }
+
+  let scoreDepression = 10;
+  if(elevations){
+    if(depression >= 3) scoreDepression = 20;      // titik cekungan lokal jelas
+    else if(depression >= 0.5) scoreDepression = 14;
+    else if(depression >= -1) scoreDepression = 9;
+    else scoreDepression = 4;                      // titik tinggi/punggungan
+  }
+
+  let scoreWetland = wetlandNearby ? 12 : 0;
+
+  // Faktor karst — hanya aktif di region beraquifer karst (mis. Grobogan)
+  let scoreKarst = null, maxKarst = 0;
+  if(isKarst){
+    maxKarst = 15;
+    if(karstDist == null) scoreKarst = 7;                    // tak ada indikasi -> netral, tetap butuh geolistrik
+    else if(karstFeature === 'mata air') scoreKarst = karstDist<=500 ? 15 : 11;   // mata air = bukti langsung keluaran akuifer
+    else if(karstFeature === 'mulut gua') scoreKarst = karstDist<=500 ? 10 : 8;   // indikasi sungai bawah tanah, tapi titik bor perlu tepat di jalurnya
+    else scoreKarst = karstDist<=500 ? 6 : 8;                 // dolina/sinkhole dekat = drainase cepat ke bawah, kurang pasti utk bor dangkal
+  }
+
+  // Faktor sumur/bor eksisting di sekitar — bukti nyata air tanah sudah dimanfaatkan warga
+  let scoreExistingWell = 3; // baseline netral (tak terdeteksi ≠ tak ada, data OSM tidak lengkap)
+  if(existingWellDist != null){
+    if(existingWellDist <= 300) scoreExistingWell = 15;
+    else if(existingWellDist <= 800) scoreExistingWell = 12;
+    else if(existingWellDist <= 2000) scoreExistingWell = 8;
+    else scoreExistingWell = 4;
+  }
+
+  // Faktor curah hujan tahunan — imbuhan air tanah (data 1 tahun terakhir, Open-Meteo)
+  let scoreRainfall = 5; // baseline saat data tak tersedia
+  if(annualRainfall != null){
+    if(annualRainfall >= 2500) scoreRainfall = 10;
+    else if(annualRainfall >= 2000) scoreRainfall = 8;
+    else if(annualRainfall >= 1500) scoreRainfall = 6;
+    else if(annualRainfall >= 1000) scoreRainfall = 4;
+    else scoreRainfall = 2;
+  }
+
+  // Faktor tutupan lahan sekitar — proksi kapasitas infiltrasi
+  const landcoverScoreMap = {
+    forest:8, wood:8, farmland:6, orchard:6, meadow:6, grass:6, farmyard:4,
+    residential:4, village_green:5, industrial:2, commercial:2, quarry:1, construction:2
+  };
+  let scoreLandcover = 4; // netral saat tak terdeteksi
+  if(landcoverTag){ scoreLandcover = landcoverScoreMap[landcoverTag] ?? 4; }
+
+  // Di zona karst, kepercayaan pada elevasi/cekungan permukaan diturunkan (akuifer celah tidak selalu ikut topografi)
+  if(isKarst){ scoreElev = Math.round(scoreElev*0.6); scoreDepression = Math.round(scoreDepression*0.6); }
+
+  const rawTotal = scoreWater + scoreElev + scoreDepression + scoreWetland + (scoreKarst||0) + scoreExistingWell + scoreRainfall + scoreLandcover;
+  const maxTotal = 40+28+20+12+maxKarst+15+10+8;
+  const total = Math.max(0, Math.min(100, Math.round((rawTotal/maxTotal)*100)));
+
+  let tier = 'Rendah', tierColor = '#c85c4a';
+  if(total >= 70){ tier = 'Tinggi'; tierColor = '#4c9a5f'; }
+  else if(total >= 40){ tier = 'Sedang'; tierColor = '#cf9f3f'; }
+
+  const landcoverLabel = { forest:'hutan', wood:'area berhutan', farmland:'lahan pertanian', orchard:'kebun/perkebunan',
+    meadow:'padang rumput', grass:'rerumputan', farmyard:'pekarangan tani', residential:'permukiman',
+    village_green:'ruang hijau desa', industrial:'kawasan industri', commercial:'area komersial', quarry:'tambang/galian', construction:'area konstruksi' };
+
+  const factors = [
+    { name:'Jarak ke sungai/badan air', icon:'〰️', value: nearestWaterDist!=null ? `${Math.round(nearestWaterDist)} m (${nearestWaterType})` : 'tidak terdeteksi di radius 3 km', score: scoreWater, max:40 },
+    { name:'Elevasi lokasi', icon:'⛰️', value: centerElev!=null ? `${centerElev.toFixed(1)} mdpl${isKarst?' (bobot diturunkan — zona karst)':''}` : 'data tidak tersedia', score: scoreElev, max: isKarst? Math.round(28*0.6):28 },
+    { name:'Bentuk cekungan lokal', icon:'🕳️', value: elevations ? (depression>=0.5 ? `cekungan (${depression.toFixed(1)} m lebih rendah dari sekitar)` : depression <= -1 ? `punggungan/lebih tinggi dari sekitar` : 'relatif datar') : 'data tidak tersedia', score: scoreDepression, max: isKarst? Math.round(20*0.6):20 },
+    { name:'Lahan basah/gambut sekitar', icon:'🌿', value: wetlandNearby ? 'terdeteksi dalam radius 1.5 km' : 'tidak terdeteksi', score: scoreWetland, max:12 },
+    { name:'Sumur/bor warga terdekat (OSM)', icon:'🪣', value: existingWellDist!=null ? `${existingWellType} ± ${Math.round(existingWellDist)} m (${existingWellCount} titik dlm radius 3 km)` : 'tidak ada data OSM di radius ini — bukan berarti tidak ada', score: scoreExistingWell, max:15 },
+    { name:'Curah hujan tahunan (Open-Meteo)', icon:'🌧️', value: annualRainfall!=null ? `± ${Math.round(annualRainfall)} mm/tahun` : 'data tidak tersedia', score: scoreRainfall, max:10 },
+    { name:'Tutupan lahan sekitar (OSM)', icon:'🌱', value: landcoverTag ? `${landcoverLabel[landcoverTag]||landcoverTag} (± ${Math.round(landcoverDist)} m)` : 'tidak terdeteksi di radius 400 m', score: scoreLandcover, max:8 },
+  ];
+  if(isKarst){
+    factors.push({ name:'Indikasi fitur karst', icon:'🕳️', value: karstDist!=null ? `${karstFeature} ± ${Math.round(karstDist)} m` : 'tidak terdeteksi di radius 2.5 km', score: scoreKarst, max: maxKarst });
+  }
+
+  return {
+    lat, lng, total, tier, tierColor,
+    centerElev, depression, nearestWaterDist, nearestWaterType, wetlandNearby,
+    existingWellDist, existingWellType, existingWellCount, annualRainfall, landcoverTag,
+    regionId: region ? region.id : null, regionName: region ? region.name : null, isKarst,
+    karstFeature, karstDist, foundRefs,
+    factors
+  };
+}
+
+function haversine(lat1,lon1,lat2,lon2){
+  const R = 6371000;
+  const toRad = d => d*Math.PI/180;
+  const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return R * 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+/* Estimasi kedalaman bor — heuristik dari indikator permukaan (elevasi, kedekatan air,
+   tipe akuifer wilayah). Bukan pengganti survei geolistrik/hidrogeologi resmi. */
+function estimateDrillDepth(result){
+  const region = REGION_DATA.find(r=>r.id===result.regionId);
+  let lo, hi, basis;
+
+  if(result.isKarst){
+    lo = 50; hi = 105; basis = 'karst';
+    if(result.karstFeature === 'mata air' && result.karstDist!=null && result.karstDist<=500){ lo = 40; hi = 80; }
+  } else if(region && region.aquiferType === 'aquifer-alluvial'){
+    lo = 15; hi = 40; basis = 'alluvial';
+    if(result.wetlandNearby || (result.nearestWaterDist!=null && result.nearestWaterDist<=300)) hi = 30;
+  } else {
+    const e = result.centerElev;
+    if(e==null){ lo=25; hi=60; }
+    else if(e<=15){ lo=15; hi=35; }
+    else if(e<=50){ lo=20; hi=45; }
+    else if(e<=150){ lo=35; hi=70; }
+    else { lo=60; hi=120; }
+    basis = 'generic';
+    if(result.nearestWaterDist!=null){
+      if(result.nearestWaterDist<=200) hi = Math.max(lo+10, Math.round(hi*0.8));
+      else if(result.nearestWaterDist>2000) hi = Math.round(hi*1.25);
+    }
+  }
+
+  const confidence = result.total>=70 ? 'tinggi' : result.total>=40 ? 'sedang' : 'rendah (variasi kedalaman bisa cukup besar)';
+  return { lo, hi, basis, confidence };
+}
+
+function buildDepthRecoHtml(result, compact){
+  const d = estimateDrillDepth(result);
+  let extra;
+  if(d.basis === 'karst'){
+    extra = 'Zona karst: kedalaman produktif sangat bergantung jalur rekahan/gua bawah tanah — rentang ini mengacu studi geolistrik di bagian barat Grobogan (formasi aluvium–batugamping–sedimen Miosen–Pliosen).';
+  } else if(d.basis === 'alluvial'){
+    extra = 'Wilayah dataran aluvial/gambut umumnya memiliki akuifer dangkal yang menyatu dengan sistem sungai/rawa sekitar.';
+  } else {
+    extra = 'Perkiraan awal berdasarkan elevasi lokasi & kedekatan sumber air permukaan di titik ini.';
+  }
+  return `<div class="depth-reco"${compact?' style="padding:8px 10px;margin:8px 0;"':''}>
+    <div class="dr-title">🎯 <b>Estimasi kedalaman bor: ${d.lo}–${d.hi} m</b></div>
+    <div class="dr-note">${extra} Tingkat keyakinan: <b>${d.confidence}</b>. Ini estimasi awal dari indikator permukaan — <b>bukan pengganti survei geolistrik/hidrogeologi</b> untuk kepastian titik &amp; kedalaman akhir sebelum pengeboran.</div>
+  </div>`;
+}
+
+/* ============================================================
+   MARKER ICONS
+   ============================================================ */
+function pulseIcon(){
+  return L.divIcon({
+    className:'', html:`<div style="width:18px;height:18px;border-radius:50%;background:rgba(227,185,87,.35);border:2px solid #e3b957;box-shadow:0 0 0 6px rgba(227,185,87,.15);"></div>`,
+    iconSize:[18,18], iconAnchor:[9,9]
+  });
+}
+function colorMarker(lat,lng,score){
+  const color = score>=70 ? '#4c9a5f' : score>=40 ? '#cf9f3f' : '#c85c4a';
+  const icon = L.divIcon({
+    className:'wpin',
+    html:`<div class="wpin-core" style="background:${color}"><span>${score}</span></div>`,
+    iconSize:[30,30], iconAnchor:[15,28], popupAnchor:[0,-26]
+  });
+  return L.marker([lat,lng], { icon });
+}
+
+/* ============================================================
+   DETAIL PANEL RENDER
+   ============================================================ */
+function ringSvg(score, color){
+  const r = 26, c = 2*Math.PI*r;
+  const off = c - (score/100)*c;
+  return `<svg width="64" height="64"><circle cx="32" cy="32" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+    <circle cx="32" cy="32" r="${r}" fill="none" stroke="${color}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}"/></svg>`;
+}
+
+function buildFactorsHtml(result, compact){
+  return result.factors.map(f=>{
+    const pct = f.score / f.max;
+    const fcolor = pct >= 0.7 ? '#4c9a5f' : pct >= 0.4 ? '#cf9f3f' : '#c85c4a';
+    return `<div class="factor"${compact?' style="padding:6px 8px"':''}>
+      <div class="ficon" style="background:${fcolor}22">${f.icon}</div>
+      <div class="ftxt"><div class="fname">${f.name}</div><div class="fval">${f.value}</div></div>
+      <div class="fscore" style="color:${fcolor}">${f.score}/${f.max}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildKarstWarning(result, compact){
+  if(!result.isKarst) return '';
+  return compact
+    ? `<div class="karst-note" style="padding:7px 8px; font-size:11px;"><span class="kicon">⚠️</span><span>Area berpotensi <b>karst</b> — survei geolistrik disarankan sebelum penentuan final.</span></div>`
+    : `<div class="karst-note"><span class="kicon">⚠️</span><span>Titik ini berada di area <b>berpotensi karst (batugamping)</b>. Sebaran akuifer di sini mengikuti celah/rekahan dan sungai bawah tanah, bukan lapisan seragam — skor permukaan kurang akurat dibanding daerah aluvial. <b>Survei geolistrik langsung di titik ini sangat disarankan</b> sebelum penentuan final.</span></div>`;
+}
+
+function ensureDetailVisible(){
+  const sb = document.getElementById('sidebar');
+  if(sb.classList.contains('collapsed')) toggleSidebarCollapse();
+  if(window.innerWidth <= 860) sb.classList.add('open');
+  const panel = document.getElementById('detailPanel');
+  if(panel) setTimeout(()=> panel.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+}
+
+function renderDetailPanel(result, savedId){
+  document.getElementById('detailEmpty').style.display = 'none';
+  const el = document.getElementById('detailContent');
+  el.style.display = 'block';
+
+  const factorsHtml = buildFactorsHtml(result, false);
+
+  const region = REGION_DATA.find(r=>r.id===result.regionId);
+  const karstWarning = buildKarstWarning(result, false);
+
+  el.innerHTML = `
+    <div class="score-hero">
+      <div class="score-ring">${ringSvg(result.total, result.tierColor)}<div class="num" style="color:${result.tierColor}">${result.total}</div></div>
+      <div class="score-meta">
+        <div class="label" style="color:${result.tierColor}">Potensi ${result.tier}</div>
+        <div class="sub">Skor gabungan dari kedekatan sumber air, elevasi, dan bentuk lahan sekitar titik.</div>
+      </div>
+    </div>
+    <div class="coord-box">Lat: ${result.lat.toFixed(6)} &nbsp;|&nbsp; Lng: ${result.lng.toFixed(6)}${region ? ` &nbsp;|&nbsp; ${region.icon} ${region.name}` : ''}</div>
+    ${karstWarning}
+    ${buildDepthRecoHtml(result, false)}
+    <div class="factor-list">${factorsHtml}</div>
+    <div class="field-group">
+      <label>Nama Titik</label>
+      <input id="ptName" type="text" placeholder="mis. Titik Bor Blok C15 - Kebun Katingan">
+    </div>
+    <div class="field-group">
+      <label>Catatan Lapangan (opsional)</label>
+      <textarea id="ptNotes" placeholder="mis. dekat parit tersier, akses jalan tersedia, dsb."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-gold btn-block" onclick="savePoint('${savedId||''}')">💾 ${savedId? 'Perbarui Titik':'Simpan Titik Ini'}</button>
+    </div>
+  `;
+}
+
+/* ============================================================
+   SAVE / MANAGE POINTS
+   ============================================================ */
+function savePoint(existingId){
+  const src = activeMarker && activeMarker.pendingResult ? activeMarker.pendingResult : (points.find(p=>p.id===activePointId));
+  if(!src){ return; }
+  const name = document.getElementById('ptName').value.trim() || `Titik #${idCounter}`;
+  const notes = document.getElementById('ptNotes').value.trim();
+
+  if(existingId){
+    const p = points.find(pt=>pt.id===existingId);
+    if(p){ p.name = name; p.notes = notes; }
+  } else {
+    const id = 'pt_' + (idCounter++);
+    points.push({ id, name, notes, ...src });
+    if(activeMarker){ map.removeLayer(activeMarker); activeMarker = null; }
+  }
+  refreshPointList();
+  redrawAllMarkers();
+  showToast('Titik tersimpan.'); setTimeout(hideToast, 1200);
+}
+
+function refreshPointList(){
+  const listEl = document.getElementById('pointList');
+  const emptyEl = document.getElementById('pointListEmpty');
+  const actionsEl = document.getElementById('pointListActions');
+  document.getElementById('pointCount').textContent = points.length;
+
+  if(!points.length){ listEl.innerHTML=''; emptyEl.style.display='block'; actionsEl.hidden = true; return; }
+  emptyEl.style.display = 'none'; actionsEl.hidden = false;
+
+  const sorted = [...points].sort((a,b)=>b.total-a.total);
+  listEl.innerHTML = sorted.map(p=>{
+    const color = p.total>=70 ? '#4c9a5f' : p.total>=40 ? '#cf9f3f' : '#c85c4a';
+    return `<div class="point-item ${p.id===activePointId?'active':''}" onclick="focusPoint('${p.id}')">
+      <div class="point-badge" style="background:${color}">${p.total}</div>
+      <div class="point-info">
+        <div class="pname">${escapeHtml(p.name)}</div>
+        <div class="pmeta">${p.lat.toFixed(4)}, ${p.lng.toFixed(4)} · ${p.tier}</div>
+      </div>
+      <button class="point-del" onclick="event.stopPropagation(); deletePoint('${p.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function focusPoint(id){
+  const p = points.find(pt=>pt.id===id);
+  if(!p) return;
+  activePointId = id;
+  map.setView([p.lat,p.lng], Math.max(map.getZoom(),14));
+  renderDetailPanel(p, id);
+  const reg = REGION_DATA.find(r=>r.id===p.regionId);
+  if(reg) renderRegionCard(reg);
+  document.getElementById('ptName').value = p.name;
+  document.getElementById('ptNotes').value = p.notes || '';
+  refreshPointList();
+  ensureDetailVisible();
+}
+
+function deletePoint(id){
+  points = points.filter(p=>p.id!==id);
+  if(activePointId===id) activePointId = null;
+  refreshPointList();
+  redrawAllMarkers();
+}
+
+function clearAllPoints(){
+  if(!points.length) return;
+  if(!confirm('Hapus semua titik tersimpan?')) return;
+  points = []; activePointId = null;
+  refreshPointList(); redrawAllMarkers();
+}
+
+function fitAllPoints(){
+  if(!points.length) return;
+  const bounds = L.latLngBounds(points.map(p=>[p.lat,p.lng]));
+  map.fitBounds(bounds.pad(0.25));
+}
+
+function buildPointPopupHtml(p){
+  const factorsHtml = (p.factors && p.factors.length) ? buildFactorsHtml(p, true) : '';
+  const karstWarning = buildKarstWarning(p, true);
+  return `
+    <div style="min-width:280px; max-width:320px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:7px;">
+        <div style="width:34px;height:34px;border-radius:50%;background:${p.tierColor}22;border:2px solid ${p.tierColor};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:${p.tierColor};flex-shrink:0;">${p.total}</div>
+        <div style="min-width:0;">
+          <b style="display:block;">${escapeHtml(p.name)}</b>
+          <span style="font-size:11px;color:var(--muted)">Potensi <b style="color:${p.tierColor}">${p.tier}</b> (${p.total}/100)${p.regionName?` · ${escapeHtml(p.regionName)}`:''}</span>
+        </div>
+      </div>
+      ${karstWarning}
+      ${buildDepthRecoHtml(p, true)}
+      ${factorsHtml ? `<div class="factor-list two-col" style="margin-bottom:8px;">${factorsHtml}</div>` : ''}
+      ${p.notes ? `<div style="font-size:11px;color:var(--ink-text);margin-bottom:6px;"><b>Catatan:</b> ${escapeHtml(p.notes)}</div>` : ''}
+      <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:8px;">${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}</div>
+      <button class="btn btn-ghost btn-block" style="font-size:11px;padding:6px 10px;" onclick="focusPoint('${p.id}')">📋 Buka panel detail lengkap</button>
+    </div>`;
+}
+
+function redrawAllMarkers(){
+  markersLayer.clearLayers();
+  points.forEach(p=>{
+    const m = colorMarker(p.lat, p.lng, p.total);
+    m.bindPopup(buildPointPopupHtml(p), { maxWidth: 340 });
+    m.on('click', ()=>focusPoint(p.id));
+    m.addTo(markersLayer);
+  });
+}
+
+/* ============================================================
+   AREA SCAN MODE (quick grid of candidate points)
+   ============================================================ */
+async function runAreaScan(centerLatLng){
+  showToast('Memindai area (grid 3×3)...');
+  const step = 0.006; // ~650m
+  const offsets = [-1,0,1];
+  const results = [];
+  for(const dy of offsets){
+    for(const dx of offsets){
+      const lat = centerLatLng.lat + dy*step;
+      const lng = centerLatLng.lng + dx*step;
+      try{
+        const r = await computeScore(lat, lng);
+        results.push(r);
+      }catch(err){ console.warn(err); }
+    }
+  }
+  hideToast();
+  results.sort((a,b)=>b.total-a.total);
+  results.forEach(r=>{
+    drawReferenceFeatures(r.foundRefs);
+    colorMarker(r.lat, r.lng, r.total)
+      .bindPopup(`Potensi: <b>${r.tier}</b> (${r.total}/100)<br>${r.lat.toFixed(5)}, ${r.lng.toFixed(5)}<br><button class="btn btn-gold" style="margin-top:6px" onclick="promoteScanResult(${r.lat},${r.lng})">Analisis & Simpan</button>`)
+      .addTo(markersLayer);
+  });
+  if(results.length){
+    renderDetailPanel(results[0], null);
+    ensureDetailVisible();
+    activeMarker = { pendingResult: results[0] };
+    showToast(`Selesai. Titik terbaik: skor ${results[0].total} (${results[0].tier}).`);
+    setTimeout(hideToast, 2500);
+  }
+}
+function promoteScanResult(lat,lng){ analyzePoint(lat,lng); }
+
+/* ============================================================
+   IMPORT / EXPORT
+   ============================================================ */
+function exportJSON(){
+  if(!points.length){ alert('Belum ada titik tersimpan.'); return; }
+  const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), points }, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `titik-sumur-bor-${dateStamp()}.json`;
+  a.click();
+}
+
+function importData(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      const imported = data.points || data;
+      if(!Array.isArray(imported)) throw new Error('format tidak dikenali');
+      imported.forEach(p=>{ if(!p.id) p.id = 'pt_'+(idCounter++); });
+      points = points.concat(imported);
+      refreshPointList(); redrawAllMarkers(); fitAllPoints();
+      showToast(`${imported.length} titik diimpor.`); setTimeout(hideToast,1500);
+    }catch(err){ alert('Gagal membaca file JSON: ' + err.message); }
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
+}
+
+function exportExcel(){
+  if(!points.length){ alert('Belum ada titik tersimpan.'); return; }
+  const rows = points.map((p,i)=>({
+    'No': i+1,
+    'Nama Titik': p.name,
+    'Latitude': p.lat,
+    'Longitude': p.lng,
+    'Skor Potensi (0-100)': p.total,
+    'Kategori': p.tier,
+    'Wilayah': p.regionName || '',
+    'Zona Karst': p.isKarst ? 'Ya — perlu geolistrik' : 'Tidak',
+    'Elevasi (mdpl)': p.centerElev!=null ? Math.round(p.centerElev*10)/10 : '',
+    'Jarak ke Air Terdekat (m)': p.nearestWaterDist!=null ? Math.round(p.nearestWaterDist) : '',
+    'Jenis Sumber Air Terdekat': p.nearestWaterType || '',
+    'Cekungan Lokal (m)': typeof p.depression === 'number' ? Math.round(p.depression*10)/10 : '',
+    'Lahan Basah Terdeteksi': p.wetlandNearby ? 'Ya' : 'Tidak',
+    'Sumur/Bor Warga Terdekat': p.existingWellDist!=null ? `${p.existingWellType} (±${Math.round(p.existingWellDist)} m)` : '',
+    'Curah Hujan Tahunan (mm)': p.annualRainfall!=null ? Math.round(p.annualRainfall) : '',
+    'Tutupan Lahan Sekitar': p.landcoverTag || '',
+    'Fitur Karst Terdekat': p.karstFeature ? `${p.karstFeature} (±${Math.round(p.karstDist)} m)` : '',
+    'Catatan': p.notes || ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [{wch:4},{wch:28},{wch:12},{wch:12},{wch:14},{wch:11},{wch:26},{wch:14},{wch:13},{wch:16},{wch:20},{wch:14},{wch:22},{wch:16},{wch:18},{wch:22},{wch:34}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Titik Sumur Bor');
+  XLSX.writeFile(wb, `titik-sumur-bor-${dateStamp()}.xlsx`);
+}
+
+function dateStamp(){
+  const d = new Date();
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+initMap();
+renderRegionButtons();
+</script>
+</body>
+</html>

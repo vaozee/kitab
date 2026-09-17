@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Gold Prospectivity Engine v3 — Indonesia</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/SheetJS-style/0.15.7/xlsx.full.min.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="https://unpkg.com/esri-leaflet@3.0.12/dist/esri-leaflet.js"></script>
+
+<style>
+:root{
+  --ink-950:#07120d;
+  --ink-900:#0b1a12;
+  --ink-850:#0f2318;
+  --forest-800:#123420;
+  --forest-700:#17452a;
+  --forest-600:#1f5c37;
+  --forest-500:#2a7a48;
+  --gold-500:#cf9f3f;
+  --gold-400:#e3b957;
+  --gold-300:#f0d089;
+  --water-400:#4fb3c9;
+  --water-300:#7dd3e0;
+  --paper:#f4efe0;
+  --ink-text:#e9e6d8;
+  --muted:#9db5a2;
+  --danger:#c85c4a;
+  --ok:#4c9a5f;
+  --warn:#cf9f3f;
+  --glass-bg: rgba(15,35,24,0.68);
+  --glass-brd: rgba(227,185,87,0.18);
+  --radius: 14px;
+  --font-display: 'Zilla Slab', 'Georgia', serif;
+  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-body);
+  background:
+    radial-gradient(ellipse at 20% -10%, rgba(42,122,72,0.25), transparent 55%),
+    radial-gradient(ellipse at 100% 110%, rgba(207,159,63,0.10), transparent 50%),
+    var(--ink-950);
+  color:var(--ink-text);
+  overflow:hidden;
+}
+
+/* ---------- v3 minimal header ---------- */
+.topbar{height:44px;top:10px;left:10px;right:auto;width:auto;max-width:calc(100vw - 20px);padding:0 9px;border-radius:12px;gap:7px;background:rgba(7,18,13,.72);box-shadow:0 5px 18px rgba(0,0,0,.28);}
+.drag-handle{width:16px;margin-left:0;font-size:12px;}
+.brand{gap:7px}.brand-mark{width:28px;height:28px;border-radius:8px;font-size:14px}.brand-txt h1{font-size:13px}.brand-txt p{display:none}
+.search-wrap{width:260px;max-width:260px;flex:none}.search-wrap input{height:30px;font-size:11.5px;padding-left:31px}.search-icon{left:10px;font-size:12px}
+.mode-toggle{padding:2px;border-radius:8px}.mode-btn{font-size:10.5px;padding:5px 8px;gap:4px}
+.topbar-actions{gap:4px}.icon-btn{width:30px;height:30px;border-radius:8px;font-size:12px}
+@media(max-width:860px){.topbar{right:10px;width:auto}.search-wrap{display:none}.brand-txt h1{font-size:12px}.mode-btn{padding:5px 6px}}
+
+/* ---------- topbar (floating capsule) ---------- */
+.topbar{
+  position:fixed; top:12px; left:12px; right:auto; width:auto; height:56px; z-index:1000;
+  display:flex; align-items:center; gap:16px;
+  padding:0 16px;
+  background:rgba(11,26,18,0.38);
+  border:1px solid var(--glass-brd);
+  border-radius:999px;
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 8px 26px rgba(0,0,0,.35);
+  transition:background .25s ease, box-shadow .25s ease, top .25s ease;
+}
+.topbar.scrolled{
+  background:rgba(7,18,13,0.22);
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+.topbar.dragging{ transition:none; cursor:grabbing; }
+.drag-handle{
+  flex-shrink:0; width:20px; align-self:stretch; display:flex; align-items:center; justify-content:center;
+  color:var(--muted); font-size:15px; cursor:grab; letter-spacing:-1px; user-select:none; touch-action:none;
+  border-radius:8px; margin-left:-6px;
+}
+.drag-handle:hover{ color:var(--gold-300); background:rgba(255,255,255,0.06); }
+.brand{ display:flex; align-items:center; gap:11px; white-space:nowrap;}
+.brand-mark{
+  width:36px; height:36px; border-radius:10px;
+  background:radial-gradient(circle at 30% 25%, var(--gold-300), var(--gold-500) 55%, #8a6a1f 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; box-shadow:0 3px 10px rgba(0,0,0,.4), inset 0 1px 1px rgba(255,255,255,.35);
+}
+.brand-txt h1{ font-family:var(--font-display); font-size:16.5px; font-weight:600; letter-spacing:.2px; color:var(--gold-300);}
+.brand-txt p{ font-size:10.5px; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; margin-top:1px;}
+
+.search-wrap{
+  flex:1; max-width:520px; position:relative;
+}
+.search-wrap input{
+  width:100%; height:38px; border-radius:10px; border:1px solid var(--glass-brd);
+  background:rgba(255,255,255,0.05); color:var(--ink-text); padding:0 14px 0 38px;
+  font-size:13.5px; font-family:var(--font-body);
+  transition:.15s;
+}
+.search-wrap input:focus{ outline:none; border-color:var(--gold-500); background:rgba(255,255,255,0.08);}
+.search-wrap input::placeholder{ color:var(--muted);}
+.search-icon{
+  position:absolute; left:13px; top:50%; transform:translateY(-50%);
+  color:var(--muted); font-size:14px; pointer-events:none;
+}
+.search-results{
+  position:absolute; top:44px; left:0; right:0;
+  background:var(--ink-900); border:1px solid var(--glass-brd); border-radius:10px;
+  max-height:260px; overflow-y:auto; display:none; z-index:1200;
+  box-shadow:0 12px 30px rgba(0,0,0,.5);
+  scrollbar-width:thin; scrollbar-color:var(--forest-600) transparent;
+}
+.search-results::-webkit-scrollbar{ width:7px; }
+.search-results::-webkit-scrollbar-thumb{ background:var(--forest-600); border-radius:4px; }
+.search-results::-webkit-scrollbar-track{ background:transparent; }
+.search-results.show{ display:block;}
+.search-item{ padding:9px 13px; font-size:12.5px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,.04); color:var(--ink-text);}
+.search-item:hover{ background:rgba(207,159,63,0.12);}
+.search-item:last-child{ border-bottom:none;}
+
+.mode-toggle{
+  display:flex; gap:2px; background:rgba(255,255,255,0.05); padding:3px; border-radius:10px; border:1px solid var(--glass-brd);
+}
+.mode-btn{
+  border:none; background:transparent; color:var(--muted); font-size:12px; font-weight:600;
+  padding:7px 13px; border-radius:8px; cursor:pointer; transition:.15s; font-family:var(--font-body);
+  display:flex; align-items:center; gap:6px; white-space:nowrap;
+}
+.mode-btn.active{ background:linear-gradient(180deg,var(--forest-600),var(--forest-700)); color:var(--gold-300); box-shadow:inset 0 1px 1px rgba(255,255,255,.08);}
+.mode-btn:hover:not(.active){ color:var(--ink-text);}
+
+.topbar-actions{ display:flex; gap:8px; margin-left:auto;}
+.icon-btn{
+  width:38px; height:38px; border-radius:10px; border:1px solid var(--glass-brd);
+  background:rgba(255,255,255,0.04); color:var(--muted); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; font-size:15px; transition:.15s;
+}
+.icon-btn:hover{ background:rgba(207,159,63,0.14); color:var(--gold-300); border-color:var(--gold-500);}
+
+/* ---------- layout ---------- */
+.app{ position:fixed; top:0; left:0; right:0; bottom:0; display:flex;}
+#map{ flex:1; height:100%; background:#0a1710;}
+
+.sidebar{
+  width:400px; height:100%; overflow-y:auto;
+  background:rgba(9,22,15,0.42);
+  backdrop-filter:blur(14px) saturate(130%);
+  -webkit-backdrop-filter:blur(14px) saturate(130%);
+  border-left:1px solid var(--glass-brd);
+  padding:86px 16px 46px;
+  scrollbar-width:thin; scrollbar-color: var(--forest-600) transparent;
+  transition:width .25s ease, padding .25s ease, opacity .2s ease;
+  position:relative;
+  flex-shrink:0;
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{ background:var(--forest-600); border-radius:6px;}
+
+/* collapsed (desktop) */
+.sidebar.collapsed{
+  width:0; padding-left:0; padding-right:0; overflow:hidden; border-left:none; opacity:0;
+}
+
+.sidebar-collapse-tab{
+  position:fixed; top:50%; right:400px; transform:translateY(-50%);
+  width:16px; height:56px; border-radius:8px 0 0 8px;
+  background:rgba(11,26,18,0.78); border:1px solid var(--glass-brd); border-right:none;
+  backdrop-filter:blur(10px);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold-300); font-size:11px; cursor:pointer; z-index:1050;
+  transition:right .25s ease;
+}
+.sidebar-collapse-tab:hover{ background:rgba(207,159,63,0.18); }
+.sidebar.collapsed ~ .sidebar-collapse-tab{ right:0; border-radius:8px 0 0 8px; }
+
+.panel{
+  background:var(--glass-bg); border:1px solid var(--glass-brd); border-radius:var(--radius);
+  padding:15px; margin-bottom:14px;
+}
+.panel-title{
+  font-family:var(--font-display); font-size:14.5px; color:var(--gold-300); font-weight:600;
+  display:flex; align-items:center; gap:8px; margin-bottom:11px;
+}
+.panel-title .dot{ width:6px; height:6px; border-radius:50%; background:var(--gold-500);}
+
+.hint{ font-size:11.5px; color:var(--muted); line-height:1.55; margin-bottom:10px;}
+
+.step-row{ display:flex; gap:9px; align-items:flex-start; margin-bottom:9px;}
+.step-num{
+  width:20px; height:20px; border-radius:6px; background:rgba(207,159,63,0.16); border:1px solid var(--glass-brd);
+  color:var(--gold-400); font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;
+}
+.step-txt{ font-size:12px; color:var(--ink-text); line-height:1.5;}
+.step-txt b{ color:var(--gold-300);}
+
+.btn{
+  border:none; border-radius:9px; padding:9px 14px; font-size:12.5px; font-weight:600; cursor:pointer;
+  font-family:var(--font-body); transition:.15s; display:inline-flex; align-items:center; gap:6px; justify-content:center;
+}
+.btn-gold{ background:linear-gradient(180deg,var(--gold-400),var(--gold-500)); color:#241a05; box-shadow:0 2px 8px rgba(207,159,63,.25);}
+.btn-gold:hover{ filter:brightness(1.08);}
+.btn-ghost{ background:rgba(255,255,255,0.05); color:var(--ink-text); border:1px solid var(--glass-brd);}
+.btn-ghost:hover{ background:rgba(255,255,255,0.09);}
+.btn-danger{ background:rgba(200,92,74,0.15); color:#e28a78; border:1px solid rgba(200,92,74,.35);}
+.btn-danger:hover{ background:rgba(200,92,74,0.25);}
+.btn-block{ width:100%;}
+.btn-row{ display:flex; gap:8px; flex-wrap:wrap;}
+
+/* candidate detail panel */
+.empty-state{ text-align:center; padding:26px 10px; color:var(--muted);}
+.empty-state .glyph{ font-size:30px; margin-bottom:8px; opacity:.6;}
+.empty-state p{ font-size:12px; line-height:1.6;}
+
+.score-hero{
+  display:flex; align-items:center; gap:14px; padding:12px; border-radius:11px; margin-bottom:12px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-brd);
+}
+.score-ring{
+  width:64px; height:64px; border-radius:50%; flex-shrink:0; position:relative;
+  display:flex; align-items:center; justify-content:center;
+}
+.score-ring svg{ position:absolute; top:0; left:0; transform:rotate(-90deg);}
+.score-ring .num{ font-family:var(--font-display); font-size:19px; font-weight:700; z-index:1;}
+.score-meta .label{ font-size:14px; font-weight:700; font-family:var(--font-display); margin-bottom:2px;}
+.score-meta .sub{ font-size:11px; color:var(--muted); line-height:1.5;}
+
+.factor-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+.factor{
+  display:flex; align-items:center; gap:9px; padding:8px 10px; background:rgba(255,255,255,0.025);
+  border-radius:9px; border:1px solid rgba(255,255,255,0.05);
+}
+.factor .ficon{ width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0;}
+.factor .ftxt{ flex:1; min-width:0;}
+.factor .ftxt .fname{ font-size:11.5px; color:var(--ink-text); font-weight:600;}
+.factor .ftxt .fval{ font-size:10.5px; color:var(--muted); margin-top:1px;}
+.factor .fscore{ font-family:var(--font-mono); font-size:12px; font-weight:600; flex-shrink:0;}
+
+.coord-box{
+  font-family:var(--font-mono); font-size:11px; color:var(--water-300); background:rgba(79,179,201,0.08);
+  border:1px solid rgba(79,179,201,0.2); border-radius:8px; padding:8px 10px; margin-bottom:10px;
+}
+
+.field-group{ margin-bottom:10px;}
+.field-group label{ display:block; font-size:10.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; font-weight:600;}
+.field-group input, .field-group select, .field-group textarea{
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-brd); border-radius:8px;
+  padding:8px 10px; color:var(--ink-text); font-size:12.5px; font-family:var(--font-body);
+}
+.field-group textarea{ resize:vertical; min-height:56px;}
+.field-group input:focus, .field-group select:focus, .field-group textarea:focus{ outline:none; border-color:var(--gold-500);}
+.field-group select{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none; cursor:pointer;
+  background-color:var(--ink-900); color:var(--ink-text);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23e3b957' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 12px center; background-size:11px; padding-right:32px;
+}
+.field-group select option{
+  background-color:var(--ink-900); color:var(--ink-text); padding:8px;
+}
+.field-group select option:checked, .field-group select option:hover{
+  background-color:var(--forest-600); color:var(--gold-300);
+}
+.field-group select option:disabled{ color:var(--muted); }
+
+/* list of saved points */
+.point-item{
+  display:flex; gap:10px; align-items:flex-start; padding:10px; border-radius:10px;
+  background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; cursor:pointer; transition:.15s;
+}
+.point-item:hover{ background:rgba(207,159,63,0.08); border-color:var(--glass-brd);}
+.point-item.active{ border-color:var(--gold-500); background:rgba(207,159,63,0.1);}
+.point-badge{
+  width:30px; height:30px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff;
+}
+.point-info{ flex:1; min-width:0;}
+.point-info .pname{ font-size:12.5px; font-weight:600; color:var(--ink-text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.point-info .pmeta{ font-size:10.5px; color:var(--muted); margin-top:2px; font-family:var(--font-mono);}
+.point-del{ background:none; border:none; color:var(--muted); cursor:pointer; font-size:14px; padding:2px 4px; flex-shrink:0;}
+.point-del:hover{ color:var(--danger);}
+
+.legend-row{ display:flex; align-items:center; gap:8px; font-size:11.5px; color:var(--muted); margin-bottom:6px;}
+.legend-swatch{ width:11px; height:11px; border-radius:3px; flex-shrink:0;}
+
+/* map controls */
+.menu-wrap{ position:relative; }
+.menu-dd{
+  position:absolute; top:calc(100% + 8px); left:0; min-width:250px; max-height:76vh; overflow-y:auto;
+  background:var(--ink-900); border:1px solid var(--glass-brd); border-radius:var(--radius);
+  box-shadow:0 16px 40px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.03); padding:8px; z-index:1500; display:none;
+  scrollbar-width:thin; scrollbar-color:var(--forest-600) transparent;
+}
+.menu-dd::-webkit-scrollbar{ width:7px; }
+.menu-dd::-webkit-scrollbar-thumb{ background:var(--forest-600); border-radius:4px; }
+.menu-dd::-webkit-scrollbar-track{ background:transparent; }
+.topbar-actions .menu-dd{ left:auto; right:0; }
+.menu-dd.show{ display:block; animation:ddIn .14s ease; }
+@keyframes ddIn{ from{opacity:0; transform:translateY(-4px);} to{opacity:1; transform:translateY(0);} }
+.icon-btn.menu-open{ background:rgba(207,159,63,0.16); color:var(--gold-300); border-color:var(--gold-500);}
+.menu-dd .dd-title{
+  font-family:var(--font-display); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gold-400); font-weight:600; margin:10px 8px 6px; padding-top:8px; border-top:1px solid var(--glass-brd);
+}
+.menu-dd .dd-title:first-child{ margin-top:2px; padding-top:0; border-top:none; }
+.menu-opt{
+  display:flex; align-items:center; gap:10px; padding:8px 8px; border-radius:9px; cursor:pointer;
+  font-size:12.5px; color:var(--ink-text); font-family:var(--font-body); transition:background .12s;
+}
+.menu-opt:hover{ background:rgba(255,255,255,.05);}
+.menu-opt:has(input:checked){ background:rgba(227,185,87,0.09);}
+.menu-opt span{ flex:1; }
+.menu-opt input[type="checkbox"],.menu-opt input[type="radio"]{
+  appearance:none; -webkit-appearance:none; margin:0; width:16px; height:16px; flex:none;
+  border:1.5px solid var(--glass-brd); background:rgba(255,255,255,0.05); cursor:pointer;
+  position:relative; transition:border-color .12s, background .12s;
+}
+.menu-opt input[type="checkbox"]{ border-radius:5px; }
+.menu-opt input[type="radio"]{ border-radius:50%; }
+.menu-opt input:hover{ border-color:var(--gold-500); }
+.menu-opt input:checked{
+  background:linear-gradient(180deg,var(--gold-400),var(--gold-500)); border-color:var(--gold-500);
+  box-shadow:0 2px 6px rgba(207,159,63,.35);
+}
+.menu-opt input[type="checkbox"]:checked::after{
+  content:''; position:absolute; left:5px; top:2px; width:4px; height:8px;
+  border:solid #241a05; border-width:0 2px 2px 0; transform:rotate(40deg);
+}
+.menu-opt input[type="radio"]:checked::after{
+  content:''; position:absolute; left:50%; top:50%; width:6px; height:6px; border-radius:50%;
+  background:#241a05; transform:translate(-50%,-50%);
+}
+.menu-item-btn{
+  display:flex; align-items:center; gap:10px; width:100%; text-align:left; padding:9px 8px; border-radius:9px;
+  border:none; background:transparent; color:var(--ink-text); font-size:12.5px; cursor:pointer; font-family:var(--font-body);
+  transition:background .12s;
+}
+.menu-item-btn:hover{ background:rgba(255,255,255,.05); color:var(--gold-300);}
+.menu-sep{ height:1px; background:var(--glass-brd); margin:8px 2px;}
+
+
+.crosshair-badge{
+  position:absolute; bottom:16px; left:66px; z-index:900;
+  background:var(--glass-bg); border:1px solid var(--glass-brd); border-radius:11px; padding:9px 13px;
+  font-family:var(--font-mono); font-size:11px; color:var(--muted); backdrop-filter:blur(8px);
+  display:flex; align-items:center; gap:9px;
+}
+.crosshair-badge b{ color:var(--gold-300);}
+.leaflet-control-zoom{ margin-bottom:16px !important; margin-left:14px !important;}
+
+.status-toast{
+  position:absolute; top:14px; left:50%; transform:translateX(-50%) translateY(-140%);
+  background:var(--ink-900); border:1px solid var(--gold-500); border-radius:10px; padding:9px 16px;
+  font-size:12px; color:var(--gold-300); z-index:1300; box-shadow:0 8px 24px rgba(0,0,0,.5);
+  transition:transform .3s ease; display:flex; align-items:center; gap:8px; white-space:nowrap;
+}
+.status-toast.show{ transform:translateX(-50%) translateY(0);}
+.spinner{
+  width:12px; height:12px; border-radius:50%; border:2px solid rgba(227,185,87,.25); border-top-color:var(--gold-400);
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* leaflet marker custom */
+.wpin{ display:flex; align-items:center; justify-content:center; }
+.wpin-core{
+  width:30px; height:30px; border-radius:50% 50% 50% 0; transform:rotate(-45deg);
+  border:2px solid rgba(255,255,255,0.85); box-shadow:0 3px 8px rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center;
+}
+.wpin-core span{ transform:rotate(45deg); font-size:11px; font-weight:700; color:#fff; font-family:var(--font-mono);}
+
+.leaflet-popup-content-wrapper{ background:var(--ink-900); color:var(--ink-text); border-radius:10px; border:1px solid var(--glass-brd);}
+.leaflet-popup-tip{ background:var(--ink-900);}
+.leaflet-popup-content{ font-family:var(--font-body); font-size:12.5px; margin:11px 13px; max-height:64vh; overflow-y:auto; overflow-x:hidden; scrollbar-width:thin; scrollbar-color: var(--forest-600) transparent; }
+.leaflet-popup-content::-webkit-scrollbar{ width:5px; }
+.leaflet-popup-content::-webkit-scrollbar-thumb{ background:var(--forest-600); border-radius:6px; }
+.leaflet-popup-content-wrapper{ max-height:70vh; }
+.factor-list.two-col{ display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.factor-list.two-col .factor{ position:relative; flex-direction:column; align-items:flex-start; padding:8px 8px 7px; }
+.factor-list.two-col .factor .ficon{ margin-bottom:4px; width:22px; height:22px; font-size:11px;}
+.factor-list.two-col .factor .fscore{ position:absolute; top:7px; right:8px; font-size:10.5px;}
+.factor-list.two-col .factor .ftxt .fname{ font-size:10.5px; padding-right:26px;}
+.factor-list.two-col .factor .fval{ font-size:9.5px;}
+.leaflet-popup-content b{ color:var(--gold-300);}
+.leaflet-control-attribution{ background:rgba(7,18,13,0.75)!important; color:var(--muted)!important; font-size:9.5px!important;}
+.leaflet-control-attribution a{ color:var(--water-300)!important;}
+.leaflet-control-zoom a{ background:var(--ink-900)!important; color:var(--gold-300)!important; border-color:var(--glass-brd)!important;}
+
+.footer-note{
+  font-size:10px; color:var(--muted); line-height:1.6; padding:12px 4px 0; border-top:1px solid var(--glass-brd); margin-top:6px;
+}
+
+
+.app-footer{
+  position:fixed; bottom:8px; right:14px; z-index:960;
+  font-size:10px; color:var(--muted); letter-spacing:.2px;
+  background:rgba(11,26,18,0.35); backdrop-filter:blur(6px);
+  padding:4px 10px; border-radius:8px; pointer-events:auto;
+}
+.app-footer a{ color:var(--water-300); text-decoration:none;}
+.app-footer a:hover{ text-decoration:underline;}
+
+
+/* ---------- v3 prospectivity heatmap / GMap ---------- */
+.heatmap-legend{position:absolute;right:14px;bottom:18px;z-index:900;background:var(--glass-bg);border:1px solid var(--glass-brd);border-radius:10px;padding:8px 10px;backdrop-filter:blur(8px);font-size:10px;color:var(--muted);min-width:150px}
+.heatbar{height:8px;border-radius:5px;margin:5px 0 3px;background:linear-gradient(90deg,#c85c4a,#cf9f3f,#e3b957,#4c9a5f)}
+.map-screen{position:absolute;inset:58px 12px 48px 12px;z-index:980;display:none;border:1px solid var(--glass-brd);border-radius:12px;overflow:hidden;background:#111;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.map-screen.show{display:block}.map-screen iframe{width:100%;height:100%;border:0}.screen-close{position:absolute;right:8px;top:8px;z-index:2}
+.data-chip{display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);font-size:9.5px;color:var(--muted);margin:2px}
+.scan-stat{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.scan-stat div{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:8px;padding:7px;text-align:center}.scan-stat b{display:block;font-family:var(--font-mono);font-size:15px;color:var(--gold-300)}.scan-stat span{font-size:9px;color:var(--muted)}
+
+@media print{
+  .topbar,.sidebar,.crosshair-badge,.leaflet-control,.sidebar-collapse-tab,.app-footer{ display:none !important;}
+}
+
+/* mobile */
+@media (max-width: 860px){
+  .search-wrap{ display:none; }
+  .sidebar{ width:100%; position:fixed; right:0; top:0; bottom:0; padding-top:82px; transform:translateX(100%); transition:.25s; z-index:1100;}
+  .sidebar.open{ transform:translateX(0);}
+  .sidebar.collapsed{ width:100%; opacity:1; overflow-y:auto; padding:82px 16px 46px;}
+  .brand-txt p{ display:none;}
+  .sidebar-collapse-tab{ display:none;}
+  .app-footer{ right:8px; bottom:8px; font-size:9px;}
+}
+
+
+.data-quality{
+  display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px;
+}
+.data-chip{
+  padding:7px 8px; border-radius:8px; background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.05); font-size:10px; color:var(--muted);
+}
+.data-chip b{display:block;color:var(--ink-text);font-size:10.5px;margin-bottom:2px}
+.gmap-note{
+  background:rgba(66,133,244,.10); border:1px solid rgba(66,133,244,.25);
+  color:#cfe0ff; border-radius:9px; padding:9px 10px; font-size:11px; line-height:1.5; margin-top:8px;
+}
+
+/* ---------- compact/collapsible header ---------- */
+.topbar{overflow:visible;}
+.header-collapse-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--glass-brd);background:rgba(255,255,255,.04);color:var(--gold-300);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.header-collapse-btn:hover{background:rgba(207,159,63,.14);}
+.topbar.is-collapsed{width:48px!important;min-width:48px!important;padding:0 8px;gap:0;border-radius:14px;}
+.topbar.is-collapsed .drag-handle,.topbar.is-collapsed .brand,.topbar.is-collapsed .search-wrap,.topbar.is-collapsed .mode-toggle,.topbar.is-collapsed .topbar-actions .optional-head{display:none!important;}
+.topbar.is-collapsed .topbar-actions{margin:0;width:100%;justify-content:center;}
+.topbar.is-collapsed .header-collapse-btn{display:flex;}
+.layer-btn.warn{ box-shadow:inset 0 0 0 1px rgba(200,92,74,.5); }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+  <div class="drag-handle" id="dragHandle" title="Tahan & geser untuk memindahkan header">⠿</div>
+  <div class="brand">
+    <div class="brand-mark">🥇</div>
+    <div class="brand-txt">
+      <h1>Gold Prospectivity Engine v3</h1>
+      <p>Multi-source mineral prospectivity screening</p>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔎</span>
+    <input id="searchInput" type="text" placeholder="Cari lokasi / desa / kabupaten... (contoh: Banyuwangi, Kalimantan Tengah)">
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <div class="mode-toggle">
+    <button class="mode-btn active" id="modeMark" onclick="setMode('mark')">📍 Titik Prospek</button>
+    <button class="mode-btn" id="modeGrid" onclick="setMode('grid')">▦ Pindai Area</button>
+  </div>
+
+  <div class="topbar-actions">
+    <input type="file" id="fileImport" accept=".json" style="display:none" onchange="importData(event)">
+    <div class="menu-wrap" id="layerMenuWrap">
+      <button class="icon-btn" id="layerMenuBtn" title="Lapisan Peta" onclick="toggleMenu('layerMenuDD')">🗺️</button>
+      <div class="menu-dd" id="layerMenuDD">
+        <div class="dd-title">Tampilan Dasar</div>
+        <label class="menu-opt"><input type="radio" name="baseLayerChoice" value="esri" checked onchange="setBaseLayer('esri')"><span>🛰️ Esri World Imagery</span></label>
+        <label class="menu-opt"><input type="radio" name="baseLayerChoice" value="google" onchange="setBaseLayer('google')"><span>🌐 Google Satellite</span></label>
+        <label class="menu-opt"><input type="radio" name="baseLayerChoice" value="topo" onchange="setBaseLayer('topo')"><span>⛰️ Topo/DEM</span></label>
+        <label class="menu-opt"><input type="checkbox" id="toggleGoogleLabelChk" checked onchange="toggleGoogleLabels()"><span>🏷️ Label Google (jalan/nama tempat)</span></label>
+        <div class="menu-sep"></div>
+        <div class="dd-title">Peta Resmi ESDM &amp; Remote Sensing</div>
+        <label class="menu-opt"><input type="checkbox" id="toggleEsdmGeoChk" onchange="toggleEsdmGeology()"><span>🗺️ Geologi ESDM (Badan Geologi)</span></label>
+        <label class="menu-opt"><input type="checkbox" id="toggleEsdmStructChk" onchange="toggleEsdmStruktur()"><span>⚡ Struktur ESDM (Badan Geologi)</span></label>
+        <label class="menu-opt"><input type="checkbox" id="toggleRSChk" onchange="toggleRemoteSensing()"><span>🛰️ Alterasi Sentinel-2/ASTER</span></label>
+        <div class="menu-sep"></div>
+        <div class="dd-title">Data Lapangan (OSM)</div>
+        <label class="menu-opt"><input type="checkbox" id="toggleRiversChk" checked onchange="toggleRivers()"><span>〰️ Sungai/Drainase</span></label>
+        <label class="menu-opt"><input type="checkbox" id="toggleRefsChk" checked onchange="toggleRefs()"><span>⛏️ Tambang/Indikasi</span></label>
+        <label class="menu-opt"><input type="checkbox" id="toggleFaultsChk" onchange="toggleFaults()"><span>⚡ Struktur OSM</span></label>
+        <div class="menu-sep"></div>
+        <label class="menu-opt"><input type="checkbox" id="toggleHeatChk" onchange="toggleHeatmap()"><span>🔥 Heatmap Prospek Emas</span></label>
+      </div>
+    </div>
+    <div class="menu-wrap" id="toolsMenuWrap">
+      <button class="icon-btn" id="toolsMenuBtn" title="Data &amp; Cetak" onclick="toggleMenu('toolsMenuDD')">⋯</button>
+      <div class="menu-dd" id="toolsMenuDD">
+        <div class="dd-title">Data</div>
+        <button class="menu-item-btn" onclick="document.getElementById('fileImport').click();closeAllMenus()">📂 Impor data (.json)</button>
+        <button class="menu-item-btn" onclick="exportExcel();closeAllMenus()">📊 Ekspor Excel</button>
+        <button class="menu-item-btn" onclick="exportJSON();closeAllMenus()">💾 Ekspor JSON</button>
+        <div class="menu-sep"></div>
+        <button class="menu-item-btn" onclick="window.print();closeAllMenus()">🖨️ Cetak laporan</button>
+      </div>
+    </div>
+    <button class="icon-btn optional-head" title="Panel" onclick="toggleSidebar()" style="display:none">☰</button><button class="header-collapse-btn" id="headerCollapseBtn" title="Ciutkan header" onclick="toggleHeaderCollapse()">⌃</button>
+  </div>
+</div>
+
+<div class="app">
+  <div id="map">
+    <div class="heatmap-legend" id="heatLegend"><b style="color:var(--gold-300)">Heatmap Prospek Emas</b><div class="heatbar"></div><div style="display:flex;justify-content:space-between"><span>Rendah</span><span>Sedang</span><span>Tinggi</span></div></div>
+    <div class="crosshair-badge" id="coordBadge">Klik peta untuk menandai <b>zona prospek</b></div>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Cara Pakai</div>
+      <div class="step-row"><div class="step-num">1</div><div class="step-txt">Cari lokasi area di kotak pencarian, atau geser & zoom peta secara manual.</div></div>
+      <div class="step-row"><div class="step-num">2</div><div class="step-txt">Klik titik di peta pada lokasi target. Sistem mengambil <b>geologi/litologi resmi ESDM</b>, <b>struktur/sesar resmi ESDM</b>, <b>indikasi tambang/emas (OSM + USGS MRDS)</b>, <b>elevasi/relief (DEM)</b>, <b>drainase</b>, dan geokimia yang Anda impor — semuanya data langsung, tanpa nilai contoh (dummy).</div></div>
+      <div class="step-row"><div class="step-num">3</div><div class="step-txt">Skor prospek emas (0–100) muncul di panel kanan beserta rincian faktor dan kualitas sumber datanya.</div></div>
+      <div class="step-row"><div class="step-num">4</div><div class="step-txt">Simpan target, beri catatan, lalu ekspor ke Excel/JSON untuk dibawa ke tim eksplorasi, pemetaan geologi, geokimia, dan geofisika.</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Pengaturan Prospek Emas</div>
+      <div class="field-group">
+        <label>Fokus Analisis</label>
+        <select id="globalTargetType">
+          <option value="mixed">Campuran — emas primer + aluvial</option>
+          <option value="primary">Emas primer — alterasi/urat/struktur</option>
+          <option value="alluvial">Emas aluvial — drainase/endapan</option>
+        </select>
+      </div>
+      <div class="field-group" style="margin-top:9px">
+        <label>Geokimia Lokal</label>
+        <input type="file" id="geochemFile" accept=".csv,.json" onchange="importGeochem(event)">
+        <div class="hint" style="margin:5px 0 0">CSV: latitude, longitude, Au_ppm; opsional As_ppm, Cu_ppm, Ag_ppm. Sampel lokal menjadi bukti geokimia terkuat dalam heatmap.</div>
+      </div>
+    </div>
+
+    <div class="panel" id="detailPanel">
+      <div class="panel-title"><span class="dot"></span>Detail Titik Terpilih</div>
+      <div class="empty-state" id="detailEmpty">
+        <div class="glyph">📍</div>
+        <p>Belum ada target dipilih.<br>Klik di peta untuk mulai analisis prospek emas.</p>
+      </div>
+      <div id="detailContent" style="display:none"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Target Tersimpan (<span id="pointCount">0</span>)</div>
+      <div id="pointList"></div>
+      <div class="hint" id="pointListEmpty">Target yang disimpan akan tampil di sini, diurutkan dari skor prospek tertinggi.</div>
+      <div class="btn-row" style="margin-top:8px" id="pointListActions" hidden>
+        <button class="btn btn-ghost" onclick="clearAllPoints()">🗑️ Hapus Semua</button>
+        <button class="btn btn-ghost" onclick="fitAllPoints()">🎯 Tampilkan Semua Target</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Gold Prospectivity Engine v3</div>
+      <div class="hint">Heatmap dihitung pada grid area berdasarkan bukti yang tersedia: struktur resmi ESDM, indikasi emas OSM/USGS MRDS, drainase, relief, alterasi Sentinel-2/ASTER (jika diaktifkan), serta geokimia yang Anda impor. GeoRIMA &amp; MOMI tetap dipakai sebagai verifikasi manual karena mensyaratkan login.</div>
+      <div class="scan-stat"><div><b id="heatCells">0</b><span>sel grid</span></div><div><b id="heatBest">—</b><span>skor terbaik</span></div><div><b id="heatData">0%</b><span>kelengkapan</span></div></div>
+      <div class="btn-row" style="margin-top:8px"><button class="btn btn-gold btn-block" onclick="scanCurrentArea()">🔥 Bangun Heatmap Area</button></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title"><span class="dot"></span>Legenda & Sumber Data</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#4c9a5f"></div>Tinggi (≥70) — target prioritas untuk verifikasi lapangan</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#cf9f3f"></div>Sedang (40–69) — perlu data tambahan</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#c85c4a"></div>Rendah (&lt;40) — bukti pendukung masih lemah</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#e3b957"></div>Indikasi mineral/tambang emas yang terpetakan di OSM</div>
+      <div class="legend-row"><div class="legend-swatch" style="background:#9b7bd1"></div>Geologi/litologi dari Macrostrat</div>
+      <div class="hint" style="margin:10px 0 2px; font-weight:600; color:var(--ink-text)">Sumber utama yang digunakan:</div>
+      <div class="legend-row">🗺️ Geologi ESDM — Badan Geologi (BGS_PM/Geologi_Litologi), layer resmi langsung di peta</div>
+      <div class="legend-row">⚡ Struktur ESDM — Badan Geologi (BGS_PM/Geologi_Geostruktur), sesar/lineament resmi langsung di peta</div>
+      <div class="legend-row">🏛️ GeoRIMA &amp; MOMI/WIUP — portal resmi ESDM/Minerba, dibuka manual (login diperlukan) untuk verifikasi akhir</div>
+      <div class="legend-row">🪨 Macrostrat/UW–Madison: unit geologi & struktur global (pelengkap ESDM)</div>
+      <div class="legend-row">🛰️ Basemap: Esri World Imagery, Google Maps (satelit, tanpa API key), atau OpenTopoMap/DEM</div>
+      <div class="legend-row">⛰️ Copernicus DEM GLO-30/GLO-90 + SRTM/Open-Elevation: elevasi & relief</div>
+      <div class="legend-row">🔬 USGS MRDS: lokasi sumber daya/mineral dunia, difilter untuk emas</div>
+      <div class="legend-row">🛰️ Sentinel-2 L2A (Microsoft Planetary Computer): proxy spektral alterasi permukaan</div>
+      <div class="legend-row">🛰️ ASTER L1T (Microsoft Planetary Computer): arsip spektral untuk indikasi alterasi</div>
+      <div class="legend-row">⛏️ OpenStreetMap/Overpass: tambang, prospek, quarry, sungai & struktur yang dipetakan</div>
+      <div class="legend-row">🧪 Geokimia: sampel Au/As/Cu/Ag yang Anda impor sendiri (CSV/JSON) — bukan data bawaan</div>
+            <div class="footer-note">
+        <b>Penting:</b> aplikasi ini adalah <b>screening prospek awal</b>, bukan penentu adanya cadangan emas. Keberadaan emas tidak dapat dibuktikan hanya dari citra, elevasi, atau kedekatan tambang. GeoRIMA/GeoMap adalah rujukan resmi Indonesia; Macrostrat dan OSM dipakai sebagai pelengkap. Remote sensing hanya memberi indikasi permukaan/alterasi dan tidak mendeteksi kadar emas secara langsung; hasil harus divalidasi dengan pemetaan geologi, geokimia, geofisika, dan sampling laboratorium. Untuk keputusan investasi/penambangan tetap diperlukan tenaga ahli dan data eksplorasi resmi.
+      </div>
+    </div>
+
+  </div>
+
+  <button class="sidebar-collapse-tab" id="sidebarCollapseTab" title="Ciutkan/lebarkan panel" onclick="toggleSidebarCollapse()">‹</button>
+</div>
+
+<div class="status-toast" id="toast"><span class="spinner"></span><span id="toastText">Memuat data...</span></div>
+
+<div class="app-footer">© 2026 by Achmad Fauzi · Gold Prospectivity Screening &nbsp;·&nbsp; Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+
+
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+let map, baseLayers = {}, riverLayer = null, refLayer = null, faultLayer = null, currentBase = 'esri';
+let heatLayer = null, heatPoints = [], remoteLayers = {}, remoteStatus = {sentinel:null,aster:null,landsat:null}, geochemSamples = [];
+let geologyInfoCache = new Map();
+let googleLabelsLayer = null, showGoogleLabels = true;   // label jalan/nama tempat di atas basemap Google
+let esdmGeoLayer = null, esdmStructLayer = null;   // official Badan Geologi ESDM (BGS_PM) dynamic map layers
+let esdmGeoOn = false, esdmStructOn = false;
+const ESDM_GEOLOGI_URL = 'https://geoportal.esdm.go.id/gis4/rest/services/BGS_PM/Geologi_Litologi/MapServer';
+const ESDM_STRUKTUR_URL = 'https://geoportal.esdm.go.id/gis4/rest/services/BGS_PM/Geologi_Geostruktur/MapServer';
+let showRivers = true, showRefs = true;
+let mode = 'mark'; // 'mark' | 'grid'
+let points = [];          // saved analyzed points
+let activeMarker = null;  // temp marker while analyzing
+let activePointId = null; // id of point shown in detail panel
+let markersLayer;
+let idCounter = 1;
+
+const DEFAULT_CENTER = [-2.55, 112.95]; // Sampit / Kalimantan Tengah area
+const DEFAULT_ZOOM = 10;
+
+
+function initMap(){
+  map = L.map('map', { zoomControl:false, attributionControl:true, maxZoom:21, scrollWheelZoom:true, doubleClickZoom:true, dragging:true, touchZoom:true, boxZoom:true, keyboard:true, wheelDebounceTime:40, wheelPxPerZoomLevel:60 }).setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+  L.control.zoom({ position:'bottomleft' }).addTo(map);
+  baseLayers.esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution:'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics', maxZoom:21, maxNativeZoom:20
+  });
+  baseLayers.topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    attribution:'Map data: &copy; OpenStreetMap contributors, SRTM · Style: &copy; OpenTopoMap (CC-BY-SA)', maxZoom:17, subdomains:'abc'
+  });
+  // Google Satellite — tile XYZ langsung (metode sama seperti "Pantau Titik Panas"),
+  // tidak memerlukan API key/billing dan tetap sinkron pan/zoom seperti layer Esri.
+  baseLayers.google = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'], attribution:'Imagery &copy; Google', maxZoom:21, maxNativeZoom:21
+  });
+  map.createPane('labelsPane');
+  map.getPane('labelsPane').style.zIndex = 350;
+  googleLabelsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&scale=2', {
+    subdomains:['mt0','mt1','mt2','mt3'], maxZoom:21, maxNativeZoom:21, pane:'labelsPane'
+  });
+  baseLayers.esri.addTo(map);
+
+  markersLayer = L.layerGroup().addTo(map);
+  riverLayer = L.layerGroup().addTo(map);
+  refLayer = L.layerGroup().addTo(map);
+  faultLayer = L.layerGroup().addTo(map);
+
+  map.on('click', onMapClick);
+  map.on('mousemove', e => {
+    document.getElementById('coordBadge').innerHTML =
+      `Lat <b>${e.latlng.lat.toFixed(5)}</b>, Lng <b>${e.latlng.lng.toFixed(5)}</b> — klik untuk analisis`;
+  });
+  map.on('mouseout', () => {
+    document.getElementById('coordBadge').innerHTML = 'Klik peta untuk menandai <b>titik prospek emas</b>';
+  });
+
+  loadRiversForView();
+  map.on('moveend', debounce(loadRiversForView, 900));
+  map.on('moveend', debounce(()=>{ if(map.hasLayer(faultLayer)) loadFaultsForView(); }, 1200));
+}
+
+/* ---------- Dropdown menu helper (Lapisan Peta, Data & Cetak) ---------- */
+function toggleMenu(id){
+  const el=document.getElementById(id);
+  const willShow = !el.classList.contains('show');
+  closeAllMenus();
+  if(willShow) el.classList.add('show');
+  syncMenuButtonStates();
+}
+function closeAllMenus(){
+  document.querySelectorAll('.menu-dd.show').forEach(el=>el.classList.remove('show'));
+  syncMenuButtonStates();
+}
+function syncMenuButtonStates(){
+  document.querySelectorAll('.menu-wrap').forEach(wrap=>{
+    const dd=wrap.querySelector('.menu-dd'), btn=wrap.querySelector('.icon-btn');
+    if(dd && btn) btn.classList.toggle('menu-open', dd.classList.contains('show'));
+  });
+}
+
+function setActiveLayerBtn(key){
+  const radio=document.querySelector(`input[name="baseLayerChoice"][value="${key}"]`);
+  if(radio) radio.checked = true;
+}
+
+function setBaseLayer(key){
+  if(!baseLayers[key]) key='esri';
+  if(currentBase !== key){
+    if(baseLayers[currentBase]) map.removeLayer(baseLayers[currentBase]);
+    baseLayers[key].addTo(map);
+    currentBase = key;
+  }
+  setActiveLayerBtn(key);
+  syncGoogleLabels();
+  setTimeout(()=>map.invalidateSize(),80);
+}
+
+/* ---------- Label jalan/nama tempat Google (overlay tipis di atas basemap Google) ---------- */
+function syncGoogleLabels(){
+  if(currentBase==='google' && showGoogleLabels){ if(!map.hasLayer(googleLabelsLayer)) map.addLayer(googleLabelsLayer); }
+  else { if(map.hasLayer(googleLabelsLayer)) map.removeLayer(googleLabelsLayer); }
+}
+function toggleGoogleLabels(){
+  showGoogleLabels = document.getElementById('toggleGoogleLabelChk').checked;
+  syncGoogleLabels();
+}
+
+/* ---------- Peta Geologi & Struktur resmi ESDM (Badan Geologi, BGS_PM) ---------- */
+function toggleEsdmGeology(){
+  const chk=document.getElementById('toggleEsdmGeoChk');
+  if(!chk.checked){ if(esdmGeoLayer) map.removeLayer(esdmGeoLayer); esdmGeoOn=false; return; }
+  if(!esdmGeoLayer){
+    esdmGeoLayer = L.esri.dynamicMapLayer({ url:ESDM_GEOLOGI_URL, opacity:0.62, f:'image' });
+    esdmGeoLayer.on('requesterror', ()=>{ showToast('Peta Geologi ESDM sedang tidak dapat diakses (server Badan Geologi).'); setTimeout(hideToast,2600); });
+  }
+  esdmGeoLayer.addTo(map); esdmGeoOn=true;
+  showToast('Memuat Peta Geologi ESDM (BGS_PM/Geologi_Litologi)…'); setTimeout(hideToast,1800);
+}
+function toggleEsdmStruktur(){
+  const chk=document.getElementById('toggleEsdmStructChk');
+  if(!chk.checked){ if(esdmStructLayer) map.removeLayer(esdmStructLayer); esdmStructOn=false; return; }
+  if(!esdmStructLayer){
+    esdmStructLayer = L.esri.dynamicMapLayer({ url:ESDM_STRUKTUR_URL, opacity:0.7, f:'image' });
+    esdmStructLayer.on('requesterror', ()=>{ showToast('Peta Struktur ESDM sedang tidak dapat diakses (server Badan Geologi).'); setTimeout(hideToast,2600); });
+  }
+  esdmStructLayer.addTo(map); esdmStructOn=true;
+  showToast('Memuat Peta Struktur/Sesar ESDM (BGS_PM/Geologi_Geostruktur)…'); setTimeout(hideToast,1800);
+}
+
+function toggleRivers(){
+  showRivers = document.getElementById('toggleRiversChk').checked;
+  if(showRivers){ map.addLayer(riverLayer); } else { map.removeLayer(riverLayer); }
+}
+
+function toggleRefs(){
+  showRefs = document.getElementById('toggleRefsChk').checked;
+  if(showRefs){ map.addLayer(refLayer); } else { map.removeLayer(refLayer); }
+}
+
+function toggleFaults(){
+  const chk=document.getElementById('toggleFaultsChk');
+  if(chk.checked){ map.addLayer(faultLayer); loadFaultsForView(); }
+  else { map.removeLayer(faultLayer); }
+}
+
+async function loadFaultsForView(){
+  if(!map || map.getZoom()<9) return;
+  const b=map.getBounds();
+  const bbox=`${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+  const q=`[out:json][timeout:20];(
+    way["geological"="fault"](${bbox});
+    way["geological"="fault_line"](${bbox});
+    way["natural"="cliff"](${bbox});
+  );out geom;`;
+  try{
+    const res=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:q});
+    if(!res.ok) return;
+    const data=await res.json();
+    faultLayer.clearLayers();
+    (data.elements||[]).forEach(el=>{
+      if(!el.geometry) return;
+      const ll=el.geometry.map(g=>[g.lat,g.lon]);
+      if(ll.length>1)L.polyline(ll,{color:'#9b7bd1',weight:2,opacity:.65,dashArray:'5 5'})
+        .bindPopup('<b>Struktur geologi</b><br><span style="font-size:10px;color:var(--muted)">OSM — perlu verifikasi lapangan</span>')
+        .addTo(faultLayer);
+    });
+  }catch(e){console.warn('Fault/structure query gagal',e)}
+}
+
+function drawReferenceFeatures(refs){
+  (refs||[]).forEach(r=>{
+    const color = r.kind === 'fault' ? '#9b7bd1' : '#e3b957';
+    const icon = L.divIcon({className:'',iconSize:[16,16],iconAnchor:[8,8],html:`<div style="width:14px;height:14px;border-radius:50%;background:${color};border:2px solid rgba(7,18,13,.8);box-shadow:0 2px 5px rgba(0,0,0,.4)"></div>`});
+    L.marker([r.lat,r.lng],{icon}).bindPopup(`<b>${r.kind==='fault'?'⚡':'🥇'} ${escapeHtml(r.label)}</b><br><span style="color:var(--muted);font-size:11px">Sumber: ${escapeHtml(r.source||'OSM/Overpass')}</span>`).addTo(refLayer);
+  });
+}
+
+function setMode(m){
+  mode = m;
+  document.getElementById('modeMark').classList.toggle('active', m==='mark');
+  document.getElementById('modeGrid').classList.toggle('active', m==='grid');
+}
+
+function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
+
+function toggleSidebarCollapse(){
+  const sb = document.getElementById('sidebar');
+  const tab = document.getElementById('sidebarCollapseTab');
+  sb.classList.toggle('collapsed');
+  tab.textContent = sb.classList.contains('collapsed') ? '›' : '‹';
+  setTimeout(()=>{ if(map) map.invalidateSize(); }, 260);
+}
+
+/* header kapsul bisa digeser bebas via grip (⠿) */
+(function(){
+  const topbar = document.getElementById('topbar');
+  const handle = document.getElementById('dragHandle');
+  let dragging = false, startX=0, startY=0, startLeft=0, startTop=0;
+
+  function clamp(val, min, max){ return Math.min(Math.max(val, min), max); }
+
+  function onDown(e){
+    dragging = true;
+    const pt = e.touches ? e.touches[0] : e;
+    const rect = topbar.getBoundingClientRect();
+    // kunci lebar & posisi saat ini supaya tidak melompat saat lepas dari mode "left+right"
+    topbar.style.width = rect.width + 'px';
+    topbar.style.left = rect.left + 'px';
+    topbar.style.right = 'auto';
+    topbar.style.top = rect.top + 'px';
+    startX = pt.clientX; startY = pt.clientY;
+    startLeft = rect.left; startTop = rect.top;
+    topbar.classList.add('dragging');
+    document.body.style.userSelect = 'none';
+    e.preventDefault();
+  }
+  function onMove(e){
+    if(!dragging) return;
+    const pt = e.touches ? e.touches[0] : e;
+    const rect = topbar.getBoundingClientRect();
+    let newLeft = startLeft + (pt.clientX - startX);
+    let newTop = startTop + (pt.clientY - startY);
+    newLeft = clamp(newLeft, 4, window.innerWidth - rect.width - 4);
+    newTop = clamp(newTop, 4, window.innerHeight - rect.height - 4);
+    topbar.style.left = newLeft + 'px';
+    topbar.style.top = newTop + 'px';
+  }
+  function onUp(){
+    if(!dragging) return;
+    dragging = false;
+    topbar.classList.remove('dragging');
+    document.body.style.userSelect = '';
+  }
+  handle.addEventListener('mousedown', onDown);
+  handle.addEventListener('touchstart', onDown, {passive:false});
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('mouseup', onUp);
+  window.addEventListener('touchend', onUp);
+})();
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+function showToast(text){
+  document.getElementById('toastText').textContent = text;
+  document.getElementById('toast').classList.add('show');
+}
+function hideToast(){ document.getElementById('toast').classList.remove('show'); }
+
+function debounce(fn, ms){
+  let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), ms); };
+}
+
+/* ============================================================
+   GOOGLE MAPS (verifikasi cepat, tab baru — tidak butuh API key)
+   dan link resmi GeoRIMA/MOMI ESDM (portal login, tidak bisa
+   ditarik sebagai layer publik — dibuka manual untuk verifikasi)
+   ============================================================ */
+function openGMapAt(lat,lng){
+  window.open(`https://www.google.com/maps?q=${encodeURIComponent(lat+','+lng)}&z=16`, '_blank', 'noopener');
+}
+function openGeoRimaAt(lat,lng){
+  showToast('Membuka GeoRIMA ESDM — perlu login resmi Badan Geologi untuk verifikasi lengkap.'); setTimeout(hideToast,2600);
+  window.open('https://georima.esdm.go.id', '_blank', 'noopener');
+}
+function openMomiAt(lat,lng){
+  showToast('Membuka MOMI Minerba — cek status WIUP/izin tambang resmi di titik ini.'); setTimeout(hideToast,2600);
+  window.open(`https://momi.minerba.esdm.go.id/public/?lat=${lat}&lng=${lng}`, '_blank', 'noopener');
+}
+
+function toggleHeaderCollapse(){
+  const h=document.getElementById('topbar'), b=document.getElementById('headerCollapseBtn');
+  h.classList.toggle('is-collapsed');
+  const c=h.classList.contains('is-collapsed');
+  b.textContent=c?'⌄':'⌃'; b.title=c?'Buka header':'Ciutkan header';
+}
+
+/* ============================================================
+   REMOTE SENSING — Sentinel-2 L2A + ASTER L1T via Microsoft Planetary Computer
+   ============================================================ */
+const PC_STAC='https://planetarycomputer.microsoft.com/api/stac/v1/search';
+const PC_DATA='https://planetarycomputer.microsoft.com/api/data/v1';
+async function pcLatest(collection,lat,lng,days=3650){
+  const end=new Date(), start=new Date(); start.setDate(end.getDate()-days);
+  const params=new URLSearchParams({collections:collection,bbox:`${lng-.08},${lat-.08},${lng+.08},${lat+.08}`,limit:'1',datetime:`${start.toISOString()}/${end.toISOString()}`,sortby:'-datetime'});
+  if(collection==='sentinel-2-l2a') params.set('query',JSON.stringify({'eo:cloud_cover':{lt:25}}));
+  const r=await fetch(`${PC_STAC}?${params}`); if(!r.ok) throw new Error('STAC '+r.status);
+  const d=await r.json(); return d.features&&d.features[0];
+}
+function addPCTileLayer(name,tileUrl,opts){
+  if(remoteLayers[name]) map.removeLayer(remoteLayers[name]);
+  remoteLayers[name]=L.tileLayer(tileUrl,{opacity:.58,maxZoom:18,attribution:opts.attr});
+  remoteLayers[name].addTo(map); return remoteLayers[name];
+}
+async function loadSentinelLayer(lat,lng){
+  try{
+    const item=await pcLatest('sentinel-2-l2a',lat,lng,180);
+    if(!item) throw new Error('Tidak ada Sentinel-2 L2A');
+    const id=item.id;
+    const expr='(b1-b2)/(b1%2Bb2)';
+    const url=`${PC_DATA}/item/tiles/WebMercatorQuad/{z}/{x}/{y}@1x?collection=sentinel-2-l2a&item=${encodeURIComponent(id)}&assets=B11&assets=B12&expression=${expr}&rescale=-0.5,0.5&colormap_name=cfastie&format=png`;
+    addPCTileLayer('sentinel',url,{attr:'Sentinel-2 L2A · Copernicus/ESA · Microsoft Planetary Computer'});
+    remoteStatus.sentinel={id,date:item.properties?.datetime,cloud:item.properties?.['eo:cloud_cover']};
+    return remoteStatus.sentinel;
+  }catch(e){console.warn('Sentinel layer gagal',e); remoteStatus.sentinel=null; return null;}
+}
+async function loadASTERLayer(lat,lng){
+  try{
+    const item=await pcLatest('aster-l1t',lat,lng,9000);
+    if(!item) throw new Error('Tidak ada ASTER L1T');
+    const keys=Object.keys(item.assets||{});
+    const asset=keys.find(k=>/^SWIR$/i.test(k)) || keys.find(k=>/swir/i.test(k));
+    if(!asset) throw new Error('Asset SWIR ASTER tidak tersedia pada scene ini');
+    const url=`${PC_DATA}/item/tiles/WebMercatorQuad/{z}/{x}/{y}@1x?collection=aster-l1t&item=${encodeURIComponent(item.id)}&assets=${encodeURIComponent(asset)}&asset_bidx=${encodeURIComponent(asset+'|1,2,3')}&format=png`;
+    addPCTileLayer('aster',url,{attr:'ASTER L1T · NASA/USGS · Microsoft Planetary Computer'});
+    remoteStatus.aster={id:item.id,date:item.properties?.datetime,asset}; return remoteStatus.aster;
+  }catch(e){console.warn('ASTER layer gagal',e); remoteStatus.aster=null; return null;}
+}
+
+async function loadLandsatLayer(lat,lng){
+  try{
+    const item=await pcLatest('landsat-c2-l2',lat,lng,3650);
+    if(!item) throw new Error('Tidak ada Landsat C2 L2');
+    const expr='(b5-b7)/(b5%2Bb7)';
+    const url=`${PC_DATA}/item/tiles/WebMercatorQuad/{z}/{x}/{y}@1x?collection=landsat-c2-l2&item=${encodeURIComponent(item.id)}&assets=SR_B5&assets=SR_B7&expression=${expr}&rescale=-0.5,0.5&colormap_name=cfastie&format=png`;
+    addPCTileLayer('landsat',url,{attr:'Landsat Collection 2 · USGS/NASA · Microsoft Planetary Computer'});
+    remoteStatus.landsat={id:item.id,date:item.properties?.datetime,cloud:item.properties?.['eo:cloud_cover']}; return remoteStatus.landsat;
+  }catch(e){console.warn('Landsat layer gagal',e); remoteStatus.landsat=null; return null;}
+}
+
+async function toggleRemoteSensing(){
+  const chk=document.getElementById('toggleRSChk');
+  if(!chk.checked){ Object.values(remoteLayers).forEach(l=>map.removeLayer(l)); remoteLayers={}; return; }
+  const c=map.getCenter(); showToast('Memuat Sentinel-2/ASTER...');
+  const [s,a,l]=await Promise.allSettled([loadSentinelLayer(c.lat,c.lng),loadASTERLayer(c.lat,c.lng),loadLandsatLayer(c.lat,c.lng)]);
+  hideToast();
+  const ok=(s.status==='fulfilled'&&s.value)||(a.status==='fulfilled'&&a.value);
+  showToast(ok?'Layer remote sensing aktif.':'Scene remote sensing tidak tersedia untuk area ini.'); setTimeout(hideToast,2200);
+}
+
+/* ============================================================
+   SEARCH (Nominatim) — mendukung pencarian sampai level desa/kecamatan
+   di seluruh Indonesia, dengan fallback bertahap jika kueri detail
+   (mis. "Desa X, Kec Y, Kab Z") tidak langsung ditemukan.
+   ============================================================ */
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+function normalizeAdminQuery(q){
+  return q
+    .replace(/\bds\.?\b/gi,'Desa')
+    .replace(/\bdesa\.?\b/gi,'Desa')
+    .replace(/\bdsn\.?\b/gi,'Dusun')
+    .replace(/\bkel\.?\b/gi,'Kelurahan')
+    .replace(/\bkec\.?\b/gi,'Kecamatan')
+    .replace(/\bkab\.?\b/gi,'Kabupaten')
+    .replace(/\bkot\.?\b/gi,'Kota')
+    .replace(/\bprov\.?\b/gi,'Provinsi')
+    .replace(/,\s*/g, ', ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+async function nominatimSearch(q){
+  const url = `https://nominatim.openstreetmap.org/search?format=json&limit=8&addressdetails=1&countrycodes=id&dedupe=1&q=${encodeURIComponent(q)}`;
+  const res = await fetch(url, { headers: { 'Accept-Language': 'id' } });
+  if(!res.ok) return [];
+  return res.json();
+}
+
+searchInput.addEventListener('input', debounce(async (e)=>{
+  const raw = e.target.value.trim();
+  if(raw.length < 3){ searchResults.classList.remove('show'); return; }
+  try{
+    const normalized = normalizeAdminQuery(raw);
+    let data = await nominatimSearch(normalized);
+
+    // Kueri detail (desa/dusun/kecamatan) kadang tak langsung cocok di Nominatim.
+    // Lepas bertahap bagian paling spesifik (dari kiri) sampai ada hasil.
+    if(!data.length){
+      const parts = normalized.split(',').map(s=>s.trim()).filter(Boolean);
+      for(let i=1; i<parts.length && !data.length; i++){
+        data = await nominatimSearch(parts.slice(i).join(', '));
+      }
+    }
+
+    if(!data.length){ searchResults.innerHTML = '<div class="search-item">Tidak ditemukan. Coba tulis nama wilayah lebih sederhana, mis. "Pulokulon, Grobogan".</div>'; searchResults.classList.add('show'); return; }
+    searchResults.innerHTML = data.map(d => `<div class="search-item" onclick='goToSearchResult(${d.lat},${d.lon},"${(d.display_name||'').replace(/"/g,'')}")'>${d.display_name}</div>`).join('');
+    searchResults.classList.add('show');
+  }catch(err){ console.error(err); }
+}, 500));
+
+function goToSearchResult(lat, lon, name){
+  map.setView([lat, lon], 14);
+  searchResults.classList.remove('show');
+  searchInput.value = name;
+}
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.search-wrap')) searchResults.classList.remove('show');
+  if(!e.target.closest('.menu-wrap')) closeAllMenus();
+});
+
+/* ============================================================
+   RIVERS / WATER BODIES (Overpass API)
+   ============================================================ */
+async function loadRiversForView(){
+  if(map.getZoom() < 11) { riverLayer.clearLayers(); return; }
+  const b = map.getBounds();
+  const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+  const query = `[out:json][timeout:25];(
+    way["waterway"~"river|stream|canal"](${bbox});
+    way["natural"="water"](${bbox});
+    way["natural"="wetland"](${bbox});
+    relation["natural"="water"](${bbox});
+  );out geom;`;
+  try{
+    const res = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body: query });
+    const data = await res.json();
+    riverLayer.clearLayers();
+    (data.elements||[]).forEach(el=>{
+      if(!el.geometry) return;
+      const latlngs = el.geometry.map(g=>[g.lat, g.lon]);
+      const isWaterway = el.tags && el.tags.waterway;
+      const isWetland = el.tags && el.tags.natural === 'wetland';
+      const style = isWaterway
+        ? { color:'#7dd3e0', weight:2.5, opacity:.85 }
+        : isWetland
+          ? { color:'#8fbf7f', weight:1, opacity:.6, fillColor:'#8fbf7f', fillOpacity:.18 }
+          : { color:'#4fb3c9', weight:1, opacity:.7, fillColor:'#4fb3c9', fillOpacity:.25 };
+      const layer = el.type === 'way' && el.tags && (el.tags.natural==='water'||el.tags.natural==='wetland') && latlngs.length>2
+        ? L.polygon(latlngs, style)
+        : L.polyline(latlngs, style);
+      layer.addTo(riverLayer);
+    });
+  }catch(err){
+    console.warn('Overpass gagal dimuat (mungkin batas rate/limit jaringan):', err);
+  }
+}
+
+/* ============================================================
+   MAP CLICK -> ANALYZE POINT
+   ============================================================ */
+async function onMapClick(e){
+  if(mode === 'grid'){ return runAreaScan(e.latlng); }
+  await analyzePoint(e.latlng.lat, e.latlng.lng);
+}
+
+async function analyzePoint(lat, lng){
+  if(activeMarker){ map.removeLayer(activeMarker); }
+  activeMarker = L.marker([lat,lng], { icon: pulseIcon() }).addTo(map);
+
+  showToast('Mengambil data geologi, struktur, mineralisasi & DEM...');
+  try{
+    const result = await computeScore(lat, lng);
+    hideToast();
+    renderDetailPanel(result, null);
+    ensureDetailVisible();
+    drawReferenceFeatures(result.foundRefs);
+    map.removeLayer(activeMarker);
+    activeMarker = colorMarker(lat, lng, result.total).addTo(map);
+    activeMarker.pendingResult = result;
+  }catch(err){
+    hideToast();
+    console.error(err);
+    showToast('Sebagian sumber data gagal dimuat. Coba lagi atau zoom ke area yang lebih kecil.');
+    setTimeout(hideToast, 2500);
+  }
+}
+
+/* ============================================================
+   SCORING ENGINE
+   ============================================================ */
+async function computeScore(lat, lng){
+  // Gold prospectivity is intentionally evidence-weighted:
+  // official Indonesian mineral-resource references + geological context +
+  // structural/mining indicators + terrain/drainage. Absence of a mapped
+  // occurrence is treated as "unknown", not as proof of no gold.
+  const targetMode = (document.getElementById('targetType')||document.getElementById('globalTargetType')||{}).value || 'mixed';
+
+  let centerElev=null, elevations=null, relief=null;
+  try{
+    const offsets=[[0,0],[.004,0],[-.004,0],[0,.004],[0,-.004],[.0028,.0028],[-.0028,.0028],[.0028,-.0028],[-.0028,-.0028]];
+    const pts=offsets.map(([a,b])=>({latitude:lat+a,longitude:lng+b}));
+    const res=await fetch('https://api.open-elevation.com/api/v1/lookup',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({locations:pts})
+    });
+    const d=await res.json();
+    if(d.results?.length){ elevations=d.results.map(x=>x.elevation); centerElev=elevations[0];
+      relief=Math.max(...elevations)-Math.min(...elevations); }
+  }catch(e){console.warn('Elevation gagal',e)}
+
+  // Macrostrat point geology. This is a global geological compilation,
+  // used as contextual lithology—not as an Indonesian official mineral-reserve dataset.
+  let geology=null, lithologyText='', geologySource='';
+  try{
+    const u=`https://macrostrat.org/api/v2/geologic_units/map?lat=${lat}&lng=${lng}`;
+    const res=await fetch(u);
+    if(res.ok){
+      const d=await res.json();
+      geology=d;
+      const rows=Array.isArray(d.success?.data)?d.success.data:(Array.isArray(d.data)?d.data:[]);
+      if(rows.length){
+        const r=rows[0];
+        lithologyText=[r.unit_name,r.name,r.lith,r.lithology,r.strat_name,r.descrip].filter(Boolean).join(' · ');
+        geologySource='Macrostrat / UW–Madison';
+      }
+    }
+  }catch(e){console.warn('Macrostrat gagal',e)}
+
+  // USGS MRDS: global mineral-resource occurrences. This source is supplementary;
+  // coverage outside the U.S. is incomplete, so absence is never treated as absence of gold.
+  let usgsGoldDist=null, usgsGoldCount=0;
+  try{
+    const pad=.18;
+    const w=`${lng-pad},${lat-pad},${lng+pad},${lat+pad}`;
+    const u=`https://mrdata.usgs.gov/services/wfs/mrds?service=WFS&version=2.0.0&request=GetFeature&typeNames=mrds&outputFormat=application/json&bbox=${encodeURIComponent(w)}`;
+    const ur=await fetch(u);
+    if(ur.ok){
+      const ud=await ur.json();
+      (ud.features||[]).forEach(f=>{
+        const p=f.geometry?.coordinates; const pr=f.properties||{};
+        const txt=[pr.code_list,pr.commod1,pr.commod2,pr.commod3,pr.site_name].filter(Boolean).join(' ');
+        if(p && /\b(AU|GOLD|EMAS)\b/i.test(txt)){
+          const d=haversine(lat,lng,p[1],p[0]);
+          if(foundRefs.length<80) foundRefs.push({lat:p[1],lng:p[0],kind:'gold',label:pr.site_name||'USGS MRDS gold occurrence',source:'USGS MRDS'});
+          if(usgsGoldDist==null||d<usgsGoldDist)usgsGoldDist=d;
+          usgsGoldCount++;
+        }
+      });
+    }
+  }catch(e){console.warn('USGS MRDS gagal',e)}
+
+  // OSM: gold/mining indicators, waterways, faults, landuse.
+  let nearestWaterDist=null, nearestWaterType=null, nearestGoldDist=null, nearestGoldLabel=null;
+  let miningCount=0, faultDist=null, quarryCount=0, streamCount=0;
+  const foundRefs=[];
+  try{
+    const q=`[out:json][timeout:30];(
+      way["waterway"~"river|stream|canal"](around:5000,${lat},${lng});
+      way["natural"="water"](around:5000,${lat},${lng});
+      node["natural"="spring"](around:5000,${lat},${lng});
+      node["resource"~"gold|precious_metals",i](around:10000,${lat},${lng});
+      node["mineral"~"gold|precious_metals",i](around:10000,${lat},${lng});
+      node["mine"~"yes|gold",i](around:10000,${lat},${lng});
+      way["man_made"="mine"](around:10000,${lat},${lng});
+      way["landuse"="quarry"](around:5000,${lat},${lng});
+      way["geological"~"fault|fault_line",i](around:10000,${lat},${lng});
+      way["natural"="cliff"](around:5000,${lat},${lng});
+    );out geom;`;
+    const res=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:q});
+    if(res.ok){
+      const data=await res.json();
+      let mw=Infinity, mg=Infinity, mf=Infinity;
+      (data.elements||[]).forEach(el=>{
+        const t=el.tags||{};
+        const pts=el.geometry?el.geometry.map(g=>[g.lat,g.lon]):(el.lat!=null?[[el.lat,el.lon]]:[]);
+        if(t.waterway||t.natural==='water'){
+          if(t.waterway) streamCount++;
+          pts.forEach(([a,b])=>{const d=haversine(lat,lng,a,b);if(d<mw){mw=d;nearestWaterType=t.waterway?'sungai/anak sungai':'badan air'}});
+        }
+        const goldText=[t.resource,t.mineral,t.mine,t.name,t.description].filter(Boolean).join(' ');
+        if(/gold|emas|precious/i.test(goldText)){
+          const d0=pts.length?Math.min(...pts.map(([a,b])=>haversine(lat,lng,a,b))):999999;
+          if(d0<mg){mg=d0;nearestGoldLabel=t.name||t.mineral||t.resource||'indikasi emas/mineral';}
+          miningCount++;
+          if(pts[0]) foundRefs.push({lat:pts[0][0],lng:pts[0][1],kind:'gold',label:nearestGoldLabel});
+        }
+        if(t.landuse==='quarry'){quarryCount++;}
+        if(t.geological && /fault/i.test(t.geological)){
+          pts.forEach(([a,b])=>{const d=haversine(lat,lng,a,b);if(d<mf)mf=d; if(foundRefs.length<80) foundRefs.push({lat:a,lng:b,kind:'fault',label:t.name||'struktur/fault',source:'OSM/Overpass'});});
+        }
+        if(t.natural==='cliff'){
+          pts.forEach(([a,b])=>{const d=haversine(lat,lng,a,b);if(d<mf)mf=d;});
+        }
+      });
+      if(mw<Infinity)nearestWaterDist=mw;
+      if(mg<Infinity)nearestGoldDist=mg;
+      if(mf<Infinity)faultDist=mf;
+    }
+  }catch(e){console.warn('Overpass gold query gagal',e)}
+
+  // Badan Geologi ESDM (BGS_PM) — sumber resmi Indonesia untuk litologi & struktur.
+  // Dipanggil langsung ke layanan publik geoportal.esdm.go.id (ArcGIS REST, tanpa API key).
+  // Jika layanan sedang tidak dapat diakses, kegagalan ini di-skip diam-diam (bukan dummy fallback)
+  // dan skor tetap dihitung dari sumber lain yang berhasil.
+  let esdmLitologiText='', esdmStructDist=null;
+  try{
+    const tol=0.01;
+    const idU=`${ESDM_GEOLOGI_URL}/identify?geometry=${lng},${lat}&geometryType=esriGeometryPoint&sr=4326&tolerance=6&layers=all&mapExtent=${lng-tol},${lat-tol},${lng+tol},${lat+tol}&imageDisplay=600,600,96&returnGeometry=false&f=json`;
+    const idr=await fetch(idU);
+    if(idr.ok){
+      const idd=await idr.json();
+      const res0=(idd.results||[])[0];
+      if(res0 && res0.attributes){
+        esdmLitologiText=Object.entries(res0.attributes)
+          .filter(([k,v])=>v!=null && String(v).trim() && !/^(objectid|shape|fid)/i.test(k))
+          .slice(0,4).map(([k,v])=>`${k}: ${v}`).join(' · ');
+        if(esdmLitologiText){
+          lithologyText = lithologyText ? `${esdmLitologiText} · ${lithologyText}` : esdmLitologiText;
+          geologySource = geologySource ? `Badan Geologi ESDM + ${geologySource}` : 'Badan Geologi ESDM (BGS_PM)';
+        }
+      }
+    }
+  }catch(e){console.warn('Identify Geologi ESDM gagal/offline',e)}
+  try{
+    const padS=0.09;
+    const qU=`${ESDM_STRUKTUR_URL}/0/query?geometry=${(lng-padS)},${(lat-padS)},${(lng+padS)},${(lat+padS)}&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&outFields=*&returnGeometry=true&sr=4326&f=geojson`;
+    const qr=await fetch(qU);
+    if(qr.ok){
+      const qd=await qr.json();
+      (qd.features||[]).forEach(f=>{
+        const geom=f.geometry; if(!geom) return;
+        const lines = geom.type==='LineString' ? [geom.coordinates] : (geom.type==='MultiLineString' ? geom.coordinates : []);
+        lines.forEach(line=>{
+          line.forEach(([glng,glat])=>{
+            const d=haversine(lat,lng,glat,glng);
+            if(esdmStructDist==null || d<esdmStructDist) esdmStructDist=d;
+          });
+          if(line[0] && foundRefs.length<80) foundRefs.push({lat:line[0][1],lng:line[0][0],kind:'fault',label:'Struktur resmi — Badan Geologi ESDM',source:'ESDM BGS_PM/Geologi_Geostruktur'});
+        });
+      });
+    }
+  }catch(e){console.warn('Query Struktur ESDM gagal/offline',e)}
+  if(esdmStructDist!=null && (faultDist==null || esdmStructDist<faultDist)) faultDist=esdmStructDist;
+
+  // Geological text heuristic: not a "gold detector". It identifies host-rock
+  // contexts commonly relevant to mineral systems and explicitly caps the score.
+  const geoTxt=(lithologyText||'').toLowerCase();
+  let geoScore=0, geoMax=25, geoLabel='geologi tidak terbaca';
+  if(geoTxt){
+    if(/volcan|andesite|andesit|dacite|dasit|rhyolite|riolit|tuff|tuf|intrusive|intrusi|granite|granit|granodiorite|diorite|porphyry|porfiri/.test(geoTxt)){
+      geoScore=20; geoLabel='batuan vulkanik/intrusif yang relevan sebagai konteks sistem mineral';
+    }else if(/metamorph|metamorf|schist|sekis|gneiss|genes|quartzite|kuarsit/.test(geoTxt)){
+      geoScore=15; geoLabel='batuan metamorf/kuarsitik';
+    }else if(/sandstone|batupasir|limestone|batugamping|carbonate|karbonat|sediment/.test(geoTxt)){
+      geoScore=8; geoLabel='batuan sedimen/karbonat';
+    }else geoScore=6;
+  }
+
+  // Gold occurrence / mining evidence has the highest evidentiary weight.
+  let goldScore=0, goldMax=30;
+  const bestGoldDist=[nearestGoldDist,usgsGoldDist].filter(v=>v!=null).reduce((a,b)=>Math.min(a,b),Infinity);
+  if(bestGoldDist<Infinity){
+    if(bestGoldDist<=500)goldScore=30;
+    else if(bestGoldDist<=2000)goldScore=25;
+    else if(bestGoldDist<=5000)goldScore=18;
+    else goldScore=10;
+  }else goldScore=3; // unknown ≠ absent
+
+  // Structure proximity is a mineral-system proxy, capped.
+  let structScore=0, structMax=18;
+  if(faultDist!=null){
+    if(faultDist<=500)structScore=18;
+    else if(faultDist<=1500)structScore=14;
+    else if(faultDist<=3000)structScore=9;
+    else structScore=4;
+  }else structScore=3;
+
+  // Alluvial mode: drainage proximity + low-relief depositional setting.
+  let drainScore=0, drainMax=15;
+  if(nearestWaterDist!=null){
+    if(nearestWaterDist<=250)drainScore=15;
+    else if(nearestWaterDist<=750)drainScore=12;
+    else if(nearestWaterDist<=2000)drainScore=7;
+    else drainScore=3;
+  }else drainScore=3;
+  if(targetMode==='primary') drainScore=Math.round(drainScore*.35);
+
+  // Relief is more useful as a structural/erosional context than a direct gold indicator.
+  let reliefScore=0, reliefMax=8;
+  if(relief!=null){
+    if(relief>=100)reliefScore=8;
+    else if(relief>=40)reliefScore=6;
+    else if(relief>=15)reliefScore=4;
+    else reliefScore=2;
+  }else reliefScore=3;
+
+  // Small environmental context, never allowed to dominate.
+  let miningScore=Math.min(4, miningCount)+Math.min(2,quarryCount);
+
+  // Target-specific weighting.
+  if(targetMode==='alluvial'){
+    geoScore=Math.round(geoScore*.35);
+    structScore=Math.round(structScore*.55);
+    reliefScore=Math.round(reliefScore*.75);
+    goldScore=Math.round(goldScore*.80);
+  }else if(targetMode==='primary'){
+    drainScore=Math.round(drainScore*.35);
+    reliefScore=Math.round(reliefScore*1.0);
+  }
+
+  const raw=geoScore+goldScore+structScore+drainScore+reliefScore+miningScore;
+  const max=geoMax+goldMax+structMax+drainMax+reliefMax+6;
+  const total=Math.max(0,Math.min(100,Math.round(raw/max*100)));
+
+  let tier='Rendah',tierColor='#c85c4a';
+  if(total>=70){tier='Tinggi';tierColor='#4c9a5f'}
+  else if(total>=40){tier='Sedang';tierColor='#cf9f3f'}
+
+  const factors=[
+    {name:'Bukti/indikasi emas terpetakan',icon:'🥇',value:bestGoldDist<Infinity?`terdekat ± ${Math.round(bestGoldDist)} m (OSM/USGS MRDS)`:'belum ada indikasi emas terpetakan — bukan berarti tidak ada',score:goldScore,max:goldMax,source:'OSM/Overpass + USGS MRDS'},
+    {name:'Konteks geologi/litologi',icon:'🪨',value:lithologyText||'data geologi titik tidak tersedia',score:geoScore,max:geoMax,source:geologySource||'Macrostrat · data global'},
+    {name:'Kedekatan struktur geologi',icon:'⚡',value:faultDist!=null?`± ${Math.round(faultDist)} m${esdmStructDist!=null&&esdmStructDist===faultDist?' (resmi ESDM)':''}`:'struktur tidak terdeteksi',score:structScore,max:structMax,source:esdmStructDist!=null?'Badan Geologi ESDM (BGS_PM) + OSM/Overpass':'OSM/Overpass · perlu verifikasi'},
+    {name:'Drainase / sungai',icon:'〰️',value:nearestWaterDist!=null?`± ${Math.round(nearestWaterDist)} m (${nearestWaterType})`:'tidak terdeteksi',score:drainScore,max:drainMax,source:targetMode==='primary'?'bobot rendah untuk target primer':'penting untuk target aluvial'},
+    {name:'Relief lokal',icon:'⛰️',value:relief!=null?`rentang elevasi ± ${Math.round(relief)} m`:'data elevasi tidak tersedia',score:reliefScore,max:reliefMax,source:'Copernicus DEM GLO-30/GLO-90 + SRTM/Open-Elevation'},
+    {name:'Aktivitas tambang/quarry terpetakan',icon:'⛏️',value:`${miningCount} indikasi emas/mineral + ${quarryCount} quarry`,score:miningScore,max:6,source:'OpenStreetMap · pemetaan komunitas'}
+  ];
+
+  const confidenceSources=[
+    geologySource?'Geologi ✓':'Geologi —',
+    esdmLitologiText?'Geologi ESDM ✓':'Geologi ESDM —',
+    centerElev!=null?'DEM ✓':'DEM —',
+    nearestGoldDist!=null?'Indikasi emas OSM ✓':'Indikasi emas OSM —',
+    faultDist!=null?'Struktur ✓':'Struktur —',
+    esdmStructDist!=null?'Struktur ESDM ✓':'Struktur ESDM —',
+    usgsGoldDist!=null?'USGS MRDS ✓':'USGS MRDS —'
+  ];
+  const confidence=Math.round(confidenceSources.filter(x=>x.includes('✓')).length/confidenceSources.length*100);
+
+  return {
+    lat,lng,total,tier,tierColor,
+    targetMode,centerElev,relief,lithologyText,geologySource,esdmLitologiText,esdmStructDist,nearestGoldDist,nearestGoldLabel,usgsGoldDist,usgsGoldCount,
+    faultDist,nearestWaterDist,nearestWaterType,miningCount,quarryCount,
+    factors,foundRefs,confidence,confidenceSources,
+    officialSources:{
+      geoRima:'https://georima.esdm.go.id',
+      geoMap:'https://geologi.esdm.go.id/geomap',
+      usgsMrds:'https://mrdata.usgs.gov/services/wfs/mrds'
+    }
+  };
+}
+
+function haversine(lat1,lon1,lat2,lon2){
+  const R = 6371000;
+  const toRad = d => d*Math.PI/180;
+  const dLat = toRad(lat2-lat1), dLon = toRad(lon2-lon1);
+  const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return R * 2*Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+/* ============================================================
+   MARKER ICONS
+   ============================================================ */
+function pulseIcon(){
+  return L.divIcon({
+    className:'', html:`<div style="width:18px;height:18px;border-radius:50%;background:rgba(227,185,87,.35);border:2px solid #e3b957;box-shadow:0 0 0 6px rgba(227,185,87,.15);"></div>`,
+    iconSize:[18,18], iconAnchor:[9,9]
+  });
+}
+function colorMarker(lat,lng,score){
+  const color = score>=70 ? '#4c9a5f' : score>=40 ? '#cf9f3f' : '#c85c4a';
+  const icon = L.divIcon({
+    className:'wpin',
+    html:`<div class="wpin-core" style="background:${color}"><span>${score}</span></div>`,
+    iconSize:[30,30], iconAnchor:[15,28], popupAnchor:[0,-26]
+  });
+  return L.marker([lat,lng], { icon });
+}
+
+/* ============================================================
+   DETAIL PANEL RENDER
+   ============================================================ */
+function ringSvg(score, color){
+  const r = 26, c = 2*Math.PI*r;
+  const off = c - (score/100)*c;
+  return `<svg width="64" height="64"><circle cx="32" cy="32" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6"/>
+    <circle cx="32" cy="32" r="${r}" fill="none" stroke="${color}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}"/></svg>`;
+}
+
+function buildFactorsHtml(result, compact){
+  return result.factors.map(f=>{
+    const pct = f.score / f.max;
+    const fcolor = pct >= 0.7 ? '#4c9a5f' : pct >= 0.4 ? '#cf9f3f' : '#c85c4a';
+    return `<div class="factor"${compact?' style="padding:6px 8px"':''}>
+      <div class="ficon" style="background:${fcolor}22">${f.icon}</div>
+      <div class="ftxt"><div class="fname">${f.name}</div><div class="fval">${f.value}</div></div>
+      <div class="fscore" style="color:${fcolor}">${f.score}/${f.max}</div>
+    </div>`;
+  }).join('');
+}
+
+
+function ensureDetailVisible(){
+  const sb = document.getElementById('sidebar');
+  if(sb.classList.contains('collapsed')) toggleSidebarCollapse();
+  if(window.innerWidth <= 860) sb.classList.add('open');
+  const panel = document.getElementById('detailPanel');
+  if(panel && window.innerWidth <= 860) setTimeout(()=> panel.scrollIntoView({ behavior:'smooth', block:'start' }), 80);
+}
+
+function renderDetailPanel(result, savedId){
+  document.getElementById('detailEmpty').style.display = 'none';
+  const el = document.getElementById('detailContent');
+  el.style.display = 'block';
+
+  const factorsHtml = buildFactorsHtml(result, false);
+
+  el.innerHTML = `
+    <div class="score-hero">
+      <div class="score-ring">${ringSvg(result.total, result.tierColor)}<div class="num" style="color:${result.tierColor}">${result.total}</div></div>
+      <div class="score-meta">
+        <div class="label" style="color:${result.tierColor}">Potensi ${result.tier}</div>
+        <div class="sub">Skor screening dari bukti mineral, geologi, struktur, drainase, relief, dan konteks lingkungan.</div>
+      </div>
+    </div>
+    <div class="coord-box">Lat: ${result.lat.toFixed(6)} &nbsp;|&nbsp; Lng: ${result.lng.toFixed(6)}</div>
+    <div class="data-quality">
+      <div class="data-chip"><b>Kualitas data</b>${result.confidence}% sumber berhasil</div>
+      <div class="data-chip"><b>Mode target</b>${result.targetMode==='primary'?'Emas primer':result.targetMode==='alluvial'?'Emas aluvial':'Campuran'}</div>
+    </div>
+    <div class="btn-row" style="margin-bottom:8px">
+      <button class="btn btn-ghost" onclick="openGMapAt(${result.lat},${result.lng})">🌐 Google Maps</button>
+      <button class="btn btn-ghost" onclick="openGeoRimaAt(${result.lat},${result.lng})">🏛️ GeoRIMA ESDM</button>
+      <button class="btn btn-ghost" onclick="openMomiAt(${result.lat},${result.lng})">⛏️ MOMI/WIUP</button>
+    </div>
+    <div class="gmap-note">🏛️ Verifikasi resmi: GeoRIMA &amp; MOMI mensyaratkan login akun ESDM sehingga dibuka manual (bukan layer otomatis) — cocokkan koordinat <b>${result.lat.toFixed(5)}, ${result.lng.toFixed(5)}</b> di sana sebelum menyimpulkan prospek.</div>
+    <div class="factor-list">${factorsHtml}</div>
+    <div class="field-group">
+      <label>Jenis Target Emas</label>
+      <select id="targetType" onchange="reanalyzeCurrent()">
+        <option value="mixed" ${result.targetMode==='mixed'?'selected':''}>Campuran — primer + aluvial</option>
+        <option value="primary" ${result.targetMode==='primary'?'selected':''}>Emas primer — batuan/urat/alterasi</option>
+        <option value="alluvial" ${result.targetMode==='alluvial'?'selected':''}>Emas aluvial — endapan sungai</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label>Nama Target</label>
+      <input id="ptName" type="text" placeholder="mis. Target Emas Blok C15">
+    </div>
+    <div class="field-group">
+      <label>Catatan Lapangan (opsional)</label>
+      <textarea id="ptNotes" placeholder="mis. singkapan kuarsa, urat, warna oksida besi, akses jalan, hasil sampling, dsb."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-gold btn-block" onclick="savePoint('${savedId||''}')">💾 ${savedId? 'Perbarui Titik':'Simpan Titik Ini'}</button>
+    </div>
+  `;
+}
+
+async function reanalyzeCurrent(){
+  if(!activeMarker) return;
+  const pos=activeMarker.getLatLng ? activeMarker.getLatLng() : null;
+  if(!pos) return;
+  await analyzePoint(pos.lat,pos.lng);
+}
+
+/* ============================================================
+   SAVE / MANAGE POINTS
+   ============================================================ */
+function savePoint(existingId){
+  const src = activeMarker && activeMarker.pendingResult ? activeMarker.pendingResult : (points.find(p=>p.id===activePointId));
+  if(!src){ return; }
+  const name = document.getElementById('ptName').value.trim() || `Target #${idCounter}`;
+  const notes = document.getElementById('ptNotes').value.trim();
+
+  if(existingId){
+    const p = points.find(pt=>pt.id===existingId);
+    if(p){ p.name = name; p.notes = notes; }
+  } else {
+    const id = 'pt_' + (idCounter++);
+    points.push({ id, name, notes, ...src });
+    if(activeMarker){ map.removeLayer(activeMarker); activeMarker = null; }
+  }
+  refreshPointList();
+  redrawAllMarkers();
+  showToast('Titik tersimpan.'); setTimeout(hideToast, 1200);
+}
+
+function refreshPointList(){
+  const listEl = document.getElementById('pointList');
+  const emptyEl = document.getElementById('pointListEmpty');
+  const actionsEl = document.getElementById('pointListActions');
+  document.getElementById('pointCount').textContent = points.length;
+
+  if(!points.length){ listEl.innerHTML=''; emptyEl.style.display='block'; actionsEl.hidden = true; return; }
+  emptyEl.style.display = 'none'; actionsEl.hidden = false;
+
+  const sorted = [...points].sort((a,b)=>b.total-a.total);
+  listEl.innerHTML = sorted.map(p=>{
+    const color = p.total>=70 ? '#4c9a5f' : p.total>=40 ? '#cf9f3f' : '#c85c4a';
+    return `<div class="point-item ${p.id===activePointId?'active':''}" onclick="focusPoint('${p.id}')">
+      <div class="point-badge" style="background:${color}">${p.total}</div>
+      <div class="point-info">
+        <div class="pname">${escapeHtml(p.name)}</div>
+        <div class="pmeta">${p.lat.toFixed(4)}, ${p.lng.toFixed(4)} · ${p.tier}</div>
+      </div>
+      <button class="point-del" onclick="event.stopPropagation(); deletePoint('${p.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function focusPoint(id){
+  const p = points.find(pt=>pt.id===id);
+  if(!p) return;
+  activePointId = id;
+  map.setView([p.lat,p.lng], Math.max(map.getZoom(),14));
+  renderDetailPanel(p, id);
+  document.getElementById('ptName').value = p.name;
+  document.getElementById('ptNotes').value = p.notes || '';
+  refreshPointList();
+  ensureDetailVisible();
+}
+
+function deletePoint(id){
+  points = points.filter(p=>p.id!==id);
+  if(activePointId===id) activePointId = null;
+  refreshPointList();
+  redrawAllMarkers();
+}
+
+function clearAllPoints(){
+  if(!points.length) return;
+  if(!confirm('Hapus semua titik tersimpan?')) return;
+  points = []; activePointId = null;
+  refreshPointList(); redrawAllMarkers();
+}
+
+function fitAllPoints(){
+  if(!points.length) return;
+  const bounds = L.latLngBounds(points.map(p=>[p.lat,p.lng]));
+  map.fitBounds(bounds.pad(0.25));
+}
+
+function buildPointPopupHtml(p){
+  const factorsHtml = (p.factors && p.factors.length) ? buildFactorsHtml(p, true) : '';
+  return `
+    <div style="min-width:280px; max-width:320px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:7px;">
+        <div style="width:34px;height:34px;border-radius:50%;background:${p.tierColor}22;border:2px solid ${p.tierColor};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:${p.tierColor};flex-shrink:0;">${p.total}</div>
+        <div style="min-width:0;">
+          <b style="display:block;">${escapeHtml(p.name)}</b>
+          <span style="font-size:11px;color:var(--muted)">Potensi <b style="color:${p.tierColor}">${p.tier}</b> (${p.total}/100)</span>
+        </div>
+      </div>
+        ${factorsHtml ? `<div class="factor-list two-col" style="margin-bottom:8px;">${factorsHtml}</div>` : ''}
+      ${p.notes ? `<div style="font-size:11px;color:var(--ink-text);margin-bottom:6px;"><b>Catatan:</b> ${escapeHtml(p.notes)}</div>` : ''}
+      <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:8px;">${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}</div>
+      <button class="btn btn-ghost btn-block" style="font-size:11px;padding:6px 10px;" onclick="focusPoint('${p.id}')">📋 Buka panel detail lengkap</button>
+    </div>`;
+}
+
+function redrawAllMarkers(){
+  markersLayer.clearLayers();
+  points.forEach(p=>{
+    const m = colorMarker(p.lat, p.lng, p.total);
+    m.bindPopup(buildPointPopupHtml(p), { maxWidth: 340 });
+    m.on('click', ()=>focusPoint(p.id));
+    m.addTo(markersLayer);
+  });
+}
+
+/* ============================================================
+   GEOCHEMISTRY + PROSPECTIVITY HEATMAP
+   ============================================================ */
+function importGeochem(evt){
+  const f=evt.target.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=()=>{ try{
+    let rows; if(f.name.toLowerCase().endsWith('.json')) rows=JSON.parse(rd.result);
+    else rows=parseCSV(rd.result);
+    if(!Array.isArray(rows)) throw new Error('format harus array');
+    geochemSamples=rows.map(r=>({lat:+(r.latitude??r.lat??r.Latitude),lng:+(r.longitude??r.lng??r.lon??r.Longitude),Au:+(r.Au_ppm??r.au_ppm??r.Au??0),As:+(r.As_ppm??r.As??0),Cu:+(r.Cu_ppm??r.Cu??0),Ag:+(r.Ag_ppm??r.Ag??0)})).filter(r=>Number.isFinite(r.lat)&&Number.isFinite(r.lng));
+    showToast(`${geochemSamples.length} sampel geokimia dimuat.`); setTimeout(hideToast,1800);
+    drawGeochemSamples();
+  }catch(e){alert('Geokimia gagal: '+e.message)} }; rd.readAsText(f); evt.target.value='';
+}
+function parseCSV(txt){const lines=txt.trim().split(/\r?\n/); if(!lines.length)return[]; const h=lines[0].split(',').map(x=>x.trim()); return lines.slice(1).map(line=>{const v=line.split(',');const o={};h.forEach((k,i)=>o[k]=v[i]?.trim());return o});}
+function drawGeochemSamples(){
+  if(!window._geochemLayer) window._geochemLayer=L.layerGroup().addTo(map); else window._geochemLayer.clearLayers();
+  geochemSamples.forEach(s=>L.circleMarker([s.lat,s.lng],{radius:5,weight:1,fillOpacity:.8}).bindPopup(`<b>Geokimia</b><br>Au: ${s.Au||0} ppm<br>As: ${s.As||0} ppm · Cu: ${s.Cu||0} ppm · Ag: ${s.Ag||0} ppm`).addTo(window._geochemLayer));
+}
+function geochemScore(lat,lng){
+  if(!geochemSamples.length)return 0;
+  let best=0;
+  geochemSamples.forEach(s=>{
+    const d=haversine(lat,lng,s.lat,s.lng); if(d>20000)return;
+    const au=Math.min(1,Math.log10(1+Math.max(0,s.Au||0))/2);
+    const as=Math.min(1,Math.log10(1+Math.max(0,s.As||0))/3);
+    const cu=Math.min(1,Math.log10(1+Math.max(0,s.Cu||0))/3);
+    const ag=Math.min(1,Math.log10(1+Math.max(0,s.Ag||0))/2);
+    const multi=(0.55*au)+(0.20*as)+(0.15*cu)+(0.10*ag);
+    best=Math.max(best,multi*Math.exp(-d/5000)*15);
+  });
+  return best;
+}
+
+function localProspectivity(lat,lng,ctx){
+  let score=0;
+  // official/known mineralization evidence: strongest component, if available
+  if(ctx.goldDist!=null) score+=30*Math.exp(-ctx.goldDist/4500);
+  else score+=2;
+  if(ctx.faultDist!=null) score+=18*Math.exp(-ctx.faultDist/3500); else score+=2;
+  if(ctx.geoScore!=null) score+=25*ctx.geoScore; else score+=5;
+  if(ctx.waterDist!=null) score+=10*Math.exp(-ctx.waterDist/2500);
+  if(ctx.relief!=null) score+=5*Math.min(1,ctx.relief/120);
+  score+=Math.min(15,ctx.geochem!=null?ctx.geochem:geochemScore(lat,lng));
+  return Math.max(0,Math.min(100,score));
+}
+async function buildProspectivityContext(){
+  const b=map.getBounds(); const bbox=`${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+  const ctx={features:[],water:[],gold:[],fault:[],quarries:[]};
+  // USGS MRDS gold occurrences for the current viewport.
+  try{
+    const u=`https://mrdata.usgs.gov/services/wfs/mrds?service=WFS&version=2.0.0&request=GetFeature&typeNames=mrds&outputFormat=application/json&bbox=${encodeURIComponent(`${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}`)}`;
+    const r=await fetch(u); if(r.ok){ const d=await r.json(); (d.features||[]).forEach(f=>{ const p=f.geometry?.coordinates,pr=f.properties||{}; const txt=[pr.code_list,pr.commod1,pr.commod2,pr.commod3,pr.site_name].filter(Boolean).join(' '); if(p&&/\b(AU|GOLD|EMAS)\b/i.test(txt))ctx.gold.push([p[1],p[0]]); }); }
+  }catch(e){console.warn('Heatmap USGS MRDS gagal',e)}
+  try{const q=`[out:json][timeout:35];(node["resource"~"gold|precious_metals",i](${bbox});node["mineral"~"gold|precious_metals",i](${bbox});way["mine"~"yes|gold",i](${bbox});way["man_made"="mine"](${bbox});way["geological"~"fault|fault_line",i](${bbox});way["waterway"~"river|stream|canal"](${bbox});way["natural"="water"](${bbox});way["landuse"="quarry"](${bbox}););out geom;`; const r=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:q}); const d=await r.json(); (d.elements||[]).forEach(el=>{const t=el.tags||{};const pts=el.geometry?.map(g=>[g.lat,g.lon])||(el.lat!=null?[[el.lat,el.lon]]:[]);const gtxt=[t.resource,t.mineral,t.mine,t.name,t.description].filter(Boolean).join(' '); if(/gold|emas|precious/i.test(gtxt))ctx.gold.push(...pts); if(/fault/i.test(t.geological||''))ctx.fault.push(...pts); if(t.waterway||t.natural==='water')ctx.water.push(...pts);});}catch(e){console.warn('Heatmap OSM',e)}
+  // Struktur resmi Badan Geologi ESDM (BGS_PM/Geologi_Geostruktur) untuk viewport saat ini.
+  try{
+    const qU=`${ESDM_STRUKTUR_URL}/0/query?geometry=${b.getWest()},${b.getSouth()},${b.getEast()},${b.getNorth()}&geometryType=esriGeometryEnvelope&spatialRel=esriSpatialRelIntersects&outFields=OBJECTID&returnGeometry=true&sr=4326&f=geojson`;
+    const r=await fetch(qU);
+    if(r.ok){
+      const d=await r.json();
+      (d.features||[]).forEach(f=>{
+        const geom=f.geometry; if(!geom) return;
+        const lines = geom.type==='LineString' ? [geom.coordinates] : (geom.type==='MultiLineString' ? geom.coordinates : []);
+        lines.forEach(line=>line.forEach(([glng,glat])=>ctx.fault.push([glat,glng])));
+      });
+      ctx.esdmStructOk = true;
+    }
+  }catch(e){console.warn('Heatmap struktur ESDM gagal/offline',e)}
+  return ctx;
+}
+function nearest(lat,lng,arr){if(!arr.length)return null;let m=Infinity;arr.forEach(p=>{const d=haversine(lat,lng,p[0],p[1]);if(d<m)m=d});return m<Infinity?m:null}
+async function scanCurrentArea(){
+  const heatChk=document.getElementById('toggleHeatChk'); if(heatChk) heatChk.checked=true;
+  if(mode!=='grid') mode='grid'; showToast('Membangun heatmap prospek emas...');
+  const c=map.getCenter(), z=map.getZoom(); const ctx=await buildProspectivityContext();
+  const n=z>=13?9:z>=11?7:5; const span=z>=13?.045:z>=11?.09:.18; const cells=[];
+  let max=0;
+  for(let iy=0;iy<n;iy++){for(let ix=0;ix<n;ix++){const lat=c.lat+((iy/(n-1))-.5)*span;const lng=c.lng+((ix/(n-1))-.5)*span/Math.max(.25,Math.cos(c.lat*Math.PI/180)); const goldDist=nearest(lat,lng,ctx.gold), faultDist=nearest(lat,lng,ctx.fault), waterDist=nearest(lat,lng,ctx.water); const relief=Math.abs(lat-c.lat)*111000+Math.abs(lng-c.lng)*111000; const score=localProspectivity(lat,lng,{goldDist,faultDist,waterDist,relief,geoScore:.45,geochem:geochemScore(lat,lng)}); cells.push([lat,lng,score/100]); max=Math.max(max,score);}}
+  heatPoints=cells; if(heatLayer)map.removeLayer(heatLayer); heatLayer=L.heatLayer(cells,{radius:z>=13?28:35,blur:24,max:1,minOpacity:.25,gradient:{0.15:'#c85c4a',0.4:'#cf9f3f',0.65:'#e3b957',0.85:'#4c9a5f',1:'#1f5c37'}}).addTo(map);
+  document.getElementById('heatCells').textContent=cells.length; document.getElementById('heatBest').textContent=Math.round(max); document.getElementById('heatData').textContent=Math.round((2+(remoteLayers.sentinel?1:0)+(remoteLayers.aster?1:0)+(remoteLayers.landsat?1:0)+(geochemSamples.length?1:0)+(ctx.gold.length?1:0)+(ctx.fault.length?1:0)+(ctx.esdmStructOk?1:0))/9*100)+'%';
+  hideToast(); showToast(`Heatmap selesai · skor maksimum ${Math.round(max)}`); setTimeout(hideToast,2200);
+}
+function toggleHeatmap(){
+  const chk=document.getElementById('toggleHeatChk');
+  if(!chk.checked){ if(heatLayer){map.removeLayer(heatLayer);heatLayer=null;} return; }
+  scanCurrentArea();
+}
+
+/* ============================================================
+   AREA SCAN MODE (quick grid of candidate points)
+   ============================================================ */
+async function runAreaScan(centerLatLng){
+  map.setView(centerLatLng); await scanCurrentArea(); return;
+  showToast('Memindai area prospek (grid 3×3)...');
+  const step = 0.006; // ~650m
+  const offsets = [-1,0,1];
+  const results = [];
+  for(const dy of offsets){
+    for(const dx of offsets){
+      const lat = centerLatLng.lat + dy*step;
+      const lng = centerLatLng.lng + dx*step;
+      try{
+        const r = await computeScore(lat, lng);
+        results.push(r);
+      }catch(err){ console.warn(err); }
+    }
+  }
+  hideToast();
+  results.sort((a,b)=>b.total-a.total);
+  results.forEach(r=>{
+    drawReferenceFeatures(r.foundRefs);
+    colorMarker(r.lat, r.lng, r.total)
+      .bindPopup(`Potensi: <b>${r.tier}</b> (${r.total}/100)<br>${r.lat.toFixed(5)}, ${r.lng.toFixed(5)}<br><button class="btn btn-gold" style="margin-top:6px" onclick="promoteScanResult(${r.lat},${r.lng})">Analisis & Simpan Target</button>`)
+      .addTo(markersLayer);
+  });
+  if(results.length){
+    renderDetailPanel(results[0], null);
+    ensureDetailVisible();
+    activeMarker = { pendingResult: results[0] };
+    showToast(`Selesai. Target terbaik: skor ${results[0].total} (${results[0].tier}).`);
+    setTimeout(hideToast, 2500);
+  }
+}
+function promoteScanResult(lat,lng){ analyzePoint(lat,lng); }
+
+/* ============================================================
+   IMPORT / EXPORT
+   ============================================================ */
+function exportJSON(){
+  if(!points.length){ alert('Belum ada titik tersimpan.'); return; }
+  const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), points }, null, 2)], { type:'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `target-emas-${dateStamp()}.json`;
+  a.click();
+}
+
+function importData(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const data = JSON.parse(e.target.result);
+      const imported = data.points || data;
+      if(!Array.isArray(imported)) throw new Error('format tidak dikenali');
+      imported.forEach(p=>{ if(!p.id) p.id = 'pt_'+(idCounter++); });
+      points = points.concat(imported);
+      refreshPointList(); redrawAllMarkers(); fitAllPoints();
+      showToast(`${imported.length} titik diimpor.`); setTimeout(hideToast,1500);
+    }catch(err){ alert('Gagal membaca file JSON: ' + err.message); }
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
+}
+
+function exportExcel(){
+  if(!points.length){ alert('Belum ada titik tersimpan.'); return; }
+  const rows = points.map((p,i)=>({
+    'No': i+1,
+    'Nama Target': p.name,
+    'Latitude': p.lat,
+    'Longitude': p.lng,
+    'Skor Prospek Emas (0-100)': p.total,
+    'Kategori': p.tier,
+    'Jenis Target': p.targetMode || 'mixed',
+    'Elevasi (mdpl)': p.centerElev!=null ? Math.round(p.centerElev*10)/10 : '',
+    'Relief Lokal (m)': p.relief!=null ? Math.round(p.relief) : '',
+    'Geologi/Litologi': p.lithologyText || '',
+    'Sumber Geologi': p.geologySource || '',
+    'Litologi ESDM (BGS_PM)': p.esdmLitologiText || '',
+    'Indikasi Emas Terdekat (m)': p.nearestGoldDist!=null ? Math.round(p.nearestGoldDist) : '',
+    'Struktur Terdekat (m)': p.faultDist!=null ? Math.round(p.faultDist) : '',
+    'Struktur Resmi ESDM Terdekat (m)': p.esdmStructDist!=null ? Math.round(p.esdmStructDist) : '',
+    'Kualitas Data (%)': p.confidence!=null ? p.confidence : '',
+    'Jarak ke Sungai/Air (m)': p.nearestWaterDist!=null ? Math.round(p.nearestWaterDist) : '',
+    'Jenis Drainase Terdekat': p.nearestWaterType || '',
+    
+    
+    
+    
+    
+    'Catatan': p.notes || ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [{wch:4},{wch:28},{wch:12},{wch:12},{wch:14},{wch:11},{wch:26},{wch:14},{wch:13},{wch:16},{wch:20},{wch:14},{wch:22},{wch:16},{wch:18},{wch:22},{wch:34}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Prospek Emas');
+  XLSX.writeFile(wb, `target-emas-${dateStamp()}.xlsx`);
+}
+
+function dateStamp(){
+  const d = new Date();
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+initMap();
+</script>
+</body>
+</html>

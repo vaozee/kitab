@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mabādi' Al-Awwaliyyah — Ushul Fiqh & Qawa'id Fiqhiyyah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #eef3f8;
+    --bg-panel: #ffffff;
+    --bg-soft: #f4f8fc;
+    --ink: #10233d;
+    --ink-soft: #43597a;
+    --line: #cfdcee;
+    --accent: #0e7cc4;
+    --accent-2: #14b8a6;
+    --accent-3: #7c5cff;
+    --gold: #c9922a;
+    --glow: 0 0 0 1px rgba(14,124,196,0.08), 0 8px 28px rgba(16,35,61,0.08);
+    --radius: 16px;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --arabic: 'Amiri', 'Scheherazade New', serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 90% -10%, rgba(20,184,166,0.10), transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, rgba(124,92,255,0.10), transparent 55%),
+      var(--bg);
+    line-height:1.65;
+  }
+
+  /* ===== Grid background layer, subtle sci-fi circuit feel ===== */
+  .grid-overlay{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(rgba(14,124,196,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(14,124,196,0.05) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(1400px 900px at 50% 0%, black, transparent 75%);
+  }
+
+  /* ===== Top Hero ===== */
+  header.hero{
+    position:relative; z-index:1;
+    padding: 64px 24px 48px;
+    text-align:center;
+    background:
+      linear-gradient(180deg, rgba(14,124,196,0.08), transparent 70%);
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--accent);
+    background:rgba(14,124,196,0.08); border:1px solid rgba(14,124,196,0.25);
+    padding:6px 14px; border-radius:999px;
+  }
+  .eyebrow::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--accent-2); box-shadow:0 0 8px var(--accent-2); }
+  h1.title{
+    margin:22px 0 6px; font-size:clamp(28px,5vw,48px); font-weight:700;
+    background:linear-gradient(90deg, var(--ink), var(--accent) 55%, var(--accent-3));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    letter-spacing:-.01em;
+  }
+  .arabic-title{
+    font-family:var(--arabic); font-size:clamp(26px,4.4vw,40px);
+    color:var(--ink); margin:8px 0 18px; direction:rtl;
+  }
+  .subtitle{ color:var(--ink-soft); max-width:680px; margin:0 auto; font-size:15.5px; }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:22px;
+  }
+  .meta-chip{
+    font-family:var(--mono); font-size:12px; color:var(--ink-soft);
+    background:var(--bg-panel); border:1px solid var(--line);
+    padding:6px 12px; border-radius:8px;
+  }
+
+  /* ===== Layout ===== */
+  .layout{
+    position:relative; z-index:1;
+    max-width:1240px; margin:0 auto; padding:32px 20px 80px;
+    display:grid; grid-template-columns:260px 1fr; gap:28px;
+    align-items:start;
+  }
+  @media (max-width:920px){ .layout{ grid-template-columns:1fr; } }
+
+  /* ===== Sidebar / TOC ===== */
+  nav.toc{
+    position:sticky; top:20px;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--glow); padding:18px 16px; max-height:calc(100vh - 40px); overflow-y:auto;
+  }
+  nav.toc h3{
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--accent); margin:4px 0 10px 4px;
+  }
+  nav.toc .part-label{
+    font-size:12px; font-weight:600; color:var(--ink-soft); margin:14px 0 6px 4px;
+    text-transform:uppercase; letter-spacing:.06em;
+  }
+  nav.toc ol{ list-style:none; margin:0 0 6px; padding:0; }
+  nav.toc a{
+    display:block; padding:6px 8px; border-radius:8px; color:var(--ink-soft);
+    text-decoration:none; font-size:13.5px; transition:.15s;
+  }
+  nav.toc a:hover{ background:var(--bg-soft); color:var(--accent); }
+  nav.toc .sec-num{ font-family:var(--mono); color:var(--accent); margin-right:6px; }
+
+  main{ min-width:0; }
+
+  /* ===== Cards / Sections ===== */
+  section.block{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--glow); padding:28px 26px 30px; margin-bottom:26px; scroll-margin-top:20px;
+    position:relative; overflow:hidden;
+  }
+  section.block::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  }
+  .part-title{
+    font-size:13px; font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase;
+    color:#fff; background:linear-gradient(90deg, var(--accent), var(--accent-3));
+    display:inline-block; padding:10px 18px; border-radius:10px; margin-bottom:18px;
+  }
+  h2.part-heading{
+    font-size:26px; margin:0 0 22px; padding-bottom:14px; border-bottom:2px dashed var(--line);
+  }
+
+  .sec-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .sec-badge{
+    font-family:var(--mono); font-size:12px; color:#fff; background:var(--accent);
+    padding:3px 10px; border-radius:6px; white-space:nowrap;
+  }
+  h3.sec-title{ margin:0; font-size:20px; color:var(--ink); }
+  .sec-title-arabic{ font-family:var(--arabic); direction:rtl; font-size:20px; color:var(--accent-3); }
+
+  .lede{ color:var(--ink-soft); margin:10px 0 18px; font-size:14.8px; }
+
+  .arabic-panel{
+    direction:rtl; text-align:center; font-family:var(--arabic);
+    font-size:clamp(20px,2.6vw,26px); line-height:2.1; color:var(--ink);
+    background:linear-gradient(180deg, var(--bg-soft), #fff);
+    border:1px solid var(--line); border-right:4px solid var(--accent);
+    border-radius:12px; padding:18px 22px; margin:14px 0;
+  }
+  .kaidah-panel{
+    direction:rtl; text-align:center; font-family:var(--arabic);
+    font-size:clamp(22px,3vw,30px); color:var(--ink);
+    background:
+      linear-gradient(120deg, rgba(14,124,196,0.06), rgba(124,92,255,0.06));
+    border:1px solid rgba(14,124,196,0.3); border-radius:14px;
+    padding:22px 24px; margin:16px 0;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.5);
+  }
+  .ayat-source{
+    font-family:var(--mono); font-size:12px; color:var(--gold); text-align:center; margin-top:6px;
+  }
+
+  .translation{
+    background:var(--bg-soft); border-left:3px solid var(--accent-2);
+    padding:12px 16px; border-radius:0 10px 10px 0; margin:12px 0; font-style:italic; color:#1b3350;
+  }
+
+  .label-row{
+    display:inline-flex; align-items:center; gap:6px; font-family:var(--mono);
+    font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-2);
+    margin:16px 0 6px;
+  }
+  .label-row::before{ content:"//"; color:var(--line); }
+
+  .explain{
+    background:#fbfcff; border:1px dashed var(--line); border-radius:12px;
+    padding:16px 18px; margin:8px 0 14px; font-size:14.5px; color:#2a3f5c;
+  }
+  .explain strong{ color:var(--accent); }
+  .explain ul{ margin:8px 0 0; padding-left:20px; }
+  .explain li{ margin:4px 0; }
+
+  .examples{ margin:10px 0 4px; }
+  .examples li{ margin:6px 0; font-size:14.5px; }
+  .examples li::marker{ color:var(--accent-2); font-weight:700; }
+
+  table.def-table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:14.5px; }
+  table.def-table th, table.def-table td{
+    border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;
+  }
+  table.def-table th{ background:var(--bg-soft); font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); }
+  table.def-table td.term{ font-weight:700; color:var(--accent-3); white-space:nowrap; }
+
+  .divider{
+    display:flex; align-items:center; gap:10px; margin:26px 0; color:var(--line);
+  }
+  .divider::before, .divider::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .divider span{ font-family:var(--mono); font-size:11px; color:var(--ink-soft); }
+
+  .callout{
+    background:linear-gradient(120deg, rgba(201,146,42,0.08), rgba(201,146,42,0.02));
+    border:1px solid rgba(201,146,42,0.35); border-radius:12px; padding:16px 18px; margin:16px 0;
+  }
+  .callout .tag{ font-family:var(--mono); font-size:11px; color:var(--gold); text-transform:uppercase; letter-spacing:.1em; }
+  .callout p{ margin:6px 0 0; font-size:14.5px; }
+
+  .tanbih{
+    background:linear-gradient(120deg, rgba(124,92,255,0.08), rgba(124,92,255,0.02));
+    border:1px solid rgba(124,92,255,0.35); border-radius:12px; padding:16px 18px; margin:16px 0;
+  }
+  .tanbih .tag{ font-family:var(--mono); font-size:11px; color:var(--accent-3); text-transform:uppercase; letter-spacing:.1em; }
+
+  .kaidah-block{ padding-top:20px; border-top:1px solid var(--line); }
+  .kaidah-block:first-of-type{ border-top:none; padding-top:0; }
+  .kaidah-number{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:10px; font-family:var(--mono); font-weight:700; font-size:14px;
+    background:linear-gradient(135deg, var(--accent), var(--accent-3)); color:#fff; margin-right:10px;
+  }
+  h3.kaidah-title{ display:flex; align-items:center; margin:0 0 10px; font-size:18px; }
+
+  footer.site-footer{
+    position:relative; z-index:1; text-align:center; padding:34px 20px 50px; color:var(--ink-soft);
+    font-family:var(--mono); font-size:12.5px; border-top:1px solid var(--line); margin-top:10px;
+  }
+  footer.site-footer a{ color:var(--accent); text-decoration:none; }
+
+  .back-top{
+    position:fixed; bottom:22px; right:22px; z-index:5;
+    background:var(--accent); color:#fff; border:none; border-radius:50%;
+    width:44px; height:44px; font-size:18px; cursor:pointer; box-shadow:0 8px 20px rgba(14,124,196,0.4);
+  }
+
+  @media print{
+    nav.toc, .back-top{ display:none; }
+    .layout{ display:block; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-overlay"></div>
+
+<header class="hero">
+  <span class="eyebrow">Ushul Fiqh &amp; Qawa'id Fiqhiyyah — Modul Belajar</span>
+  <h1 class="title">Mabādi' Al-Awwaliyyah</h1>
+  <div class="arabic-title">مَبَادِئُ الأَوَّلِيَّة</div>
+  <p class="subtitle">Prinsip-prinsip dasar memahami Ushul Fiqh dan Qawa'idul Fiqhiyyah — disusun ulang dengan teks Arab, terjemah, dan penjelasan tambahan yang lebih rinci untuk kebutuhan belajar-mengajar.</p>
+  <div class="meta-row">
+    <span class="meta-chip">Bagian I · 15 Pembahasan Ushul Fiqh</span>
+    <span class="meta-chip">Bagian II · 40 Kaidah Fiqhiyyah</span>
+    <span class="meta-chip">Madzhab Syafi'i</span>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc">
+    <h3>Daftar Isi</h3>
+    <div class="part-label">Bagian Pertama</div>
+    <ol>
+      <li><a href="#p1"><span class="sec-num">01</span>Ushul Fiqh &amp; Fiqh</a></li>
+      <li><a href="#p2"><span class="sec-num">02</span>Hukum-hukum Taklifi</a></li>
+      <li><a href="#p3"><span class="sec-num">03</span>Amr (Perintah)</a></li>
+      <li><a href="#p4"><span class="sec-num">04</span>Nahy (Larangan)</a></li>
+      <li><a href="#p5"><span class="sec-num">05</span>'Ām (Umum)</a></li>
+      <li><a href="#p6"><span class="sec-num">06</span>Khas &amp; Takhsis</a></li>
+      <li><a href="#p7"><span class="sec-num">07</span>Naskh</a></li>
+      <li><a href="#p8"><span class="sec-num">08</span>Mujmal &amp; Bayan</a></li>
+      <li><a href="#p9"><span class="sec-num">09</span>Muthlaq &amp; Muqayyad</a></li>
+      <li><a href="#p10"><span class="sec-num">10</span>Manthuq &amp; Mafhum</a></li>
+      <li><a href="#p11"><span class="sec-num">11</span>Perbuatan Nabi Saw</a></li>
+      <li><a href="#p12"><span class="sec-num">12</span>Taqrir Nabi Saw</a></li>
+      <li><a href="#p13"><span class="sec-num">13</span>Ijma'</a></li>
+      <li><a href="#p14"><span class="sec-num">14</span>Qiyas</a></li>
+      <li><a href="#p15"><span class="sec-num">15</span>Ijtihad, Ittiba', Taqlid</a></li>
+    </ol>
+    <div class="part-label">Bagian Kedua — Qawa'id</div>
+    <ol>
+      <li><a href="#k1"><span class="sec-num">K1</span>Al-Umur bi Maqashidiha</a></li>
+      <li><a href="#k2"><span class="sec-num">K2–4</span>Syarat Ta'yin</a></li>
+      <li><a href="#k5"><span class="sec-num">K5</span>Maqashid al-Lafzh</a></li>
+      <li><a href="#k6"><span class="sec-num">K6</span>Al-Yaqin</a></li>
+      <li><a href="#k7"><span class="sec-num">K7</span>Al-Ashlu Baqa'</a></li>
+      <li><a href="#k8"><span class="sec-num">K8</span>Bara'ah Dzimmah</a></li>
+      <li><a href="#k9"><span class="sec-num">K9</span>Al-Ashlu al-'Adam</a></li>
+      <li><a href="#k10"><span class="sec-num">K10</span>Taqdirul Hadits</a></li>
+      <li><a href="#k11"><span class="sec-num">K11</span>Al-Masyaqqah</a></li>
+      <li><a href="#k12"><span class="sec-num">K12</span>Al-Asyya' Idza Ittasa'at</a></li>
+      <li><a href="#k13"><span class="sec-num">K13</span>Adh-Dharar Yuzal</a></li>
+      <li><a href="#k14"><span class="sec-num">K14</span>Adh-Dharar la Yuzal</a></li>
+      <li><a href="#k15"><span class="sec-num">K15</span>Adh-Dharurat Tubih</a></li>
+      <li><a href="#k16"><span class="sec-num">K16</span>Bi Qadariha</a></li>
+      <li><a href="#k17"><span class="sec-num">K17</span>Al-Hajah</a></li>
+      <li><a href="#k18"><span class="sec-num">K18</span>Ta'arudh Mafsadatan</a></li>
+      <li><a href="#k19"><span class="sec-num">K19</span>Dar'ul Mafasid</a></li>
+      <li><a href="#k20"><span class="sec-num">K20</span>Al-Abdha' Tahrim</a></li>
+      <li><a href="#k21"><span class="sec-num">K21</span>Al-'Adah Muhakkamah</a></li>
+      <li><a href="#k22"><span class="sec-num">K22</span>Kembali ke 'Urf</a></li>
+      <li><a href="#k23"><span class="sec-num">K23</span>Al-Ijtihad la Yunqadh</a></li>
+      <li><a href="#k24"><span class="sec-num">K24</span>Al-Iytsar bi Ibadah</a></li>
+      <li><a href="#k25"><span class="sec-num">K25</span>Al-Iytsar bi Ghairi Ibadah</a></li>
+      <li><a href="#k26"><span class="sec-num">K26</span>Tasharruf Imam</a></li>
+      <li><a href="#k27"><span class="sec-num">K27</span>Al-Hudud Tasqut</a></li>
+      <li><a href="#k28"><span class="sec-num">K28</span>Ma la Yatimm al-Wajib</a></li>
+      <li><a href="#k29"><span class="sec-num">K29</span>Al-Khuruj min al-Khilaf</a></li>
+      <li><a href="#k30"><span class="sec-num">K30</span>Ar-Rukhas la Tunath</a></li>
+      <li><a href="#k31"><span class="sec-num">K31</span>Rukhas &amp; Syakk</a></li>
+      <li><a href="#k32"><span class="sec-num">K32</span>Katsrat al-'Amal</a></li>
+      <li><a href="#k33"><span class="sec-num">K33</span>Ma la Yudraku Kulluh</a></li>
+      <li><a href="#k34"><span class="sec-num">K34</span>Al-Maisur</a></li>
+      <li><a href="#k35"><span class="sec-num">K35</span>Ma Haruma Fi'luh</a></li>
+      <li><a href="#k36"><span class="sec-num">K36</span>Ma Haruma Akhdzuh</a></li>
+      <li><a href="#k37"><span class="sec-num">K37</span>Al-Khair al-Muta'addi</a></li>
+      <li><a href="#k38"><span class="sec-num">K38</span>Ar-Ridha bisy-Syai'</a></li>
+      <li><a href="#k39"><span class="sec-num">K39</span>Al-Hukm Yaduru</a></li>
+      <li><a href="#k40"><span class="sec-num">K40</span>Al-Ashlu al-Ibahah</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+  <!-- ================= PENGANTAR ================= -->
+  <section class="block" id="intro">
+    <span class="part-title">Pengantar</span>
+    <h2 class="part-heading">Kenapa Ushul Fiqh Harus Dipelajari Lebih Dulu</h2>
+    <div class="kaidah-panel">مَنْ جَهِلَ الْأَصْلَ لَمْ يُصِبْ الْفَرْعَ اَبَدًا</div>
+    <div class="translation">"Barang siapa yang bodoh (tidak tahu) terhadap pokok asalnya, maka ia tidak akan menemukan cabangnya, untuk selamanya."</div>
+    <div class="explain">
+      <strong>Penjelasan tambahan:</strong> Ushul Fiqh adalah "akar" yang menopang seluruh bangunan hukum fiqih (far'). Tanpa memahami metodologi pengambilan hukum (istinbath), seseorang hanya akan menghafal hukum-hukum fiqih secara terpisah-pisah tanpa memahami <em>mengapa</em> hukum itu ditetapkan demikian. Kitab ini terbagi dua bagian besar:
+      <ul>
+        <li><strong>Bagian Pertama</strong> — kaidah-kaidah Ushul Fiqh: bagaimana dalil (Al-Qur'an, Hadits, Ijma', Qiyas) diproses menjadi hukum.</li>
+        <li><strong>Bagian Kedua</strong> — 40 Qawa'id Fiqhiyyah: kaidah-kaidah umum yang merangkum banyak masalah fiqih cabang ke dalam satu prinsip induk, sehingga memudahkan seorang penuntut ilmu menganalogikan kasus baru.</li>
+      </ul>
+    </div>
+    <div class="kaidah-panel" style="font-size:22px">يُدْرِكُ الذَّكِيُّ بِنَظِيْرٍ وَاحِدٍ مَا لاَ يُدْرِكُهُ الْغَبِيُّ بِأَلْفِ شَاهِدٍ</div>
+    <div class="translation">"Dengan satu contoh, orang yang cerdas akan menangkap hal-hal yang tidak akan ditangkap oleh orang yang lamban meski diberi seribu macam contoh."</div>
+    <div class="explain">
+      Pesan pedagogis dari mukadimah ini penting bagi pengajar: <strong>metode terbaik mengajarkan Ushul Fiqh bukan menghafal definisi kosong, melainkan selalu mengikatnya dengan satu contoh konkret yang tepat</strong> sebelum berpindah ke kaidah berikutnya. Modul ini disusun mengikuti prinsip tersebut — setiap kaidah disertai contoh penerapan.
+    </div>
+  </section>
+
+  <!-- ================= BAGIAN PERTAMA ================= -->
+  <section class="block" id="bagian1">
+    <span class="part-title">Bagian Pertama</span>
+    <h2 class="part-heading">Pembahasan Tentang Ushul Fiqh</h2>
+
+    <div class="sec-head" id="p1">
+      <span class="sec-badge">01</span>
+      <h3 class="sec-title">Definisi Ushul dan Fiqh</h3>
+    </div>
+    <table class="def-table">
+      <tr><th>Istilah</th><th>Etimologi (Bahasa)</th><th>Terminologi (Istilah)</th></tr>
+      <tr>
+        <td class="term">Ushul</td>
+        <td>Sesuatu yang di atasnya berdiri sesuatu yang lain — seperti akar bagi pohon.</td>
+        <td>Sesuatu yang diucapkan atas dasar dalil dan kaidah secara global. Contoh: dasar wajibnya sholat adalah firman Allah <span style="font-family:var(--arabic)">أَقِيْمُوا الصَّلاَةَ</span> (dirikanlah sholat).</td>
+      </tr>
+      <tr>
+        <td class="term">Far'</td>
+        <td>Sesuatu yang berdiri di atas yang lain — seperti ranting pada pohon.</td>
+        <td>Cabang hukum fiqih yang berdiri di atas dasar ushul fiqih-nya.</td>
+      </tr>
+      <tr>
+        <td class="term">Fiqh</td>
+        <td>Faham.</td>
+        <td>Ilmu tentang hukum-hukum syara' yang dihasilkan melalui ijtihad. Contoh: mengetahui niat wudhu itu wajib berdasar hadits <span style="font-family:var(--arabic)">إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ</span> (HR. Bukhari-Muslim).</td>
+      </tr>
+    </table>
+    <div class="callout">
+      <span class="tag">Catatan Penting</span>
+      <p>Hukum syara' yang diketahui <em>tanpa</em> melalui jalan ijtihad — seperti wajibnya sholat lima waktu atau haramnya zina, yang bersifat pasti (qath'i) dan disepakati — <strong>tidak disebut fiqih</strong> dalam pengertian teknis ini, karena tidak melalui proses penggalian dalil (istinbath). Perbedaan ini penting agar santri memahami bahwa "fiqih" secara istilah adalah produk ijtihad, bukan sekadar pengetahuan hukum syariat secara umum.</p>
+    </div>
+    <div class="label-row">Istilah Epistemologi Terkait</div>
+    <table class="def-table">
+      <tr><th>Istilah</th><th>Makna</th></tr>
+      <tr><td class="term">Ilmu</td><td>Sifat yang menjelaskan sesuatu secara sempurna dan pasti.</td></tr>
+      <tr><td class="term">Jahl</td><td>Tidak mengetahui sesuatu sama sekali.</td></tr>
+      <tr><td class="term">Dzon</td><td>Perkiraan kuat dari dua kemungkinan.</td></tr>
+      <tr><td class="term">Wahm</td><td>Perkiraan lemah dari dua kemungkinan.</td></tr>
+      <tr><td class="term">Syak</td><td>Perkiraan yang seimbang antara dua kemungkinan.</td></tr>
+    </table>
+    <div class="explain">
+      <strong>Ilustrasi tingkatan keyakinan:</strong> jika seseorang memperkirakan "Zaid berdiri atau tidak" — bila kedua indikasi (dalil) sama kuat maka disebut <em>syak</em>; bila kedua indikasinya kuat sekali sehingga meyakinkan disebut <em>tsubut</em> (kepastian/yakin); bila salah satu indikasi lebih kuat dari yang lain disebut <em>dzon</em>; dan bila indikasinya lemah disebut <em>wahm</em>. Tangga keyakinan ini penting karena banyak kaidah fiqih — misalnya Kaidah Keenam tentang yakin dan syak — dibangun di atas perbedaan level ini.
+    </div>
+
+    <div class="divider"><span>Hukum-hukum Taklifi</span></div>
+    <div class="sec-head" id="p2">
+      <span class="sec-badge">02</span>
+      <h3 class="sec-title">Al-Ahkam (Hukum-hukum)</h3>
+    </div>
+    <table class="def-table">
+      <tr><th>Hukum</th><th>Definisi</th><th>Contoh</th></tr>
+      <tr><td class="term">Wajib</td><td>Diberi pahala jika dikerjakan, disiksa jika ditinggalkan.</td><td>Sholat lima waktu, puasa Ramadhan.</td></tr>
+      <tr><td class="term">Mandub</td><td>Diberi pahala jika dikerjakan, tidak disiksa jika ditinggalkan.</td><td>Sholat sunnah Tahiyyatul Masjid.</td></tr>
+      <tr><td class="term">Haram</td><td>Diberi pahala jika ditinggalkan, disiksa jika dikerjakan.</td><td>Riba, merusak.</td></tr>
+      <tr><td class="term">Makruh</td><td>Diberi pahala jika ditinggalkan, tidak disiksa jika dikerjakan.</td><td>Mendahulukan mencuci tangan kiri sebelum kanan saat wudhu.</td></tr>
+      <tr><td class="term">Mubah</td><td>Tidak diberi pahala jika dikerjakan, tidak disiksa jika ditinggalkan.</td><td>Tidur di siang hari.</td></tr>
+    </table>
+    <table class="def-table">
+      <tr><th>Istilah</th><th>Definisi</th></tr>
+      <tr><td class="term">Shohih</td><td>Jika rukun dan syaratnya terpenuhi.</td></tr>
+      <tr><td class="term">Bathil</td><td>Jika rukun dan syaratnya tidak terpenuhi.</td></tr>
+      <tr><td class="term">Rukun</td><td>Penentu sahnya sesuatu dan termasuk bagian dari sesuatu itu (misal: mencuci muka dalam wudhu).</td></tr>
+      <tr><td class="term">Syarat</td><td>Penentu sahnya sesuatu namun bukan bagian darinya (misal: air suci untuk sahnya wudhu).</td></tr>
+      <tr><td class="term">Rukhshoh</td><td>Hukum yang berubah dari sulit menjadi mudah karena sebab tertentu, meski sebab hukum asal masih ada (misal: berbuka puasa bagi musafir yang kepayahan).</td></tr>
+      <tr><td class="term">'Azimah</td><td>Hukum asal (misal: wajibnya sholat lima waktu).</td></tr>
+    </table>
+    <div class="explain">
+      <strong>Kaitan konseptual:</strong> Perbedaan Rukun dan Syarat sering membingungkan pemula. Kuncinya: <strong>Rukun berada di dalam</strong> ibadah/akad itu sendiri (bagian yang membentuknya), sedangkan <strong>Syarat berada di luar</strong>, mendahului atau menyertainya, tapi tidak menjadi unsur pembentuknya. Membedakan keduanya penting saat menganalisis batal-tidaknya suatu ibadah: rusaknya rukun membatalkan bagian itu sendiri, sedangkan tidak terpenuhinya syarat membatalkan keseluruhan sejak awal.
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-1</span></div>
+    <div class="sec-head" id="p3">
+      <span class="sec-badge">03</span>
+      <h3 class="sec-title">Amr (Perintah)</h3>
+      <span class="sec-title-arabic">الأَمْر</span>
+    </div>
+    <p class="lede">Amr adalah permintaan melakukan suatu pekerjaan dari yang lebih tinggi derajatnya kepada yang lebih rendah derajatnya. Ada 5 kaidah pokok:</p>
+
+    <div class="kaidah-panel">اَلأَصْلُ فِي الْأَمْرِ لِلْوُجُوبِ إِلاَّ مَا دَلَّ الدَّلِيْلُ عَلَى خِلاَفِهِ</div>
+    <div class="translation">"Asal dalam perintah itu hukumnya wajib, kecuali terdapat dalil yang menunjukkan sebaliknya."</div>
+    <div class="ayat-source">وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ — QS. An-Nisa: 77</div>
+    <div class="explain">
+      <strong>Penjelasan:</strong> Kaidah ini adalah patokan utama dalam membaca perintah dalam Al-Qur'an dan Hadits — selama tidak ada qarinah (indikator) yang memalingkannya ke hukum lain (mandub, ibadah, atau irsyad), maka bentuk perintah (<em>shighah amr</em>, seperti fi'il amr) dihukumi wajib. Qarinah pemaling itu bisa berupa hadits lain, ijma', atau konteks kalimat. Contoh: perintah "makan dan minumlah" dalam surat Al-A'raf: 31 tidak dihukumi wajib karena qarinah menunjukkan ia sekadar mubah.
+    </div>
+
+    <div class="kaidah-panel">اَلأَصْلُ فِي الأَمْرِ لاَ يَقْتَضِى التَّكْرَارَ إِلاَّ مَا دَلَّ الدَّلِيْلُ عَلَى خِلاَفِهِ</div>
+    <div class="translation">"Asal dalam perintah itu tidak mesti diulangi, kecuali terdapat dalil yang menunjukkan sebaliknya."</div>
+    <div class="ayat-source">وَأَتِمُّوا الْحَجَّ وَالْعُمْرَةَ لِلَّهِ — QS. Al-Baqarah: 196</div>
+    <div class="explain">
+      Perintah haji dan umrah cukup dilaksanakan sekali seumur hidup (bagi yang mampu), bukan berulang setiap tahun — karena tidak ada dalil yang mewajibkan pengulangannya. Bandingkan dengan sholat lima waktu, yang wajib berulang <em>bukan</em> karena kaidah ini, melainkan karena adanya dalil lain (penyebutan waktu) yang menjelaskan pengulangannya.
+    </div>
+
+    <div class="kaidah-panel">اَلأَصْلُ فِي الأَمْرِ لاَ يَقْتَضِى الْفَوْرَ</div>
+    <div class="translation">"Asal dalam perintah itu tidak mesti spontan/segera."</div>
+    <div class="explain">
+      Tujuan yang diminta dalam sebuah perintah adalah <em>terlaksananya</em> perbuatan itu, tanpa penentuan waktu pelaksanaan pada masa awal (segera) dibanding masa berikutnya (ditunda) — selama masih dalam rentang waktu yang dibolehkan syara'. Karena itu, seseorang yang diperintahkan sholat dzuhur boleh menundanya sampai mendekati akhir waktu, selama tidak melampaui batas.
+    </div>
+
+    <div class="kaidah-panel">اَلأَمْرُ بِالشَّيْئِ اَمْرٌ بِوَسَائِلِهِ</div>
+    <div class="translation">"Memerintah sesuatu berarti juga memerintah melaksanakan wasilah (perantara)-nya."</div>
+    <div class="explain">
+      Prinsip ini dikenal luas dalam ushul fiqh sebagai kaidah <em>"ma la yatimmu al-wajib illa bihi fahuwa wajib"</em> (lihat juga Kaidah Fiqhiyyah ke-28 di Bagian Kedua). Contoh: perintah sholat otomatis mencakup perintah bersuci (wudhu) sebelumnya, karena sholat tidak sah tanpa bersuci. Prinsip ini banyak dipakai untuk menetapkan wajibnya sarana (wasa'il) demi tercapainya tujuan (maqashid) yang diwajibkan.
+    </div>
+
+    <div class="kaidah-panel">اَلأَمْرُ بِالشَّيْئِ نَهْيٌ عَنْ ضِدِّهِ</div>
+    <div class="translation">"Memerintah sesuatu berarti juga melarang yang berlawanan dengan sesuatu itu."</div>
+    <div class="ayat-source">وَقُولُوا لِلنَّاسِ حُسْنًا — QS. Al-Baqarah: 83</div>
+    <div class="explain">
+      Perintah mengucapkan kata-kata baik secara implisit juga melarang ucapan buruk, karena keduanya (baik dan buruk) adalah dua hal yang saling berlawanan (dhid) dan tidak mungkin berkumpul bersamaan pada satu waktu untuk satu perbuatan. Kaidah ini membantu memahami bagaimana satu ayat perintah bisa melahirkan dua konsekuensi hukum sekaligus: kewajiban dan larangan.
+    </div>
+
+    <div class="kaidah-panel">إِذَا فُعِلَ الْمَأْمُوْرُ بِهِ عَلَى وَجْهِهِ يَخْرُجُ الْمَأْمُوْرُ عَنْ عُهْدَةِ الأَمْرِ</div>
+    <div class="translation">"Jika apa yang diperintahkan telah dilakukan sesuai caranya, maka orang yang diperintah telah keluar dari tanggungan perintah itu."</div>
+    <div class="explain">
+      Contoh: seseorang yang tidak menemukan air lalu bertayammum dan sholat, maka ia telah menunaikan kewajibannya secara sempurna — tidak diwajibkan mengqadha sholat tersebut meski kemudian ia menemukan air. Kaidah ini menegaskan bahwa selama syarat dan rukun terpenuhi sesuai keadaan (kondisi darurat/rukhshoh), tanggungan (dzimmah) seseorang telah bebas — ini juga berkaitan erat dengan Kaidah Fiqhiyyah ke-8 (Bara'ah Dzimmah).
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-2</span></div>
+    <div class="sec-head" id="p4">
+      <span class="sec-badge">04</span>
+      <h3 class="sec-title">Nahy (Larangan)</h3>
+      <span class="sec-title-arabic">النَّهْي</span>
+    </div>
+    <p class="lede">Nahy adalah permintaan meninggalkan pekerjaan dari yang lebih tinggi derajatnya kepada yang lebih rendah derajatnya.</p>
+
+    <div class="kaidah-panel">اَلأَصْلُ فِي النَّهْيِ لِلتَّحْرِيْمِ إِلاَّ مَا دَلَّ الدَّلِيْلُ عَلَى خِلاَفِهِ</div>
+    <div class="translation">"Asal dalam larangan itu hukumnya haram, kecuali terdapat dalil yang menunjukkan sebaliknya."</div>
+    <div class="ayat-source">وَلَا تُفْسِدُوا فِي الْأَرْضِ بَعْدَ إِصْلَاحِهَا — QS. Al-A'raf: 56</div>
+    <div class="explain">Ini adalah cerminan dari kaidah Amr pertama: sebagaimana asal perintah adalah wajib, asal larangan adalah haram. Jika ada qarinah (dalil pemaling) — misalnya larangan yang hanya bermakna makruh, tanzih, atau adab — barulah hukumnya turun dari haram.</div>
+
+    <div class="kaidah-panel">اَلنَّهْيُ عَنِ الشَّيْئِ اَمْرٌ بِضِدِّهِ</div>
+    <div class="translation">"Melarang sesuatu berarti juga memerintah yang berlawanan dengan sesuatu itu."</div>
+    <div class="ayat-source">وَلَا تَأْكُلُوا أَمْوَالَكُم بَيْنَكُم بِالْبَاطِلِ — QS. Al-Baqarah: 188</div>
+    <div class="explain">Larangan memakan harta orang lain secara batil sekaligus berarti perintah untuk memperoleh harta dengan cara yang benar (jual beli, hibah, warisan yang sah). Ini adalah kebalikan simetris dari kaidah Amr ke-5 sebelumnya.</div>
+
+    <div class="kaidah-panel">اَلأَصْلُ فِي النَّهْيِ يَدُلُّ عَلَى فَسَادِ الْمَنْهِيِّ عَنْهُ فِي الْعِبَادَاتِ</div>
+    <div class="translation">"Asal dalam larangan itu menunjukkan pada kerusakan (batalnya) perkara yang dilarang dalam beribadah."</div>
+    <div class="explain">
+      Contoh: sholat dan puasanya orang yang sedang haidh. Karena larangan itu jatuh pada dzat ibadahnya sendiri, maka ibadah yang tetap dikerjakan menjadi batal/tidak sah — bukan sekadar berdosa.
+    </div>
+
+    <div class="kaidah-panel">اَلنَّهْيُ يَدُلُّ عَلَى فَسَادِ الْمَنْهِيِّ عَنْهُ فِي الْمُعَامَلاَتِ إِنْ رَجَعَ النَّهْيُ إِلَى نَفْسِ الْعَقْدِ</div>
+    <div class="translation">"Larangan itu menunjukkan pada kerusakan perkara yang dilarang dalam bermuamalah jika larangan itu merujuk pada dzatnya akad."</div>
+    <div class="explain">
+      Contoh: larangan Nabi Saw. terhadap <em>bai' al-hashah</em> (jual beli kerikil — jual beli spekulatif zaman jahiliyah yang tidak jelas objeknya). Karena larangan menyasar akad itu sendiri (objeknya tidak jelas/gharar), maka akadnya batal.
+    </div>
+
+    <div class="kaidah-panel">وَإِنْ رَجَعَ اَمْرٌ إِلَى خَارِجٍ عَنِ الْعَقْدِ غَيْرِ لاَزِمٍ فَلاَ</div>
+    <div class="translation">"Jika larangan itu merujuk pada perkara yang keluar dari bentuk akad yang tidak lazim, maka tidaklah menjadi batal."</div>
+    <div class="ayat-source">إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ وَذَرُوا الْبَيْعَ — QS. Al-Jumu'ah: 9</div>
+    <div class="explain">
+      Larangan berjual beli saat adzan Jum'at bukan karena akadnya cacat, melainkan karena waktu pelaksanaannya mengganggu kewajiban sholat Jum'at. Karena itu, jual beli tersebut tetap sah secara akad meski pelakunya berdosa karena mengabaikan panggilan sholat. Perbedaan ini — antara larangan yang menyasar <em>dzat akad</em> vs yang menyasar <em>perkara luar/waktu</em> — adalah inti pembeda antara kaidah keempat dan kelima di atas, dan sangat penting dalam fiqih muamalah kontemporer (misalnya transaksi di waktu terlarang lainnya).
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-3</span></div>
+    <div class="sec-head" id="p5">
+      <span class="sec-badge">05</span>
+      <h3 class="sec-title">'Ām (Lafadz Umum)</h3>
+      <span class="sec-title-arabic">العَام</span>
+    </div>
+    <p class="lede">'Ām adalah lafadz yang mencakup dua perkara atau lebih tanpa batasan tertentu. Ada 4 bentuk lafadz yang menunjukkan 'Am:</p>
+    <div class="explain">
+      <strong>1. Isim Mufrad ber-Al</strong> — <span style="font-family:var(--arabic)">إِنَّ الْإِنسَانَ لَفِي خُسْرٍ</span> (QS. Al-'Ashr: 2). Kata "al-insan" (manusia) mencakup seluruh jenis manusia tanpa kecuali, sampai dikecualikan oleh ayat berikutnya.<br><br>
+      <strong>2. Isim Jama' ber-Al</strong> — <span style="font-family:var(--arabic)">إِنَّ اللَّهَ يُحِبُّ الْمُحْسِنِينَ</span> (QS. Al-Baqarah: 195). Kata "al-muhsinin" mencakup semua orang yang berbuat baik.<br><br>
+      <strong>3. Lafadz Nakirah setelah huruf nafi (لا)</strong> — <span style="font-family:var(--arabic)">وَاتَّقُوا يَوْمًا لَّا تَجْزِي نَفْسٌ عَن نَّفْسٍ شَيْئًا</span> (QS. Al-Baqarah: 48). "Nafsun" dalam konteks larangan mencakup setiap jiwa tanpa kecuali.<br><br>
+      <strong>4. Isim Mubham</strong> (kata yang maknanya samar sehingga mencakup umum) — terbagi lima:
+      <ul>
+        <li><span style="font-family:var(--arabic)">مَنْ</span> — untuk yang berakal, contoh QS. Az-Zalzalah: 7</li>
+        <li><span style="font-family:var(--arabic)">مَا</span> — untuk yang tidak berakal, contoh QS. Al-Hujurat: 18</li>
+        <li><span style="font-family:var(--arabic)">أَيّ</span> — untuk segala jenis, contoh QS. Al-Isra: 110</li>
+        <li><span style="font-family:var(--arabic)">أَيْنَ</span> — zharaf makan (tempat), contoh QS. An-Nisa: 78</li>
+        <li><span style="font-family:var(--arabic)">مَتَى</span> — zharaf zaman (waktu), contoh kalimat "kapan saja kamu pergi, kamu tertalak"</li>
+      </ul>
+    </div>
+    <div class="callout">
+      <span class="tag">Fungsi Praktis</span>
+      <p>Mengenali bentuk-bentuk lafadz 'Am penting sebelum masuk ke pembahasan Takhsis (pembahasan berikutnya) — sebab hanya lafadz yang benar-benar 'Am yang bisa ditakhsis (dikhususkan/dipersempit cakupannya) oleh dalil lain.</p>
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-4</span></div>
+    <div class="sec-head" id="p6">
+      <span class="sec-badge">06</span>
+      <h3 class="sec-title">Khas dan Takhsis</h3>
+      <span class="sec-title-arabic">الخَاص والتَّخْصِيْص</span>
+    </div>
+    <p class="lede">Takhsis adalah pengeluaran sebagian cakupan dari dalil-dalil 'Am. Takhsis terbagi dua: <strong>Muttashil</strong> (bersambung dalam satu kalimat) dan <strong>Munfashil</strong> (terpisah, berasal dari dalil lain).</p>
+
+    <div class="label-row">Takhsis Muttashil</div>
+    <div class="explain">
+      <ul>
+        <li><strong>Istitsna (pengecualian)</strong> — QS. Al-'Ashr: 1–3, "kecuali orang-orang yang beriman dan beramal saleh" mengecualikan sebagian dari "manusia yang merugi".</li>
+        <li><strong>Taqyid bis-shifat (dibatasi sifat)</strong> — QS. An-Nisa: 92, kafarat membunuh tersalah dibatasi dengan "budak yang beriman" (bukan sembarang budak).</li>
+        <li><strong>Takhsis bil Ghayah (dengan batas akhir)</strong> — QS. Al-Baqarah: 222, "jangan dekati mereka sampai mereka suci" — larangan berlaku hanya sampai batas waktu tertentu.</li>
+        <li><strong>Takhsis bil Badal (dengan kata ganti/badal)</strong> — QS. Ali 'Imran: 97, kewajiban haji hanya berlaku bagi "yang mampu mengadakan perjalanan", bukan semua manusia.</li>
+      </ul>
+    </div>
+    <div class="label-row">Takhsis Munfashil</div>
+    <div class="explain">
+      Enam jenis, berdasarkan sumber dalil yang men-takhsis dan yang di-takhsis:
+      <ul>
+        <li><strong>Kitab bil Kitab</strong> — QS. Al-Baqarah: 221 (larangan nikahi wanita musyrik) ditakhsis oleh QS. Al-Ma'idah: 5 (bolehnya menikahi Ahlul Kitab yang menjaga kehormatan).</li>
+        <li><strong>Kitab bis-Sunnah</strong> — QS. An-Nisa: 11 (ketentuan waris anak) ditakhsis hadits "orang muslim tidak mewarisi orang kafir dan sebaliknya".</li>
+        <li><strong>Sunnah bil Kitab</strong> — hadits "Allah tidak menerima sholat orang yang berhadats sampai ia berwudhu" ditakhsis QS. An-Nisa: 43 tentang bolehnya tayammum.</li>
+        <li><strong>Sunnah bis-Sunnah</strong> — hadits zakat tanaman yang disirami hujan (10%) ditakhsis hadits lain tentang batas minimal nishab (5 ausuq).</li>
+        <li><strong>Kitab bil Qiyas</strong> — QS. An-Nur: 2 (hukuman zina 100 kali dera) ditakhsis dengan qiyas dari QS. An-Nisa: 25 (separuh hukuman bagi budak).</li>
+        <li><strong>Sunnah bil Qiyas</strong> — hadits ancaman bagi orang kaya yang menunda hutang di-qiyaskan agar tidak berlaku antara orang tua dan anak, karena anak dilarang berkata kasar pada orang tua (QS. Al-Isra: 23).</li>
+      </ul>
+    </div>
+    <div class="callout">
+      <span class="tag">Poin Pengajaran</span>
+      <p>Perbedaan mendasar Muttashil vs Munfashil: Muttashil tidak bisa berdiri sendiri sebagai kalimat utuh tanpa bagian yang men-takhsis-nya (mis. "kecuali..." tidak bermakna tanpa kalimat sebelumnya), sedangkan Munfashil adalah dua dalil yang masing-masing berdiri sendiri secara sempurna, namun salah satunya mempersempit cakupan yang lain.</p>
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-5</span></div>
+    <div class="sec-head" id="p7">
+      <span class="sec-badge">07</span>
+      <h3 class="sec-title">Naskh</h3>
+      <span class="sec-title-arabic">النَّسْخ</span>
+    </div>
+    <div class="explain">
+      Secara bahasa, Naskh berarti <em>al-izalah</em> (menghapus/menghilangkan) — seperti ungkapan "matahari menghapus kegelapan". Ada pula makna <em>an-naql</em> (menyalin), seperti menyalin isi kitab ke tempat lain.
+    </div>
+    <div class="kaidah-panel">رَفْعُ حُكْمٍ شَرْعِيٍّ بِدَلِيْلٍ شَرْعِيٍّ مُتَأَخِّرٍ</div>
+    <div class="translation">Secara istilah: "Menghilangkan hukum syara' dengan dasar dalil syara' yang datang lebih akhir."</div>
+    <p class="lede">Naskh terbagi 5 macam menurut objek yang dihapus (tulisan/hukum):</p>
+    <div class="explain">
+      <ol>
+        <li><strong>Menasakh tulisan, menetapkan hukumnya</strong> — ayat rajam bagi pezina muhshan (sudah menikah) yang lafadznya sudah tidak tertulis di mushaf, namun hukumnya tetap berlaku, dikuatkan hadits mutawatir Nabi Saw. yang pernah merajam.</li>
+        <li><strong>Menasakh hukum, menetapkan tulisan</strong> — QS. Al-Baqarah: 240 (nafkah istri yang ditinggal wafat setahun) ditakhsis-naskh oleh QS. Al-Baqarah: 234 ('iddah 4 bulan 10 hari), namun ayat 240 tetap tertulis di mushaf.</li>
+        <li><strong>Menasakh dua perkara sekaligus</strong> — hadits tentang bilangan susuan yang mengharamkan pernikahan, dari 10 kali menjadi 5 kali, di mana bilangan lama sudah tidak dibaca maupun berhukum.</li>
+        <li><strong>Menasakh Hadits dengan Al-Qur'an</strong> — kiblat Baitul Maqdis (ditetapkan hadits) dinasakh oleh QS. Al-Baqarah: 144 (perintah menghadap Masjidil Haram).</li>
+        <li><strong>Menasakh Hadits dengan Hadits</strong> — larangan ziarah kubur dinasakh oleh hadits "maka sekarang berziarahlah". Sebagian ulama juga membolehkan Al-Qur'an dinasakh oleh Hadits, seperti kewajiban wasiat pada QS. Al-Baqarah: 180 yang dinasakh oleh hadits "tidak ada wasiat bagi ahli waris".</li>
+      </ol>
+    </div>
+    <div class="callout">
+      <span class="tag">Catatan Metodologis</span>
+      <p>Memahami Naskh penting agar seorang penuntut ilmu tidak salah menyimpulkan hukum ketika menemukan dua dalil yang tampak bertentangan. Kaidah umum ushul fiqh: naskh hanya berlaku jika kedua dalil sama-sama qath'i tsubut (pasti sumbernya) dan tidak mungkin dikompromikan (jam'u), serta diketahui mana yang datang lebih dulu dan lebih akhir secara historis (tarikh).</p>
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-6</span></div>
+    <div class="sec-head" id="p8">
+      <span class="sec-badge">08</span>
+      <h3 class="sec-title">Mujmal &amp; Bayan</h3>
+      <span class="sec-title-arabic">المُجْمَل والبَيَان</span>
+    </div>
+    <div class="explain">
+      <strong>Mujmal</strong> adalah lafadz yang membutuhkan penjelasan karena maknanya belum jelas — contoh lafadz <span style="font-family:var(--arabic)">قُرُوْء</span> pada QS. Al-Baqarah: 228, yang bisa bermakna "haidh" atau "suci" sekaligus, sehingga membutuhkan penjelasan lebih lanjut (baik dari konteks ayat lain maupun hadits).
+    </div>
+    <p class="lede"><strong>Bayan</strong> adalah mengeluarkan sesuatu dari yang sulit dipahami menjadi lebih jelas. Bayan terbagi 4 bentuk:</p>
+    <div class="explain">
+      <ol>
+        <li><strong>Bayan bil qaul (ucapan)</strong> — penjelasan puasa qadha haji tamattu' pada QS. Al-Baqarah: 196.</li>
+        <li><strong>Bayan bil fi'il (perbuatan)</strong> — praktik Nabi Saw. mencontohkan tata cara sholat.</li>
+        <li><strong>Bayan bil kitabah (tulisan)</strong> — surat Nabi Saw. yang masyhur menjelaskan kadar zakat dan diyat anggota tubuh.</li>
+        <li><strong>Bayan bil isyarah (isyarat)</strong> — sabda "bulan itu segini, segini, dan segini" sambil mengisyaratkan jari, menjelaskan bahwa bulan bisa 29 atau 30 hari.</li>
+      </ol>
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-7</span></div>
+    <div class="sec-head" id="p9">
+      <span class="sec-badge">09</span>
+      <h3 class="sec-title">Muthlaq dan Muqayyad</h3>
+      <span class="sec-title-arabic">المُطْلَق والمُقَيَّد</span>
+    </div>
+    <div class="kaidah-panel">اَلْمُطْلَقُ: مَا دَلَّ عَلَى الْمَاهِيَةِ بِلاَ قَيْدٍ مِنْ قُيُوْدِهَا</div>
+    <div class="translation">"Muthlaq: lafadz yang menunjukkan hakikat sesuatu tanpa ikatan (bebas)."</div>
+    <div class="kaidah-panel" style="font-size:22px">اَلْمُقَيَّدُ: مَا دَلَّ عَلَى الْمَاهِيَةِ بِقَيْدٍ مِنْ قُيُوْدِهَا</div>
+    <div class="translation">"Muqayyad: lafadz yang menunjukkan hakikat sesuatu dengan beberapa ikatan (batasan)."</div>
+    <div class="explain">
+      <strong>Aturan dasar:</strong> jika khithab (perintah) datang secara mutlak, ia tetap dihukumi mutlak; jika datang secara muqayyad, ia tetap muqayyad. Namun jika lafadz yang sama datang mutlak pada satu ayat dan muqayyad pada ayat lain (dalam konteks hukum yang sama), maka yang mutlak dibawa mengikuti yang muqayyad. Contoh: kafarat membunuh (QS. An-Nisa: 92) mensyaratkan "budak yang beriman" (muqayyad), sedangkan kafarat dzihar (QS. Al-Mujadalah: 3) hanya menyebut "budak" secara mutlak. Menurut jumhur ulama, lafadz mutlak pada kafarat dzihar ini dibawa mengikuti yang muqayyad pada kafarat membunuh, karena keduanya sama-sama dalam konteks "kafarat" (hukum sejenis).
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-8</span></div>
+    <div class="sec-head" id="p10">
+      <span class="sec-badge">10</span>
+      <h3 class="sec-title">Manthuq dan Mafhum</h3>
+      <span class="sec-title-arabic">المَنْطُوْق والمَفْهُوْم</span>
+    </div>
+    <div class="kaidah-panel">اَلْمَنْطُوْقُ: مَا دَلَّ عَلَيْهِ اللَّفْظُ فِيْ مَحَلِّ النُّطْقِ</div>
+    <div class="translation">"Manthuq: makna yang diambil dari lafadz yang diucapkan/dituliskan."</div>
+    <div class="explain">
+      Manthuq terbagi dua: <strong>Nash</strong> (tidak butuh ta'wil, jelas seperti QS. Al-Baqarah: 196 tentang puasa tiga hari) dan <strong>Dzahir</strong> (butuh ta'wil karena makna lahiriahnya mustahil, seperti QS. Adz-Dzariyat: 47 "langit Kami bangun dengan aidin" — kata "aidin" secara lahiriah berarti "tangan-tangan", padahal Allah mustahil memiliki tangan, maka ditakwil menjadi "kekuatan/kekuasaan").
+    </div>
+    <div class="kaidah-panel" style="font-size:22px">اَلْمَفْهُوْمُ: مَا دَلَّ عَلَيْهِ اللَّفْظُ لاَ فِيْ مَحَلِّ النُّطْقِ</div>
+    <div class="translation">"Mafhum: makna yang diambil dari lafadz yang tidak diucapkan/dituliskan secara langsung."</div>
+    <div class="explain">
+      <strong>Mafhum Muwafaqah</strong> — pemahaman yang sejalan (searah) dengan yang diucapkan. Contoh: larangan berkata "ah" pada orang tua (QS. Al-Isra: 23) secara mafhum juga melarang memukul mereka, karena memukul jelas lebih menyakitkan daripada sekadar berkata "ah" — mafhum ini disebut <em>fahwal khithab</em> (lebih utama daripada yang diucapkan).<br><br>
+      <strong>Mafhum Mukhalafah</strong> — pemahaman yang berlawanan dengan yang diucapkan. Contoh: hadits "kambing yang digembalakan bebas (di padang) wajib dizakati" (HR. Syafi'i) secara mafhum mukhalafah berarti kambing yang diberi makan (tidak digembalakan bebas) tidak wajib dizakati. Contoh lain: "haji adalah bulan-bulan yang telah dimaklumi" (QS. Al-Baqarah: 197) memafhumi tidak sahnya ihram haji di luar bulan-bulan tersebut.
+    </div>
+    <div class="callout">
+      <span class="tag">Kegunaan Praktis</span>
+      <p>Mafhum Mukhalafah adalah salah satu metode istinbath yang paling sering digunakan namun juga paling banyak diperdebatkan ulama ushul fiqh — karena tidak semua bentuk kalimat bersyarat, bersifat, atau berbilangan otomatis melahirkan mafhum mukhalafah yang mu'tabar (diakui). Karena itu, penerapan kaidah ini memerlukan latihan lewat banyak contoh sebagaimana pesan mukadimah kitab ini.</p>
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-9</span></div>
+    <div class="sec-head" id="p11">
+      <span class="sec-badge">11</span>
+      <h3 class="sec-title">Perbuatan Shahibus Syari'at (Nabi Saw)</h3>
+    </div>
+    <div class="explain">
+      Perbuatan Nabi Muhammad Saw. terbagi menjadi dua: (1) yang wajib diikuti umat, dan (2) yang bersifat kekhususan hanya untuk beliau. Contoh kekhususan: bolehnya Nabi memiliki lebih dari 4 istri (QS. An-Nisa: 3 membatasi umat maksimal 4), sebagaimana ditunjukkan hadits Ghailan yang diperintahkan memilih 4 dari 10 istrinya saat masuk Islam — perintah memilih itu tidak berlaku bagi Nabi.
+    </div>
+    <div class="kaidah-panel">اَلأَصْلُ فِي اَفْعَالِ النَّبِيِّ ﷺ الاِقْتِدَاءُ إِلاَّ مَا دَلَّ الدَّلِيْلُ عَلَى الاِخْتِصَاصِ بِهِ</div>
+    <div class="translation">"Asalnya setiap perbuatan Nabi Saw. adalah mesti diikuti, kecuali terdapat dalil yang menunjukkan kekhususan hanya pada diri Nabi Saw."</div>
+    <div class="ayat-source">لَقَدْ كَانَ لَكُمْ فِي رَسُولِ اللَّهِ أُسْوَةٌ حَسَنَةٌ — QS. Al-Ahzab: 21</div>
+    <div class="explain">Kaidah ini menjadi dasar rujukan sunnah fi'liyyah (perbuatan) sebagai sumber hukum ketiga setelah Al-Qur'an dan sunnah qauliyyah (perkataan), dengan pengecualian yang jelas dan terbatas.</div>
+
+    <div class="divider"><span>Pembahasan Ke-10</span></div>
+    <div class="sec-head" id="p12">
+      <span class="sec-badge">12</span>
+      <h3 class="sec-title">Taqrir (Persetujuan) Shahibus Syari'at</h3>
+    </div>
+    <div class="explain">
+      Taqrir Nabi Saw. — baik terhadap ucapan maupun perbuatan seseorang — memiliki kedudukan hukum yang sama seperti ucapan/perbuatan beliau sendiri, karena Nabi bersifat ma'shum (terjaga) dari menyetujui kemungkaran. Contoh: taqrir Nabi terhadap ucapan Abu Bakar ra. tentang harta rampasan perang untuk yang membunuhnya; dan taqrir terhadap Khalid bin Walid ra. yang memakan biawak (HR. Syaikhani).<br><br>
+      Bahkan perbuatan sahabat yang <em>tidak</em> berada di hadapan Nabi, namun diketahui dan tidak dilarang oleh beliau, juga dihukumi sama seperti perbuatan yang di hadapan Nabi. Contoh: sumpah Abu Bakar ra. yang tidak mau makan saat marah, kemudian ia melanggar sumpahnya karena menyadari makan lebih baik (HR. Muslim) — menunjukkan bolehnya, bahkan disunnahkannya, melanggar sumpah jika hal itu membawa kebaikan.
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-11</span></div>
+    <div class="sec-head" id="p13">
+      <span class="sec-badge">13</span>
+      <h3 class="sec-title">Ijma'</h3>
+      <span class="sec-title-arabic">الإِجْمَاع</span>
+    </div>
+    <table class="def-table">
+      <tr><th>Etimologi</th><td>Menyepakati (Ittifaq)</td></tr>
+      <tr><th>Terminologi</th><td>Kesepakatan para umat Nabi Saw. setelah wafatnya beliau, pada suatu masa, dalam menentukan suatu masalah hukum.</td></tr>
+    </table>
+    <div class="ayat-source">لَا تَجْتَمِعُ أُمَّتِي عَلَى ضَلَالَةٍ وَيَدُ اللَّهِ مَعَ الْجَمَاعَةِ — HR. Turmudzi</div>
+    <div class="explain">
+      Ijma' dianggap sah secara hukum melalui ucapan dan perbuatan para ulama, bahkan sekalipun hanya dilakukan oleh sebagian mereka, disertai persetujuan diam (tidak menolak) dari ulama lain yang masih hidup pada masa itu — inilah yang disebut <strong>Ijma' Sukuti</strong>. Contoh Ijma' terbuka: kesepakatan batalnya wudhu sebab keluarnya sesuatu dari dua lubang (kemaluan dan dubur) seperti baul dan ghaith. Contoh Ijma' Sukuti: dalil qiyas yang dipakai Imam Syafi'i berdasarkan praktik sebagian sahabat yang tidak diingkari oleh ulama sezamannya.
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-12</span></div>
+    <div class="sec-head" id="p14">
+      <span class="sec-badge">14</span>
+      <h3 class="sec-title">Qiyas</h3>
+      <span class="sec-title-arabic">القِيَاس</span>
+    </div>
+    <div class="ayat-source">فَاعْتَبِرُوا يَا أُولِي الْأَبْصَارِ — QS. Al-Hasyr: 2</div>
+    <table class="def-table">
+      <tr><th>Etimologi</th><td>Mengukur sesuatu dengan yang lain untuk diketahui kesamaan keduanya.</td></tr>
+      <tr><th>Terminologi</th><td>Mengembalikan hukum cabang (far') ke hukum asal ('ashl) dengan sebab 'illat yang menyatukan keduanya dalam penetapan hukum. Contoh: qiyas padi dengan gandum dalam masalah riba, karena sama-sama jenis makanan pokok.</td></tr>
+    </table>
+    <div class="label-row">Rukun Qiyas (4)</div>
+    <div class="explain">
+      <ol>
+        <li><strong>Ashl</strong> (yang menjadi dasar/sudah ada hukumnya)</li>
+        <li><strong>Far'</strong> (cabang/kasus baru yang dicari hukumnya)</li>
+        <li><strong>Hukum Ashl</strong> (hukum yang sudah ditetapkan pada ashl)</li>
+        <li><strong>'Illat Hukum Ashl</strong> (sebab yang menghubungkan ashl dan far')</li>
+      </ol>
+    </div>
+    <p class="lede">Qiyas terbagi 3 jenis berdasarkan kualitas hubungan 'illat-nya:</p>
+    <div class="explain">
+      <ol>
+        <li><strong>Qiyas 'Illat</strong> — jika 'illat-nya menjadikan hukum wajib (pasti berlaku). Contoh: haram memukul kedua orang tua diqiyaskan dari larangan berkata "ah" karena 'illat-nya sama, yaitu menyakiti (QS. Al-Isra: 23).</li>
+        <li><strong>Qiyas Dilalah</strong> — jika 'illat-nya hanya menjadi dalil hukum, namun tidak sampai mewajibkan hukum tersebut. Contoh: qiyas harta anak-anak dengan harta orang dewasa dalam wajib zakat (karena sama-sama <em>mal tam</em>, harta yang sempurna kepemilikannya), meski Imam Abu Hanifah berpendapat sebaliknya dengan meng-qiyaskan pada ibadah haji yang hanya wajib bagi yang baligh.</li>
+        <li><strong>Qiyas Syibhi</strong> — menemukan hukum cabang yang meragukan antara dua hukum asal, dengan mengambil yang lebih banyak kesamaannya. Contoh klasik: status hukum 'Abd (hamba sahaya) yang terluka — apakah diqiyaskan pada manusia merdeka (sehingga pelakunya di-qishash) atau pada hewan/harta (sehingga pelakunya hanya wajib mengganti harga)? Karena 'Abd lebih banyak kesamaannya dengan harta (bisa dijual, diwaris, diwaqafkan, anggota tubuhnya dihitung mengurangi harga), maka ia diqiyaskan dengan harta.</li>
+      </ol>
+    </div>
+
+    <div class="divider"><span>Pembahasan Ke-13</span></div>
+    <div class="sec-head" id="p15">
+      <span class="sec-badge">15</span>
+      <h3 class="sec-title">Ijtihad, Ittiba', dan Taqlid</h3>
+    </div>
+    <table class="def-table">
+      <tr><th>Istilah</th><th>Definisi</th><th>Pelaku</th></tr>
+      <tr>
+        <td class="term">Ijtihad</td>
+        <td>Mencurahkan segenap kemampuan dalam menentukan hukum syara' dengan jalan istinbath (mencari dalil) dari Al-Qur'an dan Hadits.</td>
+        <td>Mujtahid</td>
+      </tr>
+      <tr>
+        <td class="term">Ittiba'</td>
+        <td>Menerima pendapat orang lain dan mengetahui dari mana pendapat itu diambil (dalilnya).</td>
+        <td>Muttabi'</td>
+      </tr>
+      <tr>
+        <td class="term">Taqlid</td>
+        <td>Menerima pendapat orang lain tanpa mengetahui dari mana pendapat itu diambil.</td>
+        <td>Muqallid</td>
+      </tr>
+    </table>
+    <div class="callout">
+      <span class="tag">Sikap Ideal</span>
+      <p>Ijtihad dan Ittiba' dalam persoalan agama sangat dianjurkan/diharuskan (bagi yang mampu), sedangkan Taqlid buta dalam persoalan agama amat dicela — karena mengikuti tanpa dasar berpotensi terjerumus mengikuti kesalahan tanpa disadari, sebagaimana dikecam pada QS. Al-Ma'idah: 104 dan QS. Az-Zukhruf: 22 tentang orang yang membuta ikuti nenek moyang.</p>
+    </div>
+    <div class="explain">
+      <strong>Prinsip keadilan bagi mujtahid</strong> (HR. Bukhari): "Apabila seorang hakim berijtihad kemudian benar, ia mendapat dua pahala; jika salah, ia tetap mendapat satu pahala." Prinsip ini menunjukkan bahwa Islam menghargai proses ijtihad yang sungguh-sungguh meski hasilnya keliru — selama dilakukan oleh orang yang memenuhi syarat (mujtahid) dan dengan metode yang benar. Bagi orang awam yang tidak memiliki kapasitas berijtihad, kewajibannya adalah Ittiba' (mengikuti dengan mengetahui sandaran dalil) semaksimal mungkin, bukan Taqlid buta.
+    </div>
+  </section>
+
+  <!-- ================= BAGIAN KEDUA ================= -->
+  <section class="block" id="bagian2">
+    <span class="part-title">Bagian Kedua</span>
+    <h2 class="part-heading">Qawa'idul Fiqhiyyah — 40 Kaidah Fiqih</h2>
+    <div class="lede">
+      Qawa'id Fiqhiyyah adalah kaidah-kaidah umum hasil induksi (istiqra') dari banyak masalah fiqih cabang, yang dirangkum menjadi satu prinsip induk sehingga memudahkan analisis kasus-kasus baru (nawazil) yang belum pernah dibahas secara eksplisit oleh ulama terdahulu. Lima kaidah pertama dikenal sebagai <strong>Al-Qawa'id Al-Khams</strong> (Lima Kaidah Induk) yang menjadi fondasi bagi kaidah-kaidah lainnya.
+    </div>
+    <div class="ayat-source">قَالَ النَّبِيُّ ﷺ: إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى — HR. Bukhari</div>
+
+    <!-- KAIDAH 1 -->
+    <div class="kaidah-block" id="k1">
+      <h3 class="kaidah-title"><span class="kaidah-number">1</span>Kaidah Pertama — Niat Menentukan Hakikat Amal</h3>
+      <div class="kaidah-panel">اَلْأُمُوْرُ بِمَقَاصِدِهَا</div>
+      <div class="translation">"Setiap perbuatan itu bersama dengan tujuannya/niatnya."</div>
+      <div class="explain">
+        Ini adalah kaidah induk pertama dan paling fundamental, karena seluruh ibadah dan sebagian besar muamalah bergantung pada niat pelakunya. Menariknya, kaidah ini juga berlaku dalam konteks yang tampak "sekuler" seperti sumpah, pembicaraan, dan transaksi harta — menunjukkan bahwa niat adalah pusat penilaian syariat, bukan hanya pada ibadah ritual semata.
+      </div>
+      <div class="label-row">Contoh Penerapan</div>
+      <ul class="examples">
+        <li>Wudhu, mandi wajib, sholat, dan puasa harus disertai niat agar sah.</li>
+        <li>Jika seseorang berbuat sesuatu yang hukumnya mubah, tetapi berniat melakukan yang haram — misal menggauli istrinya sendiri namun berniat itu adalah zina — maka perbuatan tersebut tetap dihukumi haram karena niatnya.</li>
+        <li>Makan dan minum yang diniatkan untuk menguatkan ibadah akan bernilai pahala; tanpa niat, tidak bernilai pahala meski mubah.</li>
+        <li>Memeras anggur menjadi cuka atau khamr — hukumnya bergantung tujuan/niat si peraih.</li>
+        <li>Tidak berbicara dengan orang lain lebih dari 3 hari hukumnya haram <em>jika diniatkan</em> memutus silaturahim, namun tidak haram jika tanpa niat demikian.</li>
+        <li>Tidak memakai wewangian/berhias lebih dari 3 hari berkabung karena kematian bukan suami sendiri — haram jika diniatkan turut berduka, dan tidak apa-apa jika tanpa niat itu.</li>
+        <li>Mengambil harta orang yang berhutang — jika diniatkan untuk melunasi hutangnya sendiri, tidak dihukum potong tangan; jika diniatkan mencuri, dihukum potong tangan.</li>
+        <li>Kinayah (sindiran) talak: ucapan "kamu perempuan yang tidak punya suami" — jatuh talak jika diniatkan menjatuhkan talak, tidak jatuh jika tanpa niat itu.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 2-4 grouped: Ta'yin -->
+    <div class="kaidah-block" id="k2">
+      <h3 class="kaidah-title"><span class="kaidah-number">2</span>Kaidah Kedua — Ta'yin yang Disyaratkan, Salah Menjadi Batal</h3>
+      <div class="kaidah-panel">مَا يُشْتَرَطُ فِيْهِ التَّعْيِيْنُ فَخَطَأٌ فِيْهِ مُبْطِلٌ</div>
+      <div class="translation">"Jika menyatakan sesuatu itu menjadi syarat, maka jika kesalahan (dalam menyatakannya) hukumnya batal."</div>
+      <div class="explain">
+        Kaidah 2, 3, dan 4 saling melengkapi dan sebaiknya dipelajari sebagai satu rangkaian tentang kapan kesalahan ta'yin (penentuan detail tertentu) merusak ibadah, dan kapan tidak.
+      </div>
+      <ul class="examples">
+        <li>Niat menjadi ma'mum pada "Zaid", ternyata yang menjadi imam "Umar" — batal berjama'ahnya, karena ia telah keliru menetapkan ta'yin yang disyaratkan (siapa imamnya), padahal jama'ah <em>tidak</em> mensyaratkan penyebutan nama imam — hanya niat berjama'ah saja yang wajib.</li>
+        <li>Niat mensholati mayit "Bakar", ternyata mayitnya "Khalid", atau niat mayit laki-laki ternyata perempuan — tidak sah, karena sholat jenazah tidak mewajibkan ta'yin identitas mayit, cukup niat mensholati mayit secara umum.</li>
+      </ul>
+    </div>
+
+    <div class="kaidah-block" id="k3">
+      <h3 class="kaidah-title"><span class="kaidah-number">3</span>Kaidah Ketiga — Global vs Terperinci</h3>
+      <div class="kaidah-panel">مَا يُشْتَرَطُ التَّعَرُّضُ لَهُ جُمْلَةً وَلاَ يُشْتَرَطُ تَعْيِيْنُهُ تَفْصِيْلاً إِذَا عَيَّنَهُ وَاَخْطَأَ ضَرَّ</div>
+      <div class="translation">"Jika syaratnya hanya menentukan secara global, dan tidak disyaratkan ta'yin secara terperinci, maka ketika seseorang menyatakannya secara terperinci dan ia salah, hal itu akan menjadi madharat."</div>
+      <ul class="examples">
+        <li>Melaksanakan sholat untuk banyak mayit tanpa perlu menyebutkan jumlah pastinya — jika seseorang secara sengaja menetapkan jumlah 10 orang padahal lebih, sholatnya harus diulang (i'adah).</li>
+        <li>Tidak disyaratkan ta'yin bilangan raka'at; jika seseorang niat sholat dzuhur "lima raka'at" atau "tiga raka'at" secara sadar, sholatnya tidak sah.</li>
+        <li>Zakat harta yang ghaib (tidak berada di samping) yang ternyata sudah rusak/hilang — zakat itu tidak bisa dialihkan sebagai zakat harta yang masih ada.</li>
+      </ul>
+    </div>
+
+    <div class="kaidah-block" id="k4">
+      <h3 class="kaidah-title"><span class="kaidah-number">4</span>Kaidah Keempat — Kebalikan Kaidah Ketiga</h3>
+      <div class="kaidah-panel">مَا لاَ يُشْتَرَطُ التَّعَرُّضُ لَهُ جُمْلَةً وَلاَ تَفْصِيْلاً إِذَا عَيَّنَهُ وَاَخْطَأَ لَمْ يَضُرَّ</div>
+      <div class="translation">"Jika tidak disyaratkan menentukan secara global maupun terperinci, maka ketika seseorang menyatakannya dan ia salah, hal itu tidak menjadi madharat."</div>
+      <ul class="examples">
+        <li>Kesalahan menyebut tempat sholat — niat sholat dzuhur di Mesir ternyata berada di Mekah, sholatnya tidak batal, karena penyebutan tempat bukan bagian dari niat sholat.</li>
+        <li>Kesalahan menyebut waktu — niat sholat 'Ashar pada hari Kamis, ternyata sudah hari Jum'at, sholatnya tetap sah.</li>
+        <li>Kesalahan ta'yin imam terhadap ma'mum di belakangnya — imam niat mengimami "Zaid" ternyata ma'mumnya "Umar", sholat imam tidak batal, karena imam tidak disyaratkan mengetahui/menyebut siapa ma'mumnya.</li>
+      </ul>
+      <div class="callout">
+        <span class="tag">Membedakan Kaidah 3 &amp; 4</span>
+        <p>Pembeda utamanya: pada Kaidah 3, unsur yang salah disebutkan (jumlah mayit, bilangan raka'at) memang termasuk syarat sah ibadah meski hanya wajib disebut secara global — sehingga kesalahan terperinci tetap merusak. Pada Kaidah 4, unsur yang salah disebutkan (tempat, waktu, identitas ma'mum) sama sekali bukan bagian dari syarat niat ibadah itu — sehingga kesalahan menyebutnya tidak berpengaruh apa pun.</p>
+      </div>
+    </div>
+
+    <!-- KAIDAH 5 -->
+    <div class="kaidah-block" id="k5">
+      <h3 class="kaidah-title"><span class="kaidah-number">5</span>Kaidah Kelima — Maksud Ucapan Bergantung Pengucapnya</h3>
+      <div class="kaidah-panel">مَقَاصِدُ اللَّفْظِ عَلَى نِيَّةِ اللاَّفِظِ</div>
+      <div class="translation">"Maksud lafadz (ucapan) itu tergantung orang yang mengucapkannya."</div>
+      <ul class="examples">
+        <li>Suami memanggil istrinya bernama "Thaliq" (yang diceraikan) atau budaknya bernama "Hurroh" (yang merdeka) — jika bertujuan menjatuhkan talak/memerdekakan, maka terjadi; jika hanya sekadar memanggil nama, tidak terjadi apa-apa.</li>
+        <li>Mengulang lafadz talak 3 kali tanpa huruf 'athaf — jika bertujuan mengulangi dari awal, jatuh talak tiga; jika bertujuan hanya menegaskan (taukid), jatuh talak satu.</li>
+        <li>Membaca ayat Al-Qur'an dalam sholat — jika berniat sekadar membaca, sholat sah; jika berniat sekadar memberi pengertian pada orang lain (bukan bacaan sholat), sholat batal; jika berniat keduanya, sholat tetap sah menurut sebagian pendapat, namun Qaul Ashoh (pendapat lebih kuat) menyatakan batal.</li>
+        <li>Mengiringi niat dengan ucapan "Insya Allah" — jika bertujuan menggantungkan (ta'liq) niat, batal niatnya; jika bertujuan mengharap berkah (tabarruk), tidak batal; jika hanya diucapkan mutlak tanpa maksud apa pun, Qaul Ashoh menyatakan hukumnya batal.</li>
+      </ul>
+    </div>
+
+    <div class="tanbih">
+      <span class="tag">Tanbih — Keyakinan &amp; Keraguan dalam Ibadah</span>
+      <p style="font-family:var(--arabic);direction:rtl;text-align:center;font-size:20px;margin:10px 0">إِذَا شَكَّ أَحَدُكُمْ فِيْ صَلاَتِهِ فَلَمْ يَدْرِ كَمْ صَلَّى ثَلاَثًا أَمْ أَرْبَعًا فَلْيَطْرَحِ الشَّكَّ وَلْيَبْنِ عَلَى مَا اسْتَيْقَنَ</p>
+      <p style="text-align:center;font-style:italic">"Jika salah satu di antara kalian ragu dalam sholatnya dan tidak mengetahui apakah ia sholat 3 raka'at atau 4, hendaklah ia buang keraguan itu dan berpegang pada apa yang diyakininya." (HR. Muslim)</p>
+    </div>
+
+    <!-- KAIDAH 6 -->
+    <div class="kaidah-block" id="k6">
+      <h3 class="kaidah-title"><span class="kaidah-number">6</span>Kaidah Keenam — Keyakinan Tidak Hilang oleh Keraguan</h3>
+      <div class="kaidah-panel">اَلْيَقِيْنُ لاَ يُزَالُ بِالشَّكِّ</div>
+      <div class="translation">"Keyakinan itu tidak akan hilang oleh keraguan."</div>
+      <div class="explain">
+        Ini adalah kaidah induk kedua dan sangat luas penerapannya, terutama dalam bab thaharah (bersuci). Prinsipnya: sesuatu yang sudah ditetapkan dengan yakin hanya bisa berubah oleh keyakinan lain yang setara, bukan oleh keraguan yang lebih lemah.
+      </div>
+      <ul class="examples">
+        <li>Ragu jumlah raka'at (3 atau 4) — berpegang pada jumlah yang lebih sedikit (3), karena itulah yang diyakini.</li>
+        <li>Yakin suci lalu ragu berhadats — tetap dihukumi suci.</li>
+        <li>Yakin berhadats lalu ragu suci — tetap dihukumi berhadats.</li>
+      </ul>
+      <div class="explain">Kaidah cabang terkait: <em>"Sesuatu yang tetap dengan keyakinan tidak akan hilang kecuali dengan keyakinan pula."</em> — menegaskan simetri: hanya bukti setara yang bisa mengubah status yang telah pasti.</div>
+    </div>
+
+    <!-- KAIDAH 7 -->
+    <div class="kaidah-block" id="k7">
+      <h3 class="kaidah-title"><span class="kaidah-number">7</span>Kaidah Ketujuh — Praduga Keadaan Tetap (Istishab)</h3>
+      <div class="kaidah-panel">اَلْأَصْلُ بَقَاءُ مَا كَانَ عَلَى مَا كَانَ</div>
+      <div class="translation">"Asalnya itu tetapnya sesuatu atas keadaan sebelumnya."</div>
+      <div class="explain">Ini adalah salah satu bentuk penerapan istishab (praduga kontinuitas keadaan) yang berkaitan erat dengan Kaidah Keenam.</div>
+      <ul class="examples">
+        <li>Sahur di akhir malam, ragu apakah fajar sudah muncul — puasanya sah, karena asalnya masih malam.</li>
+        <li>Berbuka di akhir siang tanpa ijtihad, ragu matahari sudah terbenam — puasanya batal, karena asalnya masih siang.</li>
+        <li>Sengketa suami-istri: istri menggugat tidak pernah diberi nafkah/pakaian — ucapan yang dipegang adalah ucapan istri, karena asalnya nafkah adalah tanggungan yang belum dipenuhi.</li>
+        <li>Sengketa tamkin (pelayanan istri kepada suami) — ucapan yang dipegang adalah ucapan suami, karena asalnya belum ada tamkin, sehingga nafkah belum wajib (nafkah wajib jika ada tamkin).</li>
+        <li>Sengketa air najis setelah dibeli — ucapan yang dipegang adalah ucapan penjual, karena asalnya air itu suci.</li>
+        <li>Air suci yang berubah sedikit atau banyak — tetap dihukumi suci selama tidak diyakini penyebab najisnya.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 8-9 -->
+    <div class="kaidah-block" id="k8">
+      <h3 class="kaidah-title"><span class="kaidah-number">8</span>Kaidah Kedelapan — Bebasnya Tanggungan</h3>
+      <div class="kaidah-panel">اَلْأَصْلُ بَرَاءَةُ الذِّمَّةِ</div>
+      <div class="translation">"Asalnya itu lepasnya tanggungan/tanggung jawab."</div>
+      <ul class="examples">
+        <li>Orang yang diminta bersumpah lalu menolak — tidak dihukum secara sepihak, karena asalnya tidak ada tanggungan; sumpah dikembalikan kepada penuntut.</li>
+        <li>Sengketa syarat "penggantian barang" dalam pinjam-meminjam — ucapan yang dipegang adalah pihak yang diberi kitab (yang menerima), karena asalnya bebas dari tanggungan.</li>
+        <li>Sengketa harga barang pinjaman yang rusak — ucapan yang dipegang adalah peminjam, karena asalnya bebas dari kelebihan tuntutan.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k9">
+      <h3 class="kaidah-title"><span class="kaidah-number">9</span>Kaidah Kesembilan — Asalnya Tidak Ada</h3>
+      <div class="kaidah-panel">اَلْأَصْلُ الْعَدَمُ</div>
+      <div class="translation">"Asalnya itu tidak ada."</div>
+      <div class="explain">Kaidah ini erat kaitannya dengan Kaidah Kedelapan — bedanya, Kaidah 8 fokus pada tanggungan/kewajiban seseorang, sedangkan Kaidah 9 lebih umum: menegaskan bahwa segala hal (keuntungan, penghalang, izin, hutang) pada dasarnya <em>tidak ada</em> sampai terbukti sebaliknya.</div>
+      <ul class="examples">
+        <li>Ucapan pelaku Qiradh (modal usaha bagi hasil) "tidak ada untungnya" dibenarkan, karena asalnya tidak ada keuntungan.</li>
+        <li>Ucapan "kenapa kamu tidak mencegah saya membeli barang itu" — dibenarkan, karena asalnya tidak ada yang mencegah.</li>
+        <li>Sengketa pembolehan makan makanan orang lain — ucapan yang dipegang adalah pemilik makanan, karena asalnya tidak ada pembolehan.</li>
+        <li>Sengketa pelunasan hutang — ucapan yang dipegang adalah yang mendakwa mempunyai hutang (penagih), karena asalnya belum ada pelunasan/pembebasan.</li>
+        <li>Ragu meninggalkan tahiyyat awal dalam sholat — diganti sujud sahwi; namun ragu menambah sujud tidak perlu sujud sahwi, karena asalnya tidak ada penambahan itu.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 10 -->
+    <div class="kaidah-block" id="k10">
+      <h3 class="kaidah-title"><span class="kaidah-number">10</span>Kaidah Kesepuluh — Penentuan Waktu Kejadian</h3>
+      <div class="kaidah-panel">اَلْأَصْلُ فِيْ كُلِّ حَادِثٍ تَقْدِيْرُهُ بِأَقْرَبِ زَمَنِهِ</div>
+      <div class="translation">"Asalnya sesuatu yang datangnya kemudian, perkiraan hukumnya adalah menghitung pada yang lebih dekat waktu kedatangannya."</div>
+      <ul class="examples">
+        <li>Memukul perut orang hamil hingga melahirkan anak hidup tanpa sakit, kemudian anak itu meninggal — pemukul tidak dihukum sebagai pembunuh, karena sebab kematian dianggap ada faktor lain yang lebih dekat waktunya dengan kematian.</li>
+        <li>Menjual budak yang ternyata sakit lalu meninggal — tidak dapat dikembalikan, karena sakit yang bertambah itu dianggap sebab yang paling dekat kematiannya.</li>
+        <li>Melihat mani di pakaian tanpa ingat mimpi — wajib mandi wajib dan mengulang sholat sejak akhir tidurnya, karena akhir tidur itulah yang paling dekat waktunya.</li>
+        <li>Menemukan bangkai tikus di sumur wudhu — tidak wajib mengulangi sholat kecuali yakin sholatnya dalam keadaan najis.</li>
+        <li>Membuka sangkar burung yang langsung terbang — wajib mengganti; jika burung diam dulu baru terbang, tidak wajib mengganti (menurut pendapat kuat), karena keputusan terbang ada pada burung itu sendiri, bukan langsung akibat dibukanya sangkar.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 11 -->
+    <div class="kaidah-block" id="k11">
+      <h3 class="kaidah-title"><span class="kaidah-number">11</span>Kaidah Kesebelas — Kesulitan Melahirkan Kemudahan</h3>
+      <div class="kaidah-panel">اَلْمَشَقَّةُ تَجْلِبُ التَّيْسِيْرَ</div>
+      <div class="translation">"Kesulitan itu akan menghasilkan kemudahan."</div>
+      <div class="explain">Ini adalah kaidah induk ketiga, mendasari seluruh konsep rukhshoh dalam fiqih.</div>
+      <ul class="examples">
+        <li>Tidak mampu berdiri dalam sholat fardhu — boleh duduk; jika tidak mampu duduk, boleh berbaring miring.</li>
+        <li>Tidak boleh menggunakan air — boleh tayammum.</li>
+        <li>Najis yang sukar dihindari (darah luka, bisul, kotoran jalan, bekas najis yang sulit hilang) — diampuni.</li>
+        <li>Wanita tanpa wali dalam perjalanan — boleh menyerahkan kepercayaan pada orang lain yang dipercaya (Imam Syafi'i).</li>
+        <li>Tanah yang dipanaskan dengan kotoran — boleh dipakai berwudhu (Imam Syafi'i).</li>
+      </ul>
+      <div class="explain">Imam Syafi'i menurunkan prinsip ini: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">اَلْأَمْرُ إِذَا ضَاقَ اِتَّسَعَ</span> ("Perkara yang sempit akan menjadi longgar"), dan sebagian ulama menambah: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">اَلْأَشْيَاءُ إِذَا ضَاقَتْ اِتَّسَعَتْ</span> ("Setiap sesuatu yang sempit akan menjadi longgar").</div>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Faidah — Tujuh Bentuk Rukhshoh</span>
+      <p>1) <strong>Menghilangkan</strong> (gugurnya Jum'at, haji, umrah karena udzur) · 2) <strong>Mengurangi</strong> (qashar sholat) · 3) <strong>Menggantikan</strong> (tayammum ganti wudhu, duduk ganti berdiri, isyarat ganti gerakan, memberi makan ganti puasa) · 4) <strong>Mendahulukan</strong> (jama' taqdim, zakat sebelum waktunya, kafarat sumpah sebelum melanggar) · 5) <strong>Mengakhirkan</strong> (jama' ta'khir, puasa bagi musafir/sakit) · 6) <strong>Rukhshoh langsung</strong> (istinja' batu, minum khamr bagi yang haus, makan najis untuk obat) · 7) <strong>Mengubah</strong> (praktik sholat khauf).</p>
+    </div>
+
+    <!-- KAIDAH 12 -->
+    <div class="kaidah-block" id="k12">
+      <h3 class="kaidah-title"><span class="kaidah-number">12</span>Kaidah Kedua Belas — Kebalikan Kaidah 11</h3>
+      <div class="kaidah-panel">اَلْأَشْيَاءُ إِذَا اتَّسَعَتْ ضَاقَتْ</div>
+      <div class="translation">"Setiap sesuatu itu jika dalam kondisi longgar maka ia akan menjadi sempit."</div>
+      <ul class="examples">
+        <li>Sedikit bergerak dalam sholat itu diampuni; jika banyak bergerak tanpa hajat, tidak diampuni.</li>
+        <li>Air yang berubah oleh ganggang alami tetap suci; jika ganggang itu sengaja diremas dan diceburkan hingga mengubah air, air menjadi tidak suci.</li>
+        <li>Bangkai hewan yang darahnya tidak mengalir (misal: lalat, semut) di dalam air tidak menajiskan air.</li>
+      </ul>
+      <div class="explain">Imam Ghazali rahimahullah menggabungkan Kaidah 11 dan 12 dalam satu ungkapan: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">كُلُّ مَا تَجَاوَزَ حَدَّهُ اِنْعَكَسَ إِلَى ضِدِّهِ</span> — "Setiap sesuatu yang melewati batas, ia akan kembali pada kebalikannya."</div>
+    </div>
+
+    <!-- KAIDAH 13-19: kelompok Dharar -->
+    <div class="kaidah-block" id="k13">
+      <h3 class="kaidah-title"><span class="kaidah-number">13</span>Kaidah Ketiga Belas — Kemadharatan Harus Dihilangkan</h3>
+      <div class="kaidah-panel">اَلضَّرَرُ يُزَالُ</div>
+      <div class="translation">"Kemadharatan itu (harus) dihilangkan."</div>
+      <div class="explain">Ini kaidah induk keempat, berdasar hadits: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">لاَ ضَرَرَ وَلاَ ضِرَارَ</span> ("Tidak boleh memberi madharat pada diri sendiri maupun orang lain" — HR. Imam Malik &amp; Ibnu Majah). Kaidah 13–19 semuanya berputar pada tema penanganan dharar (kemadharatan), dan sebaiknya dipelajari sebagai satu kelompok bertahap.</div>
+      <ul class="examples">
+        <li>Hak khiyar pembeli karena cacat barang.</li>
+        <li>Fasakh nikah karena adanya cacat tertentu pada pasangan.</li>
+        <li>Istri boleh meminta fasakh nikah karena kesulitan ekonomi/kemiskinan suami.</li>
+        <li>Menjaga kelestarian umat: menetapkan hukum, mencegah kedzaliman, qishash, dan kewajiban ganti rugi bagi perusak.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k14">
+      <h3 class="kaidah-title"><span class="kaidah-number">14</span>Kaidah Keempat Belas — Batasan Menghilangkan Dharar</h3>
+      <div class="kaidah-panel">اَلضَّرَرُ لاَ يُزَالُ بِالضَّرَرِ</div>
+      <div class="translation">"Kemadharatan itu tidak bisa dihilangkan dengan kemadharatan yang lain."</div>
+      <ul class="examples">
+        <li>Orang yang kelaparan (madharat) tidak boleh memakan makanan orang lain yang sama-sama kelaparan, dan tidak boleh membunuh anak atau budaknya sendiri.</li>
+        <li>Seseorang terjatuh menimpa orang yang sedang terluka dan tetap berada di atasnya hingga meninggal — dihukumi membunuh; jika langsung pindah, tidak dihukumi membunuh.</li>
+        <li>Uang dinar yang terjatuh di tempat tinta — jika dihancurkan untuk mengambilnya, wajib mengganti tempat tinta pemiliknya, kecuali pemilik tempat tinta sendiri yang menghancurkannya.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k15">
+      <h3 class="kaidah-title"><span class="kaidah-number">15</span>Kaidah Kelima Belas — Kemadharatan Membolehkan yang Dilarang</h3>
+      <div class="kaidah-panel">اَلضَّرُوْرَاتُ تُبِيْحُ الْمَحْظُوْرَاتِ</div>
+      <div class="translation">"Kemadharatan itu dapat membolehkan semua yang dicegah/dilarang."</div>
+      <ul class="examples">
+        <li>Memakan bangkai dan daging babi bagi yang sangat lapar; minum arak bagi yang amat kehausan.</li>
+        <li>Melafalkan kalimat kekufuran karena dipaksa.</li>
+        <li>Mengambil harta orang yang enggan membayar hutang tanpa izin.</li>
+        <li>Ketika kehalalan sudah amat langka di suatu daerah, boleh memakai yang haram sesuai kebutuhan.</li>
+        <li>Menggali kubur karena darurat (misal: mayit belum dimandikan atau tidak menghadap kiblat).</li>
+      </ul>
+      <div class="explain">Kaidah terkait: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">لاَ حَرَامَ مَعَ الضَّرُوْرَةِ وَلاَ كَرَاهَةَ مَعَ الْحَاجَةِ</span> — "Tidak ada hukum haram bagi yang dharurat, dan tidak ada hukum makruh bagi yang hajat (butuh)."</div>
+    </div>
+    <div class="kaidah-block" id="k16">
+      <h3 class="kaidah-title"><span class="kaidah-number">16</span>Kaidah Keenam Belas — Batas Ukuran Rukhshoh Dharurat</h3>
+      <div class="kaidah-panel">مَا أُبِيْحَ لِلضَّرُوْرَةِ يُقَدَّرُ بِقَدْرِهَا</div>
+      <div class="translation">"Yang dibolehkan dalam hal kemadharatan itu hanya sebatas ukuran perkiraan madharatnya."</div>
+      <div class="explain">Prinsip ini adalah pembatas bagi Kaidah 15 — dharurat bukan izin tanpa batas, melainkan tetap terikat pada seberapa besar keadaan darurat itu membutuhkan.</div>
+      <ul class="examples">
+        <li>Orang yang madharat hanya boleh makan makanan haram sekadar untuk menyambung hidup, bukan sampai kenyang.</li>
+        <li>Mengobati/menyunatkan perempuan hanya boleh membuka bagian yang menjadi tujuan pengobatan, wajib menutup selainnya.</li>
+        <li>Orang gila tidak boleh dikawinkan dengan lebih dari satu istri, karena itu sudah menolak kebutuhan (di luar batas keperluan).</li>
+        <li>Menambah tempat sholat Jum'at boleh sekadar menghilangkan alasan tidak muat; jika sudah cukup dengan dua tempat, tidak boleh membuat tempat ketiga.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k17">
+      <h3 class="kaidah-title"><span class="kaidah-number">17</span>Kaidah Ketujuh Belas — Hajat Setara Dharurat</h3>
+      <div class="kaidah-panel">اَلْحَاجَةُ قَدْ تَنْزِلُ مَنْزِلَةَ الضَّرُوْرَةِ</div>
+      <div class="translation">"Hajat (kebutuhan) itu terkadang berada di posisi dharurat."</div>
+      <div class="explain">Kaidah ini memperluas ruang lingkup rukhshoh: tidak hanya kondisi darurat mendesak (mengancam nyawa) yang membolehkan hal-hal terlarang, tetapi juga kebutuhan (hajat) yang mendasar dalam kehidupan sosial-ekonomi.</div>
+      <ul class="examples">
+        <li>Bolehnya melihat perempuan untuk keperluan mu'amalah (transaksi) dan khitbah (melamar).</li>
+        <li>Bolehnya akad Muzara'ah (bibit dari penggarap) dan Mukhabarah (bibit dari pemilik sawah) — meski secara ushul mengandung unsur gharar, dibolehkan karena hajat masyarakat.</li>
+        <li>Bolehnya menjual sayuran (lobak, bawang) yang masih dalam tanah, karena mensyaratkan pengeluaran sekaligus akan menyulitkan dan merusaknya.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k18">
+      <h3 class="kaidah-title"><span class="kaidah-number">18</span>Kaidah Kedelapan Belas — Memilih Mafsadat yang Lebih Ringan</h3>
+      <div class="kaidah-panel">إِذَا تَعَارَضَ مَفْسَدَتَانِ رُوْعِيَ اَعْظَمُهُمَا ضَرَرًا بِارْتِكَابِ اَخَفِّهِمَا</div>
+      <div class="translation">"Ketika terdapat dua kemafsadatan (yang berbenturan), maka hindari yang lebih besar madharatnya dengan melakukan yang lebih ringan mafsadatnya."</div>
+      <ul class="examples">
+        <li>Boleh membelah perut orang yang sudah mati jika di dalamnya ada bayi yang diperkirakan masih hidup.</li>
+        <li>Tidak boleh minum khamr dan berjudi, karena madharat keduanya lebih besar dari manfaatnya.</li>
+        <li>Diberlakukannya hukum qishash, hudud, dan membunuh perampok dalam Islam.</li>
+        <li>Boleh bagi orang yang madharat mengambil makanan orang lain secara paksa.</li>
+        <li>Boleh memotong dahan/ranting pohon milik orang lain jika berada di area tanah miliknya.</li>
+        <li>Orang yang madharat menemukan bangkai dan makanan orang lain — pendapat lebih shahih menyatakan lebih baik memakan bangkai (halal berdasar Nash) daripada makanan orang lain (hanya halal berdasar ijtihad).</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k19">
+      <h3 class="kaidah-title"><span class="kaidah-number">19</span>Kaidah Kesembilan Belas — Mendahulukan Menolak Mafsadat</h3>
+      <div class="kaidah-panel">دَرْءُ الْمَفَاسِدِ مُقَدَّمٌ عَلَى جَلْبِ الْمَصَالِحِ</div>
+      <div class="translation">"Mendahulukan untuk menolak kemafsadatan daripada mengambil kemashlahatan."</div>
+      <ul class="examples">
+        <li>Mubalaghah (bersungguh-sungguh) dalam berkumur dan istinsyaq disunnahkan, namun dimakruhkan bagi orang yang berpuasa demi menjaga puasanya.</li>
+        <li>Menyela-nyela rambut sunnah dalam bersuci, tetapi dimakruhkan bagi orang yang sedang ihram demi menjaga dari rontoknya rambut.</li>
+        <li>Diampuni meninggalkan sebagian kewajiban yang lebih ringan (berdiri, bersuci) jika ada udzur; tetapi tidak diampuni melakukan perbuatan yang dilarang, apalagi dosa besar.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 20 -->
+    <div class="kaidah-block" id="k20">
+      <h3 class="kaidah-title"><span class="kaidah-number">20</span>Kaidah Kedua Puluh — Kehormatan Kemaluan</h3>
+      <div class="kaidah-panel">اَلْأَصْلُ فِي الْأَبْضَاعِ التَّحْرِيْمُ</div>
+      <div class="translation">"Asalnya berjima' itu hukumnya haram."</div>
+      <div class="ayat-source">وَالَّذِينَ هُمْ لِفُرُوجِهِمْ حَافِظُونَ إِلَّا عَلَىٰ أَزْوَاجِهِمْ أَوْ مَا مَلَكَتْ أَيْمَانُهُمْ — QS. Al-Mu'minun: 5–7</div>
+      <div class="explain">Kaidah ini menegaskan bahwa hubungan intim pada dasarnya terlarang kecuali dalam ikatan yang jelas kehalalannya (nikah sah atau kepemilikan budak yang sah) — keraguan pada status kehalalan tidak cukup untuk membolehkannya, berbeda dengan Kaidah 40 (Al-Ibahah) yang berlaku untuk perkara-perkara lain di luar kehormatan kemaluan.</div>
+      <ul class="examples">
+        <li>Wanita muhrim yang tidak diketahui keberadaannya di antara sekelompok wanita terbatas jumlahnya — dilarang berijtihad memilih salah satunya; namun jika jumlahnya sangat banyak, boleh, sebagai rukhshoh agar pintu nikah tidak tertutup dan pintu zina tidak terbuka.</li>
+        <li>Wakil membeli jariyah (budak perempuan) dengan sifat tertentu, lalu meninggal sebelum menyerahkannya — jariyah tersebut tidak boleh dijima' oleh pemberi wakil, karena dikhawatirkan wakil membelinya untuk dirinya sendiri.</li>
+        <li>Tidak halal menjima' tawanan perang sampai statusnya jelas sebagai bagian ghanimah yang dibagi imam.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 21-22 'Urf -->
+    <div class="kaidah-block" id="k21">
+      <h3 class="kaidah-title"><span class="kaidah-number">21</span>Kaidah Kedua Puluh Satu — Adat Menjadi Hukum</h3>
+      <div class="kaidah-panel">اَلْعَادَةُ مُحَكَّمَةٌ</div>
+      <div class="translation">"Adat itu bisa menjadi hukum."</div>
+      <div class="explain">Ini adalah kaidah induk kelima, dasar dari seluruh konsep 'urf (adat/kebiasaan) sebagai sumber hukum sekunder dalam fiqih muamalah.</div>
+      <ul class="examples">
+        <li>Jual beli dengan menyebut bahasa singkat (mutlak) — ketentuannya sesuai mata uang yang berlaku.</li>
+        <li>Muamalah barang/jenis lain tanpa kesepakatan harga eksplisit — berlaku harga sesuai kebiasaan.</li>
+        <li>Menggunakan kamar mandi dan makan hidangan tamu tanpa akad — hukumnya tergantung adat, apakah gratis atau tidak.</li>
+        <li>Hitungan haidh, nifas, dan suci — sedikit/banyaknya tergantung kebiasaan yang berlaku.</li>
+        <li>Upah tukang jahit dan tukang tenun — menurut Imam Rafi'i sebaiknya bersandar pada kebiasaan yang berlaku.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k22">
+      <h3 class="kaidah-title"><span class="kaidah-number">22</span>Kaidah Kedua Puluh Dua — Dikembalikan pada 'Urf</h3>
+      <div class="kaidah-panel">مَا وَرَدَ بِهِ الشَّرْعُ مُطْلَقًا وَلاَ ضَابِطَ لَهُ فِيْهِ وَلاَ فِي اللُّغَةِ يُرْجَعُ فِيْهِ إِلَى الْعُرْفِ</div>
+      <div class="translation">"Sesuatu yang datang dalam hukum syara' secara muthlaq dan tidak ada landasannya (secara syara' maupun bahasa), maka dikembalikan pada kebiasaan ('urf) yang berlaku."</div>
+      <ul class="examples">
+        <li>Niat sholat cukup dengan Muqoronah 'Urfiyah (kehadiran niat menurut ukuran kebiasaan orang), disebut Istihdharul 'Urfi.</li>
+        <li>Jual beli mu'athah (saling serah terima tanpa ijab-qabul lisan) secara ushul tidak sah, namun wajib dikembalikan pada adat kebiasaan — pendapat ini dipilih Imam Nawawi rahimahullah dan termasuk Qaul Mu'tamad.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 23 -->
+    <div class="kaidah-block" id="k23">
+      <h3 class="kaidah-title"><span class="kaidah-number">23</span>Kaidah Kedua Puluh Tiga — Ijtihad Tidak Membatalkan Ijtihad</h3>
+      <div class="kaidah-panel">اَلاِجْتِهَادُ لاَ يُنْقَضُ بِالاِجْتِهَادِ</div>
+      <div class="translation">"Ijtihad itu tidak akan rusak dengan ijtihad yang lain."</div>
+      <ul class="examples">
+        <li>Berubah ijtihad arah kiblat — dipakai ijtihad kedua, namun tidak perlu mengulangi sholat yang telah dikerjakan berdasar ijtihad pertama, meski 4 raka'at menghadap 4 arah berbeda.</li>
+        <li>Hakim memutuskan hukum berdasarkan ijtihadnya, kemudian ijtihad itu berubah — keputusan hukum pertama tidak batal.</li>
+        <li>Suami men-khulu' istrinya, lalu menikahinya kembali tanpa muhallil dengan i'tiqad khulu' adalah fasakh (bukan talak) — jika kemudian ijtihadnya berubah bahwa khulu' adalah talak, ia tetap diperbolehkan bersama istrinya berdasar pernikahan tersebut.</li>
+      </ul>
+      <div class="tanbih">
+        <span class="tag">Tanbih</span>
+        <p>Pengertian kaidah ini: ijtihad kedua tidak <em>membatalkan</em> ijtihad pertama, melainkan hanya menggantikan penerapan hukum ke depannya, karena tidak ada tarjih (yang lebih kuat) atas ijtihad pertama saat itu dilakukan. Karena itu, ijtihad kedua digunakan untuk menentukan arah baru, namun ijtihad pertama yang telah dijalankan tidak batal secara retroaktif.</p>
+      </div>
+    </div>
+
+    <!-- KAIDAH 24-25 Iytsar -->
+    <div class="kaidah-block" id="k24">
+      <h3 class="kaidah-title"><span class="kaidah-number">24</span>Kaidah Kedua Puluh Empat — Iytsar dalam Ibadah Dilarang</h3>
+      <div class="kaidah-panel">اَلإِيْثَارُ بِالْعِبَادَةِ مَمْنُوْعٌ</div>
+      <div class="translation">"Mendahulukan orang lain dalam hal ibadah itu dilarang."</div>
+      <div class="explain">Iytsar berarti mengalah/mendahulukan orang lain atas hak diri sendiri. Kaidah 24 dan 25 membedakan konteks ibadah murni (di mana iytsar dilarang, karena pahalanya bersifat pribadi) versus konteks non-ibadah (di mana iytsar justru dianjurkan sebagai keutamaan).</div>
+      <ul class="examples">
+        <li>Mendahulukan orang lain di shaf pertama sholat berjama'ah.</li>
+        <li>Mendahulukan orang lain memakai air suci atau bergantian menutup aurat.</li>
+        <li>Mendahulukan orang lain untuk mendapat giliran mengajar ilmu.</li>
+        <li>Mendahulukan orang lain memberi makan fakir miskin dan anak yatim (yang sedang menjadi kewajiban/hajatnya sendiri).</li>
+      </ul>
+      <div class="ayat-source">وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ — QS. Al-Hasyr: 9</div>
+    </div>
+    <div class="kaidah-block" id="k25">
+      <h3 class="kaidah-title"><span class="kaidah-number">25</span>Kaidah Kedua Puluh Lima — Iytsar di Luar Ibadah Dianjurkan</h3>
+      <div class="kaidah-panel">اَلإِيْثَارُ بِغَيْرِ الْعِبَادَةِ مَطْلُوْبٌ</div>
+      <div class="translation">"Mendahulukan diri sendiri dalam hal yang bukan ibadah itu yang dicari (dianjurkan mengalah)."</div>
+      <ul class="examples">
+        <li>Mengalah dalam hal kemiskinan (demi orang lain).</li>
+        <li>Mengalah dalam hal pakaian (demi orang lain).</li>
+        <li>Mengalah dalam hal makanan (demi orang lain).</li>
+        <li>Tidak mengambil harta sedekah, karena mengalah demi orang lain yang lebih membutuhkan.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 26 -->
+    <div class="kaidah-block" id="k26">
+      <h3 class="kaidah-title"><span class="kaidah-number">26</span>Kaidah Kedua Puluh Enam — Kebijakan Pemimpin Terikat Mashlahat</h3>
+      <div class="kaidah-panel">تَصَرُّفُ الْإِمَامِ عَلَى الرَّعِيَّةِ مَنُوْطٌ بِالْمَصْلَحَةِ</div>
+      <div class="translation">"Kebijakan seorang pemimpin dalam kepemimpinannya harus dilandasi dengan kemashlahatan (bagi rakyat)."</div>
+      <div class="ayat-source">كُلُّكُمْ رَاعٍ وَكُلُّكُمْ مَسْؤُوْلٌ عَنْ رَعِيَّتِهِ</div>
+      <ul class="examples">
+        <li>Imam membagi zakat kepada beberapa asnaf — diharamkan melebihkan kepada salah satu asnaf jika kebutuhannya sama.</li>
+        <li>Tidak boleh memilih imam sholat yang fasiq walau secara hukum sah menjadi ma'mumnya, karena hukumnya makruh.</li>
+        <li>Tidak boleh menggunakan harta baitul mal untuk yang tidak butuh sambil mengabaikan yang lebih membutuhkan.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 27 -->
+    <div class="kaidah-block" id="k27">
+      <h3 class="kaidah-title"><span class="kaidah-number">27</span>Kaidah Kedua Puluh Tujuh — Hudud Gugur Sebab Syubhat</h3>
+      <div class="kaidah-panel">اَلْحُدُوْدُ تَسْقُطُ بِالشُّبُهَاتِ</div>
+      <div class="translation">"Hudud (hukum had) itu hilang dengan adanya perkara yang syubhat (ragu-ragu)."</div>
+      <div class="ayat-source">اِدْرَءُوا الْحُدُوْدَ بِالشُّبُهَاتِ</div>
+      <ul class="examples">
+        <li>Orang yang menjima' perempuan dengan sangkaan bahwa itu adalah istrinya, tidak dijatuhi had.</li>
+        <li>Menjima' perempuan yang dinikahi dengan status akad yang diperselisihkan ulama (nikah mut'ah, tanpa wali, tanpa saksi) — tidak dijatuhi had, karena syubhat khilafiyah.</li>
+        <li>Mengambil harta yang disangka miliknya sendiri, bapaknya, atau anaknya — tidak dijatuhi had karena syubhat kepemilikan.</li>
+        <li>Minum khamr untuk berobat — walau menurut Qaul Ashoh tetap haram, tetap dianggap syubhat karena adanya perbedaan pendapat.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 28-29 -->
+    <div class="kaidah-block" id="k28">
+      <h3 class="kaidah-title"><span class="kaidah-number">28</span>Kaidah Kedua Puluh Delapan — Sarana bagi Wajib</h3>
+      <div class="kaidah-panel">مَا لاَ يَتِمُّ الْوَاجِبُ إِلاَّ بِهِ فَهُوَ وَاجِبٌ</div>
+      <div class="translation">"Perkara yang membuat sempurnanya hukum wajib, maka perkara itu hukumnya wajib pula."</div>
+      <div class="explain">Kaidah ini adalah versi lain dari kaidah "Amr bis-Syai'i" di Bagian Pertama (Pembahasan Amr, kaidah ke-4) — menegaskan bahwa sarana pencapaian sesuatu yang wajib turut menjadi wajib.</div>
+      <ul class="examples">
+        <li>Wajibnya mencuci sebagian (juz) leher dan kepala beserta mencuci wajah — agar seluruh wajah tercuci sempurna.</li>
+        <li>Wajibnya mencuci sebagian lengan dan betis beserta siku dan kaki.</li>
+        <li>Wajibnya menutup sebagian dengkul dan pusar untuk aurat laki-laki, dan sebagian wajah/kepala untuk aurat perempuan.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k29">
+      <h3 class="kaidah-title"><span class="kaidah-number">29</span>Kaidah Kedua Puluh Sembilan — Keluar dari Perbedaan Pendapat</h3>
+      <div class="kaidah-panel">اَلْخُرُوْجُ مِنَ الْخِلاَفِ مُسْتَحَبٌّ</div>
+      <div class="translation">"Keluar dari khilafiyah (perbedaan pendapat) hukumnya sunnah."</div>
+      <ul class="examples">
+        <li>Menggosok-gosok saat bersuci dan meratakan usapan pada kepala — disunnahkan karena keluar dari khilafiyah Imam Malik yang mewajibkannya.</li>
+        <li>Mencuci mani (sperma) disunnahkan karena Imam Malik mewajibkannya.</li>
+        <li>Sholat Qashar dalam perjalanan sejauh 3 marhalah (± 88,5 km) disunnahkan karena keluar dari khilafiyah Imam Abu Hanifah yang mewajibkannya.</li>
+        <li>Menjauhi menghadap/membelakangi kiblat saat buang hajat, bahkan dengan penutup, hukumnya sunnah karena keluar dari khilafiyah Imam Sufyan Tsauri.</li>
+        <li>Makruhnya sholat munfarid (sendirian) di belakang shaf ma'mum yang ada, karena keluar dari khilafiyah Imam Ahmad yang membatalkannya.</li>
+        <li>Makruhnya mufarraqah (berpisah dari imam tanpa udzur), karena keluar dari khilafiyah Imam Daud Zhahiri yang membatalkannya.</li>
+      </ul>
+      <div class="tanbih">
+        <span class="tag">Tanbih — Syarat Menjaga Khilafiyah</span>
+        <p>1) Menjaga khilafiyah tidak boleh jatuh pada khilafiyah lain — memisah (fashl) sholat witir lebih afdhal daripada menyambungnya (washl), demi menjaga khilafiyah Imam Abu Hanifah tentang witir yang tidak boleh disambung.<br>2) Khilafiyah tidak boleh bertentangan dengan sunnah yang telah tegak — disunnahkan mengangkat kedua telapak tangan dalam sholat, meski Imam Abu Hanifah membatalkannya, karena praktik itu diriwayatkan oleh 50 sahabat.<br>3) Landasan khilafiyah harus sudah kuat, tidak boleh tergesa-gesa — berpuasa bagi musafir lebih utama, meski sebagian ahli zhahir menyatakan puasanya tidak sah.</p>
+      </div>
+    </div>
+
+    <!-- KAIDAH 30-31 Rukhas -->
+    <div class="kaidah-block" id="k30">
+      <h3 class="kaidah-title"><span class="kaidah-number">30</span>Kaidah Ketiga Puluh — Rukhshoh Tidak Berlaku pada Maksiat</h3>
+      <div class="kaidah-panel">اَلرُّخَصُ لاَ تُنَاطُ بِالْمَعَاصِيْ</div>
+      <div class="translation">"Rukhshoh (keringanan) itu tidak berlaku dengan kemaksiatan."</div>
+      <ul class="examples">
+        <li>Tidak boleh mendapat rukhshoh bepergian (qashar, jama', berbuka puasa) bagi yang melakukan perjalanan maksiat.</li>
+        <li>Tidak boleh memakan bangkai/babi bagi orang yang madharat karena maksiat dalam perjalanannya.</li>
+        <li>Istinja' dengan sesuatu yang dihormati/dimuliakan atau dengan makanan — tidak cukup (tidak sah) menurut Qaul Ashoh, karena istinja' dengan batu itu sendiri termasuk rukhshoh, dan rukhshoh tidak boleh dilanggar dengan cara yang tidak semestinya.</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k31">
+      <h3 class="kaidah-title"><span class="kaidah-number">31</span>Kaidah Ketiga Puluh Satu — Rukhshoh Tidak Berlaku dengan Sebab Keraguan</h3>
+      <div class="kaidah-panel">اَلرُّخَصُ لاَ تُنَاطُ بِالشَّكِّ</div>
+      <div class="translation">"Rukhshoh (keringanan) itu tidak berlaku dengan sebab keraguan."</div>
+      <ul class="examples">
+        <li>Wajib mencuci kaki bagi yang ragu tentang hukum bolehnya mengusap khuff (sepatu boot).</li>
+        <li>Wajib sholat itmam (sempurna) bagi yang ragu tentang hukum bolehnya sholat Qashar — misal ragu apakah niat takbiratul ihram dilakukan saat safar atau hadir, ragu niat qashar atau tidak, atau ragu apakah imamnya musafir atau muqim. Karena asalnya adalah itmam, dan qashar hanya boleh dengan syarat yang jelas.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 32-34 -->
+    <div class="kaidah-block" id="k32">
+      <h3 class="kaidah-title"><span class="kaidah-number">32</span>Kaidah Ketiga Puluh Dua — Banyak Amal, Banyak Keutamaan</h3>
+      <div class="kaidah-panel">مَا كَانَ اَكْثَرَ فِعْلاً كَانَ اَكْثَرَ فَضْلاً</div>
+      <div class="translation">"Yang banyak pekerjaannya maka banyak keutamaannya."</div>
+      <div class="ayat-source">اَجْرُكِ عَلَى قَدْرِ نَصَبِكِ — HR. Muslim</div>
+      <ul class="examples">
+        <li>Memisahkan sholat witir lebih utama dibanding menyambungnya, karena bertambahnya niat, takbiratul ihram, dan salam.</li>
+        <li>Sholat sunnah sambil duduk pahalanya separuh dari sholat berdiri; sholat sambil berbaring separuh dari sholat duduk.</li>
+        <li>Haji Ifrad (mendahulukan haji baru umrah) lebih utama dibanding Haji Qiran (haji dan umrah bersamaan).</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k33">
+      <h3 class="kaidah-title"><span class="kaidah-number">33</span>Kaidah Ketiga Puluh Tiga — Tidak Semua atau Tidak Sama Sekali</h3>
+      <div class="kaidah-panel">مَا لاَ يُدْرَكُ كُلُّهُ لاَ يُتْرَكُ كُلُّهُ</div>
+      <div class="translation">"Sesuatu yang tidak bisa dilakukan seluruhnya, janganlah ditinggal seluruhnya."</div>
+      <div class="ayat-source">وَمَا اَمَرْتُكُمْ بِهِ فَأْتُوْا مِنْهُ مَا اسْتَطَعْتُمْ — HR. Bukhari-Muslim</div>
+      <ul class="examples">
+        <li>Tidak mampu bersedekah dengan dinar (kadar besar) — lakukan dengan dirham (kadar kecil), jangan tinggalkan seluruhnya.</li>
+        <li>Tidak mampu mengajar/belajar seluruh cabang ilmu — jangan tinggalkan seluruhnya.</li>
+        <li>Sulit sholat malam 10 raka'at — laksanakan walau hanya 4 raka'at.</li>
+      </ul>
+      <div class="explain">Perumpamaan ulama Fuqaha: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">مَا لاَ يُدْرَكُ كُلُّهُ لاَ يُتْرَكُ بَعْضُهُ</span> — "Sesuatu yang tidak bisa dilakukan seluruhnya bukan berarti tidak dilakukan sebagiannya."</div>
+    </div>
+    <div class="kaidah-block" id="k34">
+      <h3 class="kaidah-title"><span class="kaidah-number">34</span>Kaidah Ketiga Puluh Empat — Kemudahan Tidak Hilang oleh Kesukaran</h3>
+      <div class="kaidah-panel">اَلْمَيْسُوْرُ لاَ يَسْقُطُ بِالْمَعْسُوْرِ</div>
+      <div class="translation">"Kemudahan itu tidak akan hilang oleh sebab kesukaran."</div>
+      <ul class="examples">
+        <li>Jari-jari tangan yang terpotong — wajib mencuci yang tersisa dalam bersuci.</li>
+        <li>Hanya mampu menutup sebagian aurat — dibolehkan sesuai kadar kemampuannya.</li>
+        <li>Tidak mampu ruku' dan sujud tapi mampu berdiri — berdiri dalam sholat tetap wajib.</li>
+        <li>Hanya memiliki setengah sha' (dari 1 sha' = 3 liter lebih) — tetap wajib dikeluarkan sebagai zakat fitrah.</li>
+        <li>Hanya mampu membaca setengah surat Al-Fatihah — lakukan, dan kekurangannya diganti membaca surat lain.</li>
+        <li>Memiliki 1 nishab dimana separuhnya ghaib (tidak bersama) — Qaul Ashoh: wajib mengeluarkan zakat dari harta yang ada saja.</li>
+        <li>Orang bisu wajib menggerakkan lisannya sebagai ganti membaca Fatihah, sebagaimana isyarat pada ruku' dan sujud.</li>
+        <li>Luka yang mencegah air masuk — tetap wajib mencuci anggota lain, kemudian tayammum pada anggota yang luka.</li>
+      </ul>
+    </div>
+
+    <!-- KAIDAH 35-36 -->
+    <div class="kaidah-block" id="k35">
+      <h3 class="kaidah-title"><span class="kaidah-number">35</span>Kaidah Ketiga Puluh Lima — Pekerjaan Haram, Hasilnya Haram</h3>
+      <div class="kaidah-panel">مَا حَرُمَ فِعْلُهُ حَرُمَ طَلَبُهُ</div>
+      <div class="translation">"Yang haram pekerjaannya, maka haram mencarinya."</div>
+      <div class="ayat-source">وَلْتَكُنْ مِّنكُمْ أُمَّةٌ يَدْعُونَ إِلَى الْخَيْرِ وَيَأْمُرُونَ بِالْمَعْرُوفِ وَيَنْهَوْنَ عَنِ الْمُنكَرِ — QS. Ali 'Imran: 104</div>
+      <ul class="examples">
+        <li>Mencari riba dan mahar dari orang yang zalim.</li>
+        <li>Mencari persenan (uang tip) dukun dan sogokan.</li>
+        <li>Mencari upah dari menangisi mayit (paid mourner).</li>
+      </ul>
+    </div>
+    <div class="kaidah-block" id="k36">
+      <h3 class="kaidah-title"><span class="kaidah-number">36</span>Kaidah Ketiga Puluh Enam — Kebalikan Kaidah 35</h3>
+      <div class="kaidah-panel">مَا حَرُمَ اَخْذُهُ حَرُمَ إِعْطَاؤُهُ</div>
+      <div class="translation">"Yang haram mengambilnya, maka haram memberikannya."</div>
+      <ul class="examples">
+        <li>Memberikan riba dan mahar orang yang zalim.</li>
+        <li>Memberikan persenan (uang tip) dukun dan sogokan.</li>
+        <li>Memberikan upah untuk menangisi mayit.</li>
+      </ul>
+      <div class="explain">Kaidah 35 dan 36 adalah dua sisi mata uang yang sama: keharaman berlaku pada kedua pihak transaksi (yang meminta/mengambil dan yang memberi), sebagaimana kaidah umum "setiap yang haram diambil, haram pula diberikan, dan sebaliknya".</div>
+    </div>
+
+    <!-- KAIDAH 37 -->
+    <div class="kaidah-block" id="k37">
+      <h3 class="kaidah-title"><span class="kaidah-number">37</span>Kaidah Ketiga Puluh Tujuh — Kebaikan Berkesinambungan Lebih Utama</h3>
+      <div class="kaidah-panel">اَلْخَيْرُ الْمُتَعَدِّى اَفْضَلُ مِنَ الْقَاصِرِ</div>
+      <div class="translation">"Kebaikan yang berkesinambungan (manfaatnya menular ke orang lain) itu lebih utama daripada yang singkat/terbatas pada diri sendiri."</div>
+      <ul class="examples">
+        <li>Mengajarkan ilmu lebih utama daripada sholat sunnah muthlaq.</li>
+        <li>Melakukan fardhu kifayah lebih unggul daripada fardhu 'ain, karena menggugurkan kewajiban umat lain sekaligus.</li>
+      </ul>
+      <div class="explain">
+        Nadzam Imam Suyuthi ra. menjelaskan 10 amal yang pahalanya terus mengalir walau pelakunya telah wafat: <em>ilmu yang diajarkan, doa anak sholeh, menanam pohon kurma (tanaman), sedekah jariyah, mewariskan mushaf Al-Qur'an, membangun pondok/tempat belajar, menggali sumur, menyalurkan sungai/kali, membangun rumah singgah musafir/tempat dzikir, dan mengajarkan Al-Qur'an</em> — sebagaimana disebut dalam nadzam beliau.
+      </div>
+    </div>
+
+    <!-- KAIDAH 38 -->
+    <div class="kaidah-block" id="k38">
+      <h3 class="kaidah-title"><span class="kaidah-number">38</span>Kaidah Ketiga Puluh Delapan — Ridha Menanggung Konsekuensi</h3>
+      <div class="kaidah-panel">اَلرِّضَى بِالشَّيْئِ رِضًى بِمَا يَتَوَلَّدُ مِنْهُ</div>
+      <div class="translation">"Ridha terhadap sesuatu itu (berarti) ridha dengan apa yang terlahir darinya."</div>
+      <ul class="examples">
+        <li>Ridha suami-istri terhadap 'aib pasangan, meski cacat itu bertambah kemudian — tidak ada khiyar (menurut Qaul Shahih).</li>
+        <li>Murtahin (penerima gadai) yang mengizinkan Rahin (penggadai) memukul hamba sahaya gadaian, walau sampai rusak — tidak wajib mengganti, karena itu dampak dari izinnya sendiri.</li>
+        <li>Seseorang meminta "potong tangan saya" lalu ternyata tangannya terus terputus akibat pemotongan itu — dibiarkan (tidak ada tanggungan) menurut Qaul Azhar.</li>
+        <li>Memakai wewangian sebelum ihram, lalu baunya tetap ada sampai ihram — tidak wajib membayar fidyah.</li>
+        <li>Istinja' dengan batu diampuni meski keringat membuat kotorannya basah kembali.</li>
+        <li>Terlanjur minum air saat kumur-kumur/istinsyaq tanpa mubalaghah bagi orang puasa — tidak batal puasanya (Qaul Ashoh); berbeda jika dengan mubalaghah (batal), karena itu akibat perbuatan yang dicegah.</li>
+      </ul>
+      <div class="explain">Kaidah terkait: <span style="font-family:var(--arabic);direction:rtl;display:inline-block">اَلْمُتَوَلِّدُ مِنْ مَأْذُوْنٍ فِيْهِ لاَ اَثَرَ لَهُ</span> — "Yang muncul/terlahir dari yang telah diizinkan, maka tidak menjadi masalah."</div>
+    </div>
+
+    <!-- KAIDAH 39 -->
+    <div class="kaidah-block" id="k39">
+      <h3 class="kaidah-title"><span class="kaidah-number">39</span>Kaidah Ketiga Puluh Sembilan — Hukum Berputar Bersama 'Illat</h3>
+      <div class="kaidah-panel">اَلْحُكْمُ يَدُوْرُ مَعَ الْعِلَّةِ وُجُوْدًا وَعَدَمًا</div>
+      <div class="translation">"Hukum itu beredar bersama dengan 'illat-nya (sebabnya), ada maupun tidak ada."</div>
+      <div class="ayat-source">كُلُّ مُسْكِرٍ خَمْرٌ وَكُلُّ خَمْرٍ حَرَامٌ — HR. Muslim</div>
+      <ul class="examples">
+        <li>Haramnya khamr karena memabukkan — ketika tidak lagi memabukkan (misal berubah menjadi cuka), hukumnya menjadi halal.</li>
+        <li>Masuk rumah orang lain dan memakai pakaiannya haram karena tidak ada ridha pemilik; jika diketahui pemiliknya ridha, hukumnya boleh.</li>
+        <li>Haramnya meminum racun karena merusak; jika tidak akan merusak (misal dosis kecil untuk pengobatan), hukumnya boleh.</li>
+      </ul>
+      <div class="explain">Ini adalah salah satu kaidah paling penting dalam analisis fiqih kontemporer: dengan menemukan 'illat (sebab hukum) yang tepat pada suatu kasus, hukum yang sama dapat diterapkan atau ditiadakan sesuai ada-tidaknya 'illat tersebut — inilah dasar metodologis dari Qiyas (lihat Bagian Pertama, Pembahasan 12).</div>
+    </div>
+
+    <!-- KAIDAH 40 -->
+    <div class="kaidah-block" id="k40">
+      <h3 class="kaidah-title"><span class="kaidah-number">40</span>Kaidah Keempat Puluh — Asal Segala Sesuatu adalah Mubah</h3>
+      <div class="kaidah-panel">اَلْأَصْلُ فِي الْأَشْيَاءِ الْإِبَاحَةُ</div>
+      <div class="translation">"Asalnya sesuatu itu hukumnya Mubah (boleh)."</div>
+      <div class="ayat-source">اَلْحَلاَلُ مَا اَحَلَّ اللهُ فِيْ كِتَابِهِ وَالْحَرَامُ مَا حَرَّمَ اللهُ فِيْ كِتَابِهِ وَمَا سَكَتَ عَنْهُ فَهُوَ مِمَّا عَفَى عَنْهُ — HR. Turmudzi &amp; Ibnu Majah</div>
+      <div class="explain">
+        Kaidah penutup ini menjadi fondasi hukum bagi segala benda, makanan, dan aktivitas duniawi di luar kehormatan kemaluan (bandingkan dengan Kaidah 20 yang justru sebaliknya): selama tidak ada dalil yang mengharamkannya, hukum asalnya adalah mubah/boleh. Ini adalah kaidah yang paling sering dirujuk dalam menjawab persoalan-persoalan baru (nawazil) yang tidak ditemukan nashnya secara eksplisit.
+      </div>
+      <ul class="examples">
+        <li>Keraguan hukum halal-haram hewan yang tidak diketahui jenisnya — hukumnya halal.</li>
+        <li>Burung dara yang masuk sangkar seseorang, ragu apakah milik orang lain — lebih utama boleh memilikinya.</li>
+        <li>Ragu ukuran tambalan emas pada tempat makanan/minuman (besar/kecil) — hukum asalnya mubah dipakai.</li>
+        <li>Hukum memakan jerapah — menurut Imam Subki, boleh dimakan, karena hukum asalnya adalah mubah.</li>
+      </ul>
+    </div>
+
+    <div class="divider" style="margin-top:34px"><span style="font-family:var(--arabic);font-size:20px">تَمَّتْ</span></div>
+    <p style="text-align:center;color:var(--ink-soft);font-size:13.5px">— Selesai. Semoga bermanfaat sebagai bahan ajar dan bahan kajian mandiri. —</p>
+  </section>
+
+  </main>
+</div>
+
+<button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<footer class="site-footer">
+  &copy; 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a>
+</footer>
+
+</body>
+</html>

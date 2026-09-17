@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kalkulator Pajak Indonesia — Lengkap &amp; Terkini</title>
+<style>
+:root{
+  --bg-1:#08110d;
+  --bg-2:#0e1f16;
+  --panel:#12241a;
+  --panel-2:#16301f;
+  --border:#294936;
+  --gold:#d4af6a;
+  --gold-bright:#f0cf8e;
+  --green-bright:#3fae6f;
+  --text:#eaf2e9;
+  --text-dim:#9ab0a0;
+  --danger:#e07a5f;
+  --input-bg:#0d1a13;
+  --radius:14px;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(circle at 15% 0%, #1b3826 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, #1a2f22 0%, transparent 50%),
+    linear-gradient(160deg,var(--bg-1),var(--bg-2) 60%,#0a1710);
+  color:var(--text);
+  min-height:100vh;
+  padding:24px clamp(14px, 4vw, 56px) 60px;
+}
+.wrap{max-width:1280px;width:100%;margin:0 auto;}
+header{
+  display:flex; justify-content:center;
+  margin-bottom:22px;
+  padding:16px 14px;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.header-capsule{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  width:100%;
+  padding:14px 22px 14px 26px;
+  border-radius:999px;
+  background:linear-gradient(135deg, rgba(212,175,106,0.18), rgba(63,174,111,0.14));
+  border:1px solid var(--border);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  box-shadow:0 10px 30px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.06);
+  position:relative; overflow:hidden;
+}
+.header-capsule-left{display:flex; align-items:center; gap:16px; min-width:0; position:relative; z-index:1;}
+.header-capsule::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(120deg, transparent 30%, rgba(212,175,106,0.10) 50%, transparent 70%);
+  animation: sheen 7s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes sheen{0%,100%{transform:translateX(-30%);}50%{transform:translateX(30%);}}
+.header-capsule-icon{font-size:1.9rem;flex:0 0 auto;}
+.header-capsule-text{text-align:left;min-width:0;}
+.header-capsule-text h1{
+  margin:0; font-size:1.65rem; letter-spacing:.2px; font-weight:700; white-space:nowrap;
+  background:linear-gradient(90deg,var(--gold-bright),var(--green-bright));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.header-capsule-text p{margin:3px 0 0;color:var(--text-dim);font-size:.82rem;white-space:nowrap;}
+@media (max-width:480px){
+  .header-capsule{padding:12px 16px;}
+  .header-capsule-text h1{font-size:1.3rem;}
+  .header-capsule-text h1,.header-capsule-text p{white-space:normal;}
+}
+.badge-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1;}
+.badge{
+  font-size:.72rem; padding:4px 10px; border-radius:20px;
+  border:1px solid var(--border); color:var(--gold);
+  background:rgba(212,175,106,0.07);
+  text-decoration:none; display:inline-block; cursor:pointer; transition:.15s;
+}
+.badge:hover{background:rgba(212,175,106,0.2); border-color:var(--gold); color:var(--gold-bright);}
+
+nav.tabs{
+  display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;
+  justify-content:center;
+}
+nav.tabs button{
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:var(--text-dim);
+  padding:10px 14px;
+  border-radius:10px;
+  font-size:.83rem;
+  cursor:pointer;
+  transition:.18s;
+  backdrop-filter: blur(6px);
+}
+nav.tabs button:hover{ color:var(--text); border-color:var(--gold); }
+nav.tabs button.active{
+  background:linear-gradient(135deg, rgba(63,174,111,0.22), rgba(212,175,106,0.16));
+  border-color:var(--green-bright);
+  color:var(--gold-bright);
+  font-weight:600;
+  box-shadow:0 0 0 1px rgba(63,174,111,0.25) inset;
+}
+
+.panel{
+  background:linear-gradient(160deg, rgba(22,48,31,0.75), rgba(18,36,26,0.75));
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:18px;
+  backdrop-filter: blur(10px);
+  display:none;
+  animation: fadein .25s ease;
+}
+.panel.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.panel h2{margin:0 0 4px;font-size:1.15rem;color:var(--gold-bright);}
+.panel .sub{color:var(--text-dim);font-size:.95rem;margin:0 0 18px;line-height:1.6;}
+
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media (max-width:640px){.grid{grid-template-columns:1fr;}}
+
+label{display:block;font-size:.78rem;color:var(--text-dim);margin-bottom:5px;}
+input[type=text], input[type=number], select{
+  width:100%;
+  background:var(--input-bg);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:10px 12px;
+  border-radius:9px;
+  font-size:.95rem;
+  outline:none;
+  transition:.15s;
+}
+input:focus, select:focus{border-color:var(--green-bright); box-shadow:0 0 0 2px rgba(63,174,111,0.18);}
+select{ color-scheme: dark; cursor:pointer; }
+body.light-theme select{ color-scheme: light; }
+select option{ background:var(--panel); color:var(--text); }
+.field{margin-bottom:14px;}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap;}
+.radio-opt{
+  flex:1; min-width:120px;
+  border:1px solid var(--border); border-radius:9px; padding:9px 10px;
+  cursor:pointer; font-size:.82rem; color:var(--text-dim);
+  background:#0d1a13; text-align:center; transition:.15s;
+}
+.radio-opt input{display:none;}
+.radio-opt.sel{ border-color:var(--gold); color:var(--gold-bright); background:rgba(212,175,106,0.08); }
+
+button.calc{
+  margin-top:6px;
+  width:100%;
+  background:linear-gradient(135deg,var(--green-bright),#2e8c58);
+  color:#08150d; font-weight:700; border:none;
+  padding:13px; border-radius:10px; font-size:.95rem; cursor:pointer;
+  transition:.15s; letter-spacing:.2px;
+}
+button.calc:hover{filter:brightness(1.08); transform:translateY(-1px);}
+
+.result{
+  margin-top:18px; padding:16px 18px; border-radius:12px;
+  background:linear-gradient(135deg, rgba(212,175,106,0.10), rgba(63,174,111,0.08));
+  border:1px solid rgba(212,175,106,0.35);
+  display:none;
+}
+.result.show{display:block; animation:fadein .3s ease;}
+.result .line{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:6px 0; border-bottom:1px dashed rgba(255,255,255,0.08);
+  font-size:.87rem;
+}
+.result .line:last-child{border-bottom:none;}
+.result .line span:first-child{color:var(--text-dim);}
+.result .line span:last-child{font-variant-numeric:tabular-nums; font-weight:600;}
+.result .total{
+  margin-top:8px; padding-top:10px; border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.result .total .lbl{font-size:.85rem;color:var(--gold);}
+.result .total .val{font-size:1.4rem;font-weight:800;color:var(--gold-bright);}
+
+.note{
+  margin-top:14px; font-size:.75rem; color:var(--text-dim);
+  background:rgba(0,0,0,0.18); border-left:3px solid var(--gold);
+  padding:10px 12px; border-radius:6px; line-height:1.5;
+}
+.note b{color:var(--gold);}
+
+.legal{
+  font-size:.7rem; color:var(--text-dim); text-align:center;
+  margin-top:26px; padding:14px; border-top:1px solid var(--border);
+  line-height:1.6;
+}
+.legal b{color:var(--gold);}
+
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.chip{font-size:.68rem;padding:2px 8px;border-radius:12px;border:1px solid var(--border);color:var(--text-dim);}
+
+.law-links{
+  margin-top:12px;padding-top:12px;
+  border-top:1px dashed var(--border);
+  display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+}
+.law-label{font-size:.7rem;color:var(--text-dim);margin-right:2px;white-space:nowrap;}
+.law-chip{
+  font-size:.7rem;padding:4px 11px;border-radius:20px;
+  border:1px solid var(--border);color:var(--gold);
+  text-decoration:none;background:rgba(212,175,106,0.06);
+  transition:.15s;white-space:nowrap;
+}
+.law-chip:hover{background:rgba(212,175,106,0.20);border-color:var(--gold);color:var(--gold-bright);}
+
+.tabs-groups{margin-bottom:20px;}
+.tab-group{margin-bottom:12px;}
+.tab-group-title{
+  font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-dim);margin:0 0 8px 2px;font-weight:600;
+}
+.tab-group-row{display:flex;flex-wrap:wrap;gap:8px;}
+
+.tax-nav{margin-bottom:22px;}
+.group-capsules{position:relative; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:14px;}
+.group-indicator{
+  position:absolute; z-index:1; top:0; left:0; width:0; height:0;
+  border-radius:999px;
+  background:linear-gradient(120deg, var(--green-bright), var(--gold-bright) 65%, var(--gold));
+  box-shadow:0 4px 16px rgba(63,174,111,.35), inset 0 1px 0 rgba(255,255,255,.15);
+  transition:left .45s cubic-bezier(.34,1.35,.4,1), top .45s cubic-bezier(.34,1.35,.4,1),
+             width .45s cubic-bezier(.34,1.35,.4,1), height .45s cubic-bezier(.34,1.35,.4,1),
+             opacity .2s ease;
+  pointer-events:none; opacity:0;
+}
+.group-capsule{
+  position:relative;
+  font-size:.88rem; padding:8px 18px; border-radius:20px;
+  border:1px solid var(--border); color:var(--gold);
+  background:rgba(212,175,106,0.07);
+  cursor:pointer; transition:color .3s ease, border-color .3s ease, background .3s ease;
+  font-weight:500;
+}
+.group-capsule .lbl{position:relative; z-index:2;}
+.group-capsule:hover{border-color:var(--gold); color:var(--gold-bright);}
+.group-capsule.lit{color:#06170f; font-weight:700; border-color:transparent; background:transparent;}
+.group-select-wrap{display:flex;justify-content:center;}
+.group-select-wrap select{
+  max-width:560px; font-weight:600; font-size:1.02rem; text-align-last:center;
+  border-radius:20px; padding:12px 18px;
+}
+
+@keyframes panelPulse{
+  0%{box-shadow:0 0 0 0 rgba(63,174,111,0.45);}
+  70%{box-shadow:0 0 0 16px rgba(63,174,111,0);}
+  100%{box-shadow:0 0 0 0 rgba(63,174,111,0);}
+}
+.panel.nav-jump{animation: fadein .25s ease, panelPulse .9s ease-out;}
+
+
+.theme-toggle{
+  position:relative;z-index:1;flex:0 0 auto;margin-left:2px;
+  background:rgba(255,255,255,0.06);border:1px solid var(--border);
+  color:var(--text);width:34px;height:34px;border-radius:50%;
+  cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+}
+.theme-toggle:hover{border-color:var(--gold);}
+
+.panel-static{
+  background:linear-gradient(160deg, rgba(22,48,31,0.55), rgba(18,36,26,0.55));
+  border:1px solid var(--border); border-radius:var(--radius);
+  padding:22px; margin-bottom:18px;
+}
+.law-index-group{margin-top:14px;}
+.law-index-group .tab-group-title{margin-bottom:8px;}
+
+body.light-theme{
+  --bg-1:#f6f4ec; --bg-2:#ffffff; --panel:#ffffff; --panel-2:#f4f0e2;
+  --border:#ddd3ba; --gold:#9c6f28; --gold-bright:#7a541c;
+  --green-bright:#1d7a4c; --text:#242420; --text-dim:#66655a; --danger:#b4402a;
+  --input-bg:#ffffff;
+  background:
+    radial-gradient(circle at 15% 0%, #f0ead6 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, #eef2ec 0%, transparent 50%),
+    linear-gradient(160deg,#f8f6ee,#f1efe4 60%,#ffffff);
+}
+body.light-theme .panel{
+  background:linear-gradient(160deg, rgba(255,255,255,0.9), rgba(244,240,226,0.85));
+}
+body.light-theme .panel-static{
+  background:linear-gradient(160deg, rgba(255,255,255,0.85), rgba(244,240,226,0.7));
+}
+body.light-theme .header-capsule{
+  background:linear-gradient(135deg, rgba(156,111,40,0.16), rgba(29,122,76,0.11));
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="header-capsule">
+    <div class="header-capsule-left">
+      <div class="header-capsule-icon">🧮</div>
+      <div class="header-capsule-text">
+        <h1>Kalkulator Pajak Indonesia</h1>
+        <p>Lengkap 35 jenis pajak &amp; pungutan Indonesia</p>
+      </div>
+    </div>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Ganti mode terang/gelap">🌙</button>
+  </div>
+</header>
+
+<nav class="tax-nav" id="tabNav">
+  <div class="group-capsules" id="groupCapsules">
+    <div class="group-indicator" id="groupIndicator"></div>
+  </div>
+  <div class="group-select-wrap">
+    <select id="itemSelect" aria-label="Pilih jenis pajak"></select>
+  </div>
+</nav>
+
+<!-- ================= PPh 21 ================= -->
+<section class="panel" data-panel="pph21">
+  <h2>PPh Pasal 21 — Karyawan (Skema TER)</h2>
+  <p class="sub">Pemotongan bulanan (Jan–Nov) memakai Tarif Efektif Rata-rata (TER) dikalikan penghasilan bruto sebulan. Masa pajak Desember dihitung ulang dengan tarif progresif Pasal 17.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Penghasilan bruto sebulan (gaji + tunjangan + lembur, dll)</label>
+      <input type="text" id="p21-bruto" inputmode="numeric" placeholder="cth. 15.000.000">
+    </div>
+    <div class="field">
+      <label>Status PTKP</label>
+      <select id="p21-ptkp">
+        <option value="TK0">TK/0 — Tidak Kawin, 0 tanggungan</option>
+        <option value="TK1">TK/1 — Tidak Kawin, 1 tanggungan</option>
+        <option value="TK2">TK/2 — Tidak Kawin, 2 tanggungan</option>
+        <option value="TK3">TK/3 — Tidak Kawin, 3 tanggungan</option>
+        <option value="K0">K/0 — Kawin, 0 tanggungan</option>
+        <option value="K1">K/1 — Kawin, 1 tanggungan</option>
+        <option value="K2">K/2 — Kawin, 2 tanggungan</option>
+        <option value="K3">K/3 — Kawin, 3 tanggungan</option>
+      </select>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPh21()">Hitung PPh 21 Bulanan</button>
+  <div class="result" id="res-p21">
+    <div class="line"><span>Kategori TER</span><span id="p21-kat">—</span></div>
+    <div class="line"><span>Tarif efektif bulanan</span><span id="p21-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPh 21 dipotong bulan ini</span><span class="val" id="p21-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> TER dibagi 3 kategori — <b>A</b> (TK/0, TK/1, K/0), <b>B</b> (TK/2, TK/3, K/1, K/2), <b>C</b> (K/3). Perhitungan Desember/masa pajak terakhir tetap wajib direkonsiliasi dengan tarif Pasal 17 (5%–35%) atas penghasilan neto setahun dikurangi PTKP — bukan sekadar dikali 12. Dasar hukum: PP 58/2023 &amp; PMK 168/2023.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-58-tahun-2023" target="_blank" rel="noopener">PP No. 58/2023</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-168-tahun-2023" target="_blank" rel="noopener">PMK 168/2023</a></div>
+</section>
+
+<!-- ================= PPh 17 tahunan / OP ================= -->
+<section class="panel" data-panel="pph17">
+  <h2>PPh Orang Pribadi — Tarif Progresif Pasal 17</h2>
+  <p class="sub">Untuk rekonsiliasi tahunan (SPT Tahunan / masa pajak Desember) atau simulasi pajak penghasilan pribadi setahun.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Penghasilan neto setahun (setelah biaya jabatan &amp; iuran pensiun)</label>
+      <input type="text" id="p17-neto" inputmode="numeric" placeholder="cth. 240.000.000">
+    </div>
+    <div class="field">
+      <label>Status PTKP</label>
+      <select id="p17-ptkp">
+        <option value="54000000">TK/0 — Rp54.000.000</option>
+        <option value="58500000">TK/1 / K/0 — Rp58.500.000</option>
+        <option value="63000000">TK/2 / K/1 — Rp63.000.000</option>
+        <option value="67500000">TK/3 / K/2 — Rp67.500.000</option>
+        <option value="72000000">K/3 — Rp72.000.000</option>
+      </select>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPh17()">Hitung PPh Setahun</button>
+  <div class="result" id="res-p17">
+    <div class="line"><span>PTKP</span><span id="p17-ptkp-out">—</span></div>
+    <div class="line"><span>Penghasilan Kena Pajak (PKP)</span><span id="p17-pkp">—</span></div>
+    <div id="p17-breakdown"></div>
+    <div class="total"><span class="lbl">Total PPh terutang setahun</span><span class="val" id="p17-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Lapisan tarif:</b> ≤60jt 5% · 60–250jt 15% · 250–500jt 25% · 500jt–5M 30% · &gt;5M 35% (UU HPP Pasal 17 ayat 1a).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008" target="_blank" rel="noopener">UU No. 36/2008 (PPh)</a></div>
+</section>
+
+<!-- ================= PPh 23 ================= -->
+<section class="panel" data-panel="pph23">
+  <h2>PPh Pasal 23 — Dividen, Bunga, Royalti, Sewa &amp; Jasa</h2>
+  <p class="sub">Dipotong oleh pihak pemberi penghasilan (pemotong) dari jumlah bruto, tidak termasuk PPN.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Jenis objek pajak</label>
+      <select id="p23-jenis">
+        <option value="0.15">Dividen (non-final) / Bunga / Royalti / Hadiah — 15%</option>
+        <option value="0.02">Sewa harta (selain tanah &amp; bangunan) / Jasa teknik, manajemen, konsultan, jasa lain — 2%</option>
+        <option value="0.19">Jasa konstruksi — 1,75%–4% (indikatif 19% lama, cek PP 9/2022)</option>
+        <option value="0.15fintech">Bunga pinjaman fintech (P2P) dalam negeri — 15%</option>
+        <option value="0.20fintech">Bunga pinjaman fintech (P2P) luar negeri — 20%</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Jumlah bruto transaksi</label>
+      <input type="text" id="p23-bruto" inputmode="numeric" placeholder="cth. 10.000.000">
+    </div>
+  </div>
+  <div class="field">
+    <label>Status NPWP penerima penghasilan</label>
+    <div class="radio-row">
+      <label class="radio-opt sel" onclick="setRadio(this,'p23-npwp')"><input type="radio" name="p23npwp" value="ya" checked>Punya NPWP</label>
+      <label class="radio-opt" onclick="setRadio(this,'p23-npwp')"><input type="radio" name="p23npwp" value="tidak">Tanpa NPWP (tarif +100%)</label>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPh23()">Hitung PPh 23</button>
+  <div class="result" id="res-p23">
+    <div class="line"><span>Tarif efektif digunakan</span><span id="p23-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPh 23 dipotong</span><span class="val" id="p23-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Dividen dari laba ditahan yang diterima PT dalam negeri (memenuhi syarat investasi kembali sesuai UU Cipta Kerja) <b>bukan objek pajak</b>. Bunga bank/lembaga keuangan juga dikecualikan dari PPh 23. Selalu cek klasifikasi objek sebelum memotong.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008" target="_blank" rel="noopener">UU No. 36/2008 (PPh)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-9-tahun-2022" target="_blank" rel="noopener">PP No. 9/2022 (Jasa Konstruksi)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-6-tahun-2023" target="_blank" rel="noopener">UU Cipta Kerja (UU 6/2023)</a></div>
+</section>
+
+<!-- ================= PPh 25 ================= -->
+<section class="panel" data-panel="pph25">
+  <h2>PPh Pasal 25 — Angsuran Bulanan</h2>
+  <p class="sub">Angsuran pajak bulanan berdasarkan PPh terutang tahun pajak sebelumnya (dikurangi kredit pajak), dibagi 12.</p>
+  <div class="grid">
+    <div class="field">
+      <label>PPh terutang menurut SPT Tahunan tahun lalu</label>
+      <input type="text" id="p25-terutang" inputmode="numeric" placeholder="cth. 60.000.000">
+    </div>
+    <div class="field">
+      <label>Total kredit pajak (PPh 21/22/23/24 dipotong pihak lain)</label>
+      <input type="text" id="p25-kredit" inputmode="numeric" placeholder="cth. 12.000.000">
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPh25()">Hitung Angsuran Bulanan</button>
+  <div class="result" id="res-p25">
+    <div class="line"><span>Dasar penghitungan angsuran</span><span id="p25-dasar">—</span></div>
+    <div class="total"><span class="lbl">Angsuran PPh 25 per bulan</span><span class="val" id="p25-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Wajib Pajak baru, bank, BUMN/BUMD, dan WP tertentu punya cara penghitungan khusus (Pasal 25 ayat 6–8 UU PPh). WP OP tertentu (punya &gt;1 gerai usaha) dikenai PPh 25 final 0,75% dari omzet per lokasi usaha (kini banyak beralih ke skema PP 55/2022).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008" target="_blank" rel="noopener">UU No. 36/2008 (PPh)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-55-tahun-2022" target="_blank" rel="noopener">PP No. 55/2022 (UMKM Final)</a></div>
+</section>
+
+<!-- ================= UMKM Final ================= -->
+<section class="panel" data-panel="umkm">
+  <h2>PPh Final UMKM — 0,5% (PP 55/2022)</h2>
+  <p class="sub">Untuk WP dengan peredaran bruto (omzet) tidak melebihi Rp4,8 miliar/tahun. OP dapat memanfaatkan omzet tidak kena pajak Rp500 juta/tahun.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Omzet (peredaran bruto) bulan ini</label>
+      <input type="text" id="umkm-omzet" inputmode="numeric" placeholder="cth. 45.000.000">
+    </div>
+    <div class="field">
+      <label>Jenis Wajib Pajak</label>
+      <select id="umkm-jenis">
+        <option value="op">Orang Pribadi (dapat fasilitas Rp500jt/tahun tidak kena pajak)</option>
+        <option value="badan">Badan (PT/CV) — dikenakan penuh sejak omzet pertama</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label>Akumulasi omzet OP tahun berjalan sebelum bulan ini (khusus OP)</label>
+    <input type="text" id="umkm-akumulasi" inputmode="numeric" placeholder="cth. 480.000.000" value="0">
+  </div>
+  <button class="calc" onclick="calcUMKM()">Hitung PPh Final</button>
+  <div class="result" id="res-umkm">
+    <div class="line"><span>Omzet kena pajak bulan ini</span><span id="umkm-kena">—</span></div>
+    <div class="total"><span class="lbl">PPh Final terutang</span><span class="val" id="umkm-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>⚠️ Update PP 20/2026 (berlaku 22 April 2026):</b> Subjek yang boleh memakai PPh Final 0,5% kini dipersempit hanya untuk <b>Orang Pribadi</b>, <b>PT Perorangan</b> (didirikan 1 orang), dan <b>Koperasi</b> (maks. 4 tahun pajak sejak terdaftar). CV, firma, dan PT reguler <u>tidak lagi</u> menjadi subjek utama fasilitas ini (hanya dilindungi ketentuan peralihan sampai masa berlakunya berakhir) — wajib beralih ke tarif normal Pasal 17/31E. Batas waktu OP: maksimal 7 tahun pajak.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-55-tahun-2022" target="_blank" rel="noopener">PP No. 55/2022 (UMKM Final)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-20-tahun-2026" target="_blank" rel="noopener">PP No. 20/2026 (Revisi UMKM)</a></div>
+</section>
+
+<!-- ================= PPN ================= -->
+<section class="panel" data-panel="ppn">
+  <h2>PPN — Pajak Pertambahan Nilai</h2>
+  <p class="sub">Tarif nominal PPN 12%, namun untuk Barang/Jasa Kena Pajak <b>non-mewah</b> dipakai DPP Nilai Lain 11/12 sehingga tarif efektif tetap 11%. Barang tergolong mewah (kendaraan bermotor, hunian mewah, kapal pesiar, dll — objek PPnBM) dikenakan tarif efektif penuh 12%.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Harga jual / nilai impor (DPP dasar)</label>
+      <input type="text" id="ppn-dpp" inputmode="numeric" placeholder="cth. 100.000.000">
+    </div>
+    <div class="field">
+      <label>Kategori barang/jasa</label>
+      <select id="ppn-kategori">
+        <option value="umum">Non-mewah (tarif efektif 11%)</option>
+        <option value="mewah">Tergolong mewah / objek PPnBM (tarif efektif 12%)</option>
+      </select>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPN()">Hitung PPN</button>
+  <div class="result" id="res-ppn">
+    <div class="line"><span>DPP digunakan</span><span id="ppn-dpp-out">—</span></div>
+    <div class="line"><span>Tarif efektif</span><span id="ppn-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPN terutang</span><span class="val" id="ppn-hasil">Rp 0</span></div>
+  </div>
+  <div class="note">Dasar hukum: UU No. 42/2009 jo. UU HPP jo. <b>PMK 131/2024</b>. Untuk barang mewah, DPP = harga jual/nilai impor penuh × 12%. Untuk non-mewah, DPP Nilai Lain = 11/12 × harga jual, lalu × 12% (hasil akhir setara 11%).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-42-tahun-2009" target="_blank" rel="noopener">UU No. 42/2009 (PPN)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-131-tahun-2024" target="_blank" rel="noopener">PMK 131/2024 (Tarif PPN 12%)</a></div>
+</section>
+
+<!-- ================= PPh 22 Impor ================= -->
+<section class="panel" data-panel="pph22">
+  <h2>PPh Pasal 22 — Impor (Badan Usaha)</h2>
+  <p class="sub">Dipungut atas kegiatan impor barang oleh importir yang memiliki Angka Pengenal Impor (API) atau non-API, dari nilai impor (CIF + Bea Masuk).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai impor (CIF + Bea Masuk + pungutan pabean lain)</label>
+      <input type="text" id="p22-nilai" inputmode="numeric" placeholder="cth. 50.000.000">
+    </div>
+    <div class="field">
+      <label>Status importir</label>
+      <select id="p22-status">
+        <option value="0.025">Punya API, barang umum — 2,5%</option>
+        <option value="0.10">Punya API, barang tertentu (Lampiran PMK 41/2022) — 10%</option>
+        <option value="0.075">Punya API, kedelai/gandum/tepung terigu — 0,5%–7,5%</option>
+        <option value="0.075lartas">Tanpa API — 7,5%</option>
+        <option value="0.15pungut">Tidak dikuasai (lelang) — 7,5%</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label>Kepemilikan NPWP importir</label>
+    <div class="radio-row">
+      <label class="radio-opt sel" onclick="setRadio(this,'p22-npwp')"><input type="radio" name="p22npwp" value="ya" checked>Punya NPWP</label>
+      <label class="radio-opt" onclick="setRadio(this,'p22-npwp')"><input type="radio" name="p22npwp" value="tidak">Tanpa NPWP (tarif +100%)</label>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPh22()">Hitung PPh 22 Impor</button>
+  <div class="result" id="res-p22">
+    <div class="line"><span>Tarif digunakan</span><span id="p22-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPh 22 terutang</span><span class="val" id="p22-hasil">Rp 0</span></div>
+  </div>
+  <div class="note">Dasar hukum: <b>PMK No. 41/PMK.010/2022</b>. Tarif bervariasi tergantung jenis barang (HS Code) — angka di atas bersifat indikatif untuk kategori paling umum. Untuk kepastian, cek lampiran PMK sesuai kode HS barang.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-41-tahun-2022" target="_blank" rel="noopener">PMK 41/PMK.010/2022</a></div>
+</section>
+
+<!-- ================= IMEI / Bea Cukai ================= -->
+<section class="panel" data-panel="imei">
+  <h2>Pajak IMEI / Barang Elektronik Penumpang (Bea Cukai)</h2>
+  <p class="sub">Registrasi IMEI sendiri <b>gratis</b> — pungutan yang muncul adalah Bea Masuk &amp; PPN Impor atas gawai (HP/tablet/komputer genggam) yang dibawa dari luar negeri. Sejak <b>PMK 34/2025</b>, PPh Pasal 22 Impor <u>tidak lagi dipungut</u> untuk barang bawaan penumpang HKT.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Harga perangkat (USD)</label>
+      <input type="text" id="imei-harga" inputmode="numeric" placeholder="cth. 1200">
+    </div>
+    <div class="field">
+      <label>Kurs pajak (Rp per USD)</label>
+      <input type="text" id="imei-kurs" inputmode="numeric" value="16000">
+    </div>
+  </div>
+  <div class="field">
+    <label>Status &amp; tempat registrasi</label>
+    <select id="imei-status">
+      <option value="penumpang">Penumpang — registrasi di posko bandara kedatangan (bebas USD 500)</option>
+      <option value="awak">Awak sarana pengangkut (bebas USD 50)</option>
+      <option value="tanpa">Registrasi susulan di luar bandara (tanpa fasilitas pembebasan)</option>
+    </select>
+  </div>
+  <button class="calc" onclick="calcIMEI()">Hitung Pajak IMEI</button>
+  <div class="result" id="res-imei">
+    <div class="line"><span>Nilai pabean (setelah kurs)</span><span id="imei-pabean-full">—</span></div>
+    <div class="line"><span>Fasilitas pembebasan</span><span id="imei-bebas">—</span></div>
+    <div class="line"><span>Nilai pabean dikenakan pajak</span><span id="imei-pabean">—</span></div>
+    <div class="line"><span>Bea Masuk (10%)</span><span id="imei-bm">—</span></div>
+    <div class="line"><span>PPN (11% efektif)</span><span id="imei-ppn">—</span></div>
+    <div class="total"><span class="lbl">Total pungutan</span><span class="val" id="imei-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Rumus:</b> Nilai Pabean = (Harga × Kurs) − Pembebasan → Bea Masuk = 10% × Nilai Pabean → PPN = 11% × (Nilai Pabean + Bea Masuk). Maks. 2 unit perangkat HKT per penumpang. Dasar hukum: PMK 34/2025 (perubahan PMK 204/PMK.04/2017) &amp; PER-13/BC/2021.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-34-tahun-2025" target="_blank" rel="noopener">PMK 34/2025 (IMEI)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-204-tahun-2017" target="_blank" rel="noopener">PMK 204/PMK.04/2017</a><a class="law-chip" href="https://www.beacukai.go.id/arsip-peraturan.html" target="_blank" rel="noopener">PER-13/BC/2021 (Bea Cukai)</a></div>
+</section>
+
+<!-- ================= PPh Badan ================= -->
+<section class="panel" data-panel="badan">
+  <h2>PPh Badan — Pasal 17 &amp; Fasilitas Pasal 31E</h2>
+  <p class="sub">Tarif umum PPh Badan 22%. Badan dengan omzet ≤ Rp50 miliar/tahun mendapat pengurangan tarif 50% atas PKP dari bagian omzet sampai dengan Rp4,8 miliar.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Penghasilan Kena Pajak (PKP) setahun</label>
+      <input type="text" id="badan-pkp" inputmode="numeric" placeholder="cth. 800.000.000">
+    </div>
+    <div class="field">
+      <label>Peredaran bruto (omzet) setahun</label>
+      <input type="text" id="badan-omzet" inputmode="numeric" placeholder="cth. 6.000.000.000">
+    </div>
+  </div>
+  <button class="calc" onclick="calcBadan()">Hitung PPh Badan</button>
+  <div class="result" id="res-badan">
+    <div id="badan-breakdown"></div>
+    <div class="total"><span class="lbl">Total PPh Badan terutang</span><span class="val" id="badan-hasil">Rp 0</span></div>
+  </div>
+  <div class="note">Jika omzet ≤ Rp4,8 miliar, badan biasanya lebih tepat memakai <b>PPh Final UMKM 0,5%</b> (tab tersendiri) — bukan Pasal 17/31E. Dasar hukum: UU HPP &amp; Pasal 31E UU PPh.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008" target="_blank" rel="noopener">Ps. 31E UU PPh (36/2008)</a></div>
+</section>
+
+<!-- ================= PBB-P2 ================= -->
+<section class="panel" data-panel="pbb">
+  <h2>PBB-P2 — Pajak Bumi &amp; Bangunan Perdesaan/Perkotaan</h2>
+  <p class="sub">Pajak daerah tahunan atas kepemilikan tanah/bangunan (di luar kawasan perkebunan, perhutanan, pertambangan — objek itu masuk PBB-P5L pusat). Tarif &amp; NJOPTKP ditetapkan Perda masing-masing daerah.</p>
+  <div class="grid">
+    <div class="field">
+      <label>NJOP Bumi (luas × harga/m²)</label>
+      <input type="text" id="pbb-njopbumi" inputmode="numeric" placeholder="cth. 500.000.000">
+    </div>
+    <div class="field">
+      <label>NJOP Bangunan (luas × harga/m²)</label>
+      <input type="text" id="pbb-njopbgn" inputmode="numeric" placeholder="cth. 300.000.000">
+    </div>
+  </div>
+  <div class="grid">
+    <div class="field">
+      <label>NJOPTKP (sesuai Perda, minimal Rp10.000.000)</label>
+      <input type="text" id="pbb-njoptkp" inputmode="numeric" value="10.000.000">
+    </div>
+    <div class="field">
+      <label>Persentase NJKP (20%–100%, sesuai Perda)</label>
+      <input type="text" id="pbb-njkp" class="pct-input" value="20" placeholder="cth. 20">
+    </div>
+  </div>
+  <div class="field">
+    <label>Tarif PBB-P2 daerah (maksimal 0,5% sesuai UU HKPD)</label>
+    <input type="text" id="pbb-tarif" class="pct-input" value="0,3" placeholder="cth. 0,3">
+  </div>
+  <button class="calc" onclick="calcPBB()">Hitung PBB-P2</button>
+  <div class="result" id="res-pbb">
+    <div class="line"><span>NJOP Bumi + Bangunan</span><span id="pbb-njoptotal">—</span></div>
+    <div class="line"><span>NJOP setelah dikurangi NJOPTKP</span><span id="pbb-setelahtkp">—</span></div>
+    <div class="line"><span>Nilai Jual Kena Pajak (NJKP)</span><span id="pbb-njkpval">—</span></div>
+    <div class="total"><span class="lbl">PBB-P2 terutang setahun</span><span class="val" id="pbb-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Sejak UU HKPD (UU No. 1/2022), tarif maksimal naik dari 0,3% menjadi <b>0,5%</b>, namun besaran final tetap ditentukan Perda tiap kabupaten/kota (banyak daerah masih memakai 0,1%–0,3%). NJOP ditetapkan ulang tiap 3 tahun oleh kepala daerah. Angka di kalkulator ini hanya simulasi — cek SPPT/Perda daerah Anda untuk angka resmi.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= BPHTB ================= -->
+<section class="panel" data-panel="bphtb">
+  <h2>BPHTB — Bea Perolehan Hak atas Tanah &amp; Bangunan</h2>
+  <p class="sub">Dikenakan satu kali saat terjadi perolehan hak (jual-beli, hibah, waris, dll), ditanggung pihak yang menerima/memperoleh hak. Pajak daerah, tarif maksimal 5% (UU HKPD Pasal 47).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Perolehan Objek Pajak (NPOP) — harga transaksi/nilai pasar</label>
+      <input type="text" id="bphtb-npop" inputmode="numeric" placeholder="cth. 800.000.000">
+    </div>
+    <div class="field">
+      <label>NJOP PBB objek (dipakai jika lebih tinggi dari NPOP)</label>
+      <input type="text" id="bphtb-njop" inputmode="numeric" placeholder="cth. 750.000.000">
+    </div>
+  </div>
+  <div class="grid">
+    <div class="field">
+      <label>Jenis perolehan</label>
+      <select id="bphtb-jenis">
+        <option value="umum">Jual-beli / hibah / lainnya</option>
+        <option value="waris">Waris / hibah wasiat (garis keturunan lurus)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Tarif BPHTB daerah (maksimal 5%)</label>
+      <input type="text" id="bphtb-tarif" class="pct-input" value="5" placeholder="cth. 5">
+    </div>
+  </div>
+  <div class="field">
+    <label>NPOPTKP sesuai Perda daerah setempat</label>
+    <input type="text" id="bphtb-npoptkp" inputmode="numeric" placeholder="cth. 60.000.000">
+  </div>
+  <button class="calc" onclick="calcBPHTB()">Hitung BPHTB</button>
+  <div class="result" id="res-bphtb">
+    <div class="line"><span>NPOP digunakan (yang lebih tinggi)</span><span id="bphtb-npopused">—</span></div>
+    <div class="line"><span>NPOP Kena Pajak (setelah NPOPTKP)</span><span id="bphtb-npopkp">—</span></div>
+    <div class="total"><span class="lbl">BPHTB terutang</span><span class="val" id="bphtb-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>NPOPTKP minimum sesuai UU HKPD:</b> jual-beli/hibah dll minimal Rp60.000.000; waris/hibah wasiat ke ahli waris garis lurus satu derajat minimal Rp300.000.000 (banyak daerah menetapkan lebih tinggi). BPHTB dibayar pembeli/penerima hak <b>sebelum</b> akta ditandatangani PPAT — terpisah dari kewajiban PPh Final 2,5% yang ditanggung penjual.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= Pajak Koperasi ================= -->
+<section class="panel" data-panel="koperasi">
+  <h2>Pajak Koperasi — SHU &amp; Bunga Simpanan Anggota</h2>
+  <p class="sub">Koperasi sebagai badan usaha membayar PPh Badan atas laba usaha; namun ada perlakuan khusus untuk SHU yang dibagikan ke anggota dan bunga simpanan anggota.</p>
+
+  <h3 style="font-size:.95rem;color:var(--gold);margin:4px 0 10px;">① Bunga Simpanan Koperasi kepada Anggota (PPh Final Ps. 4 ayat 2)</h3>
+  <div class="grid">
+    <div class="field">
+      <label>Bunga simpanan yang dibayarkan per bulan</label>
+      <input type="text" id="kop-bunga" inputmode="numeric" placeholder="cth. 500.000">
+    </div>
+  </div>
+  <button class="calc" onclick="calcKopBunga()">Hitung PPh Bunga Simpanan</button>
+  <div class="result" id="res-kopbunga">
+    <div class="line"><span>Bagian bebas pajak (≤ Rp240.000/bulan)</span><span id="kop-bebas">—</span></div>
+    <div class="line"><span>Bagian dikenai PPh Final 10%</span><span id="kop-kena">—</span></div>
+    <div class="total"><span class="lbl">PPh Final dipotong</span><span class="val" id="kop-hasil">Rp 0</span></div>
+  </div>
+  <div class="note">Dasar hukum: <b>PP No. 15 Tahun 2009</b>. Bunga simpanan sampai dengan Rp240.000/bulan tidak dipotong pajak (0%); sisanya dikenakan PPh Final <b>10%</b>. Berlaku untuk anggota koperasi orang pribadi.</div>
+
+  <h3 style="font-size:.95rem;color:var(--gold);margin:22px 0 10px;">② PPh Badan atas Laba Koperasi (sebelum dibagi jadi SHU)</h3>
+  <div class="grid">
+    <div class="field">
+      <label>Penghasilan Kena Pajak (laba) koperasi setahun</label>
+      <input type="text" id="kop-pkp" inputmode="numeric" placeholder="cth. 300.000.000">
+    </div>
+    <div class="field">
+      <label>Skema pajak koperasi</label>
+      <select id="kop-skema">
+        <option value="final">PPh Final UMKM 0,5% dari omzet (maks. 4 tahun sejak terdaftar, PP 20/2026)</option>
+        <option value="normal">Tarif normal Pasal 17/31E (22%, dengan diskon 50% jika omzet ≤ Rp50M)</option>
+      </select>
+    </div>
+  </div>
+  <div class="field" id="kop-omzet-field">
+    <label>Omzet setahun (khusus skema final 0,5%)</label>
+    <input type="text" id="kop-omzet" inputmode="numeric" placeholder="cth. 3.000.000.000">
+  </div>
+  <button class="calc" onclick="calcKopBadan()">Hitung PPh Badan Koperasi</button>
+  <div class="result" id="res-kopbadan">
+    <div id="kop-breakdown"></div>
+    <div class="total"><span class="lbl">PPh Badan koperasi terutang</span><span class="val" id="kopbadan-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Penting:</b> Sejak UU Cipta Kerja, <b>SHU yang diterima anggota koperasi dari koperasinya sendiri bukan objek PPh</b> (dikecualikan) — jadi anggota tidak dipotong pajak lagi atas SHU yang diterima. Namun laba koperasi tetap dikenakan PPh Badan di level koperasi sebelum dibagikan sebagai SHU. Koperasi simpan pinjam yang menyalurkan dana wajib menggunakan tarif normal Pasal 17/31E atas SHU dari kegiatan penyaluran dana (bukan tarif final 0,5%).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-15-tahun-2009" target="_blank" rel="noopener">PP No. 15/2009 (Koperasi)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-6-tahun-2023" target="_blank" rel="noopener">UU Cipta Kerja (UU 6/2023)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-20-tahun-2026" target="_blank" rel="noopener">PP No. 20/2026 (Revisi UMKM)</a></div>
+</section>
+
+<!-- ================= PPh 26 ================= -->
+<section class="panel" data-panel="pph26">
+  <h2>PPh Pasal 26 — Wajib Pajak Luar Negeri</h2>
+  <p class="sub">Dipotong atas penghasilan (dividen, bunga, royalti, sewa, imbalan jasa, hadiah, pensiun, dll) yang dibayarkan kepada Wajib Pajak Luar Negeri (non-BUT). Tarif umum 20% dari bruto, kecuali ada Persetujuan Penghindaran Pajak Berganda (P3B/tax treaty) yang menetapkan tarif lebih rendah.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Jumlah bruto penghasilan</label>
+      <input type="text" id="p26-bruto" inputmode="numeric" placeholder="cth. 100.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif yang digunakan</label>
+      <select id="p26-tarif">
+        <option value="0.20">Tarif umum (tanpa P3B) — 20%</option>
+        <option value="custom">Tarif P3B / tax treaty (isi manual)</option>
+      </select>
+    </div>
+  </div>
+  <div class="field" id="p26-custom-field" style="display:none;">
+    <label>Tarif P3B (%) sesuai Surat Keterangan Domisili (SKD) mitra treaty</label>
+    <input type="text" id="p26-tarif-custom" class="pct-input" placeholder="cth. 10">
+  </div>
+  <button class="calc" onclick="calcPPh26()">Hitung PPh 26</button>
+  <div class="result" id="res-p26">
+    <div class="line"><span>Tarif digunakan</span><span id="p26-tarif-out">—</span></div>
+    <div class="total"><span class="lbl">PPh 26 dipotong</span><span class="val" id="p26-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Tarif P3B hanya berlaku jika penerima penghasilan menyerahkan Surat Keterangan Domisili (SKD/Form DGT) yang sah. Untuk BUT (Bentuk Usaha Tetap), penghasilan setelah pajak juga dikenai <i>branch profit tax</i> 20% (atau tarif P3B) — kecuali ditanamkan kembali di Indonesia. Dasar hukum: Pasal 26 UU PPh jo. UU HPP.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008" target="_blank" rel="noopener">UU No. 36/2008 (PPh)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a></div>
+</section>
+
+<!-- ================= PPh Final Pengalihan Tanah & Bangunan ================= -->
+<section class="panel" data-panel="tanahbangunan">
+  <h2>PPh Final — Pengalihan Hak atas Tanah &amp; Bangunan</h2>
+  <p class="sub">Dikenakan atas penghasilan dari pengalihan hak (jual-beli, tukar-menukar, dll) tanah dan/atau bangunan, ditanggung &amp; dibayar sendiri oleh pihak penjual/pengalih sebelum akta ditandatangani PPAT.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai pengalihan (harga transaksi/jual)</label>
+      <input type="text" id="tb-nilai" inputmode="numeric" placeholder="cth. 900.000.000">
+    </div>
+    <div class="field">
+      <label>NJOP PBB objek (dipakai jika lebih tinggi)</label>
+      <input type="text" id="tb-njop" inputmode="numeric" placeholder="cth. 850.000.000">
+    </div>
+  </div>
+  <div class="field">
+    <label>Jenis transaksi</label>
+    <select id="tb-jenis">
+      <option value="0.025">Umum — jual-beli tanah/bangunan biasa — 2,5%</option>
+      <option value="0.01">Pengalihan Rumah Sederhana/Rusun Sederhana oleh pengembang — 1%</option>
+      <option value="0">Pengalihan ke Pemerintah/BUMN tertentu untuk kepentingan umum — 0%</option>
+    </select>
+  </div>
+  <button class="calc" onclick="calcTanahBangunan()">Hitung PPh Final</button>
+  <div class="result" id="res-tb">
+    <div class="line"><span>Dasar pengenaan (nilai tertinggi)</span><span id="tb-dasar">—</span></div>
+    <div class="line"><span>Tarif digunakan</span><span id="tb-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPh Final terutang</span><span class="val" id="tb-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Terpisah dari kewajiban <b>BPHTB</b> (tab tersendiri) yang ditanggung pembeli/penerima hak. PPh ini dibayar sebelum akta PPAT ditandatangani, menggunakan kode billing/e-PPT DJP. Dasar hukum: PP No. 34 Tahun 2016.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-34-tahun-2016" target="_blank" rel="noopener">PP No. 34/2016</a></div>
+</section>
+
+<!-- ================= Bea Meterai ================= -->
+<section class="panel" data-panel="meterai">
+  <h2>Bea Meterai — Dokumen</h2>
+  <p class="sub">Pajak atas dokumen tertentu (perjanjian, akta, surat berharga, kuitansi, dll) dengan tarif tunggal Rp10.000 sejak UU No. 10 Tahun 2020.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai nominal yang tercantum dalam dokumen (jika ada)</label>
+      <input type="text" id="meterai-nilai" inputmode="numeric" placeholder="cth. 8.000.000">
+    </div>
+    <div class="field">
+      <label>Jenis dokumen</label>
+      <select id="meterai-jenis">
+        <option value="perdata">Surat perjanjian/akta/surat keterangan perdata</option>
+        <option value="nominal">Dokumen yang menyebutkan nilai uang (kuitansi, tanda terima, dll)</option>
+        <option value="berharga">Surat berharga (cek, saham, obligasi) / dokumen lelang</option>
+        <option value="tanpanilai">Dokumen tanpa nilai nominal (surat biasa, ijazah, dll) — tidak terutang</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label>Jumlah dokumen/lembar yang perlu dibubuhi meterai</label>
+    <input type="text" id="meterai-jumlah" inputmode="numeric" value="1">
+  </div>
+  <button class="calc" onclick="calcMeterai()">Hitung Bea Meterai</button>
+  <div class="result" id="res-meterai">
+    <div class="line"><span>Status</span><span id="meterai-status">—</span></div>
+    <div class="line"><span>Tarif per dokumen</span><span id="meterai-tarif">—</span></div>
+    <div class="total"><span class="lbl">Total Bea Meterai</span><span class="val" id="meterai-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Dokumen yang menyebutkan penerimaan uang/nilai nominal <b>di atas Rp5.000.000</b> terutang Bea Meterai Rp10.000. Di bawah itu tidak terutang. Dokumen tanpa nilai nominal (ijazah, rapor, surat keterangan biasa) umumnya tidak terutang. Dasar hukum: UU No. 10/2020 &amp; PP No. 86/2021.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-10-tahun-2020" target="_blank" rel="noopener">UU No. 10/2020 (Meterai)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-86-tahun-2021" target="_blank" rel="noopener">PP No. 86/2021 (Meterai)</a></div>
+</section>
+
+<!-- ================= PBJT (Hotel/Restoran/Hiburan) ================= -->
+<section class="panel" data-panel="pbjt">
+  <h2>PBJT — Hotel, Makan-Minum &amp; Kesenian/Hiburan (Pajak Daerah)</h2>
+  <p class="sub">Pajak Barang &amp; Jasa Tertentu (dulu disebut Pajak Hotel/Restoran/Hiburan/PB1) dipungut oleh pengusaha dari konsumen atas jasa perhotelan, makan-minum, parkir, dan kesenian &amp; hiburan. Diatur UU HKPD No. 1/2022, tarif ditetapkan Perda.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai transaksi (harga jual/tagihan)</label>
+      <input type="text" id="pbjt-nilai" inputmode="numeric" placeholder="cth. 500.000">
+    </div>
+    <div class="field">
+      <label>Jenis jasa</label>
+      <select id="pbjt-jenis">
+        <option value="10">Hotel / Restoran &amp; Katering / Parkir — maks. 10%</option>
+        <option value="40">Kesenian &amp; Hiburan umum (bioskop, pameran, sirkus, dll) — 40%</option>
+        <option value="75">Hiburan khusus (diskotik, karaoke, kelab malam, bar, spa) — 40%–75%</option>
+      </select>
+    </div>
+  </div>
+  <div class="field">
+    <label>Tarif Perda setempat (%) — override jika berbeda dari default di atas</label>
+    <input type="text" id="pbjt-tarif-custom" class="pct-input" placeholder="kosongkan untuk pakai default jenis di atas">
+  </div>
+  <button class="calc" onclick="calcPBJT()">Hitung PBJT</button>
+  <div class="result" id="res-pbjt">
+    <div class="line"><span>Tarif digunakan</span><span id="pbjt-tarif-out">—</span></div>
+    <div class="total"><span class="lbl">PBJT terutang</span><span class="val" id="pbjt-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Sejak UU HKPD, pajak hiburan khusus (diskotik, karaoke, kelab malam, bar, mandi uap/spa) ditetapkan minimal <b>40%</b> dan maksimal <b>75%</b> — jauh lebih tinggi dari jasa hiburan umum. Tarif final ditentukan Perda kabupaten/kota masing-masing.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= PKB & BBNKB ================= -->
+<section class="panel" data-panel="pkb">
+  <h2>PKB &amp; BBNKB — Pajak Kendaraan Bermotor</h2>
+  <p class="sub">Pajak daerah atas kepemilikan (PKB, dibayar tiap tahun) dan atas penyerahan/balik nama kendaraan bermotor (BBNKB, dibayar sekali saat kepemilikan berpindah). Diatur UU HKPD No. 1/2022, besaran final ditetapkan Perda provinsi.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Jual Kendaraan Bermotor (NJKB)</label>
+      <input type="text" id="pkb-njkb" inputmode="numeric" placeholder="cth. 250.000.000">
+    </div>
+    <div class="field">
+      <label>Status kepemilikan</label>
+      <select id="pkb-status">
+        <option value="1">Kendaraan pertama (kepemilikan ke-1)</option>
+        <option value="2">Kendaraan kedua (progresif)</option>
+        <option value="3">Kendaraan ketiga (progresif)</option>
+        <option value="4">Kendaraan keempat &amp; seterusnya (progresif)</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="field">
+      <label>Tarif PKB pribadi kepemilikan pertama (%, maks. 1,2% UU HKPD)</label>
+      <input type="text" id="pkb-tarif1" class="pct-input" value="1,2">
+    </div>
+    <div class="field">
+      <label>Kenaikan tarif progresif per kendaraan tambahan (%, maks. 6% UU HKPD)</label>
+      <input type="text" id="pkb-tarifprog" class="pct-input" value="0,5">
+    </div>
+  </div>
+  <div class="field">
+    <label>Hitung juga BBNKB (balik nama, kendaraan baru dibeli)?</label>
+    <div class="radio-row">
+      <label class="radio-opt sel" onclick="setRadio(this,'pkb-bbnkb')"><input type="radio" name="pkbbbnkb" value="tidak" checked>Tidak — hanya PKB tahunan</label>
+      <label class="radio-opt" onclick="setRadio(this,'pkb-bbnkb')"><input type="radio" name="pkbbbnkb" value="ya">Ya — kendaraan baru/balik nama</label>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPKB()">Hitung PKB / BBNKB</button>
+  <div class="result" id="res-pkb">
+    <div class="line"><span>Tarif PKB efektif</span><span id="pkb-tarif-out">—</span></div>
+    <div class="line"><span>PKB terutang setahun</span><span id="pkb-hasil">Rp 0</span></div>
+    <div class="line" id="pkb-bbnkb-line" style="display:none;"><span>BBNKB (maks. 12% kendaraan baru, UU HKPD)</span><span id="pkb-bbnkb-hasil">—</span></div>
+    <div class="total"><span class="lbl">Total tagihan</span><span class="val" id="pkb-total">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Sejak UU HKPD, tarif PKB kendaraan pribadi kepemilikan pertama maksimal <b>1,2%</b> dari NJKB (dulu bisa sampai 2%), dengan tarif progresif kepemilikan kedua dst. maksimal <b>6%</b>. BBNKB penyerahan pertama (kendaraan baru) maksimal <b>12%</b>; penyerahan kedua dst. (kendaraan bekas) maksimal <b>1%</b>. Besaran final &amp; NJKB resmi mengikuti Perda &amp; Peraturan Gubernur tiap provinsi — cek Samsat setempat.<br><br><b>Dasar hukum daerah (Provinsi Kalimantan Tengah):</b> Perda Provinsi Kalimantan Tengah No. 8 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah. Tarif final ditetapkan Perda ini &amp; Pergub pelaksanaannya — cek Bapenda Provinsi Kalimantan Tengah untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.kalteng.go.id/" target="_blank" rel="noopener">Perda Prov. Kalteng No. 8/2023</a></div>
+</section>
+
+<!-- ================= Pajak Rokok ================= -->
+<section class="panel" data-panel="rokok">
+  <h2>Pajak Rokok</h2>
+  <p class="sub">Pajak daerah (provinsi) yang dipungut bersamaan dengan Cukai Rokok oleh Bea Cukai, lalu disetor ke kas daerah provinsi. Tarif tetap 10% dari besaran Cukai Rokok (Pasal 36 UU HKPD 1/2022, tata cara terbaru PMK 26/2026).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Tarif cukai per batang/gram (sesuai golongan &amp; jenis rokok, PMK Tarif Cukai)</label>
+      <input type="text" id="rokok-cukaisatuan" inputmode="numeric" placeholder="cth. 1.231 (Rp/batang, SKM Gol.1)">
+    </div>
+    <div class="field">
+      <label>Jumlah batang/gram dalam kemasan</label>
+      <input type="text" id="rokok-jumlah" inputmode="numeric" placeholder="cth. 16">
+    </div>
+  </div>
+  <button class="calc" onclick="calcRokok()">Hitung Pajak Rokok</button>
+  <div class="result" id="res-rokok">
+    <div class="line"><span>Cukai Rokok per kemasan</span><span id="rokok-cukai">—</span></div>
+    <div class="line"><span>Tarif Pajak Rokok</span><span>10%</span></div>
+    <div class="total"><span class="lbl">Pajak Rokok per kemasan</span><span class="val" id="rokok-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Harga jual eceran rokok yang dibayar konsumen = harga pabrik/importir + Cukai Rokok + Pajak Rokok + PPN Hasil Tembakau. Tembakau molasses, tembakau hirup, dan tembakau kunyah <b>dikecualikan</b> dari dasar pengenaan Pajak Rokok sejak PMK 26/2026. Objek: sigaret, cerutu, rokok daun, tembakau iris, rokok elektrik, &amp; HPTL lain yang kena cukai.<br><br><b>Dasar hukum daerah:</b> Tarif Pajak Rokok (10% dari Cukai Rokok) ditetapkan seragam nasional (UU HKPD &amp; PMK 26/2026), namun statusnya sebagai <b>pajak provinsi</b> turut diatur dalam Perda Provinsi Kalimantan Tengah No. 8 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah — hasil pungutannya disetor ke kas daerah provinsi &amp; dibagi ke kabupaten/kota secara proporsional berdasarkan jumlah penduduk (termasuk Kabupaten Katingan).</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-26-tahun-2026" target="_blank" rel="noopener">PMK 26/2026 (Pajak Rokok)</a><a class="law-chip" href="https://jdih.kalteng.go.id/" target="_blank" rel="noopener">Perda Prov. Kalteng No. 8/2023</a></div>
+</section>
+
+<!-- ================= PPnBM ================= -->
+<section class="panel" data-panel="ppnbm">
+  <h2>PPnBM — Pajak Penjualan atas Barang Mewah</h2>
+  <p class="sub">Dikenakan satu kali saat penyerahan oleh pabrikan/importir Barang Kena Pajak tergolong mewah (kendaraan mewah, hunian mewah, kapal/pesawat pribadi, barang elektronik &amp; perhiasan tertentu), <b>di luar/tambahan</b> dari PPN. Tarif bervariasi 10%–200% tergantung jenis barang (PP 61/2020, PMK 141/2021, PMK 42/2022 utk kendaraan).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Harga jual / nilai impor (DPP)</label>
+      <input type="text" id="ppnbm-dpp" inputmode="numeric" placeholder="cth. 800.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif PPnBM (%) sesuai golongan barang</label>
+      <input type="text" id="ppnbm-tarif" class="pct-input" placeholder="cth. 20 (mobil mewah), 40 (motor besar), 75 (kapal pesiar)">
+    </div>
+  </div>
+  <button class="calc" onclick="calcPPnBM()">Hitung PPnBM</button>
+  <div class="result" id="res-ppnbm">
+    <div class="line"><span>Tarif digunakan</span><span id="ppnbm-tarif-out">—</span></div>
+    <div class="line"><span>PPN 12%/11% efektif (terpisah, lihat tab PPN)</span><span>—</span></div>
+    <div class="total"><span class="lbl">PPnBM terutang</span><span class="val" id="ppnbm-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Contoh tarif indikatif:</b> kendaraan bermotor penumpang umum 10%–20%; sedan/kendaraan mewah &amp; sport 40%–70%; kendaraan sangat mewah/kapal pesiar/pesawat pribadi hingga 75%–95%; hunian mewah (rumah &gt;Rp30M, apartemen &gt;Rp10M) 20%. PPnBM dipungut <b>terpisah &amp; bersamaan</b> dengan PPN — bukan pengganti PPN. Cek lampiran PP 61/2020 &amp; PMK terkait untuk kode HS/jenis barang spesifik.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-61-tahun-2020" target="_blank" rel="noopener">PP No. 61/2020 (PPnBM)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-141-tahun-2021" target="_blank" rel="noopener">PMK 141/2021 (Tarif PPnBM)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-42-tahun-2022" target="_blank" rel="noopener">PMK 42/2022 (PPnBM Kendaraan)</a></div>
+</section>
+
+<!-- ================= PPh Final Pasal 4(2) Lainnya ================= -->
+<section class="panel" data-panel="pph4a2">
+  <h2>PPh Final Pasal 4 Ayat (2) — Bunga, Saham, Hadiah, Sewa</h2>
+  <p class="sub">Kumpulan objek PPh Final lain yang sering dijumpai: bunga deposito/tabungan, transaksi jual saham di bursa, hadiah undian, dan sewa tanah/bangunan.</p>
+  <div class="field">
+    <label>Jenis penghasilan</label>
+    <select id="p4a2-jenis" onchange="toggleP4A2()">
+      <option value="deposito">Bunga deposito, tabungan &amp; jasa giro — 20% final</option>
+      <option value="saham">Transaksi penjualan saham di Bursa Efek — 0,1% final</option>
+      <option value="undian">Hadiah undian — 25% final</option>
+      <option value="sewa">Sewa tanah &amp; bangunan — 10% final</option>
+    </select>
+  </div>
+  <div class="grid">
+    <div class="field">
+      <label id="p4a2-nilai-label">Jumlah bruto</label>
+      <input type="text" id="p4a2-nilai" inputmode="numeric" placeholder="cth. 10.000.000">
+    </div>
+    <div class="field" id="p4a2-pendiri-field" style="display:none;">
+      <label>Status saham</label>
+      <select id="p4a2-pendiri">
+        <option value="tidak">Saham biasa (bukan saham pendiri)</option>
+        <option value="ya">Saham pendiri (tambahan final 0,5% dari nilai saham saat IPO)</option>
+      </select>
+    </div>
+  </div>
+  <button class="calc" onclick="calcP4A2()">Hitung PPh Final</button>
+  <div class="result" id="res-p4a2">
+    <div class="line"><span>Dasar pengenaan</span><span id="p4a2-dasar">—</span></div>
+    <div class="line"><span>Tarif digunakan</span><span id="p4a2-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPh Final terutang</span><span class="val" id="p4a2-hasil">Rp 0</span></div>
+  </div>
+  <div class="note" id="p4a2-note"><b>Catatan:</b> Bunga deposito/tabungan dengan nominal simpanan ≤ Rp7.500.000 <b>dikecualikan</b> dari pemotongan (PP 131/2000). Untuk saham pendiri, tambahan final 0,5% dihitung dari nilai saham pendiri saat penawaran umum perdana (terpisah dari 0,1% transaksi jual-beli rutin). Dasar hukum bervariasi: PP 131/2000 (bunga), PP 41/1994 jo. PP 14/1997 (saham), PP 132/2000 (hadiah undian), PP 34/2017 (sewa tanah/bangunan).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-131-tahun-2000" target="_blank" rel="noopener">PP No. 131/2000 (Bunga Deposito)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-41-tahun-1994" target="_blank" rel="noopener">PP No. 41/1994 (Transaksi Saham)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-14-tahun-1997" target="_blank" rel="noopener">PP No. 14/1997</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-132-tahun-2000" target="_blank" rel="noopener">PP No. 132/2000 (Hadiah Undian)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-34-tahun-2017" target="_blank" rel="noopener">PP No. 34/2017 (Sewa Tanah/Bangunan)</a></div>
+</section>
+
+<!-- ================= Pajak Reklame ================= -->
+<section class="panel" data-panel="reklame">
+  <h2>Pajak Reklame</h2>
+  <p class="sub">Pajak daerah atas penyelenggaraan reklame (papan/billboard, videotron, baliho, spanduk komersial, dll) yang dapat dilihat/dibaca/didengar umum. Dasar pengenaan: Nilai Sewa Reklame (NSR), tarif maksimal 25% (UU HKPD).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Sewa Reklame (NSR) — sesuai Perda/taksiran nilai strategis, ukuran &amp; lokasi</label>
+      <input type="text" id="reklame-nsr" inputmode="numeric" placeholder="cth. 20.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif Perda setempat (%, maksimal 25%)</label>
+      <input type="text" id="reklame-tarif" class="pct-input" value="25">
+    </div>
+  </div>
+  <button class="calc" onclick="calcReklame()">Hitung Pajak Reklame</button>
+  <div class="result" id="res-reklame">
+    <div class="total"><span class="lbl">Pajak Reklame terutang</span><span class="val" id="reklame-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Reklame non-komersial murni (papan nama sendiri usaha di lokasi usaha dengan ukuran terbatas, reklame pemerintah/partai politik saat kampanye sesuai aturan Bawaslu/KPU) umumnya dikecualikan — cek Perda setempat untuk batasan ukuran bebas pajak.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= Pajak Penerangan Jalan (PJU) ================= -->
+<section class="panel" data-panel="pju">
+  <h2>Pajak Penerangan Jalan (PJU)</h2>
+  <p class="sub">Pajak daerah atas penggunaan tenaga listrik, umumnya dipungut oleh PLN dan ditambahkan pada tagihan listrik pelanggan, lalu disetor ke kas daerah.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Jual Tenaga Listrik (tagihan listrik sebelum PJU)</label>
+      <input type="text" id="pju-njtl" inputmode="numeric" placeholder="cth. 1.500.000">
+    </div>
+    <div class="field">
+      <label>Kategori pelanggan</label>
+      <select id="pju-kategori">
+        <option value="10">Rumah tangga &amp; bisnis — maks. 10%</option>
+        <option value="3">Industri — maks. 3%</option>
+        <option value="1.5">Sumber listrik sendiri/bukan PLN (genset, dll) — maks. 1,5%</option>
+      </select>
+    </div>
+  </div>
+  <button class="calc" onclick="calcPJU()">Hitung PJU</button>
+  <div class="result" id="res-pju">
+    <div class="line"><span>Tarif digunakan</span><span id="pju-tarif-out">—</span></div>
+    <div class="total"><span class="lbl">Pajak Penerangan Jalan terutang</span><span class="val" id="pju-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Golongan pelanggan rumah tangga daya rendah tertentu (sesuai kriteria Perda) sering dibebaskan dari PJU. Besaran tarif final ditetapkan Perda kabupaten/kota masing-masing sesuai batas maksimal UU HKPD.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= Pajak Air Tanah ================= -->
+<section class="panel" data-panel="airtanah">
+  <h2>Pajak Air Tanah</h2>
+  <p class="sub">Pajak daerah atas pengambilan/pemanfaatan air tanah untuk keperluan usaha/industri (bukan untuk kebutuhan dasar rumah tangga &amp; pertanian rakyat, yang umumnya dikecualikan). Dasar pengenaan: Nilai Perolehan Air (NPA), tarif maksimal 20%.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Perolehan Air (NPA) — volume × harga air baku sesuai Perda</label>
+      <input type="text" id="airtanah-npa" inputmode="numeric" placeholder="cth. 5.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif Perda setempat (%, maksimal 20%)</label>
+      <input type="text" id="airtanah-tarif" class="pct-input" value="20">
+    </div>
+  </div>
+  <button class="calc" onclick="calcAirTanah()">Hitung Pajak Air Tanah</button>
+  <div class="result" id="res-airtanah">
+    <div class="total"><span class="lbl">Pajak Air Tanah terutang</span><span class="val" id="airtanah-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> NPA dipengaruhi jenis sumber air, lokasi, tujuan pengambilan, volume, kualitas air, dan luas areal. Pengambilan air tanah untuk keperluan dasar rumah tangga, pengairan pertanian/perikanan rakyat, dan peribadatan umumnya <b>tidak dikenakan</b> pajak ini.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= Bea Keluar ================= -->
+<section class="panel" data-panel="beakeluar">
+  <h2>Bea Keluar — Pungutan Ekspor</h2>
+  <p class="sub">Pungutan negara atas barang ekspor tertentu (CPO &amp; turunannya, kulit &amp; kayu mentah, biji kakao, mineral logam tertentu, dll) untuk menjaga pasokan dalam negeri &amp; nilai tambah. Tarif spesifik/progresif per komoditas &amp; harga referensi (PMK terkait tiap komoditas).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai ekspor (harga referensi × volume × kurs)</label>
+      <input type="text" id="bk-nilai" inputmode="numeric" placeholder="cth. 500.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif Bea Keluar (%) sesuai komoditas &amp; harga referensi bulan berjalan</label>
+      <input type="text" id="bk-tarif" class="pct-input" placeholder="cth. 7,5 (CPO), 10-25 (mineral tertentu)">
+    </div>
+  </div>
+  <button class="calc" onclick="calcBeaKeluar()">Hitung Bea Keluar</button>
+  <div class="result" id="res-bk">
+    <div class="line"><span>Tarif digunakan</span><span id="bk-tarif-out">—</span></div>
+    <div class="total"><span class="lbl">Bea Keluar terutang</span><span class="val" id="bk-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Tarif Bea Keluar CPO &amp; produk turunan bersifat progresif mengikuti Harga Referensi CPO yang diumumkan Kemendag tiap bulan (skema kombinasi pungutan ekspor BPDPKS + Bea Keluar). Komoditas mineral logam (konsentrat tertentu yang masih diizinkan ekspor terbatas) memakai tarif progresif berdasarkan tingkat pembangunan smelter. Dasar hukum umum: PMK 39/2022 &amp; perubahannya, PMK spesifik per komoditas.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pmk-39-tahun-2022" target="_blank" rel="noopener">PMK 39/2022 (Bea Keluar)</a><a class="law-chip" href="https://www.beacukai.go.id/arsip-peraturan.html" target="_blank" rel="noopener">Portal Peraturan Bea Cukai</a></div>
+</section>
+
+<!-- ================= Pajak Air Permukaan ================= -->
+<section class="panel" data-panel="airpermukaan">
+  <h2>Pajak Air Permukaan</h2>
+  <p class="sub">Pajak daerah <b>provinsi</b> atas pengambilan/pemanfaatan air permukaan (sungai, danau, waduk, rawa, laut) — berbeda dari Pajak Air Tanah yang dipungut kabupaten/kota. Dasar pengenaan: Nilai Perolehan Air (NPA), tarif maksimal 10% (UU HKPD).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Perolehan Air (NPA) — volume × faktor nilai air baku sesuai Pergub</label>
+      <input type="text" id="airpermukaan-npa" inputmode="numeric" placeholder="cth. 8.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif Perda/Pergub setempat (%, maksimal 10%)</label>
+      <input type="text" id="airpermukaan-tarif" class="pct-input" value="10">
+    </div>
+  </div>
+  <button class="calc" onclick="calcAirPermukaan()">Hitung Pajak Air Permukaan</button>
+  <div class="result" id="res-airpermukaan">
+    <div class="total"><span class="lbl">Pajak Air Permukaan terutang</span><span class="val" id="airpermukaan-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> NPA dipengaruhi jenis sumber air, lokasi, tujuan pemanfaatan, volume, musim, serta luas areal. Pengambilan air permukaan untuk pengairan pertanian/perikanan rakyat, keperluan dasar rumah tangga non-komersial, dan keagamaan umumnya <b>dikecualikan</b>. Dipungut oleh pemerintah provinsi (berbeda pemungut dengan Pajak Air Tanah yang dipungut kabupaten/kota).<br><br><b>Dasar hukum daerah (Provinsi Kalimantan Tengah):</b> Perda Provinsi Kalimantan Tengah No. 8 Tahun 2023 tentang Pajak Daerah dan Retribusi Daerah. Tarif final ditetapkan Perda ini &amp; Pergub pelaksanaannya — cek Bapenda Provinsi Kalimantan Tengah untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.kalteng.go.id/" target="_blank" rel="noopener">Perda Prov. Kalteng No. 8/2023</a></div>
+</section>
+
+<!-- ================= Pajak Mineral Bukan Logam & Batuan ================= -->
+<section class="panel" data-panel="mbleb">
+  <h2>Pajak Mineral Bukan Logam &amp; Batuan (Galian C)</h2>
+  <p class="sub">Pajak daerah atas kegiatan pengambilan mineral bukan logam &amp; batuan (pasir, batu, kerikil, tanah urug, sirtu, dll) dari sumber alam di dalam/permukaan bumi. Dasar pengenaan: nilai jual hasil pengambilan, tarif maksimal 25% (UU HKPD).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Volume hasil galian (m³ / ton)</label>
+      <input type="text" id="mbleb-volume" inputmode="numeric" placeholder="cth. 500">
+    </div>
+    <div class="field">
+      <label>Harga standar per satuan (sesuai Perda/harga pasar setempat)</label>
+      <input type="text" id="mbleb-harga" inputmode="numeric" placeholder="cth. 150.000">
+    </div>
+  </div>
+  <div class="field">
+    <label>Tarif Perda setempat (%, maksimal 25%)</label>
+    <input type="text" id="mbleb-tarif" class="pct-input" value="25">
+  </div>
+  <button class="calc" onclick="calcMBLB()">Hitung Pajak MBLB</button>
+  <div class="result" id="res-mbleb">
+    <div class="line"><span>Nilai jual hasil galian</span><span id="mbleb-nilai">—</span></div>
+    <div class="total"><span class="lbl">Pajak MBLB terutang</span><span class="val" id="mbleb-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Termasuk objek: asbes, batu tulis, batu setengah permata, batu kapur, pasir &amp; kerikil, granit/andesit, marmer, tanah liat, tanah urug, dll (Pasal 62 UU HKPD). Tidak termasuk pengambilan untuk keperluan rumah tangga tanpa tujuan komersial &amp; kegiatan pertambangan mineral logam/batubara (dikenai pajak &amp; royalti pusat tersendiri).<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= Pajak Sarang Burung Walet ================= -->
+<section class="panel" data-panel="walet">
+  <h2>Pajak Sarang Burung Walet</h2>
+  <p class="sub">Pajak daerah atas pengambilan dan/atau pengusahaan sarang burung walet (termasuk walet sarang putih &amp; sriti). Dasar pengenaan: nilai jual sarang walet, tarif maksimal 10% (UU HKPD).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Volume sarang walet (kg)</label>
+      <input type="text" id="walet-volume" inputmode="numeric" placeholder="cth. 5">
+    </div>
+    <div class="field">
+      <label>Harga pasar per kg</label>
+      <input type="text" id="walet-harga" inputmode="numeric" placeholder="cth. 15.000.000">
+    </div>
+  </div>
+  <div class="field">
+    <label>Tarif Perda setempat (%, maksimal 10%)</label>
+    <input type="text" id="walet-tarif" class="pct-input" value="10">
+  </div>
+  <button class="calc" onclick="calcWalet()">Hitung Pajak Sarang Walet</button>
+  <div class="result" id="res-walet">
+    <div class="line"><span>Nilai jual sarang walet</span><span id="walet-nilai">—</span></div>
+    <div class="total"><span class="lbl">Pajak Sarang Walet terutang</span><span class="val" id="walet-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Pengambilan sarang walet dari alam bebas oleh masyarakat setempat secara tradisional (bukan pengusahaan komersial berizin) umumnya dikecualikan sesuai Perda. Pajak ini relatif jarang dipungut karena sentra walet terkonsentrasi di beberapa kabupaten/kota tertentu.<br><br><b>Dasar hukum daerah (Kabupaten Katingan, Kalimantan Tengah):</b> Perda Kabupaten Katingan No. 1 Tahun 2024 tentang Pajak Daerah dan Retribusi Daerah (menggantikan Perda No. 8 Tahun 2011 jo. perubahannya). Tarif final &amp; NJOP/NPA/dasar pengenaan setempat mengikuti Perda ini &amp; Perbup pelaksanaannya — cek Bapenda Kabupaten Katingan untuk angka resmi.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">Perda Kab. Katingan No. 1/2024</a></div>
+</section>
+
+<!-- ================= PBB Sektor Lainnya (P5L) ================= -->
+<section class="panel" data-panel="pbbp5l">
+  <h2>PBB Sektor Lainnya (P5L) — Perkebunan, Perhutanan &amp; Pertambangan</h2>
+  <p class="sub">Berbeda dari PBB-P2 (pajak daerah), PBB atas sektor Perkebunan, Perhutanan, dan Pertambangan (P5L) merupakan <b>pajak pusat</b> yang dipungut DJP, dengan tarif tetap 0,5% dari Nilai Jual Kena Pajak (NJKP).</p>
+  <div class="grid">
+    <div class="field">
+      <label>NJOP total (bumi + bangunan/tanaman/tambang) setahun</label>
+      <input type="text" id="pbbp5l-njop" inputmode="numeric" placeholder="cth. 15.000.000.000">
+    </div>
+    <div class="field">
+      <label>NJOPTKP (standar nasional per PMK, minimal Rp12.000.000)</label>
+      <input type="text" id="pbbp5l-njoptkp" inputmode="numeric" value="12.000.000">
+    </div>
+  </div>
+  <div class="field">
+    <label>Persentase NJKP</label>
+    <select id="pbbp5l-njkp">
+      <option value="0.4">40% — jika NJOP setelah NJOPTKP ≤ Rp1 miliar</option>
+      <option value="1">100% — jika NJOP setelah NJOPTKP &gt; Rp1 miliar</option>
+    </select>
+  </div>
+  <button class="calc" onclick="calcPBBP5L()">Hitung PBB Sektor Lainnya</button>
+  <div class="result" id="res-pbbp5l">
+    <div class="line"><span>NJOP setelah NJOPTKP</span><span id="pbbp5l-setelahtkp">—</span></div>
+    <div class="line"><span>NJKP</span><span id="pbbp5l-njkpval">—</span></div>
+    <div class="total"><span class="lbl">PBB P5L terutang setahun</span><span class="val" id="pbbp5l-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Objek P5L meliputi areal perkebunan (kebun sawit, karet, dll), kawasan hutan produksi/hutan tanaman industri (HPH/HTI), serta area pertambangan minyak-gas, mineral &amp; batubara (termasuk area di luar tapak proyek yang masih dalam wilayah izin usaha). Dasar hukum: UU PBB No. 12/1985 jo. UU HPP &amp; PMK terkait sektoral (Migas, Minerba, Panas Bumi, Perkebunan, Perhutanan).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://peraturan.bpk.go.id/Details/46963/uu-no-12-tahun-1985" target="_blank" rel="noopener">UU No. 12/1985 (PBB)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a></div>
+</section>
+
+<!-- ================= Cukai MMEA ================= -->
+<section class="panel" data-panel="mmea">
+  <h2>Cukai MMEA — Minuman Mengandung Etil Alkohol</h2>
+  <p class="sub">Cukai (pajak pusat) atas produksi/impor minuman beralkohol, digolongkan berdasarkan kadar etil alkohol: Golongan A (≤5%), B (&gt;5%–20%), C (&gt;20%). Tarif spesifik per liter berbeda untuk produksi dalam negeri &amp; impor (PMK Tarif Cukai MMEA).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Tarif cukai per liter (sesuai golongan &amp; asal produksi, PMK terkait)</label>
+      <input type="text" id="mmea-tarifsatuan" inputmode="numeric" placeholder="cth. 15.000 (Rp/liter)">
+    </div>
+    <div class="field">
+      <label>Volume (liter)</label>
+      <input type="text" id="mmea-volume" inputmode="numeric" placeholder="cth. 12">
+    </div>
+  </div>
+  <button class="calc" onclick="calcMMEA()">Hitung Cukai MMEA</button>
+  <div class="result" id="res-mmea">
+    <div class="total"><span class="lbl">Cukai MMEA terutang</span><span class="val" id="mmea-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Tarif cukai MMEA impor umumnya lebih tinggi dari produksi dalam negeri untuk golongan yang sama. Selain cukai, MMEA impor juga dikenai Bea Masuk, PPN, dan PPh 22 Impor secara terpisah. Golongan C (kadar &gt;20%) dikenai tarif tertinggi. Dasar hukum: UU Cukai jo. UU HPP &amp; PMK Tarif Cukai MMEA terbaru.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://peraturan.bpk.go.id/Search?keywords=UU%2039%20Tahun%202007%20Cukai" target="_blank" rel="noopener">UU No. 39/2007 (Cukai)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a></div>
+</section>
+
+<!-- ================= Pajak Karbon ================= -->
+<section class="panel" data-panel="karbon">
+  <h2>Pajak Karbon</h2>
+  <p class="sub">Pungutan atas emisi karbon (CO2e) yang melampaui batas atas emisi (cap) tertentu. Implementasi masih bertahap — sejauh ini terbatas pada sektor Pembangkit Listrik Tenaga Uap (PLTU) batubara dengan skema cap-and-tax (PP 40/2025). Tarif minimal Rp30/kg CO2e, mengikuti harga pasar karbon jika lebih tinggi.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Total emisi aktual (ton CO2e)</label>
+      <input type="text" id="karbon-emisi" inputmode="numeric" placeholder="cth. 120">
+    </div>
+    <div class="field">
+      <label>Batas atas emisi/cap bebas pajak (ton CO2e)</label>
+      <input type="text" id="karbon-batas" inputmode="numeric" placeholder="cth. 100">
+    </div>
+  </div>
+  <div class="field">
+    <label>Tarif per kg CO2e (Rp, minimal Rp30)</label>
+    <input type="text" id="karbon-tarif" inputmode="numeric" value="30">
+  </div>
+  <button class="calc" onclick="calcKarbon()">Hitung Pajak Karbon</button>
+  <div class="result" id="res-karbon">
+    <div class="line"><span>Emisi kena pajak (di atas batas)</span><span id="karbon-kena">—</span></div>
+    <div class="total"><span class="lbl">Pajak Karbon terutang</span><span class="val" id="karbon-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Penting:</b> Kewajiban pajak karbon dapat berkurang/nihil jika pelaku usaha sudah membeli unit karbon (sertifikat pengurangan emisi) melalui bursa karbon senilai emisi berlebih tersebut. Implementasi di luar sektor PLTU batubara <b>masih belum berjalan penuh</b> per Agustus 2026 — cek perkembangan terbaru di <b>pajak.go.id</b>. Dasar hukum: UU HPP No. 7/2021 &amp; PP 40/2025.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021" target="_blank" rel="noopener">UU No. 7/2021 (HPP)</a><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-40-tahun-2025" target="_blank" rel="noopener">PP No. 40/2025 (Pajak Karbon)</a></div>
+</section>
+
+<!-- ================= PPh Final Jasa Konstruksi ================= -->
+<section class="panel" data-panel="konstruksi">
+  <h2>PPh Final — Jasa Konstruksi</h2>
+  <p class="sub">Rezim final tersendiri (bukan PPh 23) atas penghasilan usaha jasa konstruksi (pelaksanaan, perencanaan, pengawasan), dipotong pengguna jasa atau disetor sendiri. Tarif tergantung kualifikasi &amp; kepemilikan Sertifikat Badan Usaha (SBU).</p>
+  <div class="grid">
+    <div class="field">
+      <label>Jenis &amp; kualifikasi penyedia jasa</label>
+      <select id="konstruksi-jenis">
+        <option value="0.0175">Pelaksanaan — Usaha Kecil bersertifikat (SBU) — 1,75%</option>
+        <option value="0.04">Pelaksanaan — tanpa sertifikat (SBU/kualifikasi) — 4%</option>
+        <option value="0.0265">Pelaksanaan — Usaha Menengah/Besar bersertifikat — 2,65%</option>
+        <option value="0.0265spesialis">Pelaksanaan — Usaha spesialis bersertifikat — 2,65%</option>
+        <option value="0.035">Perencanaan/Pengawasan bersertifikat — 3,5%</option>
+        <option value="0.06">Perencanaan/Pengawasan tanpa sertifikat — 6%</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Nilai kontrak (bruto, tidak termasuk PPN)</label>
+      <input type="text" id="konstruksi-nilai" inputmode="numeric" placeholder="cth. 2.000.000.000">
+    </div>
+  </div>
+  <button class="calc" onclick="calcKonstruksi()">Hitung PPh Final</button>
+  <div class="result" id="res-konstruksi">
+    <div class="line"><span>Tarif digunakan</span><span id="konstruksi-tarif">—</span></div>
+    <div class="total"><span class="lbl">PPh Final Jasa Konstruksi</span><span class="val" id="konstruksi-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Dasar hukum: <b>PP No. 9 Tahun 2022</b> (perubahan PP 51/2008). Kepemilikan Sertifikat Badan Usaha (SBU) yang masih berlaku menjadi syarat utama mendapatkan tarif lebih rendah — tanpa SBU dikenai tarif tertinggi kategori terkait. Berlaku untuk badan usaha maupun perorangan yang memiliki sertifikat kompetensi kerja.<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/pp-9-tahun-2022" target="_blank" rel="noopener">PP No. 9/2022 (Jasa Konstruksi)</a></div>
+</section>
+
+<!-- ================= Bea Masuk ================= -->
+<section class="panel" data-panel="beamasuk">
+  <h2>Bea Masuk — Pungutan Impor Umum</h2>
+  <p class="sub">Pungutan negara atas barang impor berdasarkan tarif dalam Buku Tarif Kepabeanan Indonesia (BTKI)/kode HS, dihitung dari Nilai Pabean (umumnya CIF). Terpisah dari PPh 22 Impor &amp; PPN Impor yang dihitung setelah Bea Masuk ditambahkan.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Pabean (CIF: Cost + Insurance + Freight)</label>
+      <input type="text" id="beamasuk-nilai" inputmode="numeric" placeholder="cth. 80.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif Bea Masuk (%) sesuai kode HS barang (BTKI/BM-FTA)</label>
+      <input type="text" id="beamasuk-tarif" class="pct-input" placeholder="cth. 5, 10, 15">
+    </div>
+  </div>
+  <button class="calc" onclick="calcBeaMasuk()">Hitung Bea Masuk</button>
+  <div class="result" id="res-beamasuk">
+    <div class="line"><span>Tarif digunakan</span><span id="beamasuk-tarif-out">—</span></div>
+    <div class="line"><span>Nilai impor (Nilai Pabean + Bea Masuk) — dasar PPN &amp; PPh 22 Impor</span><span id="beamasuk-nilaiimpor">—</span></div>
+    <div class="total"><span class="lbl">Bea Masuk terutang</span><span class="val" id="beamasuk-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Tarif dapat lebih rendah/0% jika memenuhi skema perjanjian dagang bebas (FTA) seperti ACFTA, IJEPA, IA-CEPA dengan Surat Keterangan Asal (SKA/Form E, dll). Setelah Bea Masuk, tahap berikutnya adalah PPN Impor &amp; PPh 22 Impor (lihat tab masing-masing) yang dihitung dari Nilai Impor (Nilai Pabean + Bea Masuk + pungutan pabean lain).<br><br><b>Dasar hukum daerah:</b> Pajak ini bersifat pajak/pungutan <b>pusat</b>, berlaku seragam di seluruh Indonesia berdasarkan UU &amp; peraturan pusat di atas — tidak diatur dan tidak ada variasi tarif dalam Perda Kabupaten Katingan maupun Perda Provinsi Kalimantan Tengah.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-17-tahun-2006" target="_blank" rel="noopener">UU No. 17/2006 (Kepabeanan)</a><a class="law-chip" href="https://www.beacukai.go.id/arsip-peraturan.html" target="_blank" rel="noopener">Portal Peraturan Bea Cukai</a></div>
+</section>
+
+<!-- ================= Pajak Alat Berat ================= -->
+<section class="panel" data-panel="alatberat">
+  <h2>Pajak Alat Berat (PAB)</h2>
+  <p class="sub">Jenis pajak <b>baru</b> hasil UU HKPD No. 1/2022 — sebelumnya alat berat (excavator, bulldozer, forklift, crane, motor grader, dll) sempat dikenakan sebagai bagian dari PKB, kini dipisah menjadi pajak provinsi tersendiri atas kepemilikan/penguasaan alat berat. Dasar pengenaan: Nilai Jual Alat Berat (NJAB), tarif maksimal 0,2%.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Nilai Jual Alat Berat (NJAB)</label>
+      <input type="text" id="alatberat-njab" inputmode="numeric" placeholder="cth. 1.500.000.000">
+    </div>
+    <div class="field">
+      <label>Tarif Perda setempat (%, maksimal 0,2%)</label>
+      <input type="text" id="alatberat-tarif" class="pct-input" value="0,2">
+    </div>
+  </div>
+  <button class="calc" onclick="calcAlatBerat()">Hitung Pajak Alat Berat</button>
+  <div class="result" id="res-alatberat">
+    <div class="total"><span class="lbl">Pajak Alat Berat terutang setahun</span><span class="val" id="alatberat-hasil">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Objek: excavator, bulldozer, motor grader, forklift, crane, wheel loader, compactor/roller, dan alat sejenis yang bergerak dengan motor namun bukan untuk berjalan di jalan umum. Alat berat milik TNI/Polri, pemerintah, kedutaan, badan internasional umumnya dikecualikan. Tarif final ditetapkan Perda provinsi masing-masing, maksimal 0,2% sesuai UU HKPD.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a><a class="law-chip" href="https://jdih.kalteng.go.id/" target="_blank" rel="noopener">Perda Prov. Kalteng No. 8/2023</a></div>
+</section>
+
+<!-- ================= Opsen PKB & BBNKB ================= -->
+<section class="panel" data-panel="opsenpkb">
+  <h2>Opsen PKB &amp; Opsen BBNKB</h2>
+  <p class="sub">Mekanisme <b>baru</b> sejak berlakunya UU HKPD (efektif Januari 2025): kabupaten/kota kini memungut "opsen" (pungutan tambahan) di atas PKB &amp; BBNKB provinsi, dibayar bersamaan dalam satu STNK/faktur — bukan dibagi-hasilkan lagi seperti sistem lama, tapi langsung menjadi hak kabupaten/kota tempat kendaraan terdaftar.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Pokok PKB terutang (dari tab PKB &amp; BBNKB)</label>
+      <input type="text" id="opsenpkb-pkb" inputmode="numeric" placeholder="cth. 3.000.000">
+    </div>
+    <div class="field">
+      <label>Pokok BBNKB terutang (jika kendaraan baru/balik nama, kosongkan jika tidak ada)</label>
+      <input type="text" id="opsenpkb-bbnkb" inputmode="numeric" placeholder="cth. 30.000.000">
+    </div>
+  </div>
+  <div class="grid">
+    <div class="field">
+      <label>Tarif Opsen PKB (%, standar nasional UU HKPD)</label>
+      <input type="text" id="opsenpkb-tarifpkb" class="pct-input" value="66">
+    </div>
+    <div class="field">
+      <label>Tarif Opsen BBNKB (%, standar nasional UU HKPD)</label>
+      <input type="text" id="opsenpkb-tarifbbnkb" class="pct-input" value="66">
+    </div>
+  </div>
+  <button class="calc" onclick="calcOpsenPKB()">Hitung Opsen PKB/BBNKB</button>
+  <div class="result" id="res-opsenpkb">
+    <div class="line"><span>Opsen PKB (untuk kas kabupaten/kota)</span><span id="opsenpkb-hasilpkb">—</span></div>
+    <div class="line"><span>Opsen BBNKB (untuk kas kabupaten/kota)</span><span id="opsenpkb-hasilbbnkb">—</span></div>
+    <div class="total"><span class="lbl">Total tagihan (Pokok + Opsen)</span><span class="val" id="opsenpkb-total">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Tarif Opsen PKB &amp; Opsen BBNKB ditetapkan seragam nasional sebesar <b>66%</b> dari pokok pajak (Pasal 83 &amp; Lampiran UU HKPD), sehingga total beban ke wajib pajak <b>tidak bertambah</b> dibanding sistem lama — hanya porsi kabupaten/kota kini dipungut langsung sebagai opsen, bukan dibagi-hasilkan provinsi ke kabupaten/kota di kemudian hari. Berlaku efektif 5 Januari 2025.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a></div>
+</section>
+
+<!-- ================= Opsen Pajak MBLB ================= -->
+<section class="panel" data-panel="opsenmblb">
+  <h2>Opsen Pajak MBLB</h2>
+  <p class="sub">Kebalikan dari Opsen PKB/BBNKB: untuk Pajak Mineral Bukan Logam &amp; Batuan (MBLB) yang merupakan pajak kabupaten/kota, provinsi kini memungut opsen di atasnya. Berlaku efektif bersamaan dengan opsen lain, Januari 2025.</p>
+  <div class="grid">
+    <div class="field">
+      <label>Pokok Pajak MBLB terutang (dari tab Pajak MBLB)</label>
+      <input type="text" id="opsenmblb-pokok" inputmode="numeric" placeholder="cth. 18.750.000">
+    </div>
+    <div class="field">
+      <label>Tarif Opsen Pajak MBLB (%, standar nasional UU HKPD)</label>
+      <input type="text" id="opsenmblb-tarif" class="pct-input" value="25">
+    </div>
+  </div>
+  <button class="calc" onclick="calcOpsenMBLB()">Hitung Opsen MBLB</button>
+  <div class="result" id="res-opsenmblb">
+    <div class="line"><span>Opsen Pajak MBLB (untuk kas provinsi)</span><span id="opsenmblb-hasil">—</span></div>
+    <div class="total"><span class="lbl">Total tagihan (Pokok MBLB + Opsen)</span><span class="val" id="opsenmblb-total">Rp 0</span></div>
+  </div>
+  <div class="note"><b>Catatan:</b> Tarif Opsen Pajak MBLB ditetapkan seragam nasional sebesar <b>25%</b> dari pokok Pajak MBLB (Lampiran UU HKPD). Pokok Pajak MBLB tetap menjadi hak kabupaten/kota (di Katingan diatur Perda No. 1/2024), sedangkan opsennya menjadi hak provinsi (di Kalimantan Tengah diatur Perda No. 8/2023) — dipungut &amp; dibayar bersamaan dalam satu dokumen ketetapan.</div>
+  <div class="law-links"><span class="law-label">📖 Baca peraturan:</span><a class="law-chip" href="https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022" target="_blank" rel="noopener">UU No. 1/2022 (HKPD)</a></div>
+</section>
+
+<section class="panel-static" id="lawIndex">
+  <h2 style="font-size:1.05rem;">📚 Indeks Referensi Peraturan (semua bisa diklik)</h2>
+  <p class="sub">Kumpulan lengkap seluruh dasar hukum yang dipakai kalkulator ini, ditautkan langsung ke sumber resmi (JDIH Kementerian Keuangan, JDIH BPK RI, Bea Cukai, atau JDIH daerah). Tiap tab di atas juga sudah menyertakan link yang sama pada bagian "📖 Baca peraturan".</p>
+  <div id="lawIndexBody"></div>
+</section>
+
+<div class="legal">
+  Kalkulator ini bersifat referensi umum, disusun berdasarkan peraturan yang berlaku per <b>Agustus 2026</b>. Tarif &amp; ketentuan dapat berubah — untuk kepastian hukum dan kasus spesifik (kredit pajak, kompensasi kerugian, insentif, SKB, koreksi fiskal, tarif Perda terkini), konsultasikan dengan konsultan pajak resmi, Bapenda Kabupaten Katingan/Provinsi Kalimantan Tengah, atau cek langsung ke <a href="https://www.pajak.go.id/id/peraturan-pajak" target="_blank" rel="noopener">pajak.go.id</a> / <a href="https://www.beacukai.go.id/arsip-peraturan.html" target="_blank" rel="noopener">beacukai.go.id</a> / sistem Coretax DJP / <a href="https://jdih.katingankab.go.id/" target="_blank" rel="noopener">jdih.katingankab.go.id</a> / <a href="https://jdih.kalteng.go.id/" target="_blank" rel="noopener">jdih.kalteng.go.id</a>.
+  <div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);">@2026 by Achmad Fauzi &nbsp;·&nbsp; Email: vaozeei@gmail.com</div>
+</div>
+
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function parseNum(id){
+  const raw = document.getElementById(id).value.replace(/[^0-9]/g,'');
+  return raw ? parseInt(raw,10) : 0;
+}
+function fmt(n){
+  return 'Rp ' + Math.round(n).toLocaleString('id-ID');
+}
+function setRadio(el, group){
+  document.querySelectorAll('.radio-opt').forEach(o=>{
+    if(o.parentElement === el.parentElement) o.classList.remove('sel');
+  });
+  el.classList.add('sel');
+}
+// live thousand separator formatting on numeric text inputs
+document.addEventListener('input', e=>{
+  if(e.target.matches('input[inputmode="numeric"]')){
+    let v = e.target.value.replace(/[^0-9]/g,'');
+    e.target.value = v ? parseInt(v,10).toLocaleString('id-ID') : '';
+  }
+});
+
+/* ---------- tabs (grouped) ---------- */
+const tabLabels = {
+  pph21:'PPh 21 (TER)', pph17:'PPh 17 / OP Tahunan', pph23:'PPh 23', pph25:'PPh 25',
+  umkm:'PPh Final UMKM', ppn:'PPN', pph22:'PPh 22 Impor', imei:'Pajak IMEI',
+  badan:'PPh Badan', pbb:'PBB-P2', bphtb:'BPHTB', koperasi:'Pajak Koperasi',
+  pph26:'PPh 26', tanahbangunan:'PPh Final Tanah/Bangunan', meterai:'Bea Meterai',
+  pbjt:'PBJT Hotel/Restoran/Hiburan', pkb:'PKB & BBNKB', rokok:'Pajak Rokok',
+  ppnbm:'PPnBM', pph4a2:'PPh Final Ps.4(2) Lainnya', reklame:'Pajak Reklame',
+  pju:'Pajak Penerangan Jalan', airtanah:'Pajak Air Tanah', beakeluar:'Bea Keluar',
+  airpermukaan:'Pajak Air Permukaan', mbleb:'Pajak MBLB (Galian C)', walet:'Pajak Sarang Walet',
+  pbbp5l:'PBB Sektor Lainnya (P5L)', mmea:'Cukai MMEA', karbon:'Pajak Karbon',
+  konstruksi:'PPh Final Jasa Konstruksi', beamasuk:'Bea Masuk', alatberat:'Pajak Alat Berat',
+  opsenpkb:'Opsen PKB & BBNKB', opsenmblb:'Opsen MBLB',
+};
+const tabGroups = [
+  {title:'PPh Orang Pribadi', ids:['pph21','pph17','pph25','pph26']},
+  {title:'PPh Badan & UMKM', ids:['umkm','badan','koperasi']},
+  {title:'PPh Final & Bea Meterai', ids:['pph23','pph4a2','tanahbangunan','konstruksi','meterai']},
+  {title:'PPN & PPnBM', ids:['ppn','ppnbm']},
+  {title:'Bea & Pajak Impor\u2013Ekspor', ids:['pph22','imei','beamasuk','beakeluar']},
+  {title:'Pajak Properti & Tanah', ids:['pbb','bphtb','pbbp5l']},
+  {title:'Pajak Daerah \u2014 Kabupaten/Kota', ids:['pbjt','reklame','pju','airtanah','mbleb','walet']},
+  {title:'Pajak Daerah \u2014 Provinsi', ids:['pkb','rokok','airpermukaan','alatberat']},
+  {title:'Opsen Pajak Daerah', ids:['opsenpkb','opsenmblb']},
+  {title:'Cukai & Pajak Khusus', ids:['mmea','karbon']},
+];
+const groupCapsulesEl = document.getElementById('groupCapsules');
+const groupIndicator = document.getElementById('groupIndicator');
+const itemSelect = document.getElementById('itemSelect');
+let activeGroupIndex = 0;
+const groupButtons = [];
+
+function moveGroupIndicator(el){
+  if(!el) return;
+  const parentBox = groupCapsulesEl.getBoundingClientRect();
+  const box = el.getBoundingClientRect();
+  groupIndicator.style.opacity = '1';
+  groupIndicator.style.left = (box.left - parentBox.left) + 'px';
+  groupIndicator.style.top = (box.top - parentBox.top) + 'px';
+  groupIndicator.style.width = box.width + 'px';
+  groupIndicator.style.height = box.height + 'px';
+}
+
+function buildGroupCapsules(){
+  tabGroups.forEach((group, idx)=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'group-capsule' + (idx===0 ? ' lit' : '');
+    b.innerHTML = `<span class="lbl">${group.title}</span>`;
+    b.addEventListener('mouseenter', ()=> moveGroupIndicator(b));
+    b.addEventListener('click', ()=>{
+      activeGroupIndex = idx;
+      groupButtons.forEach(x=>x.classList.remove('lit'));
+      b.classList.add('lit');
+      moveGroupIndicator(b);
+      populateItemSelect();
+      switchPanel(tabGroups[idx].ids[0], true);
+    });
+    groupCapsulesEl.appendChild(b);
+    groupButtons.push(b);
+  });
+  groupCapsulesEl.addEventListener('mouseleave', ()=>{
+    moveGroupIndicator(groupButtons[activeGroupIndex]);
+  });
+  window.addEventListener('resize', ()=> moveGroupIndicator(groupButtons[activeGroupIndex]));
+}
+
+function populateItemSelect(){
+  const group = tabGroups[activeGroupIndex];
+  itemSelect.innerHTML = group.ids.map(id=>`<option value="${id}">${tabLabels[id]}</option>`).join('');
+}
+
+function findGroupIndexForId(id){
+  const idx = tabGroups.findIndex(g=>g.ids.includes(id));
+  return idx === -1 ? 0 : idx;
+}
+
+// switches the active panel; when jump=true, scrolls the panel into view
+// ("go to preview") and gives it a brief highlight pulse
+function switchPanel(id, jump){
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active','nav-jump'));
+  const panel = document.querySelector(`.panel[data-panel="${id}"]`);
+  if(!panel) return;
+  panel.classList.add('active');
+  itemSelect.value = id;
+  if(jump){
+    requestAnimationFrame(()=>{
+      panel.scrollIntoView({behavior:'smooth', block:'start'});
+      panel.classList.add('nav-jump');
+      setTimeout(()=>panel.classList.remove('nav-jump'), 900);
+    });
+  }
+}
+
+itemSelect.addEventListener('change', ()=> switchPanel(itemSelect.value, true));
+
+buildGroupCapsules();
+populateItemSelect();
+switchPanel('pph21', false);
+window.addEventListener('load', ()=> moveGroupIndicator(groupButtons[activeGroupIndex]));
+requestAnimationFrame(()=> moveGroupIndicator(groupButtons[activeGroupIndex]));
+if(document.getElementById('p4a2-jenis')) toggleP4A2();
+
+/* ---------- theme toggle ---------- */
+function toggleTheme(){
+  const isLight = document.body.classList.toggle('light-theme');
+  document.getElementById('themeToggle').textContent = isLight ? '\u2600\ufe0f' : '\ud83c\udf19';
+}
+
+/* ---------- law index footer ---------- */
+const LAW_INDEX_PUSAT = [{label:"UU No. 7/2021 (HPP)",url:"https://jdih.kemenkeu.go.id/dok/uu-7-tahun-2021"},{label:"PP No. 58/2023",url:"https://jdih.kemenkeu.go.id/dok/pp-58-tahun-2023"},{label:"PMK 168/2023",url:"https://jdih.kemenkeu.go.id/dok/pmk-168-tahun-2023"},{label:"UU No. 36/2008 (PPh)",url:"https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008"},{label:"PP No. 9/2022 (Jasa Konstruksi)",url:"https://jdih.kemenkeu.go.id/dok/pp-9-tahun-2022"},{label:"UU Cipta Kerja (UU 6/2023)",url:"https://jdih.kemenkeu.go.id/dok/uu-6-tahun-2023"},{label:"PP No. 55/2022 (UMKM Final)",url:"https://jdih.kemenkeu.go.id/dok/pp-55-tahun-2022"},{label:"PP No. 20/2026 (Revisi UMKM)",url:"https://jdih.kemenkeu.go.id/dok/pp-20-tahun-2026"},{label:"UU No. 42/2009 (PPN)",url:"https://jdih.kemenkeu.go.id/dok/uu-42-tahun-2009"},{label:"PMK 131/2024 (Tarif PPN 12%)",url:"https://jdih.kemenkeu.go.id/dok/pmk-131-tahun-2024"},{label:"PMK 41/PMK.010/2022",url:"https://jdih.kemenkeu.go.id/dok/pmk-41-tahun-2022"},{label:"PMK 34/2025 (IMEI)",url:"https://jdih.kemenkeu.go.id/dok/pmk-34-tahun-2025"},{label:"PMK 204/PMK.04/2017",url:"https://jdih.kemenkeu.go.id/dok/pmk-204-tahun-2017"},{label:"PER-13/BC/2021 (Bea Cukai)",url:"https://www.beacukai.go.id/arsip-peraturan.html"},{label:"Ps. 31E UU PPh (36/2008)",url:"https://jdih.kemenkeu.go.id/dok/uu-36-tahun-2008"},{label:"UU No. 1/2022 (HKPD)",url:"https://jdih.kemenkeu.go.id/dok/uu-1-tahun-2022"},{label:"PP No. 15/2009 (Koperasi)",url:"https://jdih.kemenkeu.go.id/dok/pp-15-tahun-2009"},{label:"PP No. 34/2016",url:"https://jdih.kemenkeu.go.id/dok/pp-34-tahun-2016"},{label:"UU No. 10/2020 (Meterai)",url:"https://jdih.kemenkeu.go.id/dok/uu-10-tahun-2020"},{label:"PP No. 86/2021 (Meterai)",url:"https://jdih.kemenkeu.go.id/dok/pp-86-tahun-2021"},{label:"PMK 26/2026 (Pajak Rokok)",url:"https://jdih.kemenkeu.go.id/dok/pmk-26-tahun-2026"},{label:"PP No. 61/2020 (PPnBM)",url:"https://jdih.kemenkeu.go.id/dok/pp-61-tahun-2020"},{label:"PMK 141/2021 (Tarif PPnBM)",url:"https://jdih.kemenkeu.go.id/dok/pmk-141-tahun-2021"},{label:"PMK 42/2022 (PPnBM Kendaraan)",url:"https://jdih.kemenkeu.go.id/dok/pmk-42-tahun-2022"},{label:"PP No. 131/2000 (Bunga Deposito)",url:"https://jdih.kemenkeu.go.id/dok/pp-131-tahun-2000"},{label:"PP No. 41/1994 (Transaksi Saham)",url:"https://jdih.kemenkeu.go.id/dok/pp-41-tahun-1994"},{label:"PP No. 14/1997",url:"https://jdih.kemenkeu.go.id/dok/pp-14-tahun-1997"},{label:"PP No. 132/2000 (Hadiah Undian)",url:"https://jdih.kemenkeu.go.id/dok/pp-132-tahun-2000"},{label:"PP No. 34/2017 (Sewa Tanah/Bangunan)",url:"https://jdih.kemenkeu.go.id/dok/pp-34-tahun-2017"},{label:"PMK 39/2022 (Bea Keluar)",url:"https://jdih.kemenkeu.go.id/dok/pmk-39-tahun-2022"},{label:"Portal Peraturan Bea Cukai",url:"https://www.beacukai.go.id/arsip-peraturan.html"},{label:"UU No. 12/1985 (PBB)",url:"https://peraturan.bpk.go.id/Details/46963/uu-no-12-tahun-1985"},{label:"UU No. 39/2007 (Cukai)",url:"https://peraturan.bpk.go.id/Search?keywords=UU%2039%20Tahun%202007%20Cukai"},{label:"PP No. 40/2025 (Pajak Karbon)",url:"https://jdih.kemenkeu.go.id/dok/pp-40-tahun-2025"},{label:"UU No. 17/2006 (Kepabeanan)",url:"https://jdih.kemenkeu.go.id/dok/uu-17-tahun-2006"}];
+const LAW_INDEX_DAERAH = [{label:"Perda Kab. Katingan No. 1/2024",url:"https://jdih.katingankab.go.id/"},{label:"Perda Prov. Kalteng No. 8/2023",url:"https://jdih.kalteng.go.id/"}];
+function renderLawIndex(){
+  const body = document.getElementById('lawIndexBody');
+  if(!body) return;
+  function chipRow(list){
+    return list.map(l => `<a class="law-chip" href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('');
+  }
+  body.innerHTML = `
+    <div class="law-index-group">
+      <div class="tab-group-title">Peraturan Pusat (UU / PP / PMK)</div>
+      <div class="law-links" style="border-top:none;padding-top:0;margin-top:0;">${chipRow(LAW_INDEX_PUSAT)}</div>
+    </div>
+    <div class="law-index-group">
+      <div class="tab-group-title">Peraturan Daerah (Perda)</div>
+      <div class="law-links" style="border-top:none;padding-top:0;margin-top:0;">${chipRow(LAW_INDEX_DAERAH)}</div>
+    </div>
+  `;
+}
+renderLawIndex();
+
+/* ---------- TER tables (PMK 168/2023 lampiran) ---------- */
+const TER_A = [
+[5400000,0],[5650000,0.0025],[5950000,0.005],[6300000,0.0075],[6750000,0.01],
+[7500000,0.0125],[8550000,0.015],[9650000,0.0175],[10050000,0.02],[10350000,0.0225],
+[10700000,0.025],[11050000,0.03],[11600000,0.035],[12500000,0.04],[13750000,0.05],
+[15100000,0.06],[16950000,0.07],[19750000,0.08],[24150000,0.09],[26450000,0.10],
+[28000000,0.11],[30050000,0.12],[32400000,0.13],[35400000,0.14],[39100000,0.15],
+[43850000,0.16],[47800000,0.17],[51400000,0.18],[56300000,0.19],[62200000,0.20],
+[68600000,0.21],[77500000,0.22],[89000000,0.23],[103000000,0.24],[125000000,0.25],
+[157000000,0.26],[206000000,0.27],[337000000,0.28],[454000000,0.29],[550000000,0.30],
+[695000000,0.31],[910000000,0.32],[1400000000,0.33],[Infinity,0.34]
+];
+const TER_B = [
+[6200000,0],[6500000,0.0025],[6850000,0.005],[7300000,0.0075],[9200000,0.01],
+[10750000,0.015],[11250000,0.02],[11600000,0.025],[12600000,0.03],[13600000,0.04],
+[14950000,0.05],[16400000,0.06],[18450000,0.07],[21850000,0.08],[26000000,0.09],
+[27700000,0.10],[29350000,0.11],[31450000,0.12],[33950000,0.13],[37100000,0.14],
+[41100000,0.15],[45800000,0.16],[49500000,0.17],[53800000,0.18],[58500000,0.19],
+[64300000,0.20],[71100000,0.21],[80400000,0.22],[93100000,0.23],[109000000,0.24],
+[129000000,0.25],[163000000,0.26],[211000000,0.27],[374000000,0.28],[459000000,0.29],
+[555000000,0.30],[704000000,0.31],[957000000,0.32],[1405000000,0.33],[Infinity,0.34]
+];
+const TER_C = [
+[6600000,0],[6950000,0.0025],[7350000,0.005],[7800000,0.0075],[8850000,0.01],
+[9800000,0.0125],[10950000,0.015],[11200000,0.0175],[12050000,0.02],[12950000,0.03],
+[14150000,0.04],[15550000,0.05],[17050000,0.06],[19500000,0.07],[22700000,0.08],
+[26600000,0.09],[28100000,0.10],[30100000,0.11],[32600000,0.12],[35400000,0.13],
+[38900000,0.14],[43000000,0.15],[47400000,0.16],[51200000,0.17],[55800000,0.18],
+[60400000,0.19],[66700000,0.20],[74500000,0.21],[83200000,0.22],[95700000,0.23],
+[110000000,0.24],[134000000,0.25],[169000000,0.26],[221000000,0.27],[390000000,0.28],
+[463000000,0.29],[561000000,0.30],[709000000,0.31],[965000000,0.32],[1419000000,0.33],
+[Infinity,0.34]
+];
+const PTKP_TO_CAT = {TK0:'A',TK1:'A',K0:'A',TK2:'B',TK3:'B',K1:'B',K2:'B',K3:'C'};
+
+function lookupTER(table, bruto){
+  for(const [ceil, rate] of table){
+    if(bruto <= ceil) return rate;
+  }
+  return table[table.length-1][1];
+}
+
+function calcPPh21(){
+  const bruto = parseNum('p21-bruto');
+  const ptkp = document.getElementById('p21-ptkp').value;
+  const cat = PTKP_TO_CAT[ptkp];
+  const table = cat==='A'?TER_A: cat==='B'?TER_B: TER_C;
+  const rate = lookupTER(table, bruto);
+  const pph = bruto * rate;
+  document.getElementById('p21-kat').textContent = 'TER ' + cat;
+  document.getElementById('p21-tarif').textContent = (rate*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('p21-hasil').textContent = fmt(pph);
+  document.getElementById('res-p21').classList.add('show');
+}
+
+/* ---------- Pasal 17 progresif ---------- */
+function pph17progresif(pkp){
+  const layers = [
+    [60000000,0.05],[250000000,0.15],[500000000,0.25],[5000000000,0.30],[Infinity,0.35]
+  ];
+  let sisa = pkp, prevCeil=0, total=0, rows=[];
+  for(const [ceil, rate] of layers){
+    if(sisa<=0) break;
+    const bracketSize = ceil - prevCeil;
+    const taxable = Math.min(sisa, bracketSize);
+    const tax = taxable * rate;
+    if(taxable>0) rows.push({rate, taxable, tax});
+    total += tax;
+    sisa -= taxable;
+    prevCeil = ceil;
+  }
+  return {total, rows};
+}
+
+function calcPPh17(){
+  const neto = parseNum('p17-neto');
+  const ptkp = parseInt(document.getElementById('p17-ptkp').value,10);
+  const pkp = Math.max(0, neto - ptkp);
+  const {total, rows} = pph17progresif(pkp);
+  document.getElementById('p17-ptkp-out').textContent = fmt(ptkp);
+  document.getElementById('p17-pkp').textContent = fmt(pkp);
+  let html = '';
+  rows.forEach(r=>{
+    html += `<div class="line"><span>Lapisan ${(r.rate*100).toFixed(0)}%</span><span>${fmt(r.tax)}</span></div>`;
+  });
+  document.getElementById('p17-breakdown').innerHTML = html;
+  document.getElementById('p17-hasil').textContent = fmt(total);
+  document.getElementById('res-p17').classList.add('show');
+}
+
+/* ---------- PPh 23 ---------- */
+function calcPPh23(){
+  const jenisSel = document.getElementById('p23-jenis').value;
+  let rate = parseFloat(jenisSel);
+  const bruto = parseNum('p23-bruto');
+  const noNpwp = document.querySelector('input[name="p23npwp"]:checked').value === 'tidak';
+  if(noNpwp) rate = rate * 2;
+  const pph = bruto * rate;
+  document.getElementById('p23-tarif').textContent = (rate*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%' + (noNpwp?' (tanpa NPWP, ×2)':'');
+  document.getElementById('p23-hasil').textContent = fmt(pph);
+  document.getElementById('res-p23').classList.add('show');
+}
+
+/* ---------- PPh 25 ---------- */
+function calcPPh25(){
+  const terutang = parseNum('p25-terutang');
+  const kredit = parseNum('p25-kredit');
+  const dasar = Math.max(0, terutang - kredit);
+  const bulanan = dasar/12;
+  document.getElementById('p25-dasar').textContent = fmt(dasar);
+  document.getElementById('p25-hasil').textContent = fmt(bulanan);
+  document.getElementById('res-p25').classList.add('show');
+}
+
+/* ---------- UMKM Final ---------- */
+function calcUMKM(){
+  const omzet = parseNum('umkm-omzet');
+  const jenis = document.getElementById('umkm-jenis').value;
+  const akumulasi = parseNum('umkm-akumulasi');
+  let kena = omzet;
+  if(jenis==='op'){
+    const batas = 500000000;
+    const sisaBebas = Math.max(0, batas - akumulasi);
+    kena = Math.max(0, omzet - sisaBebas);
+  }
+  const pph = kena * 0.005;
+  document.getElementById('umkm-kena').textContent = fmt(kena);
+  document.getElementById('umkm-hasil').textContent = fmt(pph);
+  document.getElementById('res-umkm').classList.add('show');
+}
+
+/* ---------- PPN ---------- */
+function calcPPN(){
+  const dpp = parseNum('ppn-dpp');
+  const kategori = document.getElementById('ppn-kategori').value;
+  let ppn, effRate, dppUsed;
+  if(kategori==='mewah'){
+    dppUsed = dpp;
+    ppn = dpp * 0.12;
+    effRate = '12% (penuh)';
+  } else {
+    dppUsed = dpp * (11/12);
+    ppn = dppUsed * 0.12;
+    effRate = '11% efektif (12% × 11/12 DPP Nilai Lain)';
+  }
+  document.getElementById('ppn-dpp-out').textContent = fmt(dppUsed);
+  document.getElementById('ppn-tarif').textContent = effRate;
+  document.getElementById('ppn-hasil').textContent = fmt(ppn);
+  document.getElementById('res-ppn').classList.add('show');
+}
+
+/* ---------- PPh 22 Impor ---------- */
+function calcPPh22(){
+  const nilai = parseNum('p22-nilai');
+  let rate = parseFloat(document.getElementById('p22-status').value);
+  const noNpwp = document.querySelector('input[name="p22npwp"]:checked').value === 'tidak';
+  if(noNpwp) rate = rate * 2;
+  const pph = nilai * rate;
+  document.getElementById('p22-tarif').textContent = (rate*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%' + (noNpwp?' (tanpa NPWP, ×2)':'');
+  document.getElementById('p22-hasil').textContent = fmt(pph);
+  document.getElementById('res-p22').classList.add('show');
+}
+
+/* ---------- IMEI / Bea Cukai ---------- */
+function calcIMEI(){
+  const hargaUSD = parseNum('imei-harga');
+  const kurs = parseNum('imei-kurs');
+  const status = document.getElementById('imei-status').value;
+  const nilaiRp = hargaUSD * kurs;
+
+  let bebasUSD = 0;
+  if(status==='penumpang') bebasUSD = 500;
+  else if(status==='awak') bebasUSD = 50;
+  else bebasUSD = 0;
+
+  const bebasRp = bebasUSD * kurs;
+  const pabean = Math.max(0, nilaiRp - bebasRp);
+  const beaMasuk = pabean * 0.10;
+  const ppn = (pabean + beaMasuk) * 0.11;
+  const total = beaMasuk + ppn;
+
+  document.getElementById('imei-pabean-full').textContent = fmt(nilaiRp);
+  document.getElementById('imei-bebas').textContent = '- ' + fmt(bebasRp);
+  document.getElementById('imei-pabean').textContent = fmt(pabean);
+  document.getElementById('imei-bm').textContent = fmt(beaMasuk);
+  document.getElementById('imei-ppn').textContent = fmt(ppn);
+  document.getElementById('imei-hasil').textContent = fmt(total);
+  document.getElementById('res-imei').classList.add('show');
+}
+
+/* ---------- PPh Badan ---------- */
+function calcBadan(){
+  const pkp = parseNum('badan-pkp');
+  const omzet = parseNum('badan-omzet');
+  const rateUmum = 0.22;
+  let html = '', total;
+
+  if(omzet <= 4800000000){
+    // seluruh PKP dapat fasilitas 50%
+    total = pkp * (rateUmum/2);
+    html = `<div class="line"><span>Omzet ≤ Rp4,8M → seluruh PKP dapat diskon 50%</span><span>${(rateUmum*50).toFixed(1)}%</span></div>`;
+  } else if(omzet <= 50000000000){
+    const pkpFasilitas = pkp * (4800000000/omzet);
+    const pkpNormal = pkp - pkpFasilitas;
+    const pajakFasilitas = pkpFasilitas * (rateUmum/2);
+    const pajakNormal = pkpNormal * rateUmum;
+    total = pajakFasilitas + pajakNormal;
+    html = `<div class="line"><span>PKP dapat fasilitas 50% (proporsional)</span><span>${fmt(pajakFasilitas)}</span></div>
+            <div class="line"><span>PKP tarif umum 22%</span><span>${fmt(pajakNormal)}</span></div>`;
+  } else {
+    total = pkp * rateUmum;
+    html = `<div class="line"><span>Omzet > Rp50M → tarif umum penuh 22%</span><span>${fmt(total)}</span></div>`;
+  }
+  document.getElementById('badan-breakdown').innerHTML = html;
+  document.getElementById('badan-hasil').textContent = fmt(total);
+  document.getElementById('res-badan').classList.add('show');
+}
+
+/* ---------- PBB-P2 ---------- */
+function calcPBB(){
+  const njopBumi = parseNum('pbb-njopbumi');
+  const njopBgn = parseNum('pbb-njopbgn');
+  const njoptkp = parseNum('pbb-njoptkp');
+  const njkpPct = parseFloat(document.getElementById('pbb-njkp').value.replace(',','.')) / 100 || 0.2;
+  const tarifPct = parseFloat(document.getElementById('pbb-tarif').value.replace(',','.')) / 100 || 0.003;
+
+  const njopTotal = njopBumi + njopBgn;
+  const setelahTkp = Math.max(0, njopTotal - njoptkp);
+  const njkp = setelahTkp * njkpPct;
+  const pbb = njkp * tarifPct;
+
+  document.getElementById('pbb-njoptotal').textContent = fmt(njopTotal);
+  document.getElementById('pbb-setelahtkp').textContent = fmt(setelahTkp);
+  document.getElementById('pbb-njkpval').textContent = fmt(njkp) + ' (' + (njkpPct*100).toFixed(0) + '%)';
+  document.getElementById('pbb-hasil').textContent = fmt(pbb);
+  document.getElementById('res-pbb').classList.add('show');
+}
+
+/* ---------- BPHTB ---------- */
+function calcBPHTB(){
+  const npop = parseNum('bphtb-npop');
+  const njop = parseNum('bphtb-njop');
+  const npoptkpInput = parseNum('bphtb-npoptkp');
+  const jenis = document.getElementById('bphtb-jenis').value;
+  const tarifPct = parseFloat(document.getElementById('bphtb-tarif').value.replace(',','.')) / 100 || 0.05;
+
+  const npopUsed = Math.max(npop, njop);
+  const npoptkpMin = jenis==='waris' ? 300000000 : 60000000;
+  const npoptkp = Math.max(npoptkpInput, npoptkpMin);
+  const npopkp = Math.max(0, npopUsed - npoptkp);
+  const bphtb = npopkp * tarifPct;
+
+  document.getElementById('bphtb-npopused').textContent = fmt(npopUsed);
+  document.getElementById('bphtb-npopkp').textContent = fmt(npopkp) + ' (NPOPTKP dipakai: ' + fmt(npoptkp) + ')';
+  document.getElementById('bphtb-hasil').textContent = fmt(bphtb);
+  document.getElementById('res-bphtb').classList.add('show');
+}
+
+/* ---------- Pajak Koperasi ---------- */
+function calcKopBunga(){
+  const bunga = parseNum('kop-bunga');
+  const batas = 240000;
+  const bebas = Math.min(bunga, batas);
+  const kena = Math.max(0, bunga - batas);
+  const pph = kena * 0.10;
+  document.getElementById('kop-bebas').textContent = fmt(bebas);
+  document.getElementById('kop-kena').textContent = fmt(kena);
+  document.getElementById('kop-hasil').textContent = fmt(pph);
+  document.getElementById('res-kopbunga').classList.add('show');
+}
+
+function calcKopBadan(){
+  const pkp = parseNum('kop-pkp');
+  const skema = document.getElementById('kop-skema').value;
+  const omzet = parseNum('kop-omzet');
+  let html = '', total;
+
+  if(skema==='final'){
+    total = omzet * 0.005;
+    html = `<div class="line"><span>Omzet setahun</span><span>${fmt(omzet)}</span></div>
+            <div class="line"><span>Tarif final</span><span>0,5%</span></div>`;
+  } else {
+    const rateUmum = 0.22;
+    if(omzet>0 && omzet<=4800000000){
+      total = pkp * (rateUmum/2);
+      html = `<div class="line"><span>Omzet ≤ Rp4,8M → diskon 50%</span><span>${(rateUmum*50).toFixed(1)}%</span></div>`;
+    } else if(omzet>4800000000 && omzet<=50000000000){
+      const pkpFasilitas = pkp * (4800000000/omzet);
+      const pkpNormal = pkp - pkpFasilitas;
+      const pajakFasilitas = pkpFasilitas * (rateUmum/2);
+      const pajakNormal = pkpNormal * rateUmum;
+      total = pajakFasilitas + pajakNormal;
+      html = `<div class="line"><span>PKP dapat fasilitas 50% (proporsional)</span><span>${fmt(pajakFasilitas)}</span></div>
+              <div class="line"><span>PKP tarif umum 22%</span><span>${fmt(pajakNormal)}</span></div>`;
+    } else {
+      total = pkp * rateUmum;
+      html = `<div class="line"><span>Tarif umum 22%</span><span>${fmt(total)}</span></div>`;
+    }
+  }
+  document.getElementById('kop-breakdown').innerHTML = html;
+  document.getElementById('kopbadan-hasil').textContent = fmt(total);
+  document.getElementById('res-kopbadan').classList.add('show');
+}
+
+/* ---------- PPh 26 ---------- */
+document.getElementById('p26-tarif').addEventListener('change', function(){
+  document.getElementById('p26-custom-field').style.display = this.value==='custom' ? 'block' : 'none';
+});
+function calcPPh26(){
+  const bruto = parseNum('p26-bruto');
+  const pilihan = document.getElementById('p26-tarif').value;
+  let rate;
+  if(pilihan==='custom'){
+    rate = (parseFloat(document.getElementById('p26-tarif-custom').value.replace(',','.')) || 0) / 100;
+  } else {
+    rate = parseFloat(pilihan);
+  }
+  const pph = bruto * rate;
+  document.getElementById('p26-tarif-out').textContent = (rate*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%' + (pilihan==='custom' ? ' (tarif P3B)' : ' (tarif umum)');
+  document.getElementById('p26-hasil').textContent = fmt(pph);
+  document.getElementById('res-p26').classList.add('show');
+}
+
+/* ---------- PPh Final Pengalihan Tanah & Bangunan ---------- */
+function calcTanahBangunan(){
+  const nilai = parseNum('tb-nilai');
+  const njop = parseNum('tb-njop');
+  const rate = parseFloat(document.getElementById('tb-jenis').value);
+  const dasar = Math.max(nilai, njop);
+  const pph = dasar * rate;
+  document.getElementById('tb-dasar').textContent = fmt(dasar);
+  document.getElementById('tb-tarif').textContent = (rate*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('tb-hasil').textContent = fmt(pph);
+  document.getElementById('res-tb').classList.add('show');
+}
+
+/* ---------- Bea Meterai ---------- */
+function calcMeterai(){
+  const nilai = parseNum('meterai-nilai');
+  const jenis = document.getElementById('meterai-jenis').value;
+  const jumlah = Math.max(1, parseNum('meterai-jumlah') || 1);
+  let terutang, tarifPerDok;
+  if(jenis==='tanpanilai'){
+    terutang = false; tarifPerDok = 0;
+  } else if(jenis==='nominal'){
+    terutang = nilai > 5000000; tarifPerDok = terutang ? 10000 : 0;
+  } else {
+    terutang = true; tarifPerDok = 10000;
+  }
+  const total = terutang ? tarifPerDok * jumlah : 0;
+  document.getElementById('meterai-status').textContent = terutang ? 'Terutang Bea Meterai' : 'Tidak terutang';
+  document.getElementById('meterai-tarif').textContent = terutang ? fmt(tarifPerDok) : 'Rp 0';
+  document.getElementById('meterai-hasil').textContent = fmt(total);
+  document.getElementById('res-meterai').classList.add('show');
+}
+
+/* ---------- PBJT ---------- */
+function calcPBJT(){
+  const nilai = parseNum('pbjt-nilai');
+  const custom = document.getElementById('pbjt-tarif-custom').value.replace(',','.').trim();
+  let ratePct;
+  if(custom){
+    ratePct = parseFloat(custom) || 0;
+  } else {
+    ratePct = parseFloat(document.getElementById('pbjt-jenis').value);
+  }
+  const rate = ratePct / 100;
+  const pajak = nilai * rate;
+  document.getElementById('pbjt-tarif-out').textContent = ratePct.toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('pbjt-hasil').textContent = fmt(pajak);
+  document.getElementById('res-pbjt').classList.add('show');
+}
+
+/* ---------- PKB & BBNKB ---------- */
+function calcPKB(){
+  const njkb = parseNum('pkb-njkb');
+  const status = parseInt(document.getElementById('pkb-status').value,10);
+  const tarif1 = (parseFloat(document.getElementById('pkb-tarif1').value.replace(',','.')) || 0) / 100;
+  const tarifProg = (parseFloat(document.getElementById('pkb-tarifprog').value.replace(',','.')) || 0) / 100;
+  const hitungBBNKB = document.querySelector('input[name="pkbbbnkb"]:checked').value === 'ya';
+
+  const tarifEfektif = tarif1 + (status - 1) * tarifProg;
+  const pkb = njkb * tarifEfektif;
+  const bbnkb = hitungBBNKB ? njkb * 0.12 : 0;
+  const total = pkb + bbnkb;
+
+  document.getElementById('pkb-tarif-out').textContent = (tarifEfektif*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('pkb-hasil').textContent = fmt(pkb);
+  const bbnkbLine = document.getElementById('pkb-bbnkb-line');
+  if(hitungBBNKB){
+    bbnkbLine.style.display = 'flex';
+    document.getElementById('pkb-bbnkb-hasil').textContent = fmt(bbnkb);
+  } else {
+    bbnkbLine.style.display = 'none';
+  }
+  document.getElementById('pkb-total').textContent = fmt(total);
+  document.getElementById('res-pkb').classList.add('show');
+}
+
+/* ---------- Pajak Rokok ---------- */
+function calcRokok(){
+  const cukaiSatuan = parseNum('rokok-cukaisatuan');
+  const jumlah = parseNum('rokok-jumlah');
+  const cukai = cukaiSatuan * jumlah;
+  const pajak = cukai * 0.10;
+  document.getElementById('rokok-cukai').textContent = fmt(cukai);
+  document.getElementById('rokok-hasil').textContent = fmt(pajak);
+  document.getElementById('res-rokok').classList.add('show');
+}
+
+/* ---------- PPnBM ---------- */
+function calcPPnBM(){
+  const dpp = parseNum('ppnbm-dpp');
+  const ratePct = parseFloat(document.getElementById('ppnbm-tarif').value.replace(',','.')) || 0;
+  const rate = ratePct/100;
+  const ppnbm = dpp * rate;
+  document.getElementById('ppnbm-tarif-out').textContent = ratePct.toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('ppnbm-hasil').textContent = fmt(ppnbm);
+  document.getElementById('res-ppnbm').classList.add('show');
+}
+
+/* ---------- PPh Final Pasal 4(2) Lainnya ---------- */
+function toggleP4A2(){
+  const jenis = document.getElementById('p4a2-jenis').value;
+  const label = document.getElementById('p4a2-nilai-label');
+  const pendiriField = document.getElementById('p4a2-pendiri-field');
+  const labels = {
+    deposito: 'Jumlah bunga deposito/tabungan/jasa giro (bruto)',
+    saham: 'Nilai transaksi penjualan saham',
+    undian: 'Nilai hadiah undian (bruto)',
+    sewa: 'Nilai bruto sewa tanah/bangunan'
+  };
+  label.textContent = labels[jenis];
+  pendiriField.style.display = jenis==='saham' ? 'block' : 'none';
+}
+function calcP4A2(){
+  const jenis = document.getElementById('p4a2-jenis').value;
+  const nilai = parseNum('p4a2-nilai');
+  let dasar = nilai, rate, tarifLabel, pajak;
+  if(jenis==='deposito'){
+    if(nilai <= 7500000){
+      dasar = 0; rate = 0.20; pajak = 0;
+      tarifLabel = '20% (dikecualikan, nominal ≤ Rp7.500.000)';
+    } else {
+      rate = 0.20; pajak = nilai * rate;
+      tarifLabel = '20% final';
+    }
+  } else if(jenis==='saham'){
+    rate = 0.001; pajak = nilai * rate;
+    const pendiri = document.getElementById('p4a2-pendiri').value === 'ya';
+    if(pendiri){
+      const tambahan = nilai * 0.005;
+      pajak += tambahan;
+      tarifLabel = '0,1% transaksi + 0,5% tambahan saham pendiri';
+    } else {
+      tarifLabel = '0,1% final';
+    }
+  } else if(jenis==='undian'){
+    rate = 0.25; pajak = nilai * rate;
+    tarifLabel = '25% final';
+  } else { // sewa
+    rate = 0.10; pajak = nilai * rate;
+    tarifLabel = '10% final';
+  }
+  document.getElementById('p4a2-dasar').textContent = fmt(dasar);
+  document.getElementById('p4a2-tarif').textContent = tarifLabel;
+  document.getElementById('p4a2-hasil').textContent = fmt(pajak);
+  document.getElementById('res-p4a2').classList.add('show');
+}
+
+/* ---------- Pajak Reklame ---------- */
+function calcReklame(){
+  const nsr = parseNum('reklame-nsr');
+  const ratePct = parseFloat(document.getElementById('reklame-tarif').value.replace(',','.')) || 0;
+  const pajak = nsr * (ratePct/100);
+  document.getElementById('reklame-hasil').textContent = fmt(pajak);
+  document.getElementById('res-reklame').classList.add('show');
+}
+
+/* ---------- Pajak Penerangan Jalan ---------- */
+function calcPJU(){
+  const njtl = parseNum('pju-njtl');
+  const ratePct = parseFloat(document.getElementById('pju-kategori').value);
+  const pajak = njtl * (ratePct/100);
+  document.getElementById('pju-tarif-out').textContent = ratePct + '%';
+  document.getElementById('pju-hasil').textContent = fmt(pajak);
+  document.getElementById('res-pju').classList.add('show');
+}
+
+/* ---------- Pajak Air Tanah ---------- */
+function calcAirTanah(){
+  const npa = parseNum('airtanah-npa');
+  const ratePct = parseFloat(document.getElementById('airtanah-tarif').value.replace(',','.')) || 0;
+  const pajak = npa * (ratePct/100);
+  document.getElementById('airtanah-hasil').textContent = fmt(pajak);
+  document.getElementById('res-airtanah').classList.add('show');
+}
+
+/* ---------- Bea Keluar ---------- */
+function calcBeaKeluar(){
+  const nilai = parseNum('bk-nilai');
+  const ratePct = parseFloat(document.getElementById('bk-tarif').value.replace(',','.')) || 0;
+  const pajak = nilai * (ratePct/100);
+  document.getElementById('bk-tarif-out').textContent = ratePct.toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('bk-hasil').textContent = fmt(pajak);
+  document.getElementById('res-bk').classList.add('show');
+}
+
+/* ---------- Pajak Air Permukaan ---------- */
+function calcAirPermukaan(){
+  const npa = parseNum('airpermukaan-npa');
+  const ratePct = parseFloat(document.getElementById('airpermukaan-tarif').value.replace(',','.')) || 0;
+  const pajak = npa * (ratePct/100);
+  document.getElementById('airpermukaan-hasil').textContent = fmt(pajak);
+  document.getElementById('res-airpermukaan').classList.add('show');
+}
+
+/* ---------- Pajak MBLB (Galian C) ---------- */
+function calcMBLB(){
+  const volume = parseNum('mbleb-volume');
+  const harga = parseNum('mbleb-harga');
+  const ratePct = parseFloat(document.getElementById('mbleb-tarif').value.replace(',','.')) || 0;
+  const nilai = volume * harga;
+  const pajak = nilai * (ratePct/100);
+  document.getElementById('mbleb-nilai').textContent = fmt(nilai);
+  document.getElementById('mbleb-hasil').textContent = fmt(pajak);
+  document.getElementById('res-mbleb').classList.add('show');
+}
+
+/* ---------- Pajak Sarang Walet ---------- */
+function calcWalet(){
+  const volume = parseNum('walet-volume');
+  const harga = parseNum('walet-harga');
+  const ratePct = parseFloat(document.getElementById('walet-tarif').value.replace(',','.')) || 0;
+  const nilai = volume * harga;
+  const pajak = nilai * (ratePct/100);
+  document.getElementById('walet-nilai').textContent = fmt(nilai);
+  document.getElementById('walet-hasil').textContent = fmt(pajak);
+  document.getElementById('res-walet').classList.add('show');
+}
+
+/* ---------- PBB Sektor Lainnya (P5L) ---------- */
+function calcPBBP5L(){
+  const njop = parseNum('pbbp5l-njop');
+  const njoptkp = parseNum('pbbp5l-njoptkp');
+  const njkpPct = parseFloat(document.getElementById('pbbp5l-njkp').value);
+  const setelahTkp = Math.max(0, njop - njoptkp);
+  const njkp = setelahTkp * njkpPct;
+  const pbb = njkp * 0.005;
+  document.getElementById('pbbp5l-setelahtkp').textContent = fmt(setelahTkp);
+  document.getElementById('pbbp5l-njkpval').textContent = fmt(njkp) + ' (' + (njkpPct*100).toFixed(0) + '%)';
+  document.getElementById('pbbp5l-hasil').textContent = fmt(pbb);
+  document.getElementById('res-pbbp5l').classList.add('show');
+}
+
+/* ---------- Cukai MMEA ---------- */
+function calcMMEA(){
+  const tarifSatuan = parseNum('mmea-tarifsatuan');
+  const volume = parseNum('mmea-volume');
+  const cukai = tarifSatuan * volume;
+  document.getElementById('mmea-hasil').textContent = fmt(cukai);
+  document.getElementById('res-mmea').classList.add('show');
+}
+
+/* ---------- Pajak Karbon ---------- */
+function calcKarbon(){
+  const emisi = parseNum('karbon-emisi');
+  const batas = parseNum('karbon-batas');
+  const tarifKg = parseNum('karbon-tarif');
+  const emisiKena = Math.max(0, emisi - batas);
+  const pajak = emisiKena * 1000 * tarifKg;
+  document.getElementById('karbon-kena').textContent = emisiKena.toLocaleString('id-ID') + ' ton CO2e';
+  document.getElementById('karbon-hasil').textContent = fmt(pajak);
+  document.getElementById('res-karbon').classList.add('show');
+}
+
+/* ---------- PPh Final Jasa Konstruksi ---------- */
+function calcKonstruksi(){
+  const jenisSel = document.getElementById('konstruksi-jenis').value;
+  const rate = parseFloat(jenisSel);
+  const nilai = parseNum('konstruksi-nilai');
+  const pph = nilai * rate;
+  document.getElementById('konstruksi-tarif').textContent = (rate*100).toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('konstruksi-hasil').textContent = fmt(pph);
+  document.getElementById('res-konstruksi').classList.add('show');
+}
+
+/* ---------- Bea Masuk ---------- */
+function calcBeaMasuk(){
+  const nilaiPabean = parseNum('beamasuk-nilai');
+  const ratePct = parseFloat(document.getElementById('beamasuk-tarif').value.replace(',','.')) || 0;
+  const beaMasuk = nilaiPabean * (ratePct/100);
+  const nilaiImpor = nilaiPabean + beaMasuk;
+  document.getElementById('beamasuk-tarif-out').textContent = ratePct.toLocaleString('id-ID',{maximumFractionDigits:2}) + '%';
+  document.getElementById('beamasuk-nilaiimpor').textContent = fmt(nilaiImpor);
+  document.getElementById('beamasuk-hasil').textContent = fmt(beaMasuk);
+  document.getElementById('res-beamasuk').classList.add('show');
+}
+
+/* ---------- Pajak Alat Berat ---------- */
+function calcAlatBerat(){
+  const njab = parseNum('alatberat-njab');
+  const ratePct = parseFloat(document.getElementById('alatberat-tarif').value.replace(',','.')) || 0;
+  const pajak = njab * (ratePct/100);
+  document.getElementById('alatberat-hasil').textContent = fmt(pajak);
+  document.getElementById('res-alatberat').classList.add('show');
+}
+
+/* ---------- Opsen PKB & BBNKB ---------- */
+function calcOpsenPKB(){
+  const pkb = parseNum('opsenpkb-pkb');
+  const bbnkb = parseNum('opsenpkb-bbnkb');
+  const tarifPkbPct = parseFloat(document.getElementById('opsenpkb-tarifpkb').value.replace(',','.')) || 0;
+  const tarifBbnkbPct = parseFloat(document.getElementById('opsenpkb-tarifbbnkb').value.replace(',','.')) || 0;
+  const opsenPkb = pkb * (tarifPkbPct/100);
+  const opsenBbnkb = bbnkb * (tarifBbnkbPct/100);
+  const total = pkb + bbnkb + opsenPkb + opsenBbnkb;
+  document.getElementById('opsenpkb-hasilpkb').textContent = fmt(opsenPkb);
+  document.getElementById('opsenpkb-hasilbbnkb').textContent = fmt(opsenBbnkb);
+  document.getElementById('opsenpkb-total').textContent = fmt(total);
+  document.getElementById('res-opsenpkb').classList.add('show');
+}
+
+/* ---------- Opsen Pajak MBLB ---------- */
+function calcOpsenMBLB(){
+  const pokok = parseNum('opsenmblb-pokok');
+  const ratePct = parseFloat(document.getElementById('opsenmblb-tarif').value.replace(',','.')) || 0;
+  const opsen = pokok * (ratePct/100);
+  const total = pokok + opsen;
+  document.getElementById('opsenmblb-hasil').textContent = fmt(opsen);
+  document.getElementById('opsenmblb-total').textContent = fmt(total);
+  document.getElementById('res-opsenmblb').classList.add('show');
+}
+</script>
+</body>
+</html>

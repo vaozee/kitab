@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kumpulan Pelajaran Kitab Klasik</title>
+<meta name="description" content="Kumpulan pelajaran kitab klasik pesantren dan utilitas umum VAOZEE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://www.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://drive.google.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf5e8; --cream-2:#f2e8d0; --surface:rgba(253,249,238,.68); --surface-solid:#fdf9ee;
+  --ink:#2b2013; --muted:#7d6a4d; --line:rgba(122,90,38,.22);
+  --gold:#b3812c; --gold-light:#e3c377; --gold-deep:#8a5f1f; --maroon:#7c2c32;
+  --shadow:0 20px 55px rgba(90,64,20,.14);
+  --glow:0 0 0 1px rgba(179,129,44,.16),0 10px 34px rgba(179,129,44,.2);
+  --radius:22px; --label:'Inter',system-ui,sans-serif; --disp:'Fraunces',ui-serif,Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:112%}
+::selection{background:rgba(179,129,44,.22);color:var(--ink)}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,sans-serif;min-height:100vh;overflow-x:hidden;position:relative}
+
+/* ---------- ambient classic-manuscript background ---------- */
+.bg-fx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.bg-fx .pattern{position:absolute;inset:-2px;opacity:.5;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23b3812c' stroke-width='.9' opacity='.35'%3E%3Cpath d='M42 4 L58 20 L42 36 L26 20 Z'/%3E%3Cpath d='M42 48 L58 64 L42 80 L26 64 Z'/%3E%3Cpath d='M4 42 L20 26 L36 42 L20 58 Z'/%3E%3Cpath d='M48 42 L64 26 L80 42 L64 58 Z'/%3E%3Ccircle cx='42' cy='42' r='4'/%3E%3C/g%3E%3C/svg%3E");
+ background-size:84px 84px;mask-image:radial-gradient(ellipse 85% 65% at 50% 0%,black 35%,transparent 88%)}
+.bg-fx .halo{position:absolute;top:-22rem;left:50%;width:60rem;height:60rem;transform:translateX(-50%);border-radius:50%;
+ background:radial-gradient(circle,rgba(227,195,119,.5),transparent 62%);filter:blur(10px);animation:breathe 12s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.55;transform:translateX(-50%) scale(1)}50%{opacity:.85;transform:translateX(-50%) scale(1.06)}}
+.bg-fx .blob{position:absolute;border-radius:50%;filter:blur(75px);opacity:.5;animation:drift 24s ease-in-out infinite}
+.bg-fx .b1{width:40rem;height:40rem;top:-14rem;left:-14rem;background:radial-gradient(circle,rgba(179,129,44,.4),transparent 68%)}
+.bg-fx .b2{width:34rem;height:34rem;top:0;right:-14rem;background:radial-gradient(circle,rgba(124,44,50,.22),transparent 68%);animation-delay:-8s}
+.bg-fx .b3{width:32rem;height:32rem;bottom:-14rem;left:32%;background:radial-gradient(circle,rgba(227,195,119,.4),transparent 68%);animation-delay:-15s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(2.5%,3%) scale(1.06)}66%{transform:translate(-2%,-2.5%) scale(.97)}}
+@media(prefers-reduced-motion:reduce){.bg-fx .blob,.bg-fx .halo{animation:none}}
+
+a{color:inherit}
+.container{width:min(1180px,calc(100% - 36px));margin:auto}
+
+/* ---------- floating gold capsule header ---------- */
+.capsule-wrap{position:fixed;top:16px;left:0;right:0;z-index:60;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.capsule-nav{pointer-events:auto;width:min(920px,100%);border-radius:999px;
+ background:rgba(253,249,238,.62);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+ border:1px solid rgba(227,195,119,.55);box-shadow:0 12px 40px rgba(90,64,20,.16),inset 0 1px 0 rgba(255,252,240,.7);
+ transition:box-shadow .3s ease,background .3s ease}
+.capsule-nav.scrolled{background:rgba(253,249,238,.86);box-shadow:0 14px 46px rgba(90,64,20,.22),inset 0 1px 0 rgba(255,252,240,.8)}
+.nav-inner{height:60px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 8px 0 10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;padding:4px 6px 4px 4px;border-radius:999px}
+.logo{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#2b2013;font-family:var(--disp);font-weight:700;font-size:1rem;
+ background:linear-gradient(135deg,var(--gold-light),var(--gold));box-shadow:0 6px 18px rgba(179,129,44,.4);position:relative}
+.logo:after{content:"";position:absolute;inset:-4px;border-radius:15px;border:1px solid rgba(179,129,44,.4);animation:pulse-ring 2.6s ease-out infinite}
+@keyframes pulse-ring{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.35);opacity:0}}
+.brand strong{font-family:var(--disp);font-weight:600;font-size:.9rem;letter-spacing:.02em;display:block}
+.brand small{display:block;color:var(--muted);font-size:.6rem;margin-top:1px;letter-spacing:.09em;text-transform:uppercase}
+.nav-links{display:flex;gap:3px;align-items:center}
+.nav-links a{padding:9px 13px;border-radius:999px;text-decoration:none;color:var(--muted);font-size:.76rem;font-weight:600}
+.nav-links a:hover{background:rgba(179,129,44,.12);color:var(--gold-deep)}
+.status{display:flex;align-items:center;gap:7px;padding:7px 12px 7px 10px;border-radius:999px;background:rgba(179,129,44,.12);border:1px solid rgba(179,129,44,.28);
+ font-size:.68rem;font-weight:600;color:var(--gold-deep);letter-spacing:.03em;white-space:nowrap}
+.status .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(179,129,44,.2);animation:blink 2.2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+.nav-toggle{display:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(253,249,238,.75);color:var(--ink);font-size:1rem;cursor:pointer}
+.nav-drop{pointer-events:auto;display:none;flex-direction:column;gap:2px;width:min(920px,100%);margin-top:8px;padding:10px;border-radius:20px;
+ background:rgba(253,249,238,.94);backdrop-filter:blur(20px);border:1px solid rgba(227,195,119,.6);box-shadow:var(--shadow)}
+.nav-drop.open{display:flex}
+.nav-drop a{padding:11px 14px;border-radius:13px;text-decoration:none;color:var(--ink);font-weight:600;font-size:.82rem}
+.nav-drop a:hover{background:rgba(179,129,44,.1);color:var(--gold-deep)}
+@media(max-width:760px){.nav-links,.status{display:none}.nav-toggle{display:grid;place-items:center}.capsule-wrap{flex-direction:column;align-items:center}}
+
+/* ---------- hero ---------- */
+main{padding-top:118px}
+.hero{padding:36px 0 42px;text-align:center;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid rgba(179,129,44,.32);border-radius:999px;
+ background:rgba(253,249,238,.7);color:var(--gold-deep);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;box-shadow:0 8px 25px rgba(90,64,20,.08);
+ opacity:0;animation:rise .7s ease forwards}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(179,129,44,.16)}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(2.3rem,6vw,4.6rem);line-height:1.05;letter-spacing:-.01em;margin:22px auto 18px;max-width:900px;
+ opacity:0;animation:rise .75s .1s ease forwards}
+h1 .gradient{background:linear-gradient(100deg,#8a5f1f,#c9972c 45%,#e3c377 85%);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:sheen 6s linear infinite;font-style:italic}
+@keyframes sheen{to{background-position:200% center}}
+.hero p{max-width:700px;margin:0 auto;color:var(--muted);font-size:.98rem;line-height:1.8;opacity:0;animation:rise .75s .2s ease forwards}
+.rule{display:flex;align-items:center;gap:14px;max-width:280px;margin:26px auto 0;opacity:0;animation:rise .75s .25s ease forwards}
+.rule .line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-light))}
+.rule .line.r{background:linear-gradient(90deg,var(--gold-light),transparent)}
+.rule .gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 0 4px rgba(179,129,44,.12)}
+.hero-actions{margin:28px auto 0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;opacity:0;animation:rise .75s .3s ease forwards}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.btn{border:1px solid var(--line);background:var(--surface-solid);border-radius:13px;padding:11px 17px;text-decoration:none;font-size:.78rem;font-weight:700;
+ box-shadow:0 8px 20px rgba(90,64,20,.08);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
+.btn.primary{background:linear-gradient(135deg,var(--gold),var(--maroon));color:#fdf6e6;border-color:transparent;box-shadow:0 12px 28px rgba(179,129,44,.32)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(90,64,20,.18)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px auto 8px;max-width:760px;opacity:0;animation:rise .75s .4s ease forwards}
+.stat{padding:17px;border:1px solid var(--line);background:var(--surface);backdrop-filter:blur(10px);border-radius:18px;position:relative;overflow:hidden}
+.stat:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(227,195,119,.22),transparent 55%);pointer-events:none}
+.stat b{display:block;font:600 1.55rem var(--disp);color:var(--gold-deep);position:relative}
+.stat span{font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;position:relative}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
+
+/* ---------- sections ---------- */
+.section{padding:26px 0 18px;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.section.in{opacity:1;transform:translateY(0)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:18px}
+.kicker{font-size:.66rem;color:var(--gold-deep);font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.section h2{font:600 clamp(1.35rem,3vw,1.8rem) var(--disp);margin:6px 0 0;letter-spacing:-.01em}
+.section-head p{margin:0;color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+@media(max-width:650px){.section-head{display:block}.section-head p{margin-top:8px}}
+
+.controls{display:flex;gap:9px;align-items:center;margin:0 0 20px;flex-wrap:wrap}
+.search{flex:1;min-width:230px;position:relative}
+.search input{width:100%;border:1px solid var(--line);background:rgba(253,249,238,.8);border-radius:14px;padding:13px 15px 13px 40px;outline:none;font:500 .8rem Inter;box-shadow:0 8px 20px rgba(90,64,20,.06)}
+.search input:focus{border-color:var(--gold-light);box-shadow:0 0 0 4px rgba(179,129,44,.12)}
+.search span{position:absolute;left:14px;top:11px;color:var(--muted)}
+.filters{display:flex;gap:6px}
+.filter{border:1px solid var(--line);background:var(--surface-solid);color:var(--muted);padding:10px 13px;border-radius:12px;font-size:.7rem;font-weight:700;cursor:pointer}
+.filter.active,.filter:hover{background:rgba(179,129,44,.14);border-color:var(--gold-light);color:var(--gold-deep)}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:950px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
+
+/* ---------- ringkas / compact view (jaga-jaga jika modul banyak) ---------- */
+.grid.compact{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px}
+.grid.compact .card{min-height:auto;flex-direction:row;align-items:center;gap:10px;padding:10px 34px 10px 12px}
+.grid.compact .card:before{display:none}
+.grid.compact .corner{display:none}
+.grid.compact .card-top{position:absolute;top:7px;right:8px;flex-direction:column;align-items:flex-end;gap:2px}
+.grid.compact .num{display:none}
+.grid.compact .badge{padding:3px 7px;font-size:.52rem}
+.grid.compact .icon{margin:0;width:32px;height:32px;font-size:.82rem;flex:none}
+.grid.compact .card-body{flex:1;min-width:0}
+.grid.compact .card-body p{display:none}
+.grid.compact .card h3{font-size:.8rem;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grid.compact .card-bottom{display:none}
+.grid.compact .card:hover{transform:translateY(-2px)}
+/* Selektor #kitabGrid.compact di bawah ini sengaja punya spesifisitas lebih tinggi
+   agar mengalahkan aturan lama "#kitabGrid .card{...}" yang membuat bagian 01
+   tidak ikut mengecil saat mode ringkas dinyalakan. */
+#kitabGrid.compact .card{min-height:auto;flex-direction:row;align-items:center;gap:10px;padding:10px 34px 10px 12px}
+#kitabGrid.compact .icon{width:32px;height:32px;margin:0;font-size:.82rem}
+#kitabGrid.compact .card h3{font-size:.8rem;margin-bottom:0}
+#kitabGrid.compact .card p{display:none}
+#kitabGrid.compact .card-bottom{margin:0;padding:0;display:none}
+#compactToggle.active,#syncStatusBtn.active{background:rgba(179,129,44,.14);border-color:var(--gold-light);color:var(--gold-deep)}
+.sync-note{font-size:.6rem;color:var(--muted);font-weight:600;letter-spacing:.02em;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sync-note .sdot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none;transition:background .2s ease}
+.sync-note .sdot.err{background:var(--maroon)}
+
+.card{position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:238px;padding:20px;
+ border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);backdrop-filter:blur(10px);box-shadow:var(--shadow);text-decoration:none;
+ transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(227,195,119,.18),transparent 40%,rgba(124,44,50,.05));pointer-events:none}
+.card:hover{transform:translateY(-6px);border-color:rgba(179,129,44,.45);box-shadow:0 26px 60px rgba(90,64,20,.22)}
+.card.hidden{display:none}
+.card-top,.card-body,.card-bottom{position:relative;z-index:1}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.num{font-size:.64rem;font-weight:700;color:var(--gold-deep);letter-spacing:.08em}
+.badge{font-size:.58rem;font-weight:700;padding:5px 9px;border-radius:999px;background:rgba(179,129,44,.1);color:var(--gold-deep);border:1px solid rgba(179,129,44,.28);letter-spacing:.03em}
+.badge.common{background:rgba(124,44,50,.08);color:var(--maroon);border-color:rgba(124,44,50,.24)}
+.icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;margin:20px 0 14px;font-size:1.28rem;font-family:Amiri,serif;
+ background:linear-gradient(135deg,#f6ecd2,#f0e2c0);border:1px solid var(--line);color:var(--gold-deep)}
+.card h3{font:600 1.05rem var(--disp);margin:0 0 7px;letter-spacing:0}
+.card p{font-size:.74rem;line-height:1.65;color:var(--muted);margin:0;flex:1}
+.card-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed rgba(122,90,38,.28);margin-top:18px;padding-top:12px}
+.path{font:600 .62rem ui-monospace,monospace;color:#8f7c5c}
+.open{font-size:.68rem;font-weight:700;color:var(--gold-deep)}
+/* ornamental gold corners (border emas mini di setiap kotak modul) */
+.card .corner{position:absolute;width:32px;height:32px;background-image:var(--corner-img);background-repeat:no-repeat;background-size:contain;background-position:top left;
+ opacity:.62;transition:opacity .22s ease,transform .22s ease;z-index:2;pointer-events:none}
+.card .corner.tl{top:5px;left:5px}
+.card .corner.tr{top:5px;right:5px;transform:scaleX(-1)}
+.card .corner.bl{bottom:5px;left:5px;transform:scaleY(-1)}
+.card .corner.br{bottom:5px;right:5px;transform:scale(-1,-1)}
+.card:hover .corner{opacity:1;transform:scale(1.06)}
+.card:hover .corner.tr{transform:scaleX(-1) scale(1.06)}
+.card:hover .corner.bl{transform:scaleY(-1) scale(1.06)}
+.card:hover .corner.br{transform:scale(-1,-1) scale(1.06)}
+
+/* tombol "buka di tab baru" pada tiap kotak modul -- solusi untuk peramban yang
+   tidak bisa/tidak mengizinkan tampilan iframe (lihat juga #iframeEscapeHint) */
+.card-newtab{position:absolute;top:12px;right:12px;z-index:3;width:28px;height:28px;border-radius:50%;
+ border:1px solid rgba(179,129,44,.32);background:rgba(253,249,238,.88);color:var(--gold-deep);
+ font-size:.82rem;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;
+ box-shadow:0 6px 16px rgba(90,64,20,.16);opacity:0;transform:translateY(-2px);
+ transition:opacity .18s ease,transform .18s ease,background .18s ease,border-color .18s ease}
+.card:hover .card-newtab,.card:focus-within .card-newtab{opacity:1;transform:translateY(0)}
+.card-newtab:hover,.card-newtab:focus-visible{background:var(--gold);color:#fdf6e6;border-color:transparent;outline:none}
+@media(hover:none){.card-newtab{opacity:1;transform:none}}
+.grid.compact .card-newtab{top:auto;bottom:8px;right:8px;width:22px;height:22px;font-size:.68rem}
+
+.divider{display:flex;align-items:center;gap:14px;margin:30px 0}
+.divider .dline{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.divider .gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 0 4px rgba(179,129,44,.1);flex:none}
+.no-results{display:none;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;background:var(--surface-solid)}
+.no-results.show{display:block}
+.footer{margin-top:52px;padding:28px 0 40px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:var(--muted);font-size:.7rem}
+.footer strong{color:var(--ink)}
+.footer a{color:var(--gold-deep);text-decoration:none;font-weight:700}
+
+/* ---------- fullscreen module viewer (floating gold capsule header, page tembus di bawahnya) ---------- */
+.modal{position:fixed;inset:0;z-index:200;display:none;opacity:0;transition:opacity .25s ease;background:var(--cream)}
+.modal.open{display:block;opacity:1}
+.modal-frame-wrap{position:absolute;inset:0}
+iframe{border:0;width:100%;height:100%;background:#fff;display:block}
+.modal-capsule-wrap{position:fixed;top:16px;left:0;right:0;z-index:5;display:flex;justify-content:center;padding:0 16px;pointer-events:none}
+.modal-capsule{pointer-events:auto;width:min(760px,100%);border-radius:999px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:8px 8px 8px 16px;background:rgba(253,249,238,.6);backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+ border:1px solid rgba(227,195,119,.55);box-shadow:0 12px 40px rgba(90,64,20,.18),inset 0 1px 0 rgba(255,252,240,.7);
+ transform:translateY(-14px);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1) .05s,opacity .3s ease .05s}
+.modal.open .modal-capsule{transform:translateY(0);opacity:1}
+.modal-capsule-left{display:flex;align-items:center;gap:10px;min-width:0}
+.modal-capsule-left .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(179,129,44,.18);flex:none;animation:blink 2.2s ease-in-out infinite}
+.modal-title{font-size:.78rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.modal-actions{display:flex;gap:6px;flex:none}
+.icon-btn{width:34px;height:34px;border:1px solid var(--line);background:rgba(253,249,238,.85);border-radius:50%;cursor:pointer;text-decoration:none;display:grid;place-items:center;font-weight:700;color:var(--muted);transition:.15s ease}
+.icon-btn:hover{color:var(--gold-deep);border-color:var(--gold-light);background:rgba(179,129,44,.1)}
+.icon-btn.danger:hover{color:var(--maroon);border-color:rgba(124,44,50,.35);background:rgba(124,44,50,.08)}
+.icon-btn.fs-btn.active{color:var(--gold-deep);border-color:var(--gold-light);background:rgba(179,129,44,.14)}
+.loader{position:fixed;top:0;left:0;right:0;height:3px;background:rgba(179,129,44,.14);overflow:hidden;opacity:1;transition:opacity .3s ease .15s;z-index:6}
+.loader.done{opacity:0}
+.loader-bar{position:absolute;top:0;bottom:0;width:40%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;animation:loading 1.1s ease-in-out infinite}
+@keyframes loading{0%{left:-40%}100%{left:100%}}
+
+/* generic reveal helper */
+[data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+[data-reveal].in{opacity:1;transform:translateY(0)}
+
+/* ---------- ornamental gold corner frame ---------- */
+:root{--corner-img:url("data:image/webp;base64,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")}
+.frame-fixed{position:fixed;inset:14px;z-index:55;pointer-events:none}
+.frame-fixed .frame-line-outer{position:absolute;inset:0;border:2px solid rgba(179,129,44,.5);border-radius:3px}
+.frame-fixed .frame-line-inner{position:absolute;inset:9px;border:1px solid rgba(179,129,44,.32);border-radius:2px}
+.frame-fixed .corner{position:absolute;width:clamp(96px,11vw,190px);height:clamp(96px,11vw,190px);
+ background-image:var(--corner-img);background-repeat:no-repeat;background-size:contain;background-position:top left;
+ filter:drop-shadow(0 6px 14px rgba(120,80,20,.28))}
+.frame-fixed .corner.tl{top:-14px;left:-14px}
+.frame-fixed .corner.tr{top:-14px;right:-14px;transform:scaleX(-1)}
+.frame-fixed .corner.bl{bottom:-14px;left:-14px;transform:scaleY(-1)}
+.frame-fixed .corner.br{bottom:-14px;right:-14px;transform:scale(-1,-1)}
+@media(max-width:700px){
+ .frame-fixed{inset:7px}
+ .frame-fixed .corner{width:clamp(66px,20vw,120px);height:clamp(66px,20vw,120px)}
+}
+
+/* === Requested additions only === */
+/* Compact module-link cards on Main page only; all contents stay intact. */
+#kitabGrid{gap:10px}
+#kitabGrid .card{min-height:210px;padding:15px}
+#kitabGrid .icon{width:42px;height:42px;margin:13px 0 9px;font-size:1.15rem}
+#kitabGrid .card h3{font-size:1rem;margin-bottom:5px}
+#kitabGrid .card p{font-size:.70rem;line-height:1.55}
+#kitabGrid .card-bottom{margin-top:11px;padding-top:9px}
+
+/* Main + module headers: draggable and minimizable. */
+.capsule-nav,.modal-capsule{touch-action:none}
+.capsule-nav.is-dragging,.modal-capsule.is-dragging{cursor:grabbing}
+.header-mini-btn{cursor:pointer!important}
+.capsule-nav.minimized{
+  width:46px!important;min-width:46px!important;height:46px!important;
+  padding:5px!important;border-radius:50%!important
+}
+.capsule-nav.minimized .nav-inner{height:36px!important;padding:0!important;justify-content:center!important}
+.capsule-nav.minimized .brand,.capsule-nav.minimized .nav-links,.capsule-nav.minimized .status{display:none!important}
+.modal-capsule.minimized{
+  width:46px!important;min-width:46px!important;height:46px!important;
+  padding:5px!important;border-radius:50%!important;justify-content:center!important;gap:0!important
+}
+.modal-capsule.minimized .modal-capsule-left,
+.modal-capsule.minimized #fsBtnModal,
+.modal-capsule.minimized #toolsDropdown,
+.modal-capsule.minimized #closeModal{display:none!important}
+.modal-capsule.minimized .modal-actions{gap:0!important}
+
+/* ---------- kompak: menu tools jadi satu droplist (bukan deretan tombol) ---------- */
+.tools-dropdown{position:relative;display:flex}
+.tools-menu{position:absolute;top:calc(100% + 9px);right:0;min-width:198px;display:none;flex-direction:column;gap:1px;
+ padding:6px;border-radius:16px;background:rgba(253,249,238,.98);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+ border:1px solid rgba(227,195,119,.6);box-shadow:var(--shadow);z-index:50}
+.tools-dropdown.open .tools-menu{display:flex}
+.tools-menu .menu-item{display:flex;align-items:center;gap:9px;width:100%;padding:9px 11px;border-radius:11px;border:0;background:transparent;
+ color:var(--ink);font:600 .74rem/1.2 var(--label);text-decoration:none;cursor:pointer;text-align:left;white-space:nowrap;appearance:none}
+.tools-menu .menu-item span{width:16px;text-align:center;flex:none}
+.tools-menu .menu-item:hover{background:rgba(179,129,44,.12);color:var(--gold-deep)}
+.tools-menu .menu-item.active{background:rgba(179,129,44,.16);color:var(--gold-deep)}
+.tools-menu-label{padding:6px 11px 7px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep)}
+/* "Buka di Tab Baru" sudah ada sebagai tombol ↗ langsung di header (#newTabQuick) --
+   item yang sama di dalam droplist ini disembunyikan supaya tidak dobel. Elemennya
+   tetap ada di HTML (JS masih mengisi href-nya) hanya disembunyikan dari tampilan. */
+#toolsMenu #newTab{display:none!important}
+.modal.pdf-mode .tools-menu{background:rgba(24,22,18,.95);border-color:rgba(255,255,255,.14)}
+.modal.pdf-mode .tools-menu .menu-item{color:#f3ead4}
+.modal.pdf-mode .tools-menu .menu-item:hover,.modal.pdf-mode .tools-menu .menu-item.active{background:rgba(255,255,255,.12);color:#fff}
+.modal.pdf-mode .tools-menu-label{color:var(--gold-light)}
+/* hanya item relevan mode PDF yang tampil saat sedang membaca PDF */
+.modal:not(.pdf-mode) #pdfScrollMode,.modal:not(.pdf-mode) #pdfBookMode,.modal:not(.pdf-mode) #pdfModeLabel{display:none!important}
+
+/* Module 01-09 viewer frame: same gold/classic framing, with the existing corner artwork in all 4 corners. */
+.modal-frame-wrap{
+  position:absolute!important;inset:0!important;
+  padding:9px!important;
+  border:2px solid rgba(179,129,44,.46)!important;
+  border-radius:0!important;
+  box-shadow:inset 0 0 0 1px rgba(227,195,119,.22)!important;
+  background-color:var(--cream)!important;
+  background-image:
+    var(--corner-img),var(--corner-img),var(--corner-img),var(--corner-img)!important;
+  background-repeat:no-repeat!important;
+  background-size:42px 42px!important;
+  background-position:top left,top right,bottom left,bottom right!important;
+}
+.modal-frame-wrap iframe{
+  border:1px solid rgba(179,129,44,.36)!important;
+  border-radius:8px!important;
+}
+/* === Mode Zoom Baca (cubit 2 jari) === */
+.modal-frame-wrap{overflow:hidden!important}
+.zoom-overlay{position:absolute;inset:9px;z-index:3;display:none;touch-action:none;cursor:grab;background:transparent}
+.modal-frame-wrap.zoom-mode #frame{pointer-events:none}
+.modal-frame-wrap.zoom-mode .zoom-overlay{display:block}
+#zoomToggle.active{color:var(--gold-deep)!important;border-color:var(--gold-light)!important;background:rgba(179,129,44,.16)!important}
+.zoom-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:9;
+ background:rgba(43,32,19,.78);color:#fdf6e6;font-size:.68rem;font-weight:600;padding:8px 15px;border-radius:999px;
+ pointer-events:none;opacity:0;transition:opacity .3s ease}
+.modal-frame-wrap.zoom-mode .zoom-hint{opacity:1}
+.modal.pdf-mode #zoomToggle{display:none!important}
+
+/* === Bantuan keluar saat iframe bermasalah ===
+   Sengaja dibuat sebagai pita KECIL yang tidak menutupi iframe sama sekali (bukan
+   overlay penuh) -- supaya tidak ada risiko menutupi/menyembunyikan modul yang
+   sebenarnya berhasil tampil normal. Selalu ada juga tombol ↗ permanen di header
+   modal (#newTabQuick) dan di setiap kotak modul (.card-newtab) sebagai jalan
+   keluar langsung tanpa bergantung pada deteksi otomatis apa pun. */
+.iframe-escape-hint{position:absolute;left:50%;bottom:18px;transform:translate(-50%,14px);z-index:9;
+ display:flex;align-items:center;gap:10px;max-width:min(92%,460px);
+ background:rgba(43,32,19,.92);color:#fdf6e6;padding:10px 12px 10px 16px;border-radius:999px;
+ box-shadow:0 14px 34px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+.iframe-escape-hint.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.iframe-escape-hint span{font-size:.72rem;font-weight:600;line-height:1.3}
+.iframe-escape-hint .btn{padding:8px 13px;font-size:.7rem;white-space:nowrap;flex:none}
+.iframe-escape-hint .ieh-close{flex:none;width:22px;height:22px;border:0;border-radius:50%;background:rgba(255,255,255,.14);
+ color:#fdf6e6;cursor:pointer;font-size:.8rem;line-height:1;display:grid;place-items:center}
+.iframe-escape-hint .ieh-close:hover{background:rgba(255,255,255,.26)}
+
+/* Module 01-09: frame visible over the full-screen page, including all 4 existing corner artworks. */
+.module-frame-overlay{position:absolute;inset:0;z-index:4;pointer-events:none}
+.module-frame-overlay .mf-line{position:absolute;pointer-events:none}
+.module-frame-overlay .mf-line.outer{inset:14px;border:2px solid rgba(179,129,44,.52);border-radius:3px}
+.module-frame-overlay .mf-line.inner{inset:23px;border:1px solid rgba(179,129,44,.34);border-radius:2px}
+.module-frame-overlay .mf-corner{position:absolute;width:clamp(96px,11vw,190px);height:clamp(96px,11vw,190px);background-image:var(--corner-img);background-repeat:no-repeat;background-size:contain;background-position:top left;filter:drop-shadow(0 6px 14px rgba(120,80,20,.28))}
+.module-frame-overlay .mf-corner.tl{top:0;left:0}
+.module-frame-overlay .mf-corner.tr{top:0;right:0;transform:scaleX(-1)}
+.module-frame-overlay .mf-corner.bl{bottom:0;left:0;transform:scaleY(-1)}
+.module-frame-overlay .mf-corner.br{bottom:0;right:0;transform:scale(-1,-1)}
+@media(max-width:700px){
+ .module-frame-overlay .mf-line.outer{inset:7px}
+ .module-frame-overlay .mf-line.inner{inset:15px}
+ .module-frame-overlay .mf-corner{width:clamp(66px,20vw,120px);height:clamp(66px,20vw,120px)}
+}
+
+/* === Automatic Kitab Module Manager === */
+#moduleManagerBtn{margin-left:auto}
+.module-manager-backdrop{position:fixed;inset:0;z-index:500;background:rgba(43,32,19,.38);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px}
+.module-manager-backdrop.open{display:flex}
+.module-manager{width:min(620px,100%);max-height:min(760px,92vh);overflow:auto;background:var(--surface-solid);border:1px solid rgba(227,195,119,.7);border-radius:24px;box-shadow:0 30px 90px rgba(43,32,19,.3);padding:22px}
+.module-manager-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.module-manager-head h3{font:600 1.35rem var(--disp);margin:0}
+.module-manager-head p{font-size:.72rem;color:var(--muted);margin:5px 0 0}
+.module-manager-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface-solid);cursor:pointer;font-size:1.1rem}
+.module-form{display:grid;gap:11px}
+.module-form label{display:grid;gap:6px;font-size:.68rem;font-weight:700;color:var(--gold-deep)}
+.module-form input,.module-form select,.module-form textarea{width:100%;border:1px solid var(--line);background:#fffdf6;border-radius:12px;padding:11px 12px;outline:none;font:500 .78rem Inter;color:var(--ink)}
+.module-form textarea{min-height:78px;resize:vertical}
+.module-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.module-manager-note{padding:10px 12px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.66rem;line-height:1.55}
+.module-manager-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:5px}
+.module-manager-actions .btn{border:1px solid var(--line)}
+.module-manager-list{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+.module-manager-list h4{font:600 1rem var(--disp);margin:0 0 10px}
+.module-saved-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.72rem}
+.module-saved-item span{min-width:0}
+.module-saved-item small{display:block;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.module-delete{border:1px solid rgba(124,44,50,.25);background:rgba(124,44,50,.06);color:var(--maroon);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.65rem;font-weight:700}
+.module-edit{border:1px solid rgba(179,129,44,.35);background:rgba(179,129,44,.08);color:var(--gold-deep);border-radius:9px;padding:7px 9px;cursor:pointer;font-size:.65rem;font-weight:700}
+@media(max-width:560px){.module-form-grid{grid-template-columns:1fr}#moduleManagerBtn{margin-left:0}}
+
+/* === Header capsule refinement: compact when restored/open ===
+   Hanya mengubah ukuran/tampilan kapsul header; bagian lain tetap. */
+.capsule-nav:not(.minimized){
+  width:max-content!important;
+  max-width:calc(100vw - 32px)!important;
+}
+.capsule-nav:not(.minimized) .nav-inner{
+  width:max-content;
+  max-width:calc(100vw - 32px);
+  justify-content:flex-start!important;
+  gap:8px;
+  padding:0 8px 0 6px;
+}
+.capsule-nav:not(.minimized) .nav-links,
+.capsule-nav:not(.minimized) .status,
+.capsule-nav:not(.minimized) #fsBtnMain{
+  display:none!important;
+}
+.capsule-nav:not(.minimized) .brand{
+  flex:none;
+  padding-right:4px;
+}
+
+.modal-capsule:not(.minimized){
+  width:max-content!important;
+  max-width:calc(100vw - 32px)!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  padding:6px 8px 6px 12px;
+}
+.modal-capsule:not(.minimized) .modal-capsule-left{
+  flex:none;
+  max-width:calc(100vw - 92px);
+}
+/* Header modul/iframe dibuat ringkas: hanya tombol, tanpa judul halaman,
+   supaya semua tombol muat rapi dalam 1 baris. Elemen judul tetap ada di HTML
+   (JS masih mengisi teksnya) hanya disembunyikan dari tampilan. */
+.modal-capsule-left{display:none!important}
+.modal-capsule:not(.minimized) .modal-actions{
+  gap:5px!important;
+}
+.modal-capsule:not(.minimized) #fsBtnModal,
+.modal-capsule:not(.minimized) #closeModal,
+.modal-capsule:not(.minimized) #toolsDropdown{
+  display:grid!important;
+}
+.modal-capsule:not(.minimized) #toolsDropdown{display:flex!important}
+
+/* === Chapter 03: PDF Reader === */
+.pdf-reader-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
+.pdf-reader-note{font-size:.62rem;color:var(--muted);font-weight:600;line-height:1.5}
+.pdf-reader-empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:18px;background:var(--surface-solid)}
+.pdf-card{cursor:pointer;appearance:none;width:100%;text-align:left}
+.pdf-card .pdf-meta{font-size:.62rem;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf-card .open{cursor:pointer}
+.pdf-reader-hidden-input{display:none!important}
+.pdf-viewer-tools{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;padding:7px 10px;background:rgba(253,249,238,.92);border:1px solid rgba(227,195,119,.55);border-radius:999px;box-shadow:0 10px 30px rgba(90,64,20,.14)}
+.pdf-viewer-tools .icon-btn{width:34px;height:34px}
+.pdf-mode-label{font-size:.66rem;font-weight:800;color:var(--gold-deep);padding:0 5px;white-space:nowrap}
+.pdf-book-stage{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:8px 10px 8px;background:radial-gradient(circle at 50% 40%,#f7edd5 0%,#ead9b8 48%,#d7c098 100%);overflow:hidden}
+.pdf-book-stage.active{display:flex}
+.pdf-book{position:relative;width:min(96vw,1220px);height:min(91vh,900px);perspective:2400px;display:flex;align-items:stretch;justify-content:center;touch-action:none;user-select:none;transform:none!important}
+.pdf-book::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(100,70,30,.28),transparent);z-index:8;pointer-events:none}
+.pdf-page{position:relative;width:50%;height:100%;background:#fffdf7;box-shadow:0 18px 50px rgba(65,45,18,.28);overflow:hidden;backface-visibility:hidden;transform-style:preserve-3d;transform:none;transition:none}
+.pdf-page.pdf-under-turn{z-index:3}
+.pdf-page.pdf-static{z-index:4}
+.pdf-turn-layer{position:absolute;top:0;width:50%;height:100%;z-index:15;background:#fffdf7;overflow:hidden;transform-style:preserve-3d;will-change:transform;box-shadow:0 18px 50px rgba(65,45,18,.28);pointer-events:none}
+.pdf-turn-layer.forward{left:50%;transform-origin:left center;border-radius:2px 10px 10px 2px}
+.pdf-turn-layer.back{left:0;transform-origin:right center;border-radius:10px 2px 2px 10px}
+.pdf-turn-face{position:absolute;inset:0;width:100%;height:100%;display:block;background-color:#fffdf7;background-position:center;background-repeat:no-repeat;background-size:contain;backface-visibility:hidden;-webkit-backface-visibility:hidden}.pdf-turn-face.back{transform:rotateY(180deg)}
+.pdf-turn-layer::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(80,50,20,.16),transparent 16%,transparent 78%,rgba(80,50,20,.08));pointer-events:none}
+.pdf-book.is-dragging .pdf-page{transition:none!important}
+.pdf-page.turn-forward,.pdf-page.turn-back{animation:none!important;transform:none!important}
+@media (prefers-reduced-motion:reduce){.pdf-turn-layer{transition:none!important}}
+.pdf-page canvas{display:block;width:100%;height:100%;object-fit:contain;background:#fffdf7}
+.pdf-page.left{border-radius:10px 2px 2px 10px}
+.pdf-page.right{border-radius:2px 10px 10px 2px}
+.pdf-page.left::after,.pdf-page.right::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(90,55,18,.10),transparent 10%,transparent 88%,rgba(90,55,18,.08));mix-blend-mode:multiply}
+.pdf-page.turn-forward{transform-origin:left center;animation:pdfTurnForward .72s cubic-bezier(.2,.72,.15,1) both;z-index:12}
+.pdf-page.turn-back{transform-origin:right center;animation:pdfTurnBack .72s cubic-bezier(.2,.72,.15,1) both;z-index:12}
+@keyframes pdfTurnForward{0%{transform:rotateY(0deg);filter:brightness(1)}45%{filter:brightness(.88)}100%{transform:rotateY(-180deg);filter:brightness(.98)}}
+@keyframes pdfTurnBack{0%{transform:rotateY(0deg);filter:brightness(1)}45%{filter:brightness(.88)}100%{transform:rotateY(180deg);filter:brightness(.98)}}
+.pdf-book-caption{pointer-events:none;position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:.62rem;font-weight:700;color:var(--gold-deep);background:rgba(253,249,238,.86);padding:6px 12px;border-radius:999px;border:1px solid var(--line);z-index:20;white-space:nowrap}
+.pdf-book-hint{position:absolute;top:58px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--muted);font-weight:700;background:rgba(253,249,238,.82);padding:6px 10px;border-radius:999px;z-index:20}
+.modal.pdf-mode #frame{display:none!important}
+.modal.pdf-mode.book-active #frame{display:none}
+.modal.pdf-mode.book-active .modal-frame-wrap{
+  inset:10px!important;width:auto!important;height:auto!important;
+  background-color:var(--cream)!important;
+  background-image:var(--corner-img),var(--corner-img),var(--corner-img),var(--corner-img)!important;
+  background-repeat:no-repeat!important;background-size:42px 42px!important;
+  background-position:top left,top right,bottom left,bottom right!important;
+  border:2px solid rgba(179,129,44,.52)!important;border-radius:4px!important;
+  box-shadow:inset 0 0 0 1px rgba(227,195,119,.22),0 10px 34px rgba(0,0,0,.22)!important;
+  padding:8px!important;overflow:hidden!important
+}
+.modal.pdf-mode.book-active .pdf-book-stage{
+  inset:0!important;padding:4px!important;
+  background:radial-gradient(circle at 50% 42%,#f7edd5 0%,#ead9b8 50%,#d7c098 100%)!important;
+}
+.modal.pdf-mode.book-active .pdf-book{width:min(96vw,1220px);height:min(94vh,900px)}
+.modal.pdf-mode.book-active .module-frame-overlay{display:block;opacity:.72;pointer-events:none}
+@media(max-width:760px){
+  .pdf-book-stage{padding:70px 10px 18px}
+  .pdf-book{height:min(72vh,680px);width:98vw}
+  .pdf-page{box-shadow:0 10px 30px rgba(65,45,18,.22)}
+  .pdf-book::before{display:none}
+  .pdf-page.left{width:100%;border-radius:8px}
+  .pdf-page.right{display:none}
+  .pdf-book-caption{bottom:2px}
+  .pdf-book-hint{top:45px}
+}
+@media(prefers-reduced-motion:reduce){.pdf-page.turn-forward,.pdf-page.turn-back{animation:none}}
+
+
+/* PDF scroll viewer: fullscreen, native-browser-toolbar-free */
+.pdf-scroll-stage{position:absolute;inset:0;display:none;overflow:auto;background:#ececec;padding:10px 10px 24px;overscroll-behavior:contain}
+.pdf-scroll-stage.active{display:block}
+.pdf-scroll-pages{width:min(100%,980px);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px}
+.pdf-scroll-page-wrap{position:relative;display:block;max-width:100%;min-width:220px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.28);border-radius:2px;overflow:hidden}.pdf-scroll-page{display:block;width:100%;height:100%;background:#fff}
+.modal.pdf-mode.scroll-active #frame{display:none}
+.modal.pdf-mode.scroll-active .pdf-book-stage{display:none}
+.modal.pdf-mode.scroll-active .pdf-scroll-stage{display:block}.modal.pdf-mode.scroll-active .modal-capsule-wrap{top:8px}
+
+/* PDF reader: immersive fullscreen + floating auto-hide header */
+.modal.pdf-mode{background:#000}
+.modal.pdf-mode .modal-frame-wrap{position:absolute;inset:0;width:100%;height:100%;max-width:none;margin:0;border-radius:0;border:0;box-shadow:none;padding:0;background:#111}
+.modal.pdf-mode #frame{width:100%;height:100%;border:0;display:block}
+.modal.pdf-mode .modal-capsule-wrap{top:12px;z-index:30;pointer-events:none;transition:opacity .45s ease,transform .45s ease}
+.modal.pdf-mode .modal-capsule{pointer-events:auto;width:auto;max-width:min(94vw,900px);background:rgba(20,20,20,.24);border-color:rgba(255,255,255,.16);box-shadow:0 8px 30px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%)}
+.modal.pdf-mode.pdf-header-hidden .modal-capsule-wrap{opacity:0;transform:translateY(-18px);pointer-events:none}
+/* PDF header: compact floating glass pill; title/extra controls are intentionally hidden */
+.modal.pdf-mode .modal-capsule{width:auto!important;max-width:none!important;min-height:0;padding:5px 7px 5px 9px!important;gap:6px!important;background:rgba(18,18,18,.22)!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 6px 24px rgba(0,0,0,.14)!important}
+.modal.pdf-mode .modal-capsule-left{display:none!important}
+.modal.pdf-mode .modal-actions{gap:5px!important}
+.modal.pdf-mode #miniModal,.modal.pdf-mode #fsBtnModal,.modal.pdf-mode #toolsDropdown{display:grid!important}
+.modal.pdf-mode #toolsDropdown{display:flex!important}
+.modal.pdf-mode #miniModal,.modal.pdf-mode #fsBtnModal,.modal.pdf-mode #closeModal,.modal.pdf-mode #toolsMoreBtn{width:30px;height:30px;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.10);color:#fff;box-shadow:none}
+.modal.pdf-mode.scroll-active .modal-capsule{opacity:.78}
+.modal.pdf-mode.scroll-active .pdf-scroll-stage{scrollbar-width:thin}
+
+.modal.pdf-mode.book-active .modal-frame-wrap{background:transparent}
+.modal.pdf-mode.book-active .pdf-book-stage{padding:8px;inset:0}
+.pdf-book{touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.pdf-book-hint{transition:opacity .35s ease}
+.pdf-book.is-dragging .pdf-book-hint{opacity:0}
+@media(max-width:760px){.modal.pdf-mode .modal-capsule-wrap{top:8px;padding:0 8px}.modal.pdf-mode .modal-capsule{padding:5px 6px 5px 10px}.modal.pdf-mode.book-active .modal-frame-wrap{inset:5px!important;padding:4px!important;border-radius:4px!important;background-size:32px 32px!important}.modal.pdf-mode.book-active .pdf-book-stage{padding:2px}.modal.pdf-mode.book-active .pdf-book{width:100%;height:100%;max-height:none}}
+</style>
+</head>
+<body>
+
+<div class="frame-fixed" aria-hidden="true">
+  <div class="frame-line-outer"></div>
+  <div class="frame-line-inner"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+</div>
+
+<div class="bg-fx">
+  <div class="pattern"></div>
+  <div class="halo"></div>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<div class="capsule-wrap">
+  <header class="capsule-nav" id="capsuleNav">
+    <div class="nav-inner">
+      <a class="brand" href="#top">
+        <span class="logo">V</span>
+        <span><strong>KITAB</strong><small>Pesantren Digital</small></span>
+      </a>
+      <nav class="nav-links">
+        <a href="#kitab">Kitab Klasik</a><a href="#umum">Umum &amp; Hiburan</a><a href="#pdf-reader">Pembaca PDF</a>
+      </nav>
+      <div class="status"><span class="dot"></span><span id="clock">--:--:--</span></div>
+      <button class="icon-btn fs-btn" id="fsBtnMain" title="Layar penuh">⛶</button>
+      <button class="icon-btn header-mini-btn" id="miniMain" title="Minimalkan header" aria-label="Minimalkan header">−</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">≡</button>
+    </div>
+  </header>
+  <div class="nav-drop" id="navDrop">
+    <a href="#kitab">Kitab Klasik</a>
+    <a href="#umum">Umum &amp; Hiburan</a>
+    <a href="#pdf-reader">Pembaca PDF</a>
+  </div>
+</div>
+
+<main class="container" id="top">
+<section class="hero">
+  <div class="eyebrow"><i></i> DIGITAL PESANTREN · EDISI 2026</div>
+  <h1>Kumpulan <span class="gradient">Pelajaran Kitab Klasik</span> Pesantren</h1>
+  <p>Portal ringkas untuk membuka modul nahwu, sharaf, falak, faraidh, serta berbagai alat bantu umum — Mohon koreksi jika ada tulisan typo ataupun terjemah kurang sesuai kirim ke vaozeei@gmail.com - by Achmad Fauzi, terima kasih.</p>
+  <div class="rule"><span class="line"></span><span class="gem"></span><span class="line r"></span></div>
+  <div class="hero-actions">
+    <a class="btn primary" href="#kitab">Jelajahi Pelajaran →</a>
+    <button class="btn" id="openRandom">Buka Acak ✦</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="statKitab">9</b><span>Pelajaran Kitab Klasik</span></div>
+    <div class="stat"><b id="statUmum">6</b><span>Umum &amp; Hiburan</span></div>
+    <div class="stat"><b id="statPdf">0</b><span>Koleksi PDF</span></div>
+  </div>
+</section>
+
+<section class="section" id="kitab" data-reveal>
+  <div class="section-head"><div><div class="kicker">01 // Inti Pembelajaran</div><h2>Kitab Klasik Pesantren</h2></div><p>Nahwu · Sharaf · Falak · Farā'iḍ</p></div>
+  <div class="controls">
+    <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Cari kitab atau pelajaran…"></label>
+    <div class="filters"><button class="filter active" data-filter="all">Semua</button><button class="filter" data-filter="nahwu">Nahwu</button><button class="filter" data-filter="sharaf">Sharaf</button><button class="filter" data-filter="lain">Lainnya</button></div>
+    <button class="btn" id="compactToggle" type="button" title="Ringkas/lengkapkan tampilan kotak modul">🗜 Ringkas Tampilan</button>
+    <button class="btn" id="moduleManagerBtn" type="button">＋ Tambah Modul</button>
+    <span class="sync-note" id="syncNote"><span class="sdot" id="syncDot"></span><span id="syncText">Daftar modul lokal</span></span>
+  </div>
+  <div class="grid" id="kitabGrid"></div>
+  <div class="no-results" id="noResults">Tidak ada modul yang cocok dengan pencarian.</div>
+</section>
+
+<div class="divider"><span class="dline"></span><span class="gem"></span><span class="dline"></span></div>
+
+<section class="section" id="umum" data-reveal>
+  <div class="section-head"><div><div class="kicker">02 // Pendukung</div><h2>Umum &amp; Hiburan</h2></div><p>Utilitas · Waktu · Audio · Sistem</p></div>
+  <div class="grid" id="umumGrid"></div>
+</section>
+
+
+
+<section class="section" id="pdf-reader" data-reveal>
+  <div class="section-head"><div><div class="kicker">03 // Perpustakaan</div><h2>Pembaca PDF</h2></div><p>Folder Perangkat · Folder Sharing · Mode Buku · <span id="pdfCountLabel">0 PDF</span></p></div>
+  <div class="pdf-reader-actions">
+    <button class="btn primary" type="button" id="pdfPickFiles">＋ Tambah PDF</button>
+    <button class="btn" type="button" id="pdfPickFolder">▣ Buka Folder</button>
+    <input class="pdf-reader-hidden-input" id="pdfFilesInput" type="file" accept="application/pdf,.pdf" multiple>
+    <input class="pdf-reader-hidden-input" id="pdfFolderInput" type="file" accept="application/pdf,.pdf" webkitdirectory directory multiple>
+    <span class="pdf-reader-note">Pilih beberapa PDF sekaligus atau satu folder. Folder sharing yang bisa dipilih browser akan tampil sebagai daftar judul PDF.</span>
+  </div>
+  <div class="grid" id="pdfGrid"></div>
+  <div class="pdf-reader-empty" id="pdfEmpty">Belum ada PDF. Tambahkan file PDF atau pilih folder perangkat untuk memulai.</div>
+</section>
+
+<div class="divider"><span class="dline"></span><span class="gem"></span><span class="dline"></span></div>
+<footer class="footer">
+  <div><strong>© 2026 by Achmad Fauzi</strong> · <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
+  <div>DIGITAL PESANTREN INDEX</div>
+</footer>
+</main>
+
+<div class="module-manager-backdrop" id="moduleManagerBackdrop" aria-hidden="true">
+  <div class="module-manager" role="dialog" aria-modal="true" aria-labelledby="moduleManagerTitle">
+    <div class="module-manager-head">
+      <div><h3 id="moduleManagerTitle">Tambah Modul</h3><p>Tambahkan link modul; modul tersimpan lokal di browser ini saja (localStorage), tanpa terhubung ke layanan luar apa pun.</p></div>
+      <button class="module-manager-close" id="moduleManagerClose" type="button" aria-label="Tutup">×</button>
+    </div>
+    <form class="module-form" id="moduleForm">
+      <input type="hidden" id="moduleEditTarget" value="">
+      <div class="module-form-grid">
+        <label>Nama Kitab / Modul<input id="moduleTitle" required maxlength="100" placeholder="Contoh: Fathul Mu'in"></label>
+        <label>URL Modul<input id="moduleUrl" type="url" required placeholder="https://leezeei.github.io/modul/"></label>
+      </div>
+      <div class="module-form-grid">
+        <label style="grid-column:1/-1">File Offline (opsional)<input id="moduleLocalUrl" maxlength="180" placeholder="mis. alfiyah.html atau kitab/fathul-muin.html">
+          <small style="display:block;color:var(--muted);font-size:.62rem;margin-top:5px">Jika nama file mengikuti nama kitab, kolom ini boleh dikosongkan. Dashboard akan mencoba mencocokkan file lokal secara otomatis.</small>
+        </label>
+      </div>
+      <div class="module-form-grid">
+        <label>Bagian<select id="moduleSection"><option value="kitab" selected>01 · Kitab Klasik</option><option value="umum">02 · Umum &amp; Hiburan</option></select></label>
+        <label id="moduleCatLabel">Kategori<input id="moduleCat" list="moduleCatOptions" value="lain" placeholder="nahwu / sharaf / lain / ketik sendiri" autocomplete="off">
+          <datalist id="moduleCatOptions"><option value="nahwu">Nahwu</option><option value="sharaf">Sharaf</option><option value="lain">Lainnya</option></datalist>
+        </label>
+      </div>
+      <div class="module-form-grid">
+        <label>Label<input id="moduleBadge" maxlength="20" value="KITAB"></label>
+        <label>Ikon / Arab<input id="moduleIcon" maxlength="12" value="كتاب"></label>
+      </div>
+      <div class="module-form-grid">
+        <label style="grid-column:1/-1">Deskripsi<input id="moduleDesc" maxlength="220" placeholder="Deskripsi singkat modul"></label>
+      </div>
+      <div class="module-manager-note" id="moduleManagerNote">Nomor "MODUL XX" dibuat otomatis mengikuti urutan: 01-Kitab Klasik jadi acuan dasar, lalu 02-Umum melanjutkan nomornya — jadi kalau Kitab Klasik nambah, nomor Umum otomatis ikut bergeser. Kategori boleh dipilih dari daftar atau ketik sendiri. Setiap perubahan wajib password dan langsung tersimpan di browser ini (localStorage) -- tidak dikirim ke server/spreadsheet mana pun.</div>
+      <div class="module-manager-actions"><button class="btn" type="button" id="moduleManagerCancel">Batal</button><button class="btn primary" type="submit" id="moduleSubmitBtn">Simpan Modul</button></div>
+    </form>
+    <div class="module-manager-list" id="moduleSavedList"></div>
+  </div>
+</div>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="loader" id="loader"><div class="loader-bar"></div></div>
+  <div class="modal-frame-wrap">
+  <div class="module-frame-overlay" aria-hidden="true">
+    <div class="mf-line outer"></div><div class="mf-line inner"></div>
+    <div class="mf-corner tl"></div><div class="mf-corner tr"></div>
+    <div class="mf-corner bl"></div><div class="mf-corner br"></div>
+  </div>
+  <iframe id="frame" title="Modul VAOZEE" referrerpolicy="no-referrer"></iframe>
+  <div class="iframe-escape-hint" id="iframeEscapeHint" aria-hidden="true">
+    <span>Modul tidak tampil dengan benar di sini?</span>
+    <a class="btn primary" id="iboOpenBtn" target="_blank" rel="noopener">Buka di Tab Baru ↗</a>
+    <button type="button" class="ieh-close" id="iehClose" aria-label="Tutup">×</button>
+  </div>
+  <div class="zoom-overlay" id="zoomOverlay" aria-hidden="true"></div>
+  <div class="zoom-hint">Cubit 2 jari untuk zoom · geser 1 jari untuk baca · ganda-tap / tombol 🔍 untuk keluar</div>
+  <div class="pdf-scroll-stage" id="pdfScrollStage" aria-hidden="true"><div class="pdf-scroll-pages" id="pdfScrollPages"></div></div>
+  <div class="pdf-book-stage" id="pdfBookStage" aria-hidden="true">
+    <div class="pdf-book-hint">Geser halaman dengan jari • Tap kanan: berikutnya • Tap kiri: sebelumnya</div>
+    <div class="pdf-book" id="pdfBook">
+      <div class="pdf-page left" id="pdfPageLeft"><canvas id="pdfCanvasLeft"></canvas></div>
+      <div class="pdf-page right" id="pdfPageRight"><canvas id="pdfCanvasRight"></canvas></div>
+      <div class="pdf-book-caption" id="pdfBookCaption">Halaman 1–2</div>
+    </div>
+  </div>
+</div>
+  <div class="modal-capsule-wrap">
+    <div class="modal-capsule">
+      <div class="modal-capsule-left"><span class="dot"></span><div class="modal-title" id="modalTitle">Modul</div></div>
+      <div class="modal-actions">
+        <button class="icon-btn header-mini-btn" id="miniModal" title="Minimalkan header modul" aria-label="Minimalkan header modul">−</button>
+        <div class="tools-dropdown" id="toolsDropdown">
+          <button type="button" class="icon-btn" id="toolsMoreBtn" title="Menu tampilan" aria-haspopup="true" aria-expanded="false" aria-label="Menu tampilan">⋯</button>
+          <div class="tools-menu" id="toolsMenu" role="menu" aria-hidden="true">
+            <div class="tools-menu-label" id="pdfModeLabel">Baca PDF</div>
+            <button type="button" class="menu-item" id="pdfScrollMode" role="menuitem"><span>↕</span> Mode Scroll</button>
+            <button type="button" class="menu-item" id="pdfBookMode" role="menuitem"><span>▤</span> Mode Buku (per halaman)</button>
+            <button type="button" class="menu-item" id="zoomToggle" role="menuitem"><span>🔍</span> Mode Zoom Baca</button>
+            <a class="menu-item" id="newTab" target="_blank" rel="noopener" role="menuitem"><span>↗</span> Buka di Tab Baru</a>
+          </div>
+        </div>
+        <button class="icon-btn fs-btn" id="fsBtnModal" title="Layar penuh">⛶</button>
+        <a class="icon-btn" id="newTabQuick" target="_blank" rel="noopener" title="Buka modul ini di tab baru" aria-label="Buka modul ini di tab baru">↗</a>
+        <button class="icon-btn danger" id="closeModal" title="Tutup">×</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const kitab=[
+ {n:"01",title:"Arba'un Nawawi",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Arba'un Nawawi."},
+ {n:"02",title:"Nadhom Alfiyah",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nadhom Alfiyah."},
+ {n:"03",title:"Ilmu Usul Fiqih",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ilmu Usul Fiqih."},
+ {n:"04",title:"Qowaidul I'lal",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Qowaidul I'lal."},
+ {n:"05",title:"Bulughul Marom",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Bulughul Marom."},
+ {n:"06",title:"Safinatun Naja",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Safinatun Naja."},
+ {n:"07",title:"Mabādi' Al-Awwaliyyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Mabādi' Al-Awwaliyyah."},
+ {n:"08",title:"Aqidatul Awam",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Aqidatul Awam."},
+ {n:"09",title:"Risalatul Mahidl",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Risalatul Mahidl."},
+ {n:"10",title:"Nashoihul 'Ibaad",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nashoihul 'Ibaad."},
+ {n:"11",title:"Ta'limul Muta'alim",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ta'limul Muta'alim."},
+ {n:"12",title:"Balaghah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Balaghah."},
+ {n:"13",title:"Jawahirul Kalamiyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Jawahirul Kalamiyah."},
+ {n:"14",title:"Al-Waraqāt",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Al-Waraqāt."},
+ {n:"15",title:"Mukhtashar Abi Syuja'",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Mukhtashar Abi Syuja'."},
+ {n:"16",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Alfiyah Ibnu Malik."},
+ {n:"17",title:"Al-'Imrithi",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Al-'Imrithi."},
+ {n:"18",title:"Al-Ajurumiyah",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Al-Ajurumiyah."},
+ {n:"19",title:"Ilmu Shorof",cat:"sharaf",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ilmu Shorof."},
+ {n:"20",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nazham Al-Maqshūd."},
+ {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ilmu Falak Lanjutan."},
+ {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Pelajaran Farā'iḍ."},
+ {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Hisab Falakiyah."},
+ {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Kalkulator Ahli Waris."},
+ {n:"25",title:"Fathul Qorib al-Mujib",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Fathul Qorib al-Mujib."},
+ {n:"26",title:"Hayatul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Hayatul Hayawan."},
+ {n:"27",title:"Tahqiqul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Tahqiqul Hayawan."},
+ {n:"28",title:"Maulid Ad-Diba'i",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Maulid Ad-Diba'i."},
+ {n:"29",title:"Maulid Al-Barzanji",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Maulid Al-Barzanji."},
+ {n:"30",title:"Simṭud Durar",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Simṭud Durar."},
+];
+const umum=[
+ {n:"01",title:"POLIBUN",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: POLIBUN."},
+ {n:"02",title:"Sawit Monitor",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Sawit Monitor."},
+ {n:"03",title:"KopSUS",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: KopSUS."},
+ {n:"04",title:"Pantau Api",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Pantau Api."},
+ {n:"05",title:"ISPO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: ISPO."},
+ {n:"06",title:"HR-GA",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: HR-GA."},
+ {n:"07",title:"WarRoom Plantation",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: WarRoom Plantation."},
+ {n:"08",title:"Test MT",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Test MT."},
+ {n:"09",title:"Administrasi",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Administrasi."},
+ {n:"10",title:"BPJS TK",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJS TK."},
+ {n:"11",title:"BPJSKES",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJSKES."},
+ {n:"12",title:"RTH",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: RTH."},
+ {n:"13",title:"Kalkulator Pajak Indonesia",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Kalkulator Pajak Indonesia."},
+ {n:"14",title:"Jadwal Sholat",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Jadwal Sholat."},
+ {n:"15",title:"Peta Potensi Air Tanah",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Peta Potensi Air Tanah."},
+ {n:"16",title:"Nadaflow",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Nadaflow."},
+ {n:"17",title:"VAOZEE IO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: VAOZEE IO."},
+ {n:"18",title:"Suite Launcher",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Suite Launcher."}, {n:"19",title:"Gold Prospectivity Engine",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Gold Prospectivity Engine."},
+];
+function escAttr(v){
+ return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+/* Helper global: kartu awal dirender sebelum blok sinkronisasi (IIFE) dijalankan.
+   Versi sebelumnya memanggil validUrl()/localUrlFor() yang hanya berada di dalam IIFE,
+   sehingga terjadi ReferenceError dan seluruh kartu menjadi blank. */
+function dashboardValidUrl(url){
+ try{const u=new URL(String(url||''));return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}
+}
+const DASHBOARD_OFFLINE_FILES={
+  "Arba'un Nawawi":"arba-un-nawawi.html", "Nadhom Alfiyah":"nadhom-alfiyah.html",
+  "POLIBUN":"polibun.html", "Sawit Monitor":"sawit-monitor.html", "KopSUS":"kopsus.html",
+  "Pantau Api":"pantau-api.html", "ISPO":"ispo.html", "HR-GA":"hr-ga.html",
+  "WarRoom Plantation":"warroom-plantation.html", "Test MT":"test-mt.html", "Administrasi":"administrasi.html",
+  "BPJS TK":"bpjs-tk.html", "BPJSKES":"bpjskes.html", "Ilmu Usul Fiqih":"ilmu-usul-fiqih.html",
+  "Qowaidul I'lal":"qowaidul-i-lal.html", "Bulughul Marom":"bulughul-marom.html", "Safinatun Naja":"safinatun-naja.html",
+  "Mabādi' Al-Awwaliyyah":"mabadi-al-awwaliyyah.html", "Aqidatul Awam":"aqidatul-awam.html",
+  "Risalatul Mahidl":"risalatul-mahidl.html", "Nashoihul 'Ibaad":"nashoihul-ibaad.html",
+  "Ta'limul Muta'alim":"ta-limul-muta-alim.html", "Balaghah":"balaghah.html", "Jawahirul Kalamiyah":"jawahirul-kalamiyah.html",
+  "RTH":"rth.html", "Al-Waraqāt":"al-waraqat.html", "Mukhtashar Abi Syuja'":"mukhtashar-abi-syuja.html",
+  "Alfiyah Ibnu Malik":"alfiyah-ibnu-malik.html", "Al-'Imrithi":"al-imrithi.html", "Al-Ajurumiyah":"al-ajurumiyah.html",
+  "Ilmu Shorof":"ilmu-shorof.html", "Nazham Al-Maqshūd":"nazham-al-maqshud.html",
+  "Ilmu Falak Lanjutan":"ilmu-falak-lanjutan.html", "Pelajaran Farā'iḍ":"pelajaran-fara-id.html",
+  "Hisab Falakiyah":"hisab-falakiyah.html", "Kalkulator Ahli Waris":"kalkulator-ahli-waris.html",
+  "Kalkulator Pajak Indonesia":"kalkulator-pajak-indonesia.html", "Jadwal Sholat":"jadwal-sholat.html",
+  "Peta Potensi Air Tanah":"peta-potensi-air-tanah.html", "Nadaflow":"nadaflow.html", "VAOZEE IO":"vaozee-io.html",
+  "Suite Launcher":"suite-launcher.html"
+};
+function dashboardLocalFile(x){
+ const mapped=DASHBOARD_OFFLINE_FILES[String(x.title||'')]; if(mapped)return mapped;
+ const slug=String(x.title||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+ return slug?slug+'.html':'';
+}
+function card(x,dispN){
+ const shown=dispN||x.n;
+ const online=dashboardValidUrl(x.onlineUrl||x.url||'');
+ const local=x.localUrl||dashboardLocalFile(x);
+ const href=online||local||'#';
+ const sourceLabel=online?'ONLINE':'OFFLINE';
+ return `<a href="${escAttr(href)}" class="card" data-url="${escAttr(online)}" data-local-url="${escAttr(local)}" data-title="${escAttr(x.title)}" data-cat="${escAttr(x.cat||'umum')}" data-n="${escAttr(x.n)}" data-source="${sourceLabel}">
+   <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+   <button type="button" class="card-newtab" data-newtab-url="${escAttr(href)}" title="Buka modul ini di tab baru" aria-label="Buka modul ini di tab baru">↗</button>
+   <div class="card-top"><span class="num">MODUL ${shown}</span><span class="badge">${x.badge}</span></div>
+   <div class="icon">${x.icon}</div>
+   <div class="card-body"><h3>${x.title}</h3><p>${x.desc}</p></div>
+   <div class="card-bottom"><span class="path">${online?(new URL(online).pathname.replaceAll('/','')||'/'):local}</span><span class="open">${online&&local?'Online / Offline →':'Buka →'}</span></div>
+ </a>`;
+}
+/* Tombol ↗ di pojok kotak modul: buka URL modul langsung di tab baru peramban,
+   tanpa lewat iframe sama sekali -- jalan pintas untuk peramban yang iframe-nya
+   diblokir/dibatasi. stopPropagation dipasang di elemen tombolnya sendiri
+   (bukan lewat delegasi ke dokumen) supaya event berhenti SEBELUM sempat
+   membuka modal iframe milik kartu (anchor) yang membungkusnya. */
+function bindCardNewTabButtons(root){
+ (root||document).querySelectorAll('.card-newtab').forEach(btn=>{
+   btn.addEventListener('click',e=>{
+     e.preventDefault();e.stopPropagation();
+     const url=btn.getAttribute('data-newtab-url');
+     if(url&&url!=='#')window.open(url,'_blank','noopener');
+   });
+ });
+}
+document.getElementById('kitabGrid').innerHTML=kitab.map(card).join('');
+document.getElementById('umumGrid').innerHTML=umum.map(card).join('');
+bindCardNewTabButtons();
+
+function updateModuleCounters(){
+ const kitabCount=document.querySelectorAll('#kitabGrid .card').length;
+ const umumCount=document.querySelectorAll('#umumGrid .card').length;
+ const sk=document.getElementById('statKitab'), su=document.getElementById('statUmum');
+ if(sk)sk.textContent=kitabCount; if(su)su.textContent=umumCount;
+}
+updateModuleCounters();
+
+/* ---- fullscreen module viewer ---- */
+const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), newTabQuick=document.getElementById('newTabQuick'), loader=document.getElementById('loader');
+const iframeEscapeHint=document.getElementById('iframeEscapeHint'), iboOpenBtn=document.getElementById('iboOpenBtn'), iehClose=document.getElementById('iehClose');
+
+/* === Jalan keluar kalau iframe bermasalah ===
+   CATATAN PENTING (setelah dua kali dicoba dan ternyata malah merusak modul yang
+   sebenarnya berhasil tampil): membaca isi/URL dokumen di dalam iframe untuk
+   "menebak" apakah navigasinya diblokir TERNYATA TIDAK BISA diandalkan -- banyak
+   modul di sini adalah halaman berat yang kontennya baru terisi belakangan lewat
+   JS, dan cara membaca dokumen iframe lewat JS punya banyak kasus tepi yang beda
+   di tiap peramban/perangkat. Menebak salah lalu memaksa iframe pindah ke sumber
+   lain justru menyebabkan modul yang tadinya berhasil ikut rusak / muncul "page
+   not found" sungguhan.
+   Karena itu pendekatannya diubah total: TIDAK ADA lagi pemeriksaan otomatis
+   yang membaca isi iframe atau memaksa iframe pindah alamat sendiri. Sebagai
+   gantinya disediakan jalan keluar yang selalu berhasil dan tidak pernah salah
+   duga:
+   1) Tombol ↗ permanen di setiap kotak modul (.card-newtab) dan di header modal
+      (#newTabQuick) -- klik kapan saja, tidak bergantung pada deteksi apa pun.
+   2) Event 'error' bawaan iframe (dipicu peramban sendiri untuk kegagalan
+      jaringan yang nyata) tetap ditangani -- ini sinyal asli dari peramban,
+      bukan tebakan kita.
+   3) Pita kecil "Modul tidak tampil dengan benar?" muncul otomatis beberapa
+      detik setelah modul dibuka, TANPA menutupi iframe dan TANPA memindahkan
+      src iframe sama sekali -- murni ajakan, pengguna sendiri yang menilai lalu
+      klik kalau memang perlu. Kalau modulnya berhasil tampil, pita ini tidak
+      mengganggu apa pun dan bisa ditutup. */
+function hideEscapeHint(){
+ if(!iframeEscapeHint)return;
+ iframeEscapeHint.classList.remove('show');
+ iframeEscapeHint.setAttribute('aria-hidden','true');
+}
+function scheduleEscapeHint(url){
+ clearTimeout(frame._escapeHintTimer);
+ if(!iframeEscapeHint||!iboOpenBtn)return;
+ iboOpenBtn.href=url;
+ frame._escapeHintTimer=setTimeout(()=>{
+   iframeEscapeHint.classList.add('show');
+   iframeEscapeHint.setAttribute('aria-hidden','false');
+ },4500);
+}
+iehClose&&iehClose.addEventListener('click',hideEscapeHint);
+
+function openModule(url,title,fromHistory=false,localUrl=''){
+ const onlineUrl=dashboardValidUrl(url);
+ const offlineUrl=localUrl||'';
+ loader.classList.remove('done');
+
+ if(!onlineUrl && !offlineUrl){
+   alert('File modul untuk "'+title+'" tidak ditemukan di link online maupun file offline (pastikan file HTML-nya ada satu folder dengan dashboard ini).');
+   return;
+ }
+
+ /* Menampilkan modul di iframe TANPA menggabungkan HTML apapun -- file HTML lain
+    tetap berdiri sendiri, hanya "ditonton" lewat src iframe (relatif ke folder ini
+    untuk file offline, atau URL penuh untuk yang online). */
+ function show(target,usedOnline){
+   hideEscapeHint();
+   /* Batalkan timer "kosongkan iframe" tertunda dari closeModule() sebelumnya --
+      kalau tidak, modul yang baru saja dibuka bisa tiba-tiba dikosongkan lagi. */
+   clearTimeout(frame._closeBlankTimer);
+   /* Paksa reload walau URL-nya sama persis dengan yang sedang tampil sekarang.
+      Browser tidak akan navigasi ulang kalau iframe.src di-set ke nilai yang sama,
+      sehingga membuka modul yang sama dua kali hanya menampilkan state/halaman
+      lama dari kunjungan sebelumnya (bukan versi terbaru/awal). */
+   let resolvedTarget=target;
+   try{resolvedTarget=new URL(target,location.href).href}catch(e){}
+   if(frame.src===resolvedTarget){
+     frame.src='about:blank';
+     requestAnimationFrame(()=>{frame.src=target});
+   }else{
+     frame.src=target;
+   }
+   frame.dataset.fallbackLocal=usedOnline?offlineUrl:'';
+   frame.dataset.loaded='';
+   if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
+   modalTitle.textContent=title;
+   newTab.href=target;
+   if(newTabQuick)newTabQuick.href=target;
+   scheduleEscapeHint(target);
+   modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+
+   const modalCapsule=document.querySelector('.modal-capsule'), miniModalBtn=document.getElementById('miniModal');
+   if(modalCapsule){
+     modalCapsule.classList.add('minimized');
+     if(miniModalBtn){miniModalBtn.textContent='＋';miniModalBtn.title='Pulihkan header modul'}
+   }
+   if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+     document.documentElement.requestFullscreen().catch(()=>{});
+   }
+   if(!fromHistory){
+     history.pushState({vaozeeModule:true,url:target,title:title},'',location.href.split('#')[0]+'#modul');
+   }
+   /* Jaga-jaga: kalau iframe online ternyata gagal benar-benar dimuat (mis. situs mati
+      di tengah jalan), tetap otomatis pindah ke file offline setelah beberapa detik. */
+   if(usedOnline && offlineUrl){
+     clearTimeout(frame._fallbackTimer);
+     frame._fallbackTimer=setTimeout(()=>{if(!frame.dataset.loaded){frame.src=offlineUrl;frame.dataset.fallbackLocal=''}},5000);
+   }
+ }
+
+ /* Tidak ada versi online yang valid sama sekali -> langsung pakai file offline lokal. */
+ if(!onlineUrl){show(offlineUrl,false);return}
+ /* Tidak ada file offline sama sekali (belum ada di folder) -> langsung pakai online. */
+ if(!offlineUrl){show(onlineUrl,true);return}
+
+ /* Bila kedua sumber tersedia, online diprioritaskan. Jika browser menolak iframe
+    atau koneksi sedang mati, fallback lokal tetap tersedia. Tombol ↗ di header viewer
+    menjadi jalur langsung untuk situs yang memang melarang embedding iframe. */
+ if(navigator.onLine===false){show(offlineUrl,false);return}
+ show(onlineUrl,true);
+}
+
+function closeModule(fromPopState=false){
+ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+ if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
+ clearTimeout(frame._closeBlankTimer);
+ frame._closeBlankTimer=setTimeout(()=>{frame.src='about:blank'},220);
+ clearTimeout(frame._escapeHintTimer);
+ hideEscapeHint();
+ document.body.style.overflow='';
+ if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
+ if(!fromPopState && history.state && history.state.vaozeeModule) history.back();
+}
+frame.addEventListener('load',()=>{
+  loader.classList.add('done');frame.dataset.loaded='1';clearTimeout(frame._fallbackTimer);
+});
+frame.addEventListener('error',()=>{
+  /* Sinyal asli dari peramban (bukan tebakan kita) bahwa navigasi iframe gagal
+     total -- mis. file lokal yang benar-benar tidak ada. */
+  const local=frame.dataset.fallbackLocal;
+  let resolvedLocal='';
+  try{resolvedLocal=new URL(local||'',location.href).href}catch(e){}
+  if(local && frame.src!==resolvedLocal){
+    frame.dataset.fallbackLocal='';
+    frame.src=local;
+  }else{
+    /* Tidak ada sumber lain yang bisa dicoba -- segera tawarkan jalan keluar
+       (bukan menunggu 4.5 detik seperti biasanya) karena ini kegagalan nyata. */
+    clearTimeout(frame._escapeHintTimer);
+    if(iframeEscapeHint&&iboOpenBtn){
+      iboOpenBtn.href=frame.src;
+      iframeEscapeHint.classList.add('show');
+      iframeEscapeHint.setAttribute('aria-hidden','false');
+    }
+  }
+});
+document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)}));
+document.getElementById('closeModal').onclick=closeModule;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModule()});
+window.addEventListener('popstate',e=>{ if(modal.classList.contains('open')) closeModule(true); });
+
+/* ---- search & filter ---- */
+const search=document.getElementById('search'), filters=[...document.querySelectorAll('.filter')], noResults=document.getElementById('noResults');
+let active='all';
+function apply(){
+ const q=search.value.trim().toLowerCase();let visible=0;
+ document.querySelectorAll('#kitabGrid .card').forEach(c=>{
+   const ok=(active==='all'||c.dataset.cat===active)&&(!q||c.textContent.toLowerCase().includes(q));
+   c.classList.toggle('hidden',!ok);if(ok)visible++;
+ });
+ noResults.classList.toggle('show',visible===0);
+}
+search.addEventListener('input',apply);
+filters.forEach(b=>b.onclick=()=>{filters.forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b.dataset.filter;apply()});
+document.getElementById('openRandom').onclick=()=>{const all=[...document.querySelectorAll('.card')];const c=all[Math.floor(Math.random()*all.length)];openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)};
+
+/* ---- fullscreen toggle (header utama & header modul) ---- */
+function toggleFullscreen(){
+ if(!document.fullscreenElement){document.documentElement.requestFullscreen?.().catch(()=>{});}
+ else{document.exitFullscreen?.();}
+}
+const fsButtons=[document.getElementById('fsBtnMain'),document.getElementById('fsBtnModal')];
+fsButtons.forEach(b=>b&&b.addEventListener('click',toggleFullscreen));
+document.addEventListener('fullscreenchange',()=>{
+ const on=!!document.fullscreenElement;
+ fsButtons.forEach(b=>{if(!b)return;b.classList.toggle('active',on);b.textContent=on?'⤡':'⛶';b.title=on?'Keluar layar penuh':'Layar penuh'});
+});
+
+/* ---- capsule header state + mobile toggle ---- */
+const capsuleNav=document.getElementById('capsuleNav');
+window.addEventListener('scroll',()=>capsuleNav.classList.toggle('scrolled',window.scrollY>10),{passive:true});
+const navToggle=document.getElementById('navToggle'), navDrop=document.getElementById('navDrop');
+navToggle.onclick=()=>{const open=navDrop.classList.toggle('open');navToggle.setAttribute('aria-expanded',open)};
+navDrop.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navDrop.classList.remove('open');navToggle.setAttribute('aria-expanded','false')}));
+
+/* ---- live status clock ---- */
+const clock=document.getElementById('clock');
+function tick(){clock.textContent=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+tick();setInterval(tick,1000);
+
+/* ---- scroll reveal ----
+   Catatan perbaikan: sebagian browser mobile (terutama WebView Android) kadang
+   gagal menghitung ulang intersection dengan benar saat kombinasi
+   transform+opacity+backdrop-filter dipakai bersamaan -- akibatnya sebuah
+   section bisa "nyangkut" pada opacity:0 (tampak blank) walau sudah discroll
+   ke posisinya, dan baru muncul setelah ada reflow paksa (mis. ganti mode
+   tampilan). Supaya konten TIDAK PERNAH permanen blank, dipasang dua lapis
+   pengaman: threshold lebih rendah + rootMargin lebih longgar, DAN timer
+   cadangan yang memaksa semua section tampil walau observer gagal memicu. */
+const revealTargets=[...document.querySelectorAll('[data-reveal]')];
+function forceRevealAll(){revealTargets.forEach(el=>el.classList.add('in'))}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(entries=>entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:0,rootMargin:'0px 0px 200px 0px'});
+  revealTargets.forEach(el=>io.observe(el));
+  // Jaring pengaman: kalau ada yang belum juga 'in' setelah beberapa saat, tampilkan langsung.
+  setTimeout(()=>{revealTargets.forEach(el=>{if(!el.classList.contains('in') && el.getBoundingClientRect().top<innerHeight*1.5)el.classList.add('in')})},900);
+  setTimeout(forceRevealAll,3000);
+  window.addEventListener('orientationchange',()=>setTimeout(forceRevealAll,300));
+}else{
+  forceRevealAll();
+}
+</script>
+
+<script>
+/* === Requested header interactions === */
+(function(){
+  function bindDrag(el){
+    if(!el || el.dataset.dragBound) return;
+    el.dataset.dragBound='1';
+    let active=false,sx=0,sy=0,ox=0,oy=0;
+    el.addEventListener('pointerdown',function(e){
+      if(e.target.closest('button,a,input,select,textarea')) return;
+      active=true;
+      const r=el.getBoundingClientRect();
+      sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top;
+      el.setPointerCapture?.(e.pointerId);
+      el.classList.add('is-dragging');
+      document.body.style.userSelect='none';
+    });
+    el.addEventListener('pointermove',function(e){
+      if(!active) return;
+      const x=Math.max(6,Math.min(innerWidth-el.offsetWidth-6,ox+e.clientX-sx));
+      const y=Math.max(6,Math.min(innerHeight-el.offsetHeight-6,oy+e.clientY-sy));
+      el.style.position='fixed';
+      el.style.left=x+'px'; el.style.top=y+'px';
+      el.style.right='auto'; el.style.margin='0';
+      e.preventDefault();
+    },{passive:false});
+    function stop(){active=false;el.classList.remove('is-dragging');document.body.style.userSelect=''}
+    el.addEventListener('pointerup',stop);
+    el.addEventListener('pointercancel',stop);
+  }
+
+  function init(){
+    const main=document.querySelector('.capsule-nav');
+    const modal=document.querySelector('.modal-capsule');
+    bindDrag(main); bindDrag(modal);
+
+    const a=document.getElementById('miniMain');
+    if(main && !main.dataset.defaultMinApplied){
+      /* Header utama diminimalkan otomatis begitu halaman dibuka. */
+      main.dataset.defaultMinApplied='1';
+      main.classList.add('minimized');
+      if(a){a.textContent='＋';a.title='Pulihkan header'}
+    }
+    if(a && !a.dataset.bound){
+      a.dataset.bound='1';
+      a.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(!main)return;
+        main.classList.toggle('minimized');
+        a.textContent=main.classList.contains('minimized')?'＋':'−';
+        a.title=main.classList.contains('minimized')?'Pulihkan header':'Minimalkan header';
+      });
+    }
+    const b=document.getElementById('miniModal');
+    if(b && !b.dataset.bound){
+      b.dataset.bound='1';
+      b.addEventListener('click',function(e){
+        e.stopPropagation();
+        if(!modal)return;
+        modal.classList.toggle('minimized');
+        b.textContent=modal.classList.contains('minimized')?'＋':'−';
+        b.title=modal.classList.contains('minimized')?'Pulihkan header modul':'Minimalkan header modul';
+      });
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+  else init();
+  new MutationObserver(init).observe(document.body,{childList:true,subtree:true});
+})();
+
+/* === Droplist kompak tombol header modul/iframe ===
+   Tombol sekunder (mode scroll/buku, zoom baca, buka tab baru) digabung jadi
+   satu droplist supaya baris header tetap ringkas dan tombol Tutup (×) selalu
+   punya ruang sendiri, tidak pernah berdesakan/ketutupan di layar mobile. */
+(function(){
+  const dd=document.getElementById('toolsDropdown'), moreBtn=document.getElementById('toolsMoreBtn'), menu=document.getElementById('toolsMenu');
+  if(!dd||!moreBtn||!menu)return;
+  function closeMenu(){dd.classList.remove('open');moreBtn.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true')}
+  function openMenu(){dd.classList.add('open');moreBtn.setAttribute('aria-expanded','true');menu.setAttribute('aria-hidden','false')}
+  moreBtn.addEventListener('click',e=>{e.stopPropagation();dd.classList.contains('open')?closeMenu():openMenu()});
+  menu.addEventListener('click',e=>{ if(e.target.closest('.menu-item')) setTimeout(closeMenu,80); });
+  document.addEventListener('click',e=>{ if(dd.classList.contains('open') && !dd.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
+  document.getElementById('closeModal')&&document.getElementById('closeModal').addEventListener('click',closeMenu);
+  window.vaozeeCloseToolsMenu=closeMenu;
+})();
+
+/* === Mode Zoom Baca -- cubit 2 jari di atas iframe modul ===
+   Catatan teknis: touch/pointer yang jatuh persis di atas <iframe> TIDAK PERNAH
+   sampai ke dokumen induk (berlaku untuk semua iframe, apalagi yang online/beda
+   origin) -- jadi gestur cubit tidak bisa "didengar" langsung dari iframe-nya.
+   Solusinya: lapisan transparan (zoomOverlay) di atas iframe yang hanya aktif
+   ketika Mode Zoom dinyalakan lewat tombol 🔍. Saat aktif: cubit 2 jari = zoom,
+   geser 1 jari = baca ke segala arah, tombol 🔍 lagi / dobel-tap = keluar/reset. */
+(function(){
+  const toggle=document.getElementById('zoomToggle');
+  const wrap=document.querySelector('.modal-frame-wrap');
+  const overlay=document.getElementById('zoomOverlay');
+  const frameEl=document.getElementById('frame');
+  if(!toggle||!wrap||!overlay||!frameEl)return;
+
+  let scale=1, tx=0, ty=0;
+  const pointers=new Map();
+  let pinchStartDist=0, pinchStartScale=1, panStart=null;
+
+  function apply(){ frameEl.style.transformOrigin='0 0'; frameEl.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`; }
+  function clampPan(){
+    const r=wrap.getBoundingClientRect();
+    const maxX=Math.max(0,r.width*(scale-1)), maxY=Math.max(0,r.height*(scale-1));
+    tx=Math.min(0,Math.max(-maxX,tx)); ty=Math.min(0,Math.max(-maxY,ty));
+  }
+  function reset(){ scale=1; tx=0; ty=0; frameEl.style.transform=''; frameEl.style.transformOrigin=''; }
+  window.vaozeeResetZoomMode=function(){ wrap.classList.remove('zoom-mode'); toggle.classList.remove('active'); toggle.title='Mode Zoom Baca (cubit 2 jari)'; pointers.clear(); panStart=null; reset(); };
+
+  toggle.addEventListener('click',()=>{
+    const on=!wrap.classList.contains('zoom-mode');
+    if(on){ wrap.classList.add('zoom-mode'); toggle.classList.add('active'); toggle.title='Keluar Mode Zoom'; }
+    else{ window.vaozeeResetZoomMode(); }
+  });
+
+  const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+
+  overlay.addEventListener('pointerdown',e=>{
+    overlay.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===2){
+      const [a,b]=[...pointers.values()];
+      pinchStartDist=dist(a,b)||1; pinchStartScale=scale;
+    }else if(pointers.size===1){
+      panStart={x:e.clientX-tx,y:e.clientY-ty};
+    }
+  });
+  overlay.addEventListener('pointermove',e=>{
+    if(!pointers.has(e.pointerId))return;
+    pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pointers.size===2){
+      const [a,b]=[...pointers.values()];
+      const d=dist(a,b)||1;
+      scale=Math.min(4,Math.max(1,pinchStartScale*(d/pinchStartDist)));
+      clampPan(); apply();
+    }else if(pointers.size===1 && panStart && scale>1){
+      tx=e.clientX-panStart.x; ty=e.clientY-panStart.y;
+      clampPan(); apply();
+    }
+    e.preventDefault();
+  },{passive:false});
+  function endPtr(e){
+    pointers.delete(e.pointerId);
+    if(pointers.size===1){ const [p]=[...pointers.values()]; panStart={x:p.x-tx,y:p.y-ty}; }
+    else panStart=null;
+  }
+  overlay.addEventListener('pointerup',endPtr);
+  overlay.addEventListener('pointercancel',endPtr);
+  overlay.addEventListener('dblclick',()=>{ window.vaozeeResetZoomMode(); });
+})();
+/* === Manajemen Modul (lokal, tanpa Google Sheet/Apps Script) === */
+(function(){
+  const STORAGE_KEY='vaozee_kitab_modules_v1'; /* modul tambahan tersimpan di browser ini (localStorage) */
+
+  /* Password disimpan dalam format tersandi (dibalik lalu Base64), BUKAN teks polos,
+     supaya tidak langsung kelihatan/terlacak lewat "view source" atau pencarian teks biasa.
+     Catatan jujur: ini cuma penyamaran ringan, bukan keamanan sungguhan -- siapapun yang
+     paham JavaScript tetap bisa membongkarnya kalau benar-benar mau. Untuk proteksi nyata,
+     validasi password sebaiknya dilakukan di server (Apps Script) -- dan memang di sana
+     tetap dicocokkan ulang lewat TOKEN sebelum data ditulis ke Sheet. */
+  const PW_ENC='YXJiaWl6dWFm';
+  function getPassword(){return atob(PW_ENC).split('').reverse().join('')}
+
+  const kitabGrid=document.getElementById('kitabGrid'), umumGrid=document.getElementById('umumGrid');
+  const manager=document.getElementById('moduleManagerBackdrop'), form=document.getElementById('moduleForm');
+  const savedList=document.getElementById('moduleSavedList'), openBtn=document.getElementById('moduleManagerBtn');
+  const syncDot=document.getElementById('syncDot'), syncText=document.getElementById('syncText');
+  const editTargetInput=document.getElementById('moduleEditTarget'), submitBtn=document.getElementById('moduleSubmitBtn');
+  const managerTitle=document.getElementById('moduleManagerTitle'), managerDesc=managerTitle?managerTitle.nextElementSibling:null;
+  if(!kitabGrid||!umumGrid||!manager||!form||!openBtn)return;
+
+  function readLocal(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+  function writeLocal(x){localStorage.setItem(STORAGE_KEY,JSON.stringify(x))}
+  function validUrl(url){try{const u=new URL(url);return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}}
+
+  /*
+   * OFFLINE MODULE MAP
+   * ---------------------------------------------
+   * Isi hanya jika nama file offline berbeda dari nama kitab.
+   * Contoh:
+   *   'Alfiyah Ibnu Malik':'alfiyah-ibnu-malik-nahwu__15_.html'
+   *
+   * File relatif terhadap dashboard.html, sehingga tetap bekerja
+   * ketika folder dipindah ke komputer lain maupun ketika di-hosting.
+   */
+  const LOCAL_MODULE_FILES={
+    "Arba'un Nawawi":"arba-un-nawawi.html",
+    "Nadhom Alfiyah":"nadhom-alfiyah.html",
+    "POLIBUN":"polibun.html",
+    "Sawit Monitor":"sawit-monitor.html",
+    "KopSUS":"kopsus.html",
+    "Pantau Api":"pantau-api.html",
+    "ISPO":"ispo.html",
+    "HR-GA":"hr-ga.html",
+    "WarRoom Plantation":"warroom-plantation.html",
+    "Test MT":"test-mt.html",
+    "Administrasi":"administrasi.html",
+    "BPJS TK":"bpjs-tk.html",
+    "BPJSKES":"bpjskes.html",
+    "Ilmu Usul Fiqih":"ilmu-usul-fiqih.html",
+    "Qowaidul I'lal":"qowaidul-i-lal.html",
+    "Bulughul Marom":"bulughul-marom.html",
+    "Safinatun Naja":"safinatun-naja.html",
+    "Mabādi' Al-Awwaliyyah":"mabadi-al-awwaliyyah.html",
+    "Aqidatul Awam":"aqidatul-awam.html",
+    "Risalatul Mahidl":"risalatul-mahidl.html",
+    "Nashoihul 'Ibaad":"nashoihul-ibaad.html",
+    "Ta'limul Muta'alim":"ta-limul-muta-alim.html",
+    "Balaghah":"balaghah.html",
+    "Jawahirul Kalamiyah":"jawahirul-kalamiyah.html",
+    "RTH":"rth.html",
+    "Al-Waraqāt":"al-waraqat.html",
+    "Mukhtashar Abi Syuja'":"mukhtashar-abi-syuja.html",
+    "Alfiyah Ibnu Malik":"alfiyah-ibnu-malik.html",
+    "Al-'Imrithi":"al-imrithi.html",
+    "Al-Ajurumiyah":"al-ajurumiyah.html",
+    "Ilmu Shorof":"ilmu-shorof.html",
+    "Nazham Al-Maqshūd":"nazham-al-maqshud.html",
+    "Ilmu Falak Lanjutan":"ilmu-falak-lanjutan.html",
+    "Pelajaran Farā'iḍ":"pelajaran-fara-id.html",
+    "Hisab Falakiyah":"hisab-falakiyah.html",
+    "Kalkulator Ahli Waris":"kalkulator-ahli-waris.html",
+    "Kalkulator Pajak Indonesia":"kalkulator-pajak-indonesia.html",
+    "Jadwal Sholat":"jadwal-sholat.html",
+    "Peta Potensi Air Tanah":"peta-potensi-air-tanah.html",
+    "Nadaflow":"nadaflow.html",
+    "VAOZEE IO":"vaozee-io.html",
+    "Suite Launcher":"suite-launcher.html"
+  };
+
+  let remoteItems=[]; /* Sinkronisasi Google Sheet dihapus -- dashboard ini murni lokal/statis */
+
+  function normalizeTitle(v){
+    return String(v||'')
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/[’']/g,'')
+      .replace(/[^a-z0-9]+/g,' ')
+      .trim();
+  }
+  function sameTitle(a,b){return normalizeTitle(a)===normalizeTitle(b)}
+
+  function slugifyTitle(v){
+    return normalizeTitle(v).replace(/\s+/g,'-');
+  }
+
+  function localCandidates(x){
+    const out=[];
+    const mapped=LOCAL_MODULE_FILES[x.title];
+    if(mapped)out.push(mapped);
+
+    if(x.localUrl)out.push(x.localUrl);
+
+    /* Jika URL online menunjuk langsung ke file HTML, pakai nama file yang sama
+       sebagai kandidat offline. */
+    try{
+      const u=new URL(x.url||'');
+      const path=u.pathname.split('/').filter(Boolean);
+      const last=path[path.length-1]||'';
+      if(/\.html?$/i.test(last))out.push(last);
+    }catch(e){}
+
+    const slug=slugifyTitle(x.title);
+    if(slug)out.push(slug+'.html');
+    out.push(String(x.title||'').trim()+'.html');
+
+    return [...new Set(out.filter(Boolean))];
+  }
+
+  function localUrlFor(x){
+    const candidates=localCandidates(x);
+    return candidates[0]||'';
+  }
+
+  function findRemoteForTitle(title){
+    return remoteItems.find(x=>sameTitle(x.title,title)&&!isBuiltin(x))||null;
+  }
+
+  /*
+   * Prioritas sumber:
+   * 1. Link online (field url) jika diisi pada array kitab/umum.
+   * 2. File lokal jika link online tidak tersedia/tidak dapat dipakai.
+   *
+   * Dengan cara ini file offline hanya menjadi fallback, bukan sumber utama.
+   */
+  function mergeModule(base, remote, local){
+    const r=remote||null, l=local||null;
+    const chosen=r||l||base;
+    if(!chosen)return null;
+
+    const merged={
+      ...(base||{}),
+      ...(l||{}),
+      ...(r||{}),
+      title:(r&&r.title)||(l&&l.title)||(base&&base.title)||'',
+      url:(r&&r.url)||(base&&base.url)||'',
+      localUrl:(l&&l.localUrl)||(base&&base.localUrl)||(r&&r.localUrl)||'',
+      section:(r&&r.section)||(l&&l.section)||(base&&base.section)||'kitab'
+    };
+    merged.onlineUrl=(r&&validUrl(r.url))||(base&&validUrl(base.url))||'';
+    merged.localUrl=merged.localUrl||localUrlFor(merged);
+    return merged;
+  }
+
+  function allBaseModules(){
+    const bases=[...kitab.map(x=>({...x,section:'kitab'})),...umum.map(x=>({...x,section:'umum'}))];
+    const locals=readLocal();
+    const titles=new Map();
+
+    /* Base HTML + local tambahan digabung berdasarkan nama kitab/modul. */
+    bases.forEach(b=>titles.set(normalizeTitle(b.title),b));
+    locals.forEach(l=>{
+      const k=normalizeTitle(l.title);
+      if(!titles.has(k))titles.set(k,l);
+      else titles.set(k,{...titles.get(k),...l});
+    });
+
+    /* Data dari Sheet menang atas base HTML dan local bila judul sama. */
+    remoteItems.filter(x=>!isBuiltin(x)).forEach(r=>{
+      const k=normalizeTitle(r.title);
+      if(titles.has(k))titles.set(k,{...titles.get(k),...r});
+      else titles.set(k,r);
+    });
+
+    return [...titles.values()].map(x=>{
+      const r=findRemoteForTitle(x.title);
+      const l=locals.find(y=>sameTitle(y.title,x.title));
+      return mergeModule(x,r,l);
+    });
+  }
+
+  function isBuiltin(x){return String(x.source||'').toLowerCase()==='bawaan'}
+  function byStableId(a,b){return (parseInt(a.n,10)||0)-(parseInt(b.n,10)||0)}
+
+  function computeLists(){
+    const merged=allBaseModules();
+    const kitabList=merged.filter(x=>x.section!=='umum').sort(byStableId);
+    const umumList=merged.filter(x=>x.section==='umum').sort(byStableId);
+    return{kitabList,umumList};
+  }
+
+  function renderAll(){
+    const{kitabList,umumList}=computeLists();
+    const base=kitabList.length;
+    kitabGrid.innerHTML=kitabList.map((x,i)=>card(x,String(i+1).padStart(2,'0'))).join('');
+    umumGrid.innerHTML=umumList.map((x,i)=>card(x,String(base+i+1).padStart(2,'0'))).join('');
+    [...kitabGrid.querySelectorAll('.card'),...umumGrid.querySelectorAll('.card')].forEach(c=>{
+      c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)});
+    });
+    if(window.bindCardNewTabButtons)window.bindCardNewTabButtons();
+    apply();updateModuleCounters();
+  }
+
+  function setSyncState(state,msg){
+    if(!syncDot)return;
+    syncDot.classList.toggle('err',state==='err');
+    if(syncText)syncText.textContent=msg;
+  }
+
+  /* Sinkronisasi ke Google Sheet/Apps Script sudah dihapus sepenuhnya.
+     Dashboard ini murni statis: semua modul berasal dari array kitab/umum
+     di atas (mengarah langsung ke file HTML lokal), ditambah modul yang
+     Anda simpan sendiri lewat "Tambah Modul" (tersimpan di localStorage
+     browser ini saja, tidak dikirim ke server manapun). */
+  function syncFromSheet(){
+    setSyncState('ok','Daftar modul lokal');
+  }
+
+  function fillForm(x){
+    document.getElementById('moduleTitle').value=x.title||'';
+    document.getElementById('moduleUrl').value=x.url||'';
+    document.getElementById('moduleLocalUrl').value=x.localUrl||localUrlFor(x)||'';
+    document.getElementById('moduleSection').value=x.section==='umum'?'umum':'kitab';
+    document.getElementById('moduleCat').value=x.cat||'lain';
+    document.getElementById('moduleBadge').value=x.badge||'';
+    document.getElementById('moduleIcon').value=x.icon||'';
+    document.getElementById('moduleDesc').value=x.desc||'';
+    document.getElementById('moduleCatLabel').style.display=x.section==='umum'?'none':'';
+  }
+
+  function enterEditMode(kind,x){
+    editTargetInput.value=JSON.stringify({kind,n:String(x.n)});
+    fillForm(x);
+    if(managerTitle)managerTitle.textContent='Edit Modul';
+    if(managerDesc)managerDesc.textContent='Ubah data modul ini, lalu simpan (butuh password).';
+    if(submitBtn)submitBtn.textContent='Simpan Perubahan';
+    document.getElementById('moduleTitle').focus();
+    manager.scrollTop=0;
+  }
+
+  function exitEditMode(){
+    editTargetInput.value='';
+    if(managerTitle)managerTitle.textContent='Tambah Modul';
+    if(managerDesc)managerDesc.textContent='Tambahkan link modul; modul tersimpan lokal di browser ini saja (localStorage).';
+    if(submitBtn)submitBtn.textContent='Simpan Modul';
+  }
+
+  function listSaved(){
+    const localItems=readLocal();
+    const remoteEditable=remoteItems.filter(x=>!isBuiltin(x));
+    const remoteRows=''; /* tidak ada lagi sumber remote (Google Sheet) */
+    const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.localUrl||localUrlFor(x)} · tersimpan lokal</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}">Edit</button><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></span></div>`).join('');
+    const builtinCount=remoteItems.filter(isBuiltin).length;
+    const builtinNote='';
+    savedList.innerHTML='<h4>Modul tambahan tersimpan</h4>'+((remoteRows+localRows)||'<div class="module-manager-note">Belum ada modul tambahan.</div>')+builtinNote;
+
+    savedList.querySelectorAll('.module-edit').forEach(b=>{
+      b.onclick=()=>{
+        const src=b.dataset.remote?remoteEditable:localItems;
+        const item=src.find(x=>String(x.n)===b.dataset.n);
+        if(!item)return;
+        enterEditMode(b.dataset.remote?'remote':'local',item);
+      };
+    });
+    savedList.querySelectorAll('.module-delete').forEach(b=>{
+      b.onclick=async()=>{
+        const p=prompt('Masukkan password untuk menghapus modul:');
+        if(p!==getPassword()){if(p!==null)alert('Password salah.');return}
+        writeLocal(readLocal().filter(x=>String(x.n)!==b.dataset.n));
+        renderAll();
+        listSaved();
+      };
+    });
+  }
+
+  openBtn.onclick=()=>{manager.classList.add('open');manager.setAttribute('aria-hidden','false');listSaved();document.getElementById('moduleTitle').focus()};
+  function close(){manager.classList.remove('open');manager.setAttribute('aria-hidden','true');form.reset();exitEditMode();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display=''}
+  document.getElementById('moduleManagerClose').onclick=close;document.getElementById('moduleManagerCancel').onclick=close;
+  manager.addEventListener('click',e=>{if(e.target===manager)close()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&manager.classList.contains('open'))close()});
+
+  const sectionSelect=document.getElementById('moduleSection');
+  sectionSelect.addEventListener('change',function(){document.getElementById('moduleCatLabel').style.display=this.value==='umum'?'none':''});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const title=document.getElementById('moduleTitle').value.trim();
+    const rawUrl=document.getElementById('moduleUrl').value.trim();
+    const url=validUrl(rawUrl);
+    const localUrl=document.getElementById('moduleLocalUrl').value.trim();
+    if(!title||(!url&&!localUrl)){alert('Isi URL online yang valid atau File Offline yang valid.');return}
+
+    let editTarget=null;
+    try{editTarget=editTargetInput.value?JSON.parse(editTargetInput.value):null}catch(e){editTarget=null}
+    const isEdit=!!editTarget;
+
+    const p=prompt(isEdit?'Masukkan password untuk menyimpan perubahan modul:':'Masukkan password untuk menyimpan modul:');
+    if(p!==getPassword()){if(p!==null)alert('Password salah. Perubahan tidak disimpan.');return}
+
+    const section=sectionSelect.value;
+    const payload={
+      action:isEdit?'edit':'add',token:getPassword(),section,title,url,localUrl:localUrl,
+      cat:document.getElementById('moduleCat').value,
+      icon:document.getElementById('moduleIcon').value.trim()||(section==='umum'?'✦':'كتاب'),
+      badge:document.getElementById('moduleBadge').value.trim()||(section==='umum'?'UMUM':'KITAB'),
+      desc:document.getElementById('moduleDesc').value.trim()||'Modul pembelajaran kitab klasik pesantren.'
+    };
+    if(isEdit)payload.n=editTarget.n;
+
+    submitBtn.disabled=true;submitBtn.textContent=isEdit?'Menyimpan perubahan…':'Menyimpan…';
+    try{
+      if(isEdit&&editTarget.kind==='local'){
+        const items=readLocal().map(x=>String(x.n)===String(editTarget.n)?{...x,section,title,url,localUrl:payload.localUrl,cat:payload.cat,icon:payload.icon,badge:payload.badge,desc:payload.desc}:x);
+        writeLocal(items);renderAll();
+        alert('Perubahan modul lokal berhasil disimpan.');
+      }else{
+        const items=readLocal();
+        const localN='L'+Date.now();
+        items.push({n:localN,title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,localUrl:payload.localUrl,desc:payload.desc,section});
+        writeLocal(items);renderAll();
+        alert('Modul berhasil disimpan (tersimpan lokal di browser ini) dan langsung tampil di halaman utama.');
+      }
+    }finally{
+      submitBtn.disabled=false;submitBtn.textContent=isEdit?'Simpan Perubahan':'Simpan Modul';
+    }
+    form.reset();exitEditMode();document.getElementById('moduleBadge').value='KITAB';document.getElementById('moduleIcon').value='كتاب';document.getElementById('moduleCatLabel').style.display='';
+    listSaved();
+  });
+
+  renderAll();
+  syncFromSheet();
+})();
+
+/* === Tombol Ringkas Tampilan (compact view) === */
+(function(){
+  const KEY='vaozee_compact_view';
+  const btn=document.getElementById('compactToggle');
+  const grids=[document.getElementById('kitabGrid'),document.getElementById('umumGrid'),document.getElementById('pdfGrid')].filter(Boolean);
+  if(!btn||grids.length<2)return;
+  function apply(on){
+    grids.forEach(g=>g.classList.toggle('compact',on));
+    btn.textContent=on?'🗜 Ringkas Tampilan':'▦ Tampilan Lengkap';
+    btn.classList.toggle('active',on);
+  }
+  apply(localStorage.getItem(KEY)==='1');
+  btn.addEventListener('click',()=>{
+    const on=!grids[0].classList.contains('compact');
+    localStorage.setItem(KEY,on?'1':'0');
+    apply(on);
+  });
+})();
+</script>
+
+
+<script>
+/* === Chapter 03: VAOZEE PDF Reader === */
+(function(){
+  const grid=document.getElementById('pdfGrid'), empty=document.getElementById('pdfEmpty');
+  const filesInput=document.getElementById('pdfFilesInput'), folderInput=document.getElementById('pdfFolderInput');
+  const pickFiles=document.getElementById('pdfPickFiles'), pickFolder=document.getElementById('pdfPickFolder');
+  const modal=document.getElementById('modal'), frame=document.getElementById('frame'), titleEl=document.getElementById('modalTitle');
+  const stage=document.getElementById('pdfBookStage'), canvasL=document.getElementById('pdfCanvasLeft'), canvasR=document.getElementById('pdfCanvasRight');
+  const pageL=document.getElementById('pdfPageLeft'), pageR=document.getElementById('pdfPageRight'), caption=document.getElementById('pdfBookCaption');
+  const scrollBtn=document.getElementById('pdfScrollMode'), bookBtn=document.getElementById('pdfBookMode'), label=document.getElementById('pdfModeLabel');
+  if(!grid||!empty||!modal)return;
+
+  const STORAGE='vaozee_pdf_reader_v1';
+  let pdfEntries=[];
+  let activePdf=null, activeDoc=null, activeSpread=1, pdfLibPromise=null, gesture=null, suppressBookClickUntil=0;
+
+  /* === Sumber PDF dari Google Drive (folder "Kitab Klasik PDF") ===
+     Memakai Apps Script Web App yang sama dengan yang dipakai modul lain
+     (mis. Buletin di RTH Desktop) -- backend ini jalan atas akun pemilik
+     Drive sendiri, jadi folder TIDAK perlu dibagikan publik, dan tidak ada
+     API key yang perlu ditaruh di halaman ini. */
+  const PDF_SCRIPT_URL="https://script.google.com/macros/s/AKfycbxKmF2MeicmWJSUhmo6sAK4MoZujJqu4HOuJ9Mf3v3qnP0qme-NPifxidSAz-YAxDZsbA/exec";
+  const PDF_DRIVE_FOLDER_ID="1wVNHR_1hr5kG1CFluyvqBjlzdONQaR1n";
+
+  async function apiListDrivePdf(folderId){
+    const url=new URL(PDF_SCRIPT_URL);
+    url.searchParams.set('action','listAny');
+    url.searchParams.set('folderId',folderId);
+    const res=await fetch(url.toString());
+    if(!res.ok)throw new Error('Apps Script merespons status '+res.status);
+    return res.json();
+  }
+  /* === Cache daftar PDF di sessionStorage ===
+     Supaya Chapter 03 tidak selalu terasa lambat: daftar terakhir yang pernah
+     dimuat langsung ditampilkan (instan), lalu disegarkan diam-diam dari
+     jaringan. Ini "stale-while-revalidate" versi ringan, tanpa server tambahan. */
+  const PDF_LIST_CACHE_KEY='vaozee_pdf_list_cache_v1';
+  function loadCachedList(){
+    try{ const raw=sessionStorage.getItem(PDF_LIST_CACHE_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; }
+  }
+  function saveCachedList(list){
+    try{ sessionStorage.setItem(PDF_LIST_CACHE_KEY,JSON.stringify(list)); }catch(e){}
+  }
+  function upsertDriveEntry(f){
+    const id='drive:'+f.id;
+    const name=(f.name&&String(f.name).trim())||'PDF Tanpa Judul';
+    const existing=pdfEntries.find(x=>x.id===id);
+    if(existing){ existing.name=name; existing.size=Number(f.size)||existing.size||0; return; }
+    pdfEntries.push({id,name,path:'Google Drive · Kitab Klasik PDF',driveId:f.id,remote:true,size:Number(f.size)||0});
+  }
+  async function loadDriveEntries(){
+    const cached=loadCachedList();
+    if(cached&&cached.length){
+      cached.forEach(upsertDriveEntry);
+      pdfEntries.sort((a,b)=>a.name.localeCompare(b.name,'id'));
+      renderCards();
+    }
+    try{
+      const r=await apiListDrivePdf(PDF_DRIVE_FOLDER_ID);
+      if(!r||!r.ok){console.warn('Gagal memuat daftar PDF dari Google Drive:',r&&r.error);return}
+      const files=(r.files||[]).filter(f=>f.kind!=='folder'&&((f.mimeType||'').includes('pdf')||/\.pdf$/i.test(f.name||'')));
+      saveCachedList(files.map(f=>({id:f.id,name:f.name,size:f.size})));
+      const freshIds=new Set(files.map(f=>'drive:'+f.id));
+      pdfEntries=pdfEntries.filter(x=>!x.remote||freshIds.has(x.id)); // buang entri lama yg sudah dihapus di Drive
+      files.forEach(upsertDriveEntry);
+      pdfEntries.sort((a,b)=>a.name.localeCompare(b.name,'id'));
+      renderCards();
+    }catch(e){console.warn('Tidak bisa memuat PDF dari Google Drive:',e);}
+  }
+  const PDF_LARGE_THRESHOLD=95*1024*1024; // ~95MB -- di atas ini Google sering menolak pratinjau
+  function fmtSize(bytes){
+    if(!bytes)return '';
+    const mb=bytes/(1024*1024);
+    return mb>=1024?(mb/1024).toFixed(2)+' GB':mb.toFixed(1)+' MB';
+  }
+
+  function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function updateEmpty(){
+    empty.style.display=pdfEntries.length?'none':'block';
+    const label=document.getElementById('pdfCountLabel'), stat=document.getElementById('statPdf');
+    if(label)label.textContent=pdfEntries.length+' PDF';
+    if(stat)stat.textContent=pdfEntries.length;
+  }
+  function saveMeta(){try{localStorage.setItem(STORAGE,JSON.stringify(pdfEntries.map(x=>({id:x.id,name:x.name,path:x.path||''}))))}catch(e){}}
+  function idFor(file){return (file.webkitRelativePath||file.name)+'|'+file.size+'|'+file.lastModified}
+
+  function addFiles(list){
+    const incoming=[...list].filter(f=>f && (f.type==='application/pdf'||/\.pdf$/i.test(f.name)));
+    incoming.forEach(file=>{
+      const id=idFor(file);
+      if(pdfEntries.some(x=>x.id===id))return;
+      pdfEntries.push({id,name:file.name,path:file.webkitRelativePath||file.name,file});
+    });
+    pdfEntries.sort((a,b)=>a.name.localeCompare(b.name,'id'));
+    renderCards();saveMeta();
+  }
+
+  /* === Buka langsung file besar (>100MB) yang ditolak pratinjau Google ===
+     "/preview" Google Drive punya batas ukuran; di atas itu muncul pesan
+     "Sorry, we're unable to preview this file." Untuk kasus ini, PDF diambil
+     langsung lewat Drive API (pakai token dari Apps Script yang sama, bukan
+     API key baru) lalu dibuka dengan pembaca buku/scroll lokal yang sudah ada
+     di halaman ini -- tanpa batas ukuran preview Google sama sekali.
+     CATATAN: perlu tambahan SATU action di Apps Script yang sudah dipakai
+     (PDF_SCRIPT_URL), berikut kodenya untuk ditambahkan di project .gs:
+        else if(action==='driveToken'){
+          out={ok:true, token: ScriptApp.getOAuthToken()};
+        }
+     (taruh sejalan dengan percabangan action lain di fungsi doGet-nya). */
+  async function getDriveToken(){
+    const url=new URL(PDF_SCRIPT_URL);
+    url.searchParams.set('action','driveToken');
+    const res=await fetch(url.toString());
+    if(!res.ok)throw new Error('Apps Script merespons status '+res.status);
+    const j=await res.json();
+    if(!j||!j.ok||!j.token)throw new Error(j&&j.error?j.error:'Token akses Drive belum tersedia (action "driveToken" belum ditambahkan di Apps Script).');
+    return j.token;
+  }
+
+  /* === Cache byte PDF yang sudah pernah dibuka (Cache Storage) ===
+     Supaya buka ulang kitab yang sama jadi hampir instan (tidak unduh ulang),
+     ini pengganti paling ringan dari menyimpan PDF di server tambahan. */
+  const PDF_BLOB_CACHE='vaozee-pdf-blob-v1';
+  async function getCachedPdfBlob(driveId){
+    if(!('caches' in window))return null;
+    try{
+      const c=await caches.open(PDF_BLOB_CACHE);
+      const res=await c.match('https://vaozee-pdf.cache/'+driveId);
+      return res?await res.blob():null;
+    }catch(e){return null}
+  }
+  async function setCachedPdfBlob(driveId,blob){
+    if(!('caches' in window))return;
+    try{
+      const c=await caches.open(PDF_BLOB_CACHE);
+      await c.put('https://vaozee-pdf.cache/'+driveId,new Response(blob,{headers:{'Content-Type':'application/pdf'}}));
+    }catch(e){/* kuota cache penuh/gagal -- tidak fatal, cukup lewati */}
+  }
+
+  /* === Ambil PDF langsung lewat Drive API (dipakai untuk SEMUA PDF Drive) ===
+     Kenapa tidak lagi pakai iframe "/preview" Google sebagai jalur utama:
+     folder sengaja TIDAK dibagikan publik (lihat catatan di atas), jadi
+     iframe pratinjau bisa menampilkan halaman "tidak ditemukan"/butuh akses
+     padahal URL-nya valid dan koneksi baik-baik saja -- iframe lintas-origin
+     tidak bisa dideteksi gagal oleh halaman ini karena kontennya tidak bisa
+     dibaca (CORS), jadi tidak ada cara otomatis memperbaikinya selain
+     menghindari sepenuhnya. Mengambil byte lewat token Apps Script (akun
+     pemilik Drive) lalu merender dengan pdf.js lokal jauh lebih konsisten,
+     lebih ringan (tanpa UI Google Drive yang berat), dan judul selalu benar
+     karena diambil dari data folder sendiri, bukan dari halaman Google. */
+  async function fetchDrivePdfBlob(x,onProgress){
+    const cached=await getCachedPdfBlob(x.driveId);
+    if(cached)return cached;
+    const token=await getDriveToken();
+    const res=await fetch('https://www.googleapis.com/drive/v3/files/'+x.driveId+'?alt=media',{headers:{Authorization:'Bearer '+token}});
+    if(!res.ok)throw new Error('Gagal mengambil file dari Drive (status '+res.status+').');
+    const total=Number(res.headers.get('Content-Length'))||x.size||0;
+    let blob;
+    if(res.body&&res.body.getReader&&total){
+      const reader=res.body.getReader();const chunks=[];let received=0;
+      while(true){
+        const {done,value}=await reader.read();
+        if(done)break;
+        chunks.push(value);received+=value.length;
+        if(onProgress)onProgress(Math.min(99,Math.round(received/total*100)));
+      }
+      blob=new Blob(chunks,{type:'application/pdf'});
+    }else{
+      blob=await res.blob();
+    }
+    setCachedPdfBlob(x.driveId,blob);
+    return blob;
+  }
+
+  async function openDriveDirect(x,btn){
+    const isLarge=x.size>PDF_LARGE_THRESHOLD;
+    const oldLabel=btn?btn.textContent:'';
+    if(btn)btn.textContent='⏳ Memuat…';
+    try{
+      const blob=await fetchDrivePdfBlob(x,pct=>{ if(btn)btn.textContent='⏳ '+pct+'%'; });
+      const file=new File([blob],x.name,{type:'application/pdf'});
+      openPdf({...x,file});
+    }catch(e){
+      console.warn('Buka langsung gagal:',e);
+      if(isLarge){
+        alert('File ini berukuran besar dan jalur baca langsung gagal ('+(e&&e.message||e)+'). File akan diunduh ke perangkat sebagai gantinya.');
+        window.open('https://drive.google.com/uc?id='+x.driveId+'&export=download','_blank','noopener');
+      }else{
+        // Jaring pengaman terakhir: coba pratinjau Google (perlu file dibagikan/izin akun).
+        openModule('https://drive.google.com/file/d/'+x.driveId+'/preview',x.name.replace(/\.pdf$/i,''));
+      }
+    }finally{
+      if(btn)btn.textContent=oldLabel||'Baca PDF →';
+    }
+  }
+
+  function renderCards(){
+    grid.innerHTML=pdfEntries.map((x,i)=>{
+      const isLarge=x.remote&&x.size>PDF_LARGE_THRESHOLD;
+      const sizeLabel=x.remote&&x.size?fmtSize(x.size):'';
+      const title=(x.name||'PDF Tanpa Judul').replace(/\.pdf$/i,'')||'PDF Tanpa Judul';
+      return `<div class="card pdf-card" data-pdf-id="${esc(x.id)}">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="card-top"><span class="num">PDF ${String(i+1).padStart(2,'0')}</span><span class="badge">${x.remote?(isLarge?'PDF · BESAR':'PDF · DRIVE'):'PDF'}</span></div>
+      <div class="icon">PDF</div>
+      <div class="card-body"><h3>${esc(title)}</h3><p>${x.remote?(isLarge?'File berukuran besar ('+esc(sizeLabel)+') -- diunduh langsung lalu dibuka di pembaca VAOZEE.':'Kitab PDF dari koleksi Google Drive, dibuka di pembaca VAOZEE (mode scroll/buku).'):'Pembaca PDF VAOZEE dengan mode scroll biasa atau mode buku halaman per halaman.'}</p><div class="pdf-meta">${esc(x.path||x.name||'')}${sizeLabel?' · '+esc(sizeLabel):''}</div></div>
+      <div class="card-bottom"><span class="path">${esc(x.name||'PDF Tanpa Judul')}</span><span class="open" data-pdf-open>Baca PDF →</span></div>
+    </div>`;
+    }).join('');
+    grid.querySelectorAll('.pdf-card').forEach(card=>{
+      const x=pdfEntries.find(y=>y.id===card.dataset.pdfId); if(!x)return;
+      /* Semua PDF (lokal maupun dari Google Drive) dibuka lewat pembaca VAOZEE
+         sendiri (mode scroll/buku), BUKAN lewat iframe pratinjau Google --
+         supaya tidak lagi kena halaman "tidak ditemukan"/butuh izin, judul
+         selalu benar, dan tampilannya konsisten di semua perangkat. */
+      card.addEventListener('click',()=>{
+        if(x.remote)openDriveDirect(x,card.querySelector('[data-pdf-open]'));
+        else openPdf(x);
+      });
+    });
+    updateEmpty();
+  }
+
+  pickFiles&&pickFiles.addEventListener('click',()=>filesInput.click());
+  pickFolder&&pickFolder.addEventListener('click',async()=>{
+    if(window.showDirectoryPicker){
+      try{
+        const dir=await window.showDirectoryPicker({mode:'read'}), arr=[];
+        async function walk(handle,path=''){
+          for await(const [name,entry] of handle.entries()){
+            if(entry.kind==='file' && /\.pdf$/i.test(name)){
+              const f=await entry.getFile(); Object.defineProperty(f,'webkitRelativePath',{value:path+name}); arr.push(f);
+            }else if(entry.kind==='directory') await walk(entry,path+name+'/');
+          }
+        }
+        await walk(dir); addFiles(arr); return;
+      }catch(e){if(e.name==='AbortError')return}
+    }
+    folderInput.click();
+  });
+  filesInput&&filesInput.addEventListener('change',()=>{addFiles(filesInput.files);filesInput.value=''});
+  folderInput&&folderInput.addEventListener('change',()=>{addFiles(folderInput.files);folderInput.value=''});
+
+  let pdfHeaderTimer=null;
+  function schedulePdfHeaderHide(){
+    clearTimeout(pdfHeaderTimer);
+    if(!modal.classList.contains('pdf-mode'))return;
+    pdfHeaderTimer=setTimeout(()=>modal.classList.add('pdf-header-hidden'),2600);
+  }
+  function revealPdfHeader(){
+    if(!modal.classList.contains('pdf-mode'))return;
+    modal.classList.remove('pdf-header-hidden');
+    schedulePdfHeaderHide();
+  }
+  modal.addEventListener('pointermove',e=>{if(e.clientY<90)revealPdfHeader(); else if(modal.classList.contains('pdf-header-hidden')===false)schedulePdfHeaderHide()},{passive:true});
+  modal.addEventListener('pointerdown',e=>{if(e.clientY<90)revealPdfHeader()},{passive:true});
+  modal.addEventListener('touchstart',revealPdfHeader,{passive:true});
+
+  function openPdf(x){
+    activePdf=x; activeSpread=1; activeDoc=null;
+    const url=URL.createObjectURL(x.file);
+    frame.dataset.pdfBlob=url; frame.src='about:blank';
+    titleEl.textContent=x.name.replace(/\.pdf$/i,'');
+    modal.classList.add('open','pdf-mode'); modal.classList.remove('book-active','pdf-header-hidden'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    stage.classList.remove('active'); stage.setAttribute('aria-hidden','true');
+    // Masuk fullscreen langsung dari gesture klik kartu PDF, seperti iframe viewer.
+    const fsTarget=modal;
+    if(!document.fullscreenElement && fsTarget.requestFullscreen){fsTarget.requestFullscreen().catch(()=>{});}
+    schedulePdfHeaderHide();
+    label.textContent='Baca PDF · '+x.name.replace(/\.pdf$/i,'');
+    activateScroll();
+    if(!history.state||!history.state.vaozeePdf)history.pushState({vaozeePdf:true,title:x.name},'',location.href.split('#')[0]+'#pdf');
+  }
+
+  function closePdfCleanup(){
+    if(!modal.classList.contains('pdf-mode'))return;
+    modal.classList.remove('pdf-mode','book-active','scroll-active'); stage.classList.remove('active'); document.getElementById('pdfScrollStage')?.classList.remove('active'); document.getElementById('pdfScrollPages').innerHTML='';
+    if(frame.dataset.pdfBlob){URL.revokeObjectURL(frame.dataset.pdfBlob);delete frame.dataset.pdfBlob}
+    activePdf=null;activeDoc=null;frame.src='about:blank';
+    modal.classList.remove('pdf-header-hidden');
+    if(document.fullscreenElement && document.exitFullscreen){document.exitFullscreen().catch(()=>{});}
+  }
+
+  function loadPdfJs(){
+    if(window.pdfjsLib)return Promise.resolve(window.pdfjsLib);
+    if(pdfLibPromise)return pdfLibPromise;
+    pdfLibPromise=new Promise((resolve,reject)=>{
+      const sc=document.createElement('script');
+      sc.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; sc.async=true;
+      sc.onload=()=>{if(!window.pdfjsLib){reject(new Error('PDF.js tidak tersedia'));return} window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';resolve(window.pdfjsLib)};
+      sc.onerror=()=>reject(new Error('Gagal memuat PDF.js. Mode buku membutuhkan koneksi internet sekali untuk library pembaca.'));
+      document.head.appendChild(sc);
+    });
+    return pdfLibPromise;
+  }
+
+  async function renderPage(page,canvas){
+    const wrap=canvas.parentElement, rect=wrap.getBoundingClientRect();
+    const base=page.getViewport({scale:1});
+    const scale=Math.min((Math.max(120,rect.width)-8)/base.width,(Math.max(120,rect.height)-8)/base.height);
+    const vp=page.getViewport({scale:Math.max(.25,scale*window.devicePixelRatio)});
+    canvas.width=Math.floor(vp.width);canvas.height=Math.floor(vp.height);canvas.style.width='100%';canvas.style.height='100%';
+    await page.render({canvasContext:canvas.getContext('2d',{alpha:false}),viewport:vp}).promise;
+  }
+
+  async function renderScrollPage(pageNum){
+    const wrap=document.createElement('div'); wrap.className='pdf-scroll-page-wrap'; wrap.dataset.page=pageNum;
+    const canvas=document.createElement('canvas'); canvas.className='pdf-scroll-page'; wrap.appendChild(canvas);
+    return wrap;
+  }
+
+  let scrollObserver=null, scrollRenderBusy=new Set();
+  async function renderOneScrollPage(wrap){
+    if(!activeDoc||!wrap||wrap.dataset.rendered==='1'||scrollRenderBusy.has(wrap.dataset.page))return;
+    scrollRenderBusy.add(wrap.dataset.page);
+    try{
+      const page=await activeDoc.getPage(Number(wrap.dataset.page));
+      const c=wrap.querySelector('canvas');
+      const base=page.getViewport({scale:1});
+      const maxW=Math.min(window.innerWidth-36,980);
+      const scale=maxW/base.width;
+      wrap.style.width=Math.min(maxW,base.width*scale)+'px';
+      wrap.style.aspectRatio=base.width+'/'+base.height;
+      const vp=page.getViewport({scale:Math.max(.45,scale*window.devicePixelRatio)});
+      c.width=Math.floor(vp.width); c.height=Math.floor(vp.height); c.style.width='100%'; c.style.height='100%';
+      await page.render({canvasContext:c.getContext('2d',{alpha:false}),viewport:vp}).promise;
+      wrap.dataset.rendered='1';
+    }finally{scrollRenderBusy.delete(wrap.dataset.page)}
+  }
+
+  async function renderScrollDoc(doc){
+    const wrap=document.getElementById('pdfScrollPages'); if(!wrap)return;
+    if(scrollObserver)scrollObserver.disconnect();
+    wrap.innerHTML='';
+    for(let i=1;i<=doc.numPages;i++)wrap.appendChild(await renderScrollPage(i));
+    scrollObserver=new IntersectionObserver(entries=>{
+      entries.filter(e=>e.isIntersecting).forEach(e=>renderOneScrollPage(e.target));
+    },{root:document.getElementById('pdfScrollStage'),rootMargin:'900px 0px'});
+    wrap.querySelectorAll('.pdf-scroll-page-wrap').forEach(el=>scrollObserver.observe(el));
+  }
+
+  function canvasToDataURL(canvas){
+    try{return canvas.toDataURL('image/jpeg',.94)}catch(e){return ''}
+  }
+
+  function removeTurnLayer(){
+    const el=document.getElementById('pdfTurnLayer');
+    if(el)el.remove();
+    document.getElementById('pdfBook')?.classList.remove('is-dragging');
+  }
+
+  async function showSpread(spread,dir){
+    if(!activeDoc)return;
+    const total=activeDoc.numPages, maxStart=total%2?Math.max(1,total):Math.max(1,total-1);
+    spread=Math.max(1,Math.min(maxStart,spread));
+    if(spread%2===0)spread--;
+    removeTurnLayer();
+    pageL.className='pdf-page left pdf-static'; pageR.className='pdf-page right pdf-static';
+    const p1=await activeDoc.getPage(spread); await renderPage(p1,canvasL);
+    if(spread+1<=total){const p2=await activeDoc.getPage(spread+1);await renderPage(p2,canvasR)}
+    else{canvasR.width=1;canvasR.height=1}
+    caption.textContent=spread+1<=total?`Halaman ${spread}–${spread+1} / ${total}`:`Halaman ${spread} / ${total}`;
+    activeSpread=spread;
+  }
+
+  async function renderTurnImage(pageNum, width, height){
+    const page=await activeDoc.getPage(pageNum);
+    const base=page.getViewport({scale:1});
+    const scale=Math.min((Math.max(120,width)-8)/base.width,(Math.max(120,height)-8)/base.height);
+    const vp=page.getViewport({scale:Math.max(.25,scale*window.devicePixelRatio)});
+    const c=document.createElement('canvas');
+    c.width=Math.floor(vp.width); c.height=Math.floor(vp.height);
+    await page.render({canvasContext:c.getContext('2d',{alpha:false}),viewport:vp}).promise;
+    return canvasToDataURL(c);
+  }
+
+  async function makeTurnLayer(dir){
+    if(!activeDoc)return null;
+    const total=activeDoc.numPages;
+    const target=dir==='forward'?activeSpread+2:activeSpread-2;
+    if(target<1 || target>total)return null;
+    const book=document.getElementById('pdfBook');
+    const r=book.getBoundingClientRect();
+    const halfW=Math.max(180,r.width/2), h=Math.max(240,r.height);
+    const layer=document.createElement('div');
+    layer.id='pdfTurnLayer';
+    layer.className='pdf-turn-layer '+(dir==='forward'?'forward':'back');
+    const front=document.createElement('div'); front.className='pdf-turn-face front';
+    const back=document.createElement('div'); back.className='pdf-turn-face back';
+    const src=dir==='forward'?canvasR:canvasL;
+    const frontUrl=canvasToDataURL(src);
+    const backUrl=await renderTurnImage(target,halfW,h);
+    if(!frontUrl||!backUrl)return null;
+    front.style.backgroundImage=`url("${frontUrl}")`;
+    back.style.backgroundImage=`url("${backUrl}")`;
+    layer.append(front,back); book.appendChild(layer);
+    return layer;
+  }
+
+  function prepareGesture(dir,g){
+    if(!g||g.preparing)return;
+    if(dir==='forward' && activeSpread+2>activeDoc.numPages)return;
+    if(dir==='back' && activeSpread-2<1)return;
+    g.dir=dir;
+    g.preparing=makeTurnLayer(dir).then(layer=>{
+      g.layer=layer;
+      if(!layer)return;
+      g.layer.style.transform=`rotateY(${turnAngle(g, g.lastX ?? g.startX)}deg)`;
+    }).catch(()=>null);
+  }
+
+  function turnAngle(g,clientX){
+    const signed=g.dir==='forward'?g.startX-clientX:clientX-g.startX;
+    g.progress=Math.max(0,Math.min(1,signed/(g.r.width*.58)));
+    const eased=1-Math.pow(1-g.progress,1.12);
+    return (g.dir==='forward'?-180:180)*eased;
+  }
+
+  function applyGesturePosition(g,clientX){
+    g.lastX=clientX;
+    if(!g.dir){
+      const dx=clientX-g.startX;
+      if(Math.abs(dx)<10)return;
+      g.dir=dx<0?'forward':'back';
+      prepareGesture(g.dir,g);
+      return;
+    }
+    if(!g.layer)return;
+    g.layer.style.transform=`rotateY(${turnAngle(g,clientX)}deg)`;
+  }
+
+  function releasePointer(g,e){
+    try{g.book.releasePointerCapture?.(g.pointerId ?? e?.pointerId)}catch(_){}
+  }
+
+  async function finishTapTurn(dir){
+    if(!activeDoc)return;
+    if(dir==='forward' && activeSpread+2>activeDoc.numPages)return;
+    if(dir==='back' && activeSpread-2<1)return;
+    const book=document.getElementById('pdfBook');
+    const r=book.getBoundingClientRect();
+    const g={startX:dir==='forward'?r.right:r.left,lastX:dir==='forward'?r.left:r.right,r,book,dir,progress:1};
+    const layer=await makeTurnLayer(dir);
+    if(!layer){await showSpread(dir==='forward'?activeSpread+2:activeSpread-2);return;}
+    layer.style.transform='rotateY(0deg)';
+    requestAnimationFrame(()=>{
+      layer.style.transition='transform 820ms cubic-bezier(.18,.74,.14,1)';
+      layer.style.transform=`rotateY(${dir==='forward'?-180:180}deg)`;
+    });
+    await new Promise(res=>setTimeout(res,850));
+    layer.remove();
+    await showSpread(dir==='forward'?activeSpread+2:activeSpread-2);
+  }
+
+  function beginBookGesture(e){
+    if(!activeDoc || gesture || (e.pointerType==='mouse'&&e.button!==0))return;
+    const book=document.getElementById('pdfBook'), r=book.getBoundingClientRect();
+    e.preventDefault();
+    gesture={startX:e.clientX,startY:e.clientY,lastX:e.clientX,lastY:e.clientY,lastT:performance.now(),progress:0,layer:null,preparing:null,book,r,pointerId:e.pointerId,dir:null,velocity:0,moved:false};
+    book.classList.add('is-dragging');
+    try{book.setPointerCapture?.(e.pointerId)}catch(_){}
+  }
+
+  function updateBookGesture(clientX,clientY){
+    if(!gesture)return;
+    const g=gesture;
+    const dx=clientX-g.startX, dy=clientY-g.startY;
+    const now=performance.now();
+    g.velocity=(clientX-g.lastX)/Math.max(1,now-g.lastT);
+    g.lastT=now;
+    g.lastX=clientX; g.lastY=clientY;
+    if(Math.abs(dx)>10 || Math.abs(dy)>10)g.moved=true;
+    // Membalik halaman harus dominan horizontal agar scroll/tap tidak salah terbaca.
+    if(Math.abs(dx)<10 || Math.abs(dx)<Math.abs(dy)*.72)return;
+    applyGesturePosition(g,clientX);
+  }
+
+  async function endBookGesture(e){
+    if(!gesture)return;
+    const g=gesture;
+    const dx=g.lastX-g.startX;
+    const dy=g.lastY-g.startY;
+    const isTap=Math.abs(dx)<14 && Math.abs(dy)<14;
+
+    if(isTap){
+      suppressBookClickUntil=Date.now()+650;
+      gesture=null;
+      g.book.classList.remove('is-dragging');
+      releasePointer(g,e);
+      const rect=g.book.getBoundingClientRect();
+      const dir=e.clientX>=rect.left+rect.width/2?'forward':'back';
+      // Tap kiri = halaman sebelumnya, tap kanan = halaman berikutnya.
+      finishTapTurn(dir);
+      return;
+    }
+
+    if(!g.dir && Math.abs(dx)>=10 && Math.abs(dx)>=Math.abs(dy)*.72){
+      g.dir=dx<0?'forward':'back';
+      prepareGesture(g.dir,g);
+    }
+    if(g.preparing&&!g.layer)await g.preparing;
+    if(!g.layer){
+      gesture=null;g.book.classList.remove('is-dragging');releasePointer(g,e);return;
+    }
+    turnAngle(g,g.lastX);
+    const commit=g.progress>.13 || Math.abs(g.velocity||0)>.18;
+    const finalAngle=commit?(g.dir==='forward'?-180:180):0;
+    const layer=g.layer;
+    layer.style.transition='transform 980ms cubic-bezier(.18,.74,.14,1)';
+    layer.style.transform=`rotateY(${finalAngle}deg)`;
+    gesture=null; g.book.classList.remove('is-dragging'); releasePointer(g,e);
+    await new Promise(res=>setTimeout(res,1000));
+    layer.remove();
+    if(commit)await showSpread(g.dir==='forward'?activeSpread+2:activeSpread-2);
+    else await showSpread(activeSpread);
+  }
+
+  function bindBookTouch(){
+    const book=document.getElementById('pdfBook'); if(!book)return;
+    book.addEventListener('pointerdown',beginBookGesture,{passive:false});
+    book.addEventListener('pointermove',e=>{if(gesture){e.preventDefault();updateBookGesture(e.clientX,e.clientY)}},{passive:false});
+    book.addEventListener('pointerup',endBookGesture,{passive:false});
+    book.addEventListener('pointercancel',endBookGesture,{passive:false});
+    // Dukungan sentuhan lama pada perangkat yang tidak mengirim pointer event secara konsisten.
+    book.addEventListener('click',e=>{
+      if(Date.now()<suppressBookClickUntil || !activeDoc || gesture || e.target.closest('button,a'))return;
+      const rect=book.getBoundingClientRect();
+      if(e.clientX<rect.left || e.clientX>rect.right)return;
+      finishTapTurn(e.clientX>=rect.left+rect.width/2?'forward':'back');
+    });
+  }
+
+  async function activateBook(){
+    if(!activePdf)return;
+    try{
+      const lib=await loadPdfJs();
+      const ab=await activePdf.file.arrayBuffer();
+      activeDoc=await lib.getDocument({data:ab}).promise;
+      modal.classList.remove('scroll-active'); document.getElementById('pdfScrollStage')?.classList.remove('active'); modal.classList.add('book-active'); stage.classList.add('active'); stage.setAttribute('aria-hidden','false');
+      await showSpread(1);
+      label.textContent='Mode Buku · '+activePdf.name.replace(/\.pdf$/i,'');
+    }catch(e){
+      alert(e.message||'Mode buku tidak dapat dibuka.'); activateScroll();
+    }
+  }
+  async function activateScroll(){
+    if(!activePdf)return;
+    modal.classList.remove('book-active'); stage.classList.remove('active'); stage.setAttribute('aria-hidden','true');
+    modal.classList.add('scroll-active');
+    const scrollStage=document.getElementById('pdfScrollStage'); scrollStage?.classList.add('active'); scrollStage?.setAttribute('aria-hidden','false');
+    label.textContent='Mode Scroll · '+activePdf.name.replace(/\.pdf$/i,'');
+    try{
+      if(!activeDoc){const lib=await loadPdfJs(); const ab=await activePdf.file.arrayBuffer(); activeDoc=await lib.getDocument({data:ab}).promise;}
+      await renderScrollDoc(activeDoc);
+    }catch(e){alert(e.message||'PDF tidak dapat dirender.');}
+  }
+
+  scrollBtn&&scrollBtn.addEventListener('click',activateScroll);
+  bookBtn&&bookBtn.addEventListener('click',activateBook);
+  document.addEventListener('keydown',e=>{
+    if(!modal.classList.contains('pdf-mode')||!modal.classList.contains('book-active'))return;
+    revealPdfHeader();
+    if(e.key==='ArrowRight'){e.preventDefault();showSpread(activeSpread+2,'forward')}
+    if(e.key==='ArrowLeft'){e.preventDefault();showSpread(activeSpread-2,'back')}
+  });
+  window.addEventListener('resize',()=>{if(activeDoc&&modal.classList.contains('book-active'))showSpread(activeSpread); else if(activeDoc&&modal.classList.contains('scroll-active'))renderScrollDoc(activeDoc)});
+  window.addEventListener('popstate',()=>{if(modal.classList.contains('pdf-mode')){closePdfCleanup();modal.classList.remove('open');document.body.style.overflow=''}});
+  const close=document.getElementById('closeModal');
+  close&&close.addEventListener('click',()=>{if(modal.classList.contains('pdf-mode')){closePdfCleanup();}});
+
+  bindBookTouch();
+  renderCards();
+  loadDriveEntries();
+})();
+</script>
+
+<!-- VAOZEE_EMBEDDED_MODULES_START -->
+<script type="application/json" id="vaozee-embedded-modules">[]</script>
+<!-- VAOZEE_EMBEDDED_MODULES_END -->
+</body>
+</html>
+
+<script>document.addEventListener('DOMContentLoaded',updateModuleCounters);</script>

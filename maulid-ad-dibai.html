@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maulid Ad-Diba'i — Teks Arab, Terjemahan &amp; Penjelasan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#FAF3E2;
+    --parchment-deep:#F2E8D2;
+    --card:#FFFCF5;
+    --ink:#2B2116;
+    --ink-soft:#4A3C2C;
+    --gold:#B08B2E;
+    --gold-deep:#8C6C1F;
+    --green:#2E4A38;
+    --green-deep:#1E3226;
+    --rule:#D9C79A;
+    --shadow: 0 6px 24px rgba(43,33,22,0.08);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #FFFEFA 0%, var(--parchment) 55%, var(--parchment-deep) 100%);
+    color:var(--ink);
+    font-family:'Lora', serif;
+    line-height:1.75;
+    padding-bottom:60px;
+  }
+
+  .wrap{ max-width:880px; margin:0 auto; padding:0 20px; }
+
+  header.hero{
+    text-align:center;
+    padding:56px 20px 40px;
+    background: linear-gradient(180deg, var(--green-deep) 0%, var(--green) 100%);
+    color:#F6EFDD;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::before, header.hero::after{
+    content:"";
+    position:absolute; left:0; right:0; height:10px;
+    background:repeating-linear-gradient(45deg, var(--gold) 0 8px, transparent 8px 16px);
+    opacity:.55;
+  }
+  header.hero::before{top:0;}
+  header.hero::after{bottom:0;}
+
+  .ornament{ font-size:22px; letter-spacing:10px; color:var(--gold); margin-bottom:14px; }
+
+  header.hero .arabic-title{
+    font-family:'Scheherazade New', serif;
+    font-size:60px; line-height:1.3; margin:0 0 10px; color:#FBF3DC;
+  }
+  header.hero h1{
+    font-family:'Cormorant Garamond', serif; font-weight:600; font-size:30px;
+    letter-spacing:1.5px; margin:0 0 6px; text-transform:uppercase;
+  }
+  header.hero .subtitle{
+    font-family:'Lora', serif; font-style:italic; font-size:16px; color:#D9CDA8; margin:0 0 24px;
+  }
+
+  .author-plate{
+    display:inline-block; margin-top:10px; padding:14px 28px;
+    border:1px solid rgba(176,139,46,0.55); border-radius:2px; background:rgba(0,0,0,0.12);
+  }
+  .author-plate .arabic{
+    font-family:'Scheherazade New', serif; font-size:26px; display:block; margin-bottom:4px; color:#FBF3DC;
+  }
+  .author-plate .latin{ font-family:'Lora', serif; font-size:14px; color:#D9CDA8; letter-spacing:.3px; }
+
+  .intro-note{
+    background:var(--card); border:1px solid var(--rule); border-left:5px solid var(--gold);
+    border-radius:4px; padding:22px 26px; margin:-28px auto 20px; max-width:820px;
+    box-shadow:var(--shadow); font-size:15.5px; color:var(--ink-soft);
+  }
+  .intro-note h3{ margin:0 0 8px; font-family:'Cormorant Garamond', serif; font-size:20px; color:var(--green-deep); }
+  .intro-note p{margin:6px 0;}
+
+  .audit-note{
+    background:#F3EFE1; border:1px dashed var(--gold-deep); border-radius:4px;
+    padding:16px 22px; margin:0 auto 36px; max-width:820px; font-size:14px; color:var(--ink-soft);
+  }
+  .audit-note strong{color:var(--green-deep);}
+
+  nav.toc{
+    background:var(--card); border:1px solid var(--rule); border-radius:6px;
+    padding:24px 28px; margin:0 auto 44px; box-shadow:var(--shadow);
+  }
+  nav.toc h2{
+    font-family:'Cormorant Garamond', serif; font-size:24px; color:var(--green-deep);
+    margin:0 0 14px; text-align:center; letter-spacing:.5px;
+  }
+  nav.toc ol{ columns:2; column-gap:32px; padding-left:20px; margin:0; }
+  nav.toc li{margin-bottom:9px;break-inside:avoid;}
+  nav.toc a{ color:var(--ink-soft); text-decoration:none; font-size:14.5px; border-bottom:1px dotted var(--rule); }
+  nav.toc a:hover{color:var(--gold-deep);}
+
+  section.fasl{
+    background:var(--card); border:1px solid var(--rule); border-radius:6px;
+    padding:36px 40px; margin-bottom:26px; box-shadow:var(--shadow); scroll-margin-top:20px;
+  }
+
+  .fasl-kicker{
+    font-family:'Cormorant Garamond', serif; font-size:13px; letter-spacing:3px;
+    text-transform:uppercase; color:var(--gold-deep); margin:0 0 6px;
+  }
+  .fasl h2.title{
+    font-family:'Cormorant Garamond', serif; font-weight:600; font-size:26px; color:var(--green-deep);
+    margin:0 0 22px; padding-bottom:14px; border-bottom:2px solid var(--rule);
+  }
+
+  .arabic-block{
+    font-family:'Scheherazade New', serif; direction:rtl; text-align:right;
+    font-size:28px; line-height:2.15; color:var(--ink);
+    background:linear-gradient(180deg, #FFFEFA, #FBF6E9);
+    border:1px solid var(--rule); border-radius:4px; padding:26px 30px; margin-bottom:18px;
+  }
+  .arabic-block .bait{display:block; margin-bottom:6px;}
+  .arabic-block .refrain{ color:var(--gold-deep); font-size:22px; display:block; text-align:center; margin:14px 0; }
+
+  /* recurring liturgical response line "Allahumma shalli..." */
+  .interlude{
+    font-family:'Scheherazade New', serif; direction:rtl; text-align:center;
+    font-size:23px; color:var(--gold-deep); margin:4px auto 20px; padding:8px 0;
+  }
+  .interlude::before, .interlude::after{ content:"❊"; margin:0 12px; color:var(--gold); font-size:14px; }
+
+  .translation-block{
+    background:#F6F1E2; border-left:4px solid var(--green); border-radius:3px;
+    padding:18px 24px; margin-bottom:18px; font-size:15.5px; color:var(--ink-soft);
+  }
+  .translation-block .label{
+    font-family:'Cormorant Garamond', serif; font-weight:700; color:var(--green-deep);
+    font-size:13.5px; letter-spacing:1.5px; text-transform:uppercase; display:block; margin-bottom:8px;
+  }
+
+  .explain-block{
+    background:#FBF3DC; border:1px dashed var(--gold); border-radius:3px;
+    padding:18px 24px; font-size:15px; color:var(--ink-soft);
+  }
+  .explain-block .label{
+    font-family:'Cormorant Garamond', serif; font-weight:700; color:var(--gold-deep);
+    font-size:13.5px; letter-spacing:1.5px; text-transform:uppercase; display:block; margin-bottom:8px;
+  }
+  .explain-block ul{margin:8px 0 0; padding-left:20px;}
+  .explain-block li{margin-bottom:4px;}
+
+  .divider{ text-align:center; color:var(--gold); font-size:20px; letter-spacing:12px; margin:8px 0 26px; }
+
+  .mahal-badge{
+    display:inline-block; background:var(--green-deep); color:#F6EFDD;
+    font-family:'Cormorant Garamond', serif; letter-spacing:2px; font-size:13px;
+    text-transform:uppercase; padding:6px 16px; border-radius:20px; margin-bottom:16px;
+  }
+
+  .alt-badge{
+    display:inline-block; background:var(--gold-deep); color:#FFF8E7;
+    font-family:'Cormorant Garamond', serif; letter-spacing:1.5px; font-size:12.5px;
+    text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:14px;
+  }
+
+  footer{ text-align:center; margin-top:50px; padding:26px 20px; border-top:1px solid var(--rule); }
+  footer .foot-orn{ color:var(--gold); letter-spacing:10px; margin-bottom:10px; font-size:16px; }
+  footer p{ margin:4px 0; font-size:13.5px; color:var(--ink-soft); font-family:'Lora', serif; }
+
+  @media (max-width:640px){
+    header.hero .arabic-title{font-size:38px;}
+    .arabic-block{font-size:22px; padding:18px 16px;}
+    section.fasl{padding:22px 18px;}
+    nav.toc ol{columns:1;}
+  }
+  @media print{
+    body{background:#fff;}
+    section.fasl{box-shadow:none; break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="ornament">۞ ۞ ۞</div>
+  <div class="arabic-title">مَوْلِدُ الدِّيبَعِيِّ</div>
+  <h1>Maulid Ad-Diba'i</h1>
+  <p class="subtitle">Teks Arab Lengkap · Terjemahan · Penjelasan untuk Belajar-Mengajar</p>
+  <div class="author-plate">
+    <span class="arabic">لِلْإِمَامِ الْجَلِيلِ عَبْدِ الرَّحْمَٰنِ الدِّيبَعِيِّ رَحِمَهُ اللهُ</span>
+    <span class="latin">Karya Al-Imam Al-Jalil Abdurrahman bin Ali Ad-Diba'i Asy-Syaibani Az-Zabidi (w. 944 H)</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="intro-note">
+    <h3>Tentang Kitab Ini</h3>
+    <p><strong>Maulid Ad-Diba'i</strong> disusun oleh Al-Imam Abdurrahman bin Ali bin Muhammad Ad-Diba'i Asy-Syaibani Az-Zabidi, ulama, ahli hadis, dan sejarawan besar dari Zabid, Yaman, wafat tahun 944 H. Kitab ini salah satu naskah maulid Nabi ﷺ yang paling luas dibaca di dunia Islam — termasuk Nusantara — berisi pujian, kisah kelahiran, sifat mulia, dan mukjizat Rasulullah ﷺ dalam bentuk <em>saj'</em> (prosa berirama) dan beberapa qasidah bersajak.</p>
+    <p>Naskah di halaman ini disusun lengkap sesuai urutan aslinya, dari bacaan pembuka hingga doa penutup, dengan terjemahan dan catatan penjelasan untuk keperluan belajar-mengajar.</p>
+  </div>
+
+  <div class="audit-note">
+    <strong>Catatan transkripsi:</strong> Teks Arab pada halaman ini telah diperiksa ulang baris demi baris terhadap cetakan aslinya (Dar Al-Imam Ar-Rawwas, Beirut, tahqiq As-Sayyid Hasan bin Ali As-Saqqaf) agar sesuai persis, termasuk kalimat sisipan "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ" yang berulang di sela-sela paragraf sebagai jeda/respons — ditandai simbol ❊ pada halaman ini.
+  </div>
+
+  <nav class="toc">
+    <h2>Daftar Isi</h2>
+    <ol>
+      <li><a href="#muqaddimah">Nazham Pembuka: Ya Rabbi Shalli</a></li>
+      <li><a href="#ayat">Ayat-Ayat Al-Qur'an Pembuka</a></li>
+      <li><a href="#qasidah-ahlulbait">Qasidah Alternatif: Ya Rasulallah Salamun 'Alaik</a></li>
+      <li><a href="#fasl1">Fasal 1 — Puji-Pujian &amp; Asal Cahaya Nabi</a></li>
+      <li><a href="#fasl2">Fasal 2 — Dialog Para Nabi tentang Sang Kekasih</a></li>
+      <li><a href="#fasl3">Fasal 3 — Tanda-Tanda &amp; Sifat Kenabian</a></li>
+      <li><a href="#fasl4">Fasal 4 — Kembali dari Mi'raj &amp; Qasidah Rindu Madinah</a></li>
+      <li><a href="#fasl5">Fasal 5 — Syahadat &amp; Penutup Pembukaan</a></li>
+      <li><a href="#fasl6">Fasal 6 — Dua Hadits tentang Nur Muhammad</a></li>
+      <li><a href="#fasl7">Fasal 7 — Perintah kepada Jibril &amp; Pemindahan ke Rahim</a></li>
+      <li><a href="#fasl8">Fasal 8 — Kegembiraan Alam &amp; Kelahiran</a></li>
+      <li><a href="#qiyam">Mahallul Qiyam — Ya Nabi Salam 'Alaik</a></li>
+      <li><a href="#fasl9">Fasal 9 — Mukjizat Kelahiran</a></li>
+      <li><a href="#fasl10">Fasal 10 — Kisah Halimah As-Sa'diyah</a></li>
+      <li><a href="#fasl11">Fasal 11 — Syaqqus Shadr</a></li>
+      <li><a href="#fasl12">Fasal 12 — Alam Menyambut &amp; Kisah Sang Kahin</a></li>
+      <li><a href="#fasl13">Fasal 13 — Akhlak Nabi ﷺ</a></li>
+      <li><a href="#fasl14">Fasal 14 — Keutamaan yang Tiada Tara</a></li>
+      <li><a href="#qasidah-penutup">Qasidah Penutup</a></li>
+      <li><a href="#doa">Doa Penutup Maulid</a></li>
+    </ol>
+  </nav>
+
+  <!-- ================= MUQADDIMAH ================= -->
+  <section class="fasl" id="muqaddimah">
+    <p class="fasl-kicker">Dibaca Sebelum Maulid</p>
+    <h2 class="title">Nazham Pembuka — Ya Rabbi Shalli 'ala Muhammad</h2>
+
+    <div class="arabic-block">
+      <span class="bait">يَا رَبِّ صَلِّ عَلَى مُحَمَّدْ ۞ يَا رَبِّ صَلِّ عَلَيْهِ وَسَلِّمْ</span>
+      <span class="bait">يَا رَبِّ بَلِّغْهُ الْوَسِيلَةْ ۞ يَا رَبِّ خُصَّهُ بِالْفَضِيلَةْ</span>
+      <span class="bait">يَا رَبِّ وَارْضَ عَنِ الصَّحَابَةْ ۞ يَا رَبِّ وَارْضَ عَنِ السُّلَالَةْ</span>
+      <span class="bait">يَا رَبِّ وَارْضَ عَنِ الْمَشَايِخْ ۞ يَا رَبِّ فَارْحَمْ وَالِدِينَا</span>
+      <span class="bait">يَا رَبِّ وَارْحَمْنَا جَمِيعًا ۞ يَا رَبِّ وَارْحَمْ كُلَّ مُسْلِمْ</span>
+      <span class="bait">يَا رَبِّ وَاغْفِرْ لِكُلِّ مُذْنِبْ ۞ يَا رَبِّ لَا تَقْطَعْ رَجَانَا</span>
+      <span class="bait">يَا رَبِّ يَا سَامِعْ دُعَانَا ۞ يَا رَبِّ بَلِّغْنَا نَزُورُهْ</span>
+      <span class="bait">يَا رَبِّ تَغْشَانَا بِنُورِهْ ۞ يَا رَبِّ حِفْظَانَكْ وَأَمَانَاكْ</span>
+      <span class="bait">يَا رَبِّ وَاسْكِنَّا جِنَانَكْ ۞ يَا رَبِّ أَجِرْنَا مِنْ عَذَابِكْ</span>
+      <span class="bait">يَا رَبِّ وَارْزُقْنَا الشَّهَادَةْ ۞ يَا رَبِّ حِطْنَا بِالسَّعَادَةْ</span>
+      <span class="bait">يَا رَبِّ وَاصْلِحْ كُلَّ مُصْلِحْ ۞ يَا رَبِّ وَاكْفِ كُلَّ مُؤْذِي</span>
+      <span class="bait">يَا رَبِّ نَخْتِمْ بِالْمُشَفَّعْ ۞ يَا رَبِّ صَلِّ عَلَيْهِ وَسَلِّمْ</span>
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      1. Ya Allah, limpahkan rahmat kepada Muhammad; Ya Allah, limpahkan shalawat dan salam kepadanya.<br>
+      2. Ya Allah, sampaikan ia ke maqam Al-Wasilah; Ya Allah, khususkan dia dengan keutamaan.<br>
+      3. Ya Allah, ridhailah para sahabat; Ya Allah, ridhailah pula keturunannya.<br>
+      4. Ya Allah, ridhailah para masyayikh (guru); Ya Allah, kasihanilah kedua orang tua kami.<br>
+      5. Ya Allah, kasihanilah kami semua; Ya Allah, kasihanilah setiap muslim.<br>
+      6. Ya Allah, ampunilah setiap pendosa; Ya Allah, jangan putus harapan kami.<br>
+      7. Ya Allah, Yang Mendengar doa kami; Ya Allah, sampaikan kami berziarah kepadanya.<br>
+      8. Ya Allah, liputi kami dengan cahayanya; Ya Allah, jagalah keimanan dan amanah kami.<br>
+      9. Ya Allah, tempatkan kami di surga-Mu; Ya Allah, lindungi kami dari azab-Mu.<br>
+      10. Ya Allah, karuniakan kami mati syahid; Ya Allah, liputi kami dengan kebahagiaan.<br>
+      11. Ya Allah, perbaikilah setiap yang rusak; Ya Allah, cukupkanlah dari setiap yang menyakiti.<br>
+      12. Ya Allah, akhirilah hidup kami dengan syafaat; Ya Allah, limpahkan shalawat dan salam kepadanya.
+    </div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Nazham dua belas bait ini adalah "gerbang pembuka" sebelum pembacaan maulid dimulai. Polanya berulang, memudahkan santri baru menghafal irama sebelum masuk ke bagian prosa yang lebih panjang. Kata <em>al-Wasilah</em> pada bait ke-2 merujuk pada kedudukan tertinggi di surga yang khusus dijanjikan bagi Nabi ﷺ.
+    </div>
+  </section>
+
+  <!-- ================= AYAT ================= -->
+  <section class="fasl" id="ayat">
+    <p class="fasl-kicker">Bismillahirrahmanirrahim</p>
+    <h2 class="title">Ayat-Ayat Al-Qur'an Pembuka</h2>
+
+    <div class="arabic-block">
+      <span class="bait">لَقَدْ جَاءَكُمْ رَسُولٌ مِّنْ أَنفُسِكُمْ عَزِيزٌ عَلَيْهِ مَا عَنِتُّمْ حَرِيصٌ عَلَيْكُم بِالْمُؤْمِنِينَ رَؤُوفٌ رَّحِيمٌ</span>
+      <span class="bait">إِنَّ اللهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا</span>
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      "Sungguh telah datang kepada kalian seorang Rasul dari kalangan kalian sendiri, berat terasa olehnya penderitaan kalian, sangat menginginkan (keimanan dan keselamatan) bagi kalian, amat belas kasihan lagi penyayang terhadap orang-orang mukmin." (QS. At-Taubah: 128)<br><br>
+      "Sesungguhnya Allah dan para malaikat-Nya bershalawat untuk Nabi. Wahai orang-orang yang beriman, bershalawatlah kalian untuknya dan ucapkanlah salam penghormatan kepadanya." (QS. Al-Ahzab: 56)
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Dua ayat ini menjadi jembatan resmi antara nazham pembuka dan isi maulid. Ayat At-Taubah menonjolkan sifat kasih sayang Nabi ﷺ kepada umatnya, sedangkan ayat Al-Ahzab 56 menjadi dasar utama disyariatkannya membaca shalawat — inilah rujukan mengapa seluruh teks maulid dipenuhi kalimat "Allahumma shalli wa sallim 'alaih" di sela-sela paragraf.
+    </div>
+  </section>
+
+  <!-- ================= QASIDAH ALTERNATIF AHLUL BAIT ================= -->
+  <section class="fasl" id="qasidah-ahlulbait">
+    <span class="alt-badge">Atau Dibaca Dengan</span>
+    <h2 class="title">Ya Rasulallah Salamun 'Alaik</h2>
+
+    <div class="arabic-block">
+      <span class="bait">يَا رَسُولَ اللهِ سَلَامٌ عَلَيْكْ ۞ يَا رَفِيعَ الشَّانِ وَالدَّرَجِ</span>
+      <span class="bait">عَطْفَةً يَا جِيرَةَ الْعَلَمِ ۞ يَا أَهِيلَ الْجُودِ وَالْكَرَمِ</span>
+      <span class="bait">نَحْنُ جِيرَانٌ بِهَذَا الْحَرَمِ ۞ حَرَمِ الْإِحْسَانِ وَالْحَسَنِ</span>
+      <span class="bait">نَحْنُ مِنْ قَوْمٍ بِهِ سَكَنُوا ۞ وَبِهِ مِنْ خَوْفِهِمْ آمَنُوا</span>
+      <span class="bait">وَبِآيَاتِ الْقُرْآنِ عَنُوا ۞ فَاتَّئِدْ فِينَا أَخَا الْوَهَنِ</span>
+      <span class="bait">نَعْرِفُ الْبَطْحَاءَ وَتَعْرِفُنَا ۞ وَالصَّفَا وَالْبَيْتَ يَأْلَفُنَا</span>
+      <span class="bait">وَلَنَا الْمُعَلَّى وَخَيْفُ مِنَى ۞ فَاعْلَمَنْ هَذَا وَكُنْ زَكِنِ</span>
+      <span class="bait">وَلَنَا خَيْرُ الْأَنَامِ أَبٌ ۞ وَعَلِيٌّ الْمُرْتَضَى حَسَبُهُ</span>
+      <span class="bait">وَإِلَى السِّبْطَيْنِ نَنْتَسِبُ ۞ نَسَبًا مَا فِيهِ مِنْ دَخَنِ</span>
+      <span class="bait">كَرَّمَ إِمَامًا بَعْدَهُ خَلَفُوا ۞ مِنْهُ سَادَاتٌ بِنَا عُرِفُوا</span>
+      <span class="bait">وَبِهَذَا الْوَصْفِ قَدْ وُصِفُوا ۞ مِنْ قَدِيمِ الدَّهْرِ وَالزَّمَنِ</span>
+      <span class="bait">مِثْلُ زَيْنِ الْعَابِدِينَ عَلِيّ ۞ وَابْنِهِ الْبَاقِرِ خَيْرِ وَلِيّ</span>
+      <span class="bait">وَالْإِمَامِ الصَّادِقِ الْحَفِلِ ۞ وَعَلِيٍّ ذِي الْعُلَا الْيَقِينِ</span>
+      <span class="bait">فَهُمُ الْقَوْمُ الَّذِينَ هَدَوْا ۞ وَبِفَضْلِ اللهِ قَدْ سَعِدُوا</span>
+      <span class="bait">وَلِغَيْرِ اللهِ مَا قَصَدُوا ۞ وَمَعَ الْقُرْآنِ فِي قَرَنِ</span>
+      <span class="bait">أَهْلُ بَيْتِ الْمُصْطَفَى الطُّهُرِ ۞ هُمْ أَمَانُ الْأَرْضِ فَاذْكُرِ</span>
+      <span class="bait">شُبِّهُوا بِالْأَنْجُمِ الزُّهْرِ ۞ مِثْلَمَا قَدْ جَاءَ فِي السُّنَنِ</span>
+      <span class="bait">وَسَفِينٍ لِّلنَّجَاةِ إِذَا ۞ خِفْتُ مِنْ طُوفَانِ كُلِّ أَذَى</span>
+      <span class="bait">فَانْجُ فِيهَا لَا تَكُونُ كَذَا ۞ وَاعْتَصِمْ بِاللهِ وَاسْتَعِنْ</span>
+      <span class="bait">رَبِّ فَانْفَعْنَا بِبَرَكَتِهِمْ ۞ وَاهْدِنَا الْحُسْنَى بِحُرْمَتِهِمْ</span>
+      <span class="bait">وَأَمِتْنَا فِي طَرِيقَتِهِمْ ۞ وَمَعَافَاةً مِّنَ الْفِتَنِ</span>
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      1. Wahai Rasulullah, salam sejahtera atasmu; wahai yang tinggi kedudukan dan derajatnya.<br>
+      2. Dengan penuh kasih, wahai tetangga sang panji kemuliaan; wahai ahli kedermawanan dan kemuliaan.<br>
+      3. Kami adalah tetangga di tanah suci ini; tanah suci kebaikan dan keindahan.<br>
+      4. Kami dari kaum yang menetap di sana; dan dengannya mereka aman dari ketakutan.<br>
+      5. Dengan ayat-ayat Al-Qur'an mereka berpegang teguh; maka bersabarlah bersama kami, wahai saudara yang lemah.<br>
+      6. Kami mengenal Bathha' dan ia mengenal kami; Shafa dan Baitullah pun akrab dengan kami.<br>
+      7. Bagi kami Al-Mu'alla dan Khaif Mina; ketahuilah ini dan camkanlah.<br>
+      8. Bagi kami sebaik-baik manusia sebagai leluhur (Ali bin Abi Thalib); dan Ali Al-Murtadha nasabnya.<br>
+      9. Kepada dua cucu (Hasan-Husain) kami bernasab; nasab yang tiada cela di dalamnya.<br>
+      10. Setiap imam mulia setelahnya mewarisi kedudukan itu; darinyalah lahir para pemimpin yang kami kenal.<br>
+      11. Dengan sifat inilah mereka dikenal, sejak zaman dahulu kala.<br>
+      12. Seperti Zainal Abidin Ali, dan putranya Al-Baqir sebaik-baik wali.<br>
+      13. Dan Imam Ash-Shadiq yang agung, serta Ali pemilik keyakinan yang tinggi.<br>
+      14. Merekalah kaum yang memberi petunjuk; dengan karunia Allah mereka berbahagia.<br>
+      15. Tidak pernah mereka bertujuan selain kepada Allah; bersama Al-Qur'an mereka sejalan.<br>
+      16. Ahlul Bait Al-Musthafa yang suci; merekalah keamanan bumi, maka ingatlah.<br>
+      17. Mereka diserupakan dengan bintang-bintang gemerlap, sebagaimana disebutkan dalam hadits.<br>
+      18. Bagaikan bahtera penyelamat, apabila aku takut akan badai segala bencana.<br>
+      19. Maka selamatlah di dalamnya, janganlah celaka; berpeganglah kepada Allah dan mintalah pertolongan.<br>
+      20. Ya Tuhanku, berilah kami manfaat dengan berkah mereka; tunjukilah kami kebaikan dengan kehormatan mereka.<br>
+      21. Wafatkanlah kami dalam jalan mereka, serta selamatkanlah kami dari segala fitnah.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Qasidah ini ditandai sebagai <em>alternatif</em> ("أو يقرأ بقوله" — atau dibaca dengan ucapan ini) bacaan pembuka selain ayat-ayat di atas. Isinya memuji Ahlul Bait Nabi ﷺ — jalur keturunan melalui Sayyidina Ali dan Sayyidah Fathimah, mencakup Hasan, Husain, Ali Zainal Abidin, Muhammad Al-Baqir, hingga Ja'far Ash-Shadiq. Baik dijelaskan bahwa penyebutan silsilah ini mencerminkan tradisi kecintaan kepada Ahlul Bait yang kuat dalam khazanah maulid, dan bisa menjadi pintu masuk mengenalkan santri pada nama-nama imam Ahlul Bait yang juga dikenal luas sebagai ulama besar dalam sejarah Islam.
+    </div>
+  </section>
+
+  <!-- ================= FASL 1 ================= -->
+  <section class="fasl" id="fasl1">
+    <p class="fasl-kicker">Bismillahirrahmanirrahim</p>
+    <h2 class="title">Fasal 1 — Puji-Pujian &amp; Asal Cahaya Nabi ﷺ</h2>
+
+    <div class="arabic-block">
+      اَلْحَمْدُ لِلَّهِ الْقَوِيِّ الْغَالِبِ، الْوَلِيِّ الطَّالِبِ، الْبَاعِثِ الْوَارِثِ، الْمَانِحِ السَّالِبِ ﴿﴾ عَالِمِ الْكَائِنِ وَالْبَائِنِ وَالزَّائِلِ وَالذَّاهِبِ ﴿﴾ يُسَبِّحُهُ الْآفِلُ وَالْمَائِلُ وَالطَّالِعُ وَالْغَارِبِ ﴿﴾ وَيُوَحِّدُهُ النَّاطِقُ وَالصَّامِتُ وَالْجَامِدُ وَالذَّائِبِ ﴿﴾ يَضْرِبُ بِعَدْلِهِ السَّاكِنَ وَيَسْكُنُ بِفَضْلِهِ الضَّارِبَ (لَا إِلَٰهَ إِلَّا اللهُ) حَكِيمٌ أَظْهَرَ بَدِيعَ حِكَمِهِ وَالْعَجَائِبِ فِي تَرْتِيبِ تَرْكِيبِ هَذِهِ الْقَوَالِبِ ﴿﴾ خَلَقَ مُخًّا وَعَظْمًا وَعَضُدًا وَعُرُوقًا وَلَحْمًا وَجِلْدًا وَشَعْرًا بِنَظْمٍ مُؤْتَلِفٍ مُتَرَاكِبِ ﴿﴾ مِنْ مَّاءٍ دَافِقٍ يَخْرُجُ مِنْ بَيْنِ الصُّلْبِ وَالتَّرَائِبِ (لَا إِلَٰهَ إِلَّا اللهُ) كَرِيمٌ بَسَطَ لِخَلْقِهِ بِسَاطَ كَرَمِهِ وَالْمَوَاهِبِ ﴿﴾ يَنْزِلُ فِي كُلِّ لَيْلَةٍ إِلَى سَمَاءِ الدُّنْيَا وَيُنَادِي: هَلْ مِنْ مُسْتَغْفِرٍ؟ هَلْ مِنْ تَائِبٍ؟ هَلْ مِنْ طَالِبِ حَاجَةٍ فَأُنِيلَهُ الْمَطَالِبَ؟ ﴿﴾ فَلَوْ رَأَيْتَ الْخُدَّامَ قِيَامًا عَلَى الْأَقْدَامِ، وَقَدْ جَادُوا بِالدُّمُوعِ السَّوَاكِبِ ﴿﴾ وَالْقَوْمَ بَيْنَ نَادِمٍ وَتَائِبٍ ﴿﴾ وَخَائِفٍ لِّنَفْسِهِ يُعَاتِبُ ﴿﴾ وَآبِقٍ مِّنَ الذُّنُوبِ إِلَيْهِ هَارِبٍ ﴿﴾ فَلَا يَزَالُونَ فِي الِاسْتِغْفَارِ حَتَّى يَكُفَّ كَفُّ النَّهَارِ ذُيُولَ الْغَيَاهِبِ ﴿﴾ فَيَعُودُونَ وَقَدْ فَازُوا بِالْمَطْلُوبِ، وَأَدْرَكُوا رِضَا الْمَحْبُوبِ، وَلَمْ يَعُدْ أَحَدٌ مِّنَ الْقَوْمِ وَهُوَ خَائِبٌ (لَا إِلَٰهَ إِلَّا اللهُ) ﴿﴾ فَسُبْحَانَهُ وَتَعَالَى مِنْ مَلِكٍ أَوْجَدَ نُورَ نَبِيِّهِ مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ مِنْ نُّورِهِ قَبْلَ أَنْ يَّخْلُقَ آدَمَ مِنَ الطِّينِ اللَّازِبِ ﴿﴾ وَعَرَضَ فَخْرَهُ عَلَى الْأَشْيَاءِ، وَقَالَ: هَذَا سَيِّدُ الْأَنْبِيَاءِ، وَأَجَلُّ الْأَصْفِيَاءِ، وَأَكْرَمُ الْحَبَائِبِ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Segala puji bagi Allah Yang Maha Kuat lagi Maha Mengalahkan, Yang Maha Pemilik lagi Maha Diminta, Yang membangkitkan dan mewariskan, Yang memberi dan mencabut. Yang mengetahui segala yang tampak dan yang tersembunyi, yang fana dan yang berlalu. Bertasbih kepada-Nya segala yang terbenam dan yang condong, yang terbit dan yang tenggelam. Mengesakan-Nya yang berbicara dan yang diam, yang padat dan yang cair. Dengan keadilan-Nya Dia menundukkan yang diam, dan dengan karunia-Nya Dia menenteramkan yang bergerak. <em>(Tiada Tuhan selain Allah)</em> Maha Bijaksana, yang menampakkan keindahan hikmah dan keajaiban-Nya dalam menyusun bentuk-bentuk makhluk ini. Dia menciptakan otak, tulang, lengan, urat, daging, kulit, dan rambut dengan susunan yang rapi lagi saling berkaitan, dari air yang memancar keluar dari antara tulang sulbi dan tulang dada. <em>(Tiada Tuhan selain Allah)</em> Maha Pemurah, yang membentangkan bagi makhluk-Nya hamparan kemurahan dan anugerah. Dia turun setiap malam ke langit dunia dan menyeru: "Adakah orang yang memohon ampun? Adakah orang yang bertaubat? Adakah orang yang meminta suatu keperluan, akan Kukabulkan permintaannya?" Sekiranya engkau melihat para hamba berdiri di atas kaki mereka, mencucurkan air mata yang mengalir deras — sebagian menyesal dan bertaubat, sebagian takut mengoreksi dirinya sendiri, dan sebagian lari kepada-Nya dari dosa-dosanya. Mereka terus beristighfar hingga tangan siang melipat ujung malam yang gelap. Maka mereka kembali dalam keadaan telah meraih yang dicari, dan mendapat ridha Sang Kekasih; tak seorang pun dari mereka kembali dalam kekecewaan. <em>(Tiada Tuhan selain Allah)</em> Maka Maha Suci lagi Maha Tinggi Dia, Sang Raja yang mewujudkan cahaya Nabi-Nya, Muhammad ﷺ, dari cahaya itu sebelum menciptakan Adam dari tanah liat yang melekat. Dia perlihatkan kebanggaan-Nya kepada segala sesuatu, seraya berfirman: "Inilah penghulu para nabi, yang paling agung di antara para kekasih pilihan, dan yang paling mulia di antara para kekasih."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      <ul>
+        <li><strong>Struktur saj':</strong> Fasal ini memakai gaya prosa berirama (<em>saj'</em>) khas kesusastraan Arab klasik. Baik dijelaskan sebagai teknik sastra sebelum santri membaca, agar mereka memahami mengapa iramanya terasa berayun saat dilagukan.</li>
+        <li><strong>Tema utama:</strong> keagungan Allah sebagai Pencipta, proses penciptaan manusia, rahmat Allah yang turun tiap malam, dan penciptaan Nur Muhammad sebelum Nabi Adam — konsep populer dalam tasawuf yang dikenal sebagai "Nur Muhammad".</li>
+        <li>Ajak santri membedakan riwayat sahih dan riwayat yang diperselisihkan ulama hadits terkait Nur Muhammad — melatih sikap kritis tanpa mengurangi kecintaan kepada Nabi ﷺ.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FASL 2 ================= -->
+  <section class="fasl" id="fasl2">
+    <h2 class="title">Fasal 2 — Dialog Para Nabi tentang Sang Kekasih</h2>
+
+    <div class="arabic-block">
+      قِيلَ هُوَ آدَمُ عَلَيْهِ السَّلَامُ؟ قَالَ آدَمُ: بِهِ أُنِيلُهُ أَعْلَى الْمَرَاتِبِ ﴿﴾ قِيلَ هُوَ نُوحٌ عَلَيْهِ السَّلَامُ؟ قَالَ نُوحٌ: بِهِ يَنْجُو مِنَ الْغَرَقِ، وَيَهْلِكُ مَنْ خَالَفَهُ مِنَ الْأَهْلِ وَالْأَقَارِبِ ﴿﴾ قِيلَ هُوَ إِبْرَاهِيمُ عَلَيْهِ السَّلَامُ؟ قَالَ إِبْرَاهِيمُ: بِهِ تَقُومُ حُجَّتُهُ عَلَى عُبَّادِ الْأَصْنَامِ وَالْكَوَاكِبِ ﴿﴾ قِيلَ هُوَ مُوسَى عَلَيْهِ السَّلَامُ؟ قَالَ مُوسَى: أَخُوهُ، وَلَٰكِنْ هَذَا حَبِيبٌ، وَمُوسَى كَلِيمٌ وَمُخَاطَبٌ ﴿﴾ قِيلَ هُوَ عِيسَى عَلَيْهِ السَّلَامُ؟ قَالَ عِيسَى: يُبَشِّرُ بِهِ، وَهُوَ بَيْنَ يَدَيْ نُبُوَّتِهِ كَالْحَاجِبِ ﴿﴾ قِيلَ: فَمَنْ هَذَا الْحَبِيبُ الْكَرِيمُ الَّذِي أَلْبَسْتَهُ حُلَّةَ الْوَقَارِ، وَتَوَّجْتَهُ بِتِيجَانِ الْمَهَابَةِ وَالِافْتِخَارِ، وَنَشَرْتَ عَلَى رَأْسِهِ الْعَصَائِبَ؟ ﴿﴾ قَالَ: هُوَ نَبِيٌّ اسْتَخَرْتُهُ مِنْ لُؤَيِّ بْنِ غَالِبٍ ﴿﴾ يَمُوتُ أَبُوهُ وَأُمُّهُ، وَيَكْفُلُهُ جَدُّهُ، ثُمَّ عَمُّهُ الشَّقِيقُ أَبُو طَالِبٍ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Dikatakan: "Dialah Adam?" Adam menjawab: "Dengannyalah aku mencapai kedudukan yang paling tinggi." Dikatakan: "Dialah Nuh?" Nuh menjawab: "Dengannyalah orang-orang selamat dari tenggelam, dan binasalah dari keluarga serta kerabatku siapa saja yang menyelisihinya." Dikatakan: "Dialah Ibrahim?" Ibrahim menjawab: "Dengannyalah hujjahnya tegak atas para penyembah berhala dan bintang-bintang." Dikatakan: "Dialah Musa?" Musa menjawab: "Dia saudaraku, tetapi dia adalah kekasih (habib), sedangkan aku hanyalah yang diajak bicara (kalim) dan diseru." Dikatakan: "Dialah Isa?" Isa menjawab: "Akulah pemberi kabar gembira tentangnya; aku berada di hadapan kenabiannya bagaikan penunjuk jalan." Dikatakan: "Lalu, siapakah kekasih mulia ini, yang Engkau kenakan padanya jubah kewibawaan, Engkau mahkotai dengan mahkota keagungan dan kebanggaan, dan Engkau bentangkan di atas kepalanya sorban-sorban kemuliaan?" Allah berfirman: "Dialah seorang Nabi yang Aku pilih dari keturunan Lu'ai bin Ghalib. Ayah dan ibunya wafat, lalu ia diasuh kakeknya, kemudian pamannya sendiri, Abu Thalib."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Bagian ini disusun sebagai dialog imajinatif yang memudahkan santri memahami keutamaan Nabi Muhammad ﷺ dibandingkan para nabi ulul azmi lainnya, tanpa merendahkan kedudukan nabi-nabi tersebut. Nasab "Lu'ai bin Ghalib" adalah nenek moyang suku Quraisy; latar belakang yatim piatu Nabi ﷺ sejak kecil menjadi pelajaran tentang kesabaran dan ketetapan takdir Allah.
+    </div>
+  </section>
+
+  <!-- ================= FASL 3 ================= -->
+  <section class="fasl" id="fasl3">
+    <h2 class="title">Fasal 3 — Tanda-Tanda &amp; Sifat Kenabian</h2>
+
+    <div class="arabic-block">
+      يُبْعَثُ مِنْ تِهَامَةَ، بَيْنَ يَدَيِ الْقِيَامَةِ، فِي ظَهْرِهِ عَلَامَةٌ، تُظِلُّهُ الْغَمَامَةُ، تُطِيعُهُ السَّحَائِبُ ﴿﴾ فَجْرِيُّ الْجَبِينِ، لَيْلِيُّ الذَّوَائِبِ ﴿﴾ أَلِفِيُّ الْأَنْفِ، مِيمِيُّ الْفَمِّ، نُونِيُّ الْحَاجِبِ ﴿﴾ سَمْعُهُ يَسْمَعُ صَرِيرَ الْقَلَمِ، بَصَرُهُ إِلَى السَّبْعِ الطِّبَاقِ ثَاقِبٌ ﴿﴾ قَدَمَاهُ قَبَّلَهُمَا الْبَعِيرُ فَأَزَالَ مَا اشْتَكَاهُ مِنَ الْمِحَنِ وَالنَّوَائِبِ ﴿﴾ آمَنَ بِهِ الضَّبُّ، وَسَلَّمَتْ عَلَيْهِ الْأَشْجَارُ، وَخَاطَبَتْهُ الْأَحْجَارُ، وَحَنَّ إِلَيْهِ الْجِذْعُ حَنِينَ حَزِينٍ نَّادِبٍ ﴿﴾ يَدَاهُ تَظْهَرُ بَرَكَتُهُمَا فِي الْمَطَاعِمِ وَالْمَشَارِبِ ﴿﴾ قَلْبُهُ لَا يَغْفُلُ وَلَا يَنَامُ، وَلَٰكِنْ لِّلْخِدْمَةِ عَلَى الدَّوَامِ مُرَاقِبٌ ﴿﴾ إِنْ أُوذِيَ يَعْفُ وَلَا يُعَاقِبُ، وَإِنْ خُوصِمَ يَصْمُتْ وَلَا يُجَاوِبُ ﴿﴾ أَرْفَعُهُ إِلَى أَشْرَفِ الْمَرَاتِبِ، فِي رُكْبَةٍ لَّا تَنْبَغِي قَبْلَهُ وَلَا بَعْدَهُ لِرَاكِبٍ، فِي مَوْكِبٍ مِّنَ الْمَلَائِكَةِ يَفُوقُ عَلَى سَائِرِ الْمَوَاكِبِ ﴿﴾ فَإِذَا ارْتَقَى عَلَى الْكَوْنَيْنِ، وَانْفَصَلَ عَنِ الْعَالَمِينَ، وَوَصَلَ إِلَى قَابَ قَوْسَيْنِ، كُنْتُ لَهُ أَنَا النَّدِيمُ وَالْمُخَاطِبُ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Ia akan diutus dari Tihamah, menjelang hari Kiamat. Di punggungnya terdapat tanda kenabian, awan menaunginya, dan mendung mentaatinya. Keningnya bercahaya bagai fajar, rambutnya tergerai bagai malam. Hidungnya mancung indah, mulutnya bagai huruf mim, alisnya melengkung bagai huruf nun. Pendengarannya mendengar goresan pena takdir, pandangannya menembus tujuh lapis langit. Kedua kakinya pernah dicium seekor unta hingga hilang keluhannya dari derita dan kesusahan. Seekor biawak beriman kepadanya, pepohonan mengucap salam kepadanya, batu-batu menyapanya, dan sebatang pohon kurma merindukannya bagai orang yang meratap sedih. Kedua tangannya menampakkan keberkahan pada makanan dan minuman. Hatinya tidak pernah lalai dan tidak pernah tidur, tetapi senantiasa berjaga untuk berbakti kepada Allah. Jika disakiti, ia memaafkan dan tidak membalas; jika didebat, ia diam dan tidak menjawab dengan kasar. Aku angkat dia ke kedudukan paling mulia, dalam suatu kendaraan yang tak pernah pantas dinaiki siapa pun sebelum maupun sesudahnya, dalam iring-iringan malaikat yang melampaui segala iring-iringan lain. Maka ketika ia naik melampaui dua alam, berpisah dari seluruh makhluk, dan sampai pada jarak "dua busur panah" (qaba qausain), Akulah yang menjadi teman dekat dan yang berbicara dengannya.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Bagian ini menggabungkan <strong>sifat fisik ideal</strong> Nabi ﷺ (dilukiskan dengan metafora huruf Arab — alif, mim, nun) dan ringkasan <strong>Isra' Mi'raj</strong> ("qaba qausain" merujuk Surah An-Najm ayat 9). Kisah unta, pohon kurma, dan batu yang menyapa Nabi ﷺ adalah bagian dari <em>dalail an-nubuwwah</em> (tanda-tanda kenabian) yang populer dalam sirah.
+    </div>
+  </section>
+
+  <!-- ================= FASL 4 ================= -->
+  <section class="fasl" id="fasl4">
+    <h2 class="title">Fasal 4 — Kembali dari Mi'raj &amp; Qasidah Rindu Madinah</h2>
+
+    <div class="arabic-block">
+      ثُمَّ أَرُدُّهُ مِنَ الْعَرْشِ قَبْلَ أَنْ يَّبْرُدَ الْفَرْشُ، وَقَدْ نَالَ جَمِيعَ الْمَآرِبِ ﴿﴾ فَإِذَا شُرِّفَتْ تُرْبَةُ طَيْبَةَ مِنْهُ بِأَشْرَفِ قَالِبٍ، سَعَتْ إِلَيْهِ أَرْوَاحُ الْمُحِبِّينَ عَلَى الْأَقْدَامِ وَالنَّجَائِبِ ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Kemudian Aku kembalikan dia dari Arasy, sebelum sempat dingin tempat tidurnya, setelah ia meraih segala hajatnya. Maka ketika tanah Thaibah (Madinah) dimuliakan dengan jasadnya yang paling mulia, ruh-ruh para pecinta pun berlari menujunya, baik dengan berjalan kaki maupun berkendaraan cepat.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      <span class="bait">صَلَاةُ اللهِ مَا لَاحَتْ كَوَاكِبُ ۞ عَلَى أَحْمَدَ خَيْرِ مَنْ رَّكِبَ النَّجَائِبِ</span>
+      <span class="bait">حَدَا حَادِي السُّرَى بِاسْمِ الْحَبَائِبِ ۞ فَهَزَّ السُّكْرُ أَعْطَافَ الرَّكَائِبِ</span>
+      <span class="bait">أَلَمْ تَرَهَا وَقَدْ مَدَّتْ خُطَاهَا ۞ وَسَالَتْ مِنْ مَّدَامِعِهَا سَحَائِبُ</span>
+      <span class="bait">وَمَالَتْ لِلْحِمَى طَرَبًا وَّحَنَّتْ ۞ إِلَى تِلْكَ الْمَعَالِمِ وَالْمَلَاعِبِ</span>
+      <span class="bait">فَدَعْ جَذْبَ الزِّمَامِ وَلَا تَسُقْهَا ۞ فَقَائِدُ شَوْقِهَا لِلْحَيِّ جَاذِبُ</span>
+      <span class="bait">فَهُمْ طَرَبًا كَمَا هَامَتْ وَإِلَّا ۞ فَإِنَّكَ فِي طَرِيقِ الْحُبِّ كَاذِبُ</span>
+      <span class="bait">أَمَا هَذَا الْعَقِيقُ بَدَا وَهَذِي ۞ قِبَابُ الْحَيِّ لَاحَتْ وَالْمَضَارِبُ</span>
+      <span class="bait">وَتِلْكَ الْقُبَّةُ الْخَضْرَاءُ وَفِيهَا ۞ نَبِيٌّ نُّورُهُ يَجْلُو الْغَيَاهِبَ</span>
+      <span class="bait">وَقَدْ صَحَّ الرِّضَى وَدَنَا التَّلَاقِي ۞ وَقَدْ جَاءَ الْهَنَا مِنْ كُلِّ جَانِبِ</span>
+      <span class="bait">فَقُلْ لِلنَّفْسِ دُونَكِ وَالتَّمَلِّي ۞ فَمَا دُونَ الْحَبِيبِ الْيَوْمَ حَاجِبُ</span>
+      <span class="bait">تَمَلَّيْ بِالْحَبِيبِ بِكُلِّ قَصْدٍ ۞ فَقَدْ حَصَلَ الْهَنَا وَالضِّدُّ غَائِبُ</span>
+      <span class="bait">نَبِيُّ اللهِ خَيْرُ خَلْقٍ جَمِيعًا ۞ لَهُ أَعْلَى الْمَنَاصِبِ وَالْمَرَاتِبِ</span>
+      <span class="bait">لَهُ الْجَاهُ الرَّفِيعُ لَهُ الْمَعَالِي ۞ لَهُ الشَّرَفُ الْمُؤَبَّدُ وَالْمَنَاقِبُ</span>
+      <span class="bait">فَلَوْ أَنَّا سَعَيْنَا كُلَّ يَوْمٍ ۞ عَلَى الْأَحْدَاقِ لَا فَوْقَ النَّجَائِبِ</span>
+      <span class="bait">وَلَوْ أَنَّا عَمِلْنَا كُلَّ حِينٍ ۞ لِأَحْمَدَ مَوْلِدًا قَدْ كَانَ وَاجِبُ</span>
+      <span class="bait">عَلَيْهِ مِنَ الْمُهَيْمِنِ كُلَّ وَقْتٍ ۞ صَلَاةٌ مَّا بَدَا نُورُ الْكَوَاكِبِ</span>
+      <span class="bait">تَعُمُّ الْآلَ وَالْأَصْحَابَ طُرًّا ۞ جَمِيعَهُمُ وَعِتْرَتَهُ الْأَطَايِبَ</span>
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan Qasidah</span>
+      1. Semoga shalawat Allah — selama bintang-bintang bersinar — tercurah atas Ahmad, sebaik-baik pengendara unta pilihan.<br>
+      2. Sang penunjuk jalan malam menggiring kafilah dengan menyebut nama para kekasih, hingga kerinduan menggoyangkan pundak tunggangan.<br>
+      3. Tidakkah engkau lihat, ia telah melangkah jauh, dan air matanya mengalir bagai awan mencurahkan hujan?<br>
+      4. Ia condong rindu ke tanah suci, merindukan tempat-tempat kenangan dan taman masa lalu.<br>
+      5. Maka lepaskanlah kendali, jangan dipaksa langkahnya, sebab kerinduannya sendiri yang menarik menuju kampung halaman.<br>
+      6. Larutlah dalam rindu sebagaimana ia merindu; jika tidak, sungguh engkau dusta dalam jalan cinta.<br>
+      7. Bukankah lembah 'Aqiq telah tampak, dan inilah kemah-kemah serta perkampungan penduduknya?<br>
+      8. Dan itulah kubah hijau, di dalamnya seorang Nabi yang cahayanya menyingkap segala kegelapan.<br>
+      9. Ridha telah nyata, pertemuan telah dekat, dan kebahagiaan datang dari segala penjuru.<br>
+      10. Maka katakan pada jiwa: "Inilah saatmu, bersenang-senanglah", sebab tiada lagi tabir yang menghalangi sang kekasih hari ini.<br>
+      11. Bersenang-senanglah bersama sang kekasih dengan sepenuh tujuan, sebab kebahagiaan telah tercapai dan segala kesulitan sirna.<br>
+      12. Nabi Allah, sebaik-baik makhluk seluruhnya, baginya kedudukan dan derajat yang paling tinggi.<br>
+      13. Baginya kemuliaan yang agung, baginya keluhuran, baginya kehormatan abadi dan segala keutamaan.<br>
+      14. Sekiranya kami berusaha setiap hari mendekatinya walau hanya dengan mata, bukan di atas kendaraan tercepat sekalipun.<br>
+      15. Dan sekiranya kami mengadakan peringatan maulid bagi Ahmad setiap saat, sungguh itu adalah suatu kewajiban yang pantas.<br>
+      16. Semoga atasnya, dari Allah Yang Maha Menjaga, tercurah shalawat setiap kali bintang bersinar, meliputi seluruh keluarga, sahabat, dan keturunannya yang suci.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Qasidah "Shalatullahi Ma Lahat Kawakib" ini bergenre <em>ghazal nabawi</em> — sajak rindu yang berakar dari tradisi puisi cinta Arab pra-Islam, dialihkan objeknya menjadi kerinduan kepada Nabi ﷺ dan kota Madinah. Bait ke-15 sering dikutip sebagai salah satu dalil pendukung anjuran memperingati maulid Nabi ﷺ — baik dijadikan bahan diskusi ringan tentang perbedaan pandangan ulama seputar hukum peringatan maulid.
+    </div>
+  </section>
+
+  <!-- ================= FASL 5 ================= -->
+  <section class="fasl" id="fasl5">
+    <h2 class="title">Fasal 5 — Syahadat &amp; Penutup Pembukaan</h2>
+    <div class="arabic-block">
+      فَسُبْحَانَهُ مَنْ خَصَّهُ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ بِأَشْرَفِ الْمَنَاصِبِ وَالْمَرَاتِبِ ﴿﴾ أَحْمَدُهُ عَلَى مَا مَنَحَ مِنَ الْمَوَاهِبِ ﴿﴾ وَأَشْهَدُ أَنْ لَّا إِلَٰهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، رَبُّ الْمَشَارِقِ وَالْمَغَارِبِ ﴿﴾ وَأَشْهَدُ أَنَّ سَيِّدَنَا مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، الْمَبْعُوثُ إِلَى سَائِرِ الْأَعَاجِمِ وَالْأَعَارِبِ ﴿﴾ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ وَعَلَى آلِهِ وَأَصْحَابِهِ أُولِي الْمَآثِرِ وَالْمَنَاقِبِ، صَلَاةً وَسَلَامًا دَائِمَيْنِ مُتَلَازِمَيْنِ، يَأْتِي قَائِلُهُمَا يَوْمَ الْقِيَامَةِ غَيْرَ خَائِبٍ ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Maka Maha Suci Dia yang mengkhususkan Nabi ﷺ dengan kedudukan dan derajat termulia. Aku memuji-Nya atas segala anugerah yang telah diberikan. Aku bersaksi bahwa tiada Tuhan selain Allah, Yang Esa, tiada sekutu bagi-Nya, Tuhan seluruh timur dan barat. Dan aku bersaksi bahwa junjungan kami Muhammad adalah hamba dan utusan-Nya, yang diutus kepada seluruh manusia — baik ajam maupun Arab. Semoga Allah melimpahkan shalawat dan salam kepadanya, serta kepada keluarga dan sahabatnya, para pemilik keutamaan dan kemuliaan, dengan shalawat dan salam yang abadi lagi berkesinambungan, yang pengucapnya kelak datang pada hari Kiamat dalam keadaan tidak merugi.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Fasal singkat ini menutup bagian pembukaan (muqaddimah) sebelum masuk kisah kelahiran Nabi ﷺ. Kalimat syahadat disisipkan alami di tengah pujian — teknik umum sastra maulid untuk menegaskan tauhid di sela pujian kepada Nabi ﷺ.
+    </div>
+  </section>
+
+  <!-- ================= FASL 6 ================= -->
+  <section class="fasl" id="fasl6">
+    <h2 class="title">Fasal 6 — Dua Hadits tentang Nur Muhammad ﷺ</h2>
+
+    <div class="arabic-block">
+      بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ﴿﴾ أَوَّلُ مَا نَسْتَفْتِحُ بِإِيرَادِ حَدِيثَيْنِ وَرَدَا عَنْ نَبِيٍّ كَانَ قَدْرُهُ عَظِيمًا، وَنَسَبُهُ كَرِيمًا، وَصِرَاطُهُ مُسْتَقِيمًا ﴿﴾ قَالَ فِي حَقِّهِ مَنْ لَّمْ يَبْزُلْ سَمِيًّا عَلِيمًا: إِنَّ اللهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ، يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Pembukaan pertama yang kami mulai adalah dengan membawakan dua hadits yang diriwayatkan tentang seorang Nabi yang kedudukannya sangat agung, nasabnya mulia, dan jalannya lurus. Allah — yang tiada seorang pun setara dengan-Nya dalam nama dan ilmu — berfirman tentang kedudukannya: "Sesungguhnya Allah dan para malaikat-Nya bershalawat untuk Nabi. Wahai orang-orang yang beriman, bershalawatlah untuknya dan ucapkanlah salam penghormatan kepadanya."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      (الْحَدِيثُ الْأَوَّلُ) عَنْ بَحْرِ الْعِلْمِ الدَّافِقِ، وَلِسَانِ الْقُرْآنِ النَّاطِقِ، أَوْحَدِ عُلَمَاءِ النَّاسِ سَيِّدِنَا عَبْدِ اللهِ ابْنِ سَيِّدِنَا الْعَبَّاسِ رَضِيَ اللهُ عَنْهُمَا، عَنْ رَّسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ أَنَّهُ قَالَ: «إِنَّ قُرَيْشًا كَانَتْ نُورًا بَيْنَ يَدَيِ اللهِ عَزَّ وَجَلَّ، قَبْلَ أَنْ يَّخْلُقَ آدَمَ بِأَلْفَيْ عَامٍ، يُسَبِّحُ اللهَ ذَلِكَ النُّورُ، وَتُسَبِّحُ الْمَلَائِكَةُ بِتَسْبِيحِهِ، فَلَمَّا خَلَقَ اللهُ آدَمَ أَوْدَعَ ذَلِكَ النُّورَ فِي طِينَتِهِ» قَالَ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «فَأَهْبَطَنِيَ اللهُ عَزَّ وَجَلَّ إِلَى الْأَرْضِ فِي ظَهْرِ آدَمَ، وَحَمَلَنِي فِي السَّفِينَةِ فِي صُلْبِ نُوحٍ، وَجَعَلَنِي فِي صُلْبِ الْخَلِيلِ إِبْرَاهِيمَ حِينَ قُذِفَ بِهِ فِي النَّارِ، وَلَمْ يَزَلِ اللهُ عَزَّ وَجَلَّ يُنَقِّلُنِي مِنَ الْأَصْلَابِ الطَّاهِرَةِ إِلَى الْأَرْحَامِ الزَّكِيَّةِ الْفَاخِرَةِ، حَتَّى أَخْرَجَنِيَ اللهُ مِنْ بَيْنِ أَبَوَيَّ وَهُمَا لَمْ يَلْتَقِيَا عَلَى سِفَاحٍ قَطُّ» ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan Hadits Pertama</span>
+      Dari lautan ilmu yang melimpah, lisan Al-Qur'an yang fasih, satu-satunya panutan ulama umat manusia, junjungan kami Abdullah bin Abbas radhiyallahu 'anhuma, dari Rasulullah ﷺ, beliau bersabda: "Sesungguhnya suku Quraisy adalah cahaya di hadapan Allah 'Azza wa Jalla, dua ribu tahun sebelum Dia menciptakan Adam. Cahaya itu bertasbih kepada Allah, dan para malaikat pun ikut bertasbih dengan tasbihnya. Maka ketika Allah menciptakan Adam, Dia titipkan cahaya itu pada tanah liatnya." Beliau ﷺ bersabda: "Maka Allah menurunkanku ke bumi dalam sulbi Adam, membawaku dalam bahtera pada sulbi Nuh, dan menjadikanku dalam sulbi Ibrahim Al-Khalil saat ia dilempar ke dalam api. Allah senantiasa memindahkanku dari sulbi-sulbi yang suci ke rahim-rahim yang bersih dan mulia, hingga Allah mengeluarkanku dari antara kedua orang tuaku, yang keduanya tidak pernah bertemu dalam perzinaan sama sekali."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      (الْحَدِيثُ الثَّانِي) عَنْ عَطَاءِ بْنِ يَسَارٍ عَنْ كَعْبِ الْأَحْبَارِ، قَالَ: عَلَّمَنِي أَبِي التَّوْرَاةَ إِلَى سِفْرٍ وَاحِدٍ، كَانَ يَخْتِمُهُ وَيُدْخِلُهُ الصُّنْدُوقَ، فَلَمَّا مَاتَ أَبِي فَتَحْتُهُ فَإِذَا فِيهِ: نَبِيٌّ يَخْرُجُ آخِرَ الزَّمَانِ، مَوْلِدُهُ بِمَكَّةَ، وَهِجْرَتُهُ بِالْمَدِينَةِ، وَسُلْطَانُهُ بِالشَّامِ، يَقُصُّ شَعْرَهُ وَيَتَّزِرُ عَلَى وَسَطِهِ، يَكُونُ خَيْرَ الْأَنْبِيَاءِ وَأُمَّتُهُ خَيْرَ الْأُمَمِ، يُكَبِّرُونَ اللهَ تَعَالَى عَلَى كُلِّ شَرَفٍ، يَصُفُّونَ فِي الصَّلَاةِ كَصُفُوفِهِمْ فِي الْقِتَالِ، قُلُوبُهُمْ مَصَاحِفُهُمْ، يَحْمَدُونَ اللهَ تَعَالَى عَلَى كُلِّ شِدَّةٍ وَرَخَاءٍ ﴿﴾ ثُلُثٌ يَدْخُلُونَ الْجَنَّةَ بِغَيْرِ حِسَابٍ، وَثُلُثٌ يَأْتُونَ بِذُنُوبِهِمْ وَخَطَايَاهُمْ فَيُغْفَرُ لَهُمْ، وَثُلُثٌ يَأْتُونَ بِذُنُوبٍ وَخَطَايَا عِظَامٍ، فَيَقُولُ اللهُ تَعَالَى لِلْمَلَائِكَةِ: اذْهَبُوا فَزِنُوهُمْ! فَيَقُولُونَ: يَا رَبَّنَا، وَجَدْنَاهُمْ أَسْرَفُوا عَلَى أَنْفُسِهِمْ، وَوَجَدْنَا أَعْمَالَهُمْ مِنَ الذُّنُوبِ كَأَمْثَالِ الْجِبَالِ، غَيْرَ أَنَّهُمْ يَشْهَدُونَ أَنْ لَّا إِلَٰهَ إِلَّا اللهُ وَأَنَّ مُحَمَّدًا رَّسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ ﴿﴾ فَيَقُولُ الْحَقُّ: وَعِزَّتِي وَجَلَالِي، لَا جَعَلْتُ مَنْ أَخْلَصَ لِي بِالشَّهَادَةِ كَمَنْ كَذَّبَ بِي، أَدْخِلُوهُمُ الْجَنَّةَ بِرَحْمَتِي ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan Hadits Kedua</span>
+      Dari 'Atha' bin Yasar, dari Ka'b Al-Ahbar, ia berkata: "Ayahku mengajariku Kitab Taurat hingga satu jilid yang selalu ia segel dan simpan dalam sebuah peti. Ketika ayahku wafat, aku membukanya, ternyata di dalamnya tertulis: seorang Nabi akan muncul di akhir zaman, lahir di Makkah, hijrah ke Madinah, dan kekuasaannya di Syam. Ia memendekkan rambutnya dan mengikat kain di pinggangnya. Ia adalah sebaik-baik nabi, dan umatnya sebaik-baik umat. Mereka bertakbir kepada Allah di setiap tempat yang tinggi, berbaris dalam shalat sebagaimana barisan mereka dalam perang. Hati mereka bagaikan mushaf, memuji Allah dalam setiap kesempitan maupun kelapangan. Sepertiga dari mereka masuk surga tanpa hisab; sepertiga datang membawa dosa dan kesalahan lalu diampuni; dan sepertiga lagi datang membawa dosa dan kesalahan besar. Maka Allah berfirman kepada para malaikat: 'Pergilah, timbanglah amal mereka!' Para malaikat menjawab: 'Ya Tuhan kami, kami dapati mereka telah melampaui batas terhadap diri mereka sendiri, dan kami dapati amal mereka berupa dosa-dosa bagaikan gunung-gunung; hanya saja mereka bersaksi bahwa tiada Tuhan selain Allah dan bahwa Muhammad adalah utusan Allah ﷺ.' Maka Allah Yang Maha Benar berfirman: 'Demi kemuliaan dan keagungan-Ku, tidak akan Aku jadikan orang yang tulus bersaksi kepada-Ku sama seperti orang yang mendustakan-Ku. Masukkanlah mereka ke dalam surga dengan rahmat-Ku.'"
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      <ul>
+        <li>Kedua riwayat ini bukan hadits sahih dalam kitab hadits standar (Bukhari-Muslim), melainkan riwayat yang beredar dalam literatur sirah dan sastra pujian Nabi. Penting menjelaskan kedudukan riwayat semacam ini kepada santri — sebagai bahan renungan (targhib), bukan dalil hukum fikih.</li>
+        <li>Kisah Ka'b Al-Ahbar (mantan pendeta Yahudi yang masuk Islam) relevan untuk pembahasan konsep "Basyarat" (kabar gembira kedatangan Nabi ﷺ dalam kitab-kitab terdahulu).</li>
+        <li>Konsep "sepertiga umat masuk surga tanpa hisab, sepertiga diampuni, sepertiga ditimbang lalu diampuni berkat syahadat" bisa menjadi pintu masuk diskusi tentang pentingnya husnul khatimah.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FASL 7 ================= -->
+  <section class="fasl" id="fasl7">
+    <h2 class="title">Fasal 7 — Perintah kepada Jibril &amp; Pemindahan ke Rahim</h2>
+
+    <div class="arabic-block">
+      يَا أَعَزَّ جَوَاهِرِ الْعُقُودِ، وَخُلَاصَةَ إِكْسِيرِ سِرِّ الْوُجُودِ ﴿﴾ مَادِحُكَ قَاصِرٌ وَلَوْ جَاءَ بِبَذْلِ الْمَجْهُودِ، وَوَاصِفُكَ عَاجِزٌ عَنْ حَصْرِ مَا حَوَيْتَ مِنْ خِصَالِ الْكَرَمِ وَالْجُودِ ﴿﴾ اَلْكَوْنُ إِشَارَةٌ وَأَنْتَ الْمَقْصُودُ، يَا أَشْرَفَ مَنْ نَالَ الْمَقَامَ الْمَحْمُودَ ﴿﴾ وَجَاءَتْ رُسُلٌ مِّنْ قَبْلِكَ لَكِنَّهُمْ بِالرِّفْعَةِ وَالْعُلَا لَكَ شُهُودُ ﴿﴾
+      <span class="refrain">۞</span>
+      أَحْضِرُوا قُلُوبَكُمْ يَا مَعْشَرَ ذَوِي الْأَلْبَابِ، حَتَّى أَجْلُوَ لَكُمْ عَرَائِسَ مَعَانِي أَجَلِّ الْأَحْبَابِ ﴿﴾ الْمَخْصُوصِ بِأَشْرَفِ الْأَلْقَابِ، الرَّاقِي إِلَى حَضْرَةِ الْمَلِكِ الْوَهَّابِ، حَتَّى نَظَرَ إِلَى جَمَالِهِ بِلَا سِتْرٍ وَلَا حِجَابٍ ﴿﴾ فَلَمَّا آنَ أَوَانُ ظُهُورِ شَمْسِ الرِّسَالَةِ فِي سَمَاءِ الْجَلَالَةِ، خَرَجَ بِهِ مَرْسُومُ الْجَلِيلِ لِنَقِيبِ الْمَمْلَكَةِ جِبْرِيلَ: «يَا جِبْرِيلُ، نَادِ فِي سَائِرِ الْمَخْلُوقَاتِ مِنْ أَهْلِ الْأَرْضِ وَالسَّمَاوَاتِ بِالتَّهَانِي وَالْبِشَارَاتِ، فَإِنَّ النُّورَ الْمَصُونَ، وَالسِّرَّ الْمَكْنُونَ، الَّذِي أَوْجَدْتُهُ قَبْلَ وُجُودِ الْأَشْيَاءِ، وَإِبْدَاعِ الْأَرْضِ وَالسَّمَاءِ، أَنْقُلُهُ فِي هَذِهِ اللَّيْلَةِ إِلَى بَطْنِ أُمِّهِ مَسْرُورًا، أَمْلَأُ بِهِ الْكَوْنَ نُورًا، وَأَكْفُلُهُ يَتِيمًا، وَأُطَهِّرُهُ وَأَهْلَ بَيْتِهِ تَطْهِيرًا» ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Wahai permata termulia dari untaian kalung, dan intisari ramuan rahasia alam wujud, pujianku terlalu sedikit bagimu meski dicurahkan dengan segenap usaha; orang yang mensifatimu pun tak mampu mencakup segala sifat kemuliaan dan kedermawanan yang engkau miliki. Alam semesta hanyalah isyarat, dan engkaulah yang dimaksud — wahai yang paling mulia yang meraih maqam terpuji. Dan telah datang para rasul sebelummu, namun mereka menjadi saksi atas ketinggian dan keluhuranmu.<br><br>
+      Hadirkanlah hati kalian, wahai orang-orang yang berakal, hingga aku bukakan bagi kalian keindahan makna tentang kekasih yang paling agung, yang dikhususkan dengan gelar termulia, yang naik ke hadirat Sang Raja Maha Pemberi, hingga ia memandang keindahan-Nya tanpa tabir dan hijab. Maka ketika tiba saatnya terbitnya mentari kerasulan di langit keagungan, keluarlah perintah Yang Maha Agung kepada pemimpin para malaikat, Jibril: "Wahai Jibril, serukanlah kepada seluruh makhluk, penduduk bumi dan langit, kabar gembira dan berita bahagia. Sesungguhnya cahaya yang terjaga dan rahasia yang tersimpan, yang telah Aku ciptakan sebelum wujudnya segala sesuatu dan sebelum terciptanya langit dan bumi, akan Aku pindahkan pada malam ini ke dalam rahim ibunya dengan penuh kegembiraan. Akan Kupenuhi alam semesta dengannya sebagai cahaya, akan Kujadikan ia yatim, lalu akan Kusucikan dia beserta keluarganya dengan sesuci-sucinya."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Inilah titik dramatis kitab maulid: momen ruh mulia Nabi ﷺ dipindahkan ke rahim Sayyidah Aminah. Kalimat "Aku jadikan ia yatim" mengisyaratkan takdir wafatnya Sayyid Abdullah (ayah Nabi ﷺ) sebelum kelahiran beliau — pengingat bahwa kemuliaan seseorang tidak bergantung pada kelengkapan orang tua, melainkan pada kasih sayang dan pemeliharaan Allah.
+    </div>
+  </section>
+
+  <!-- ================= FASL 8 ================= -->
+  <section class="fasl" id="fasl8">
+    <h2 class="title">Fasal 8 — Kegembiraan Alam &amp; Kelahiran</h2>
+
+    <div class="arabic-block">
+      فَاهْتَزَّ الْعَرْشُ طَرَبًا وَاسْتِبْشَارًا، وَازْدَادَ الْكُرْسِيُّ هَيْبَةً وَوَقَارًا، وَامْتَلَأَتِ السَّمَاوَاتُ أَنْوَارًا، وَضَجَّتِ الْمَلَائِكَةُ تَهْلِيلًا وَتَمْجِيدًا وَاسْتِغْفَارًا (باجا: سُبْحَانَ اللهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَٰهَ إِلَّا اللهُ وَاللهُ أَكْبَرُ × ٣) ﴿﴾ وَلَمْ تَزَلْ أُمُّهُ تَرَى أَنْوَاعًا مِّنْ فَخْرِهِ وَفَضْلِهِ، إِلَى نِهَايَةِ تَمَامِ حَمْلِهِ ﴿﴾ فَلَمَّا اشْتَدَّ بِهَا الطَّلْقُ بِإِذْنِ رَبِّ الْخَلْقِ، وَضَعَتِ الْحَبِيبَ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ، سَاجِدًا شَاكِرًا حَامِدًا، كَأَنَّهُ الْبَدْرُ فِي تَمَامِهِ ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Maka Arasy pun bergetar penuh kegembiraan, Kursi bertambah wibawa dan keagungannya, langit-langit dipenuhi cahaya, dan para malaikat bergemuruh bertahlil, bertakbir, dan beristighfar <em>(dibaca 3 kali: Subhanallah, walhamdulillah, wa la ilaha illallah, wallahu akbar)</em>. Ibunda beliau terus-menerus menyaksikan berbagai tanda kemuliaan dan keutamaan hingga sempurna masa kandungannya. Maka ketika beliau merasakan sakit menjelang persalinan atas izin Tuhan pencipta makhluk, lahirlah sang kekasih ﷺ dalam keadaan bersujud, bersyukur, dan memuji Allah — bagaikan bulan purnama yang sempurna.
+    </div>
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Momen kelahiran Nabi ﷺ digambarkan dengan bahasa sarat simbol kosmis — Arasy bergetar, Kursi bertambah wibawa, langit dipenuhi cahaya — menekankan bahwa peristiwa ini bukan kejadian biasa. Catatan kaki pada naskah asli menandai kalimat tasbih dibaca tiga kali (باجا/repetisi); baik dipraktikkan saat pembacaan bersama. Detail Nabi ﷺ lahir dalam keadaan sujud menjadi keistimewaan yang sering diriwayatkan dalam sirah, teladan awal tentang sikap syukur.
+    </div>
+  </section>
+
+  <!-- ================= MAHALLUL QIYAM (KOREKSI) ================= -->
+  <section class="fasl" id="qiyam">
+    <span class="mahal-badge">Bagian Berdiri — Mahallul Qiyam</span>
+    <h2 class="title">Ya Nabi Salam 'Alaik — Asyraqal Badru</h2>
+
+    <div class="arabic-block">
+      <span class="bait">صَلَّى اللهُ عَلَى مُحَمَّدْ ۞ صَلَّى اللهُ عَلَيْهِ وَسَلَّمْ</span>
+      <span class="bait">يَا نَبِيْ سَلَامْ عَلَيْكْ ۞ يَا رَسُوْلْ سَلَامْ عَلَيْكْ</span>
+      <span class="bait">يَا حَبِيْبْ سَلَامْ عَلَيْكْ ۞ صَلَوَاتُ اللهِ عَلَيْكْ</span>
+      <span class="bait">أَشْرَقَ الْبَدْرُ عَلَيْنَا ۞ فَاخْتَفَتْ مِنْهُ الْبُدُورُ</span>
+      <span class="bait">مِثْلَ حُسْنِكْ مَا رَأَيْنَا ۞ قَطُّ يَا وَجْهَ السُّرُورِ</span>
+      <span class="bait">أَنْتَ شَمْسٌ أَنْتَ بَدْرٌ ۞ أَنْتَ نُورٌ فَوْقَ نُورِ</span>
+      <span class="bait">أَنْتَ إِكْسِيرٌ وَغَالِي ۞ أَنْتَ مِصْبَاحُ الصُّدُورِ</span>
+      <span class="bait">يَا حَبِيبِي يَا مُحَمَّدْ ۞ يَا عَرُوسَ الْخَافِقَيْنِ</span>
+      <span class="bait">يَا مُؤَيَّدْ يَا مُمَجَّدْ ۞ يَا إِمَامَ الْقِبْلَتَيْنِ</span>
+      <span class="bait">مَنْ رَّأَى وَجْهَكَ يَسْعَدْ ۞ يَا كَرِيمَ الْوَالِدَيْنِ</span>
+      <span class="bait">حَوْضُكَ الصَّافِي الْمُبَرَّدْ ۞ وِرْدُنَا يَوْمَ النُّشُورِ</span>
+      <span class="bait">مَا رَأَيْنَا الْعِيسَ حَنَّتْ ۞ بِالسُّرَى إِلَّا إِلَيْكْ</span>
+      <span class="bait">وَالْغَمَامَةْ قَدْ أَظَلَّتْ ۞ وَالْمَلَا صَلَّوا عَلَيْكْ</span>
+      <span class="bait">وَأَتَاكَ الْعُودُ يَبْكِي ۞ وَتَذَلَّلْ بَيْنَ يَدَيْكْ</span>
+      <span class="bait">وَاسْتَجَارَتْ يَا حَبِيبِي ۞ عِنْدَكَ الظَّبْيُ النَّفُورُ</span>
+      <span class="bait">عِنْدَ مَا شَدُّوا الْحَامِلْ ۞ وَتَنَادَوْا لِلرَّحِيلْ</span>
+      <span class="bait">جِئْتُهُمْ وَالدَّمْعُ سَائِلْ ۞ قُلْتُ قِفْ لِي يَا دَلِيلْ</span>
+      <span class="bait">وَتَحَمَّلْ لِي رَسَائِلْ ۞ أَيُّهَا الشَّوْقُ الْجَزِيلْ</span>
+      <span class="bait">نَحْوَهَا يَا تِيكَ الْمَنَازِلْ ۞ فِي الْعَشِيِّ وَالْبُكُورِ</span>
+      <span class="bait">كُلُّ مَنْ فِي الْكَوْنِ هَامُوا ۞ فِيكَ يَا بَاهِيَ الْجَبِينِ</span>
+      <span class="bait">وَلَهُمْ فِيكَ غَرَامُ ۞ وَاشْتِيَاقٌ وَحَنِينْ</span>
+      <span class="bait">فِي مَعَانِيكَ الْأَنَامُ ۞ قَدْ تَبَدَّتْ حَائِرِينْ</span>
+      <span class="bait">أَنْتَ لِلرُّسُلِ خِتَامُ ۞ أَنْتَ لِلْمَوْلَى شَكُورُ</span>
+      <span class="bait">عَبْدُكَ الْمِسْكِينُ يَرْجُو ۞ فَضْلَكَ الْجَمَّ الْغَفِيرْ</span>
+      <span class="bait">فِيكَ قَدْ أَحْسَنْتَ ظَنِّي ۞ يَا بَشِيرُ يَا نَذِيرُ</span>
+      <span class="bait">فَأَغِثْنِي وَأَجِرْنِي ۞ يَا مُجِيرُ مِنَ السَّعِيرْ</span>
+      <span class="bait">يَا غِيَاثِي يَا مَلَاذِي ۞ فِي مُهِمَّاتِ الْأُمُورِ</span>
+      <span class="bait">سَعِدَ عَبْدٌ قَدْ تَمَلَّى ۞ وَانْجَلَى عَنْهُ الْحَزَنْ</span>
+      <span class="bait">فِيكَ يَا بَدْرُ تَجَلَّى ۞ فَلَكَ الْوَصْفُ الْحَسَنْ</span>
+      <span class="bait">لَيْسَ أَزْكَى مِنْكَ أَصْلًا ۞ قَطُّ يَا جَدَّ الْحُسَيْنْ</span>
+      <span class="bait">فَعَلَيْكَ اللهُ صَلَّى ۞ دَائِمًا طُولَ الدُّهُورِ</span>
+      <span class="bait">يَا وَلِيَّ الْحَسَنَاتِ ۞ يَا رَفِيعَ الدَّرَجَاتِ</span>
+      <span class="bait">كَفِّرْ عَنِّي الذُّنُوبَ ۞ وَاغْفِرْ عَنِّي السَّيِّئَاتِ</span>
+      <span class="bait">أَنْتَ غَفَّارُ الْخَطَايَا ۞ وَالذُّنُوبِ الْمُوبِقَاتِ</span>
+      <span class="bait">أَنْتَ سَتَّارُ الْمَسَاوِئِ ۞ وَمُقِيلُ الْعَثَرَاتِ</span>
+      <span class="bait">عَالِمُ السِّرِّ وَأَخْفَى ۞ مُسْتَجِيبُ الدَّعَوَاتِ</span>
+      <span class="bait">رَبِّ فَارْحَمْنَا جَمِيعًا ۞ وَامْحُ عَنَّا السَّيِّئَاتِ</span>
+      <span class="bait">رَبِّ فَارْحَمْنَا جَمِيعًا ۞ بِجَمِيعِ الصَّالِحَاتِ</span>
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Semoga Allah melimpahkan shalawat kepada Muhammad, shalawat dan salam Allah atasnya. Wahai Nabi, salam sejahtera atasmu; wahai Rasul, salam sejahtera atasmu; wahai kekasih, salam sejahtera atasmu, shalawat Allah atasmu.<br><br>
+      Bulan purnama telah bersinar atas kami, hingga bulan-bulan lain pun sirna karenanya. Belum pernah kami melihat keindahan sepertimu, wahai wajah penuh kebahagiaan. Engkau matahari, engkau bulan purnama, engkau cahaya di atas cahaya. Engkau bagaikan intisari berharga, engkau pelita bagi hati. Wahai kekasihku, wahai Muhammad, wahai pengantin timur dan barat. Wahai yang diteguhkan, wahai yang diagungkan, wahai imam dua kiblat. Siapa memandang wajahmu berbahagia, wahai yang mulia nasab kedua orang tuanya. Telagamu yang jernih lagi sejuk adalah tempat kami minum kelak di hari kebangkitan.<br><br>
+      Tidak pernah kami lihat unta merindu dalam perjalanan malam kecuali menuju dirimu. Awan pun telah menaungi, dan segenap makhluk bershalawat atasmu. Bahkan sebatang kayu datang menangis dan merendah di hadapanmu. Bahkan seekor kijang liar berlindung kepadamu, wahai kekasihku — ketika mereka mengikat tunggangan dan saling menyeru untuk berangkat. Aku datangi mereka dengan air mata bercucuran, kukatakan: "Berhentilah, wahai penunjuk jalan, sampaikanlah untukku pesan-pesan ini, wahai kerinduan yang mendalam" — menuju tempat-tempat kenangan itu, di waktu pagi maupun petang. Setiap yang ada di alam semesta merindukanmu, wahai yang berkening cerah; bagi mereka ada kerinduan, kecintaan, dan kepedihan rindu karenamu. Dalam makna-maknamu, seluruh manusia tampak tercengang kebingungan. Engkaulah penutup para rasul, engkaulah yang paling bersyukur kepada Tuhan. Hamba-Mu yang papa ini mengharap karunia-Mu yang luas lagi berlimpah; kepadamu aku menaruh prasangka baik, wahai pembawa kabar gembira, wahai pemberi peringatan.<br><br>
+      Maka tolonglah aku dan lindungilah aku, wahai pelindung dari api neraka; wahai penolongku, wahai tempat berlindungku, dalam segala urusan penting. Berbahagialah hamba yang telah bersenang-senang memandangmu, dan sirnalah kesedihannya. Denganmu, wahai bulan purnama, segala kejelasan tampak, dan bagimu sifat yang indah. Tiada yang lebih suci nasabnya darimu, wahai kakek Husain. Maka semoga Allah senantiasa bershalawat atasmu selama zaman berlangsung. Wahai pemilik segala kebaikan, wahai yang tinggi derajatnya, hapuskanlah dariku dosa-dosa, dan ampunilah dariku segala kesalahan. Engkau (melalui syafaatmu) sarana ampunan bagi kesalahan dan dosa yang membinasakan; engkau penutup segala keburukan dan pemaaf segala kekhilafan. Allah Yang Mengetahui rahasia dan yang lebih tersembunyi, Yang Mengabulkan segala doa. Ya Tuhanku, kasihanilah kami semua, dan hapuskanlah dari kami segala kesalahan. Ya Tuhanku, kasihanilah kami semua, dengan segala kebaikan.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      <ul>
+        <li><strong>Mahallul Qiyam</strong> adalah bagian paling dikenal dari seluruh rangkaian maulid — momen ketika jamaah berdiri (qiyam) sebagai penghormatan atas peristiwa kelahiran Nabi ﷺ yang baru "dihadirkan" secara simbolis dalam pembacaan.</li>
+        <li>Tradisi berdiri ini didasarkan pandangan sebagian ulama bahwa ruh Nabi ﷺ hadir secara maknawi saat pembacaan kisah kelahirannya — pandangan yang diperselisihkan ulama. Baik dijelaskan bahwa ini tradisi (adat) di kalangan Ahlussunnah, bukan kewajiban syar'i.</li>
+        <li>Qasidah ini dikenal luas dengan pembukanya "Asyraqal Badru 'Alayna" — bulan purnama sebagai metafora keindahan dan petunjuk Nabi ﷺ, dipadukan dengan tema rindu kepada Madinah ("ma ra'aynal-'iysa hannat...") dan permohonan ampun ("fa'aghitsni wa ajirni...").</li>
+        <li>Sebutan "cucu Husain" (جَدَّ الْحُسَيْنِ) merujuk pada Nabi ﷺ sebagai kakek dari Sayyidina Husain bin Ali — pengingat garis keturunan mulia Ahlul Bait.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FASL 9 ================= -->
+  <section class="fasl" id="fasl9">
+    <h2 class="title">Fasal 9 — Mukjizat Kelahiran</h2>
+
+    <div class="arabic-block">
+      وَوُلِدَ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ مَخْتُونًا بِيَدِ الْعِنَايَةِ، مَكْحُولًا بِكُحْلِ الْهِدَايَةِ، فَأَشْرَقَ بِبَهَائِهِ الْفَضَا، وَتَلَأْلَأَ الْكَوْنُ مِنْ نُّورِهِ وَأَضَا، وَدَخَلَ فِي عَقْدِ بَيْعَتِهِ مَنْ بَقِيَ مِنَ الْخَلَائِقِ كَمَا دَخَلَ فِيهَا مَنْ مَّضَى ﴿﴾ أَوَّلُ فَضِيلَةٍ مِّنَ الْمُعْجِزَاتِ، بِخُمُودِ نَارِ فَارِسَ وَسُقُوطِ الشُّرَفَاتِ، وَرُمِيَتِ الشَّيَاطِينُ مِنَ السَّمَاءِ بِالشُّهُبِ الْمُحْرِقَاتِ، وَرَجَعَ كُلُّ جَبَّارٍ مِّنَ الْجِنِّ وَهُوَ بِصَوْلَةِ سَلْطَنَتِهِ ذَلِيلٌ خَاضِعٌ، لِمَا تَأَلَّقَ مِنْ سَنَاهُ النُّورُ السَّاطِعُ، وَأَشْرَقَ مِنْ بَهَائِهِ الضِّيَاءُ اللَّامِعُ، حَتَّى عُرِضَ عَلَى الْمَرَاضِعِ ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Beliau ﷺ lahir dalam keadaan telah dikhitan oleh tangan pertolongan Ilahi, matanya telah dicelaki dengan celak petunjuk. Maka cakrawala bersinar dengan keindahannya, dan alam semesta gemerlap oleh cahayanya. Masuklah ke dalam ikatan baiatnya orang-orang yang tersisa (di masa mendatang), sebagaimana telah masuk pula orang-orang yang telah berlalu (di masa lampau). Keutamaan mukjizat pertama yang menyertai kelahirannya: padamnya api sesembahan Persia dan runtuhnya menara-menara istana Kisra; setan-setan dilempari bintang-bintang yang membakar dari langit; dan setiap jin yang perkasa pun kembali tunduk dan hina dari kekuasaannya yang dulu berjaya, karena silau oleh cahaya terang yang memancar dari kemuliaannya, dan sinar gemerlap dari keindahannya menyinari segala arah — hingga beliau diperlihatkan kepada para wanita yang hendak menyusuinya.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Rangkaian mukjizat kelahiran Nabi ﷺ — padamnya api sesembahan Persia (yang telah menyala ribuan tahun tanpa henti) dan runtuhnya balkon istana Kisra — adalah riwayat populer dalam sirah yang menandai pergantian era: berakhirnya masa jahiliyah dan dimulainya era cahaya kenabian. Sebagian riwayat ini berstatus lemah menurut sebagian ahli hadits, namun tetap diriwayatkan luas sebagai tradisi peringatan maulid untuk membangun rasa cinta kepada Nabi ﷺ.
+    </div>
+  </section>
+
+  <!-- ================= FASL 10 (Halimah) ================= -->
+  <section class="fasl" id="fasl10">
+    <h2 class="title">Fasal 10 — Kisah Halimah As-Sa'diyah</h2>
+
+    <div class="arabic-block">
+      قِيلَ: مَنْ يَّكْفُلُ هَذِهِ الدُّرَّةَ الْيَتِيمَةَ، الَّتِي لَا تُوجَدُ لَهَا قِيمَةٌ؟ قَالَتِ الطُّيُورُ: نَحْنُ نَكْفُلُهُ وَنَغْتَنِمُ هِمَّتَهُ الْعَظِيمَةَ. قَالَتِ الْوُحُوشُ: نَحْنُ أَوْلَى بِذَلِكَ لِكَيْ نَنَالَ شَرَفَهُ وَتَعْظِيمَهُ. قِيلَ: يَا مَعْشَرَ الْأُمَمِ اسْكُنُوا، فَإِنَّ اللهَ قَدْ حَكَمَ فِي سَابِقِ حِكْمَتِهِ الْقَدِيمَةِ، بِأَنَّ نَبِيَّهُ مُحَمَّدًا صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ يَكُونُ رَضِيعًا لِحَلِيمَةَ الْحَلِيمَةِ ﴿﴾
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      ثُمَّ أُعْرِضَ عَنْهُ مَرَاضِعُ الْإِنْسِ الَّذِي سَبَقَ لِمَا سَبَقَ فِي طَيِّ الْغَيْبِ، مِنَ السَّعَادَةِ لِحَلِيمَةَ بِنْتِ أَبِي ذُؤَيْبٍ ﴿﴾ فَلَمَّا وَقَعَ نَظَرُهَا عَلَيْهِ، بَادَرَتْ مُسْرِعَةً إِلَيْهِ، وَوَضَعَتْهُ فِي حِجْرِهَا، وَضَمَّتْهُ إِلَى صَدْرِهَا، فَهَشَّ لَهَا مُتَبَسِّمًا، فَخَرَجَ مِنْ ثَغْرِهِ نُورٌ لَّحِقَ بِالسَّمَاءِ، فَحَمَلَتْهُ إِلَى رَحْلِهَا، وَازْدَحَمَتْ بِهِ إِلَى أَهْلِهَا، فَلَمَّا وَصَلَتْ بِهِ إِلَى مُقَامِهَا، عَايَنَتْ بَرَكَتَهُ عَلَى أَغْنَامِهَا، وَكَانَتْ كُلَّ يَوْمٍ تَرَى مِنْهُ بُرْهَانًا، وَتَرْفَعُ لَهُ قَدْرًا وَشَأْنًا، حَتَّى انْدَرَجَ فِي حُلَّةِ اللُّطْفِ وَالْأَمَانِ، وَدَخَلَ بَيْنَ إِخْوَتِهِ مَعَ الصِّبْيَانِ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Dikatakan: "Siapakah yang akan mengasuh mutiara yatim ini, yang tiada bandingannya nilainya?" Burung-burung berkata: "Kamilah yang akan mengasuhnya dan meraih keberuntungan besar dari himmahnya yang agung." Binatang-binatang liar berkata: "Kamilah yang lebih berhak atas hal itu, agar kami mendapat kemuliaan dan pengagungan darinya." Dikatakan: "Wahai sekalian umat, tenanglah, karena Allah telah menetapkan dalam hikmah-Nya yang terdahulu, bahwa Nabi-Nya Muhammad ﷺ akan disusui oleh Halimah Al-Halimah (yang penyantun)."<br><br>
+      Kemudian dipalingkanlah dari para wanita penyusu lain, sebab telah ditetapkan lebih dulu dalam rahasia takdir, kebahagiaan itu bagi Halimah binti Abi Dzu'aib. Maka ketika pandangannya jatuh kepada bayi itu, ia segera bergegas menghampirinya, meletakkannya di pangkuannya, dan mendekapnya ke dadanya. Bayi itu pun tersenyum kepadanya dengan senyum yang manis, hingga keluar dari celah giginya cahaya yang menjulang ke langit. Halimah pun membawanya pulang ke tempat tinggalnya, dan menjadi berlimpahlah keberkahan pada kambing-kambing gembalanya. Setiap hari ia menyaksikan tanda-tanda mukjizat dari bayi itu, dan derajat serta kedudukannya pun terus meninggi, hingga ia tumbuh dalam naungan kelembutan dan keamanan, lalu berbaur bermain bersama saudara-saudara sepersusuannya.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Kisah Halimah As-Sa'diyah adalah salah satu kisah paling dikenang dalam sirah nabawiyah — pintu masuk mengajarkan tradisi masyarakat Arab menitipkan bayi kepada wanita pedalaman (Badui) demi kesehatan dan kefasihan bahasa. Poin penting: keberkahan yang menyertai keluarga Halimah setelah mengasuh Nabi ﷺ mengajarkan bahwa berbuat baik kepada anak yatim mendatangkan keberkahan; dialog personifikasi burung dan binatang liar adalah gaya sastra untuk menegaskan betapa besar "rebutan" keberkahan mengasuh Nabi ﷺ, bukan peristiwa harfiah.
+    </div>
+  </section>
+
+  <!-- ================= FASL 11 (Syaqqus Shadr) ================= -->
+  <section class="fasl" id="fasl11">
+    <h2 class="title">Fasal 11 — Syaqqus Shadr</h2>
+
+    <div class="arabic-block">
+      فَبَيْنَمَا الْحَبِيبُ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ ذَاتَ يَوْمٍ عَنِ الْأَوْطَانِ، إِذَا أَقْبَلَ عَلَيْهِ ثَلَاثَةُ نَفَرٍ كَأَنَّ وُجُوهَهُمُ الشَّمْسُ وَالْقَمَرُ، فَانْطَلَقَ الصِّبْيَانُ هَرَبًا، وَوَقَفَ النَّبِيُّ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ مُتَعَجِّبًا ﴿﴾ فَأَضْجَعُوهُ عَلَى الْأَرْضِ إِضْجَاعًا خَفِيفًا، وَشَقُّوا بَطْنَهُ شَقًّا لَّطِيفًا، ثُمَّ أَخْرَجُوا قَلْبَ سَيِّدِ وَلَدِ عَدْنَانَ، وَشَرَحُوهُ بِسِكِّينِ الْإِحْسَانِ، وَنَزَعُوا مِنْهُ حَظَّ الشَّيْطَانِ، وَمَلَؤُوهُ بِالْحِلْمِ وَالْعِلْمِ وَالْيَقِينِ وَالرِّضْوَانِ، وَأَعَادُوهُ إِلَى مَكَانِهِ، فَقَامَ الْحَبِيبُ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ سَوِيًّا كَمَا كَانَ ﴿﴾
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      فَقَالَتِ الْمَلَائِكَةُ: يَا حَبِيبَ الرَّحْمَٰنِ، لَوْ عَلِمْتَ مَا يُرَادُ بِكَ مِنَ الْخَيْرِ، لَعَرَفْتَ قَدْرَ مَنْزِلَتِكَ عَلَى الْغَيْرِ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Pada suatu hari, ketika sang kekasih ﷺ berada tidak jauh dari perkampungan, datanglah kepadanya tiga orang yang wajah mereka bagaikan matahari dan bulan. Anak-anak yang bermain dengannya pun lari ketakutan, sedangkan Nabi ﷺ tetap berdiri dengan penuh keheranan. Mereka membaringkannya di tanah dengan lembut, membelah dadanya dengan sayatan yang halus, lalu mengeluarkan hati sang penghulu keturunan Adnan itu, membelahnya dengan pisau kebaikan, mencabut daripadanya bagian yang menjadi celah godaan setan, kemudian mengisinya dengan sifat santun, ilmu, keyakinan, dan keridhaan, lalu mengembalikannya ke tempat semula. Maka berdirilah sang kekasih ﷺ dalam keadaan sehat seperti sediakala.<br><br>
+      Para malaikat pun berkata: "Wahai kekasih Yang Maha Pengasih, sekiranya engkau tahu kebaikan apa yang dikehendaki bagimu, niscaya engkau akan mengetahui betapa tinggi kedudukanmu di atas yang lain."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      <strong>Syaqqus Shadr</strong> (pembelahan dada) diriwayatkan dalam hadits sahih (HR. Muslim, dari Anas bin Malik), meski redaksi di kitab maulid disusun secara sastrawi. Kesempatan baik untuk mengajarkan santri membedakan "bumbu sastra" dan "inti peristiwa yang berdasar hadits sahih". Peristiwa ini terjadi saat Nabi ﷺ masih kecil dalam asuhan Halimah, menjelaskan mengapa episode berikutnya menceritakan kecemasan Halimah.
+    </div>
+  </section>
+
+  <!-- ================= FASL 12 (BARU: alam menyambut + kahin) ================= -->
+  <section class="fasl" id="fasl12">
+    <h2 class="title">Fasal 12 — Alam Menyambut &amp; Kisah Sang Kahin</h2>
+
+    <div class="arabic-block">
+      وَازْدَدَتَّ فَرَحًا وَسُرُورًا، وَبَهْجَةً وَنُورًا. يَا مُحَمَّدُ أَبْشِرْ! فَقَدْ نُشِرَتْ فِي الْكَائِنَاتِ أَعْلَامُ عُلُومِكَ، وَتَبَاشَرَتِ الْمَخْلُوقَاتُ بِقُدُومِكَ، وَلَمْ يَبْقَ شَيْءٌ مِّمَّا خَلَقَ اللهُ إِلَّا جَاءَ لِأَجْلِكَ طَائِعًا، وَلِمَا قِيلَ لَكَ سَامِعًا ﴿﴾ فَسَيَأْتِيكَ الْبَعِيرُ بِذِمَامِكَ يَسْتَجِيرُ، وَالضَّبُّ وَالْغَزَالَةُ يَشْهَدَانِ لَكَ بِالرِّسَالَةِ، وَالْقَمَرُ وَالشَّجَرُ وَالذِّئْبُ يَنْطِقُونَ بِنُبُوَّتِكَ عَنْ قَرِيبٍ، وَمَرْكَبُكَ الْبُرَاقُ إِلَى جَمَالِكَ مُشْتَاقٌ، وَجَبْرِيلُ شَاؤُوشُ مَمْلَكَتِكَ قَدْ أَعْلَنَ بِذِكْرِكَ فِي الْآفَاقِ، وَالْقَمَرُ مَأْمُورٌ لَّكَ بِالِانْشِقَاقِ، وَكُلُّ مَنْ فِي الْكَوْنِ مُتَشَوِّقٌ لِّظُهُورِكَ، مُنْتَظِرٌ لِّإِشْرَاقِ نُورِكَ ﴿﴾
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      فَبَيْنَمَا الْحَبِيبُ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ مُنْصِتٌ لِّسَمَاعِ تِلْكَ الْأَشْبَاحِ، وَوَجْهُهُ مُتَهَلِّلٌ كَنُورِ الصَّبَاحِ، إِذَا أَقْبَلَتْ حَلِيمَةُ مُعْلِنَةً بِالصِّيَاحِ تَقُولُ: وَاغُرَيْبَاهُ! فَقَالَتِ الْمَلَائِكَةُ: يَا مُحَمَّدُ، مَا أَنْتَ بِغَرِيبٍ، بَلْ أَنْتَ مِنَ اللهِ قَرِيبٌ، وَأَنْتَ لَهُ صَفِيٌّ وَحَبِيبٌ ﴿﴾ قَالَتْ حَلِيمَةُ: وَاوَحِيدَاهُ! فَقَالَتِ الْمَلَائِكَةُ: يَا مُحَمَّدُ، مَا أَنْتَ بِوَحِيدٍ، بَلْ أَنْتَ صَاحِبُ التَّأْيِيدِ، وَأَنِيسُكَ أَحْمَدُ الْحَمِيدُ، وَإِخْوَانُكَ إِخْوَانُكَ مِنَ الْمَلَائِكَةِ وَأَهْلِ التَّوْحِيدِ ﴿﴾ قَالَتْ حَلِيمَةُ: وَايَتِيمَاهُ! فَقَالَتِ الْمَلَائِكَةُ: لِلَّهِ دَرُّكَ مِنْ يَّتِيمٍ، فَإِنَّ قَدْرَكَ عِنْدَ اللهِ عَظِيمٌ ﴿﴾
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      فَلَمَّا رَأَتْهُ حَلِيمَةُ سَالِمًا مِّنَ الْأَهْوَالِ، رَجَعَتْ بِهِ مَسْرُورَةً إِلَى الْأَطْلَالِ ﴿﴾ ثُمَّ قَصَّتْ خَبَرَهُ عَلَى بَعْضِ الْكُهَّانِ، وَأَعَادَتْ عَلَيْهِ مَا تَمَّ مِنْ أَمْرِهِ وَمَا كَانَ ﴿﴾ فَقَالَ لَهَا الْكَاهِنُ: يَا ابْنَ زَمْزَمَ وَالْمَقَامِ، وَالرُّكْنِ وَالْبَيْتِ الْحَرَامِ، أَفِي الْيَقْظَةِ رَأَيْتِ هَذَا أَمْ فِي الْمَنَامِ؟ فَقَالَتْ: وَحُرْمَةِ الْمَلِكِ الْعَلَّامِ، شَاهَدْتُهُمْ شَاهَدَ عِيَانٍ، لَا أَشُكُّ فِي ذَلِكَ وَلَا أُضَامُ ﴿﴾ فَقَالَ لَهَا الْكَاهِنُ: أَبْشِرِي بِهَا الْغُلَامُ! فَأَنْتِ صَاحِبَةُ الْأَعْلَامِ، فَعَقْلٌ وَخِتَامٌ، عَلَيْكَ يَنْزِلُ جِبْرِيلُ، وَعَلَى بِسَاطِ الْقُدْسِ يُخَاطِبُكَ الْجَلِيلُ ﴿﴾ وَمَنْ ذَا الَّذِي يَحْصُرُ مَا حَوَيْتَ مِنَ التَّفْضِيلِ، وَعَنْ بَعْضِ وَصْفٍ مَعْنَاكَ يَقْصُرُ لِسَانُ الْمَادِحِ الْمُطِيلِ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Dan bertambahlah kegembiraan dan kebahagiaan, kesemarakan dan cahaya. Wahai Muhammad, bergembiralah! Sungguh telah tersebar di seluruh alam tanda-tanda ilmumu, dan segenap makhluk menyambut gembira kedatanganmu. Tiada satu pun dari ciptaan Allah melainkan datang untukmu dengan taat, dan mendengarkan apa yang dikatakan kepadamu. Maka akan datang kepadamu unta meminta perlindungan dengan menyebut jaminanmu; biawak dan kijang akan bersaksi bagimu atas kerasulanmu; bulan, pohon, dan serigala akan berbicara tentang kenabianmu dalam waktu dekat; kendaraanmu, Buraq, merindukan keindahanmu; Jibril, penyeru kerajaanmu, telah mengumumkan sebutanmu ke seluruh penjuru; bulan diperintahkan untuk terbelah bagimu; dan setiap yang ada di alam semesta merindukan kemunculanmu, menanti terbitnya cahayamu.<br><br>
+      Ketika sang kekasih ﷺ sedang menyimak suara-suara (apparisi) itu dengan wajah berseri bagai cahaya pagi, tiba-tiba datanglah Halimah sambil berteriak keras: "Oh, betapa asingnya (dia)!" Maka para malaikat berkata: "Wahai Muhammad, engkau bukanlah orang asing, bahkan engkau dekat dengan Allah, dan engkau kekasih serta orang pilihan-Nya." Halimah berkata lagi: "Oh, betapa sendirinya (dia)!" Malaikat menjawab: "Wahai Muhammad, engkau tidak sendiri, bahkan engkau pemilik dukungan (dari Allah), teman dekatmu adalah Ahmad yang terpuji, dan saudara-saudaramu adalah para malaikat dan ahli tauhid." Halimah berkata lagi: "Oh, betapa yatimnya (dia)!" Malaikat menjawab: "Sungguh mulia dirimu sebagai seorang yatim, karena kedudukanmu di sisi Allah sangatlah agung."<br><br>
+      Maka ketika Halimah melihatnya selamat dari segala kejadian menakjubkan itu, ia pun kembali dengan gembira ke tempat tinggalnya. Kemudian ia menceritakan kejadian itu kepada salah seorang dukun (peramal), dan mengulang kembali apa yang telah terjadi dan bagaimana keadaannya. Sang dukun berkata kepadanya: "Wahai anak (yang berkaitan dengan) Zamzam, Maqam, Rukun, dan Baitul Haram, apakah engkau melihat ini dalam keadaan terjaga ataukah dalam mimpi?" Ia menjawab: "Demi kehormatan Sang Raja Yang Maha Mengetahui, aku menyaksikannya dengan mata kepala sendiri, aku tidak ragu sedikit pun dan tidak berdusta." Sang dukun berkata: "Bergembiralah dengan anak ini! Engkau adalah pemilik tanda-tanda kemuliaan; dialah penutup dan penyempurna (para nabi). Kepadanya Jibril akan turun, dan di atas hamparan kesucian Yang Maha Agung akan berbicara dengannya. Siapakah gerangan yang mampu menghimpun segala keutamaan yang engkau miliki, sedangkan lisan orang yang paling fasih pun tak mampu menjelaskan sebagian kecil maknamu."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      <ul>
+        <li>Bagian ini adalah elaborasi sastrawi pasca-peristiwa Syaqqus Shadr: kecemasan Halimah digambarkan lewat tiga seruan ("betapa asing", "betapa sendiri", "betapa yatim") yang masing-masing dijawab malaikat dengan penegasan bahwa Nabi ﷺ senantiasa dekat, didukung, dan mulia di sisi Allah — sebuah struktur retoris yang indah untuk mengajarkan makna "tawakal di tengah kekhawatiran".</li>
+        <li>Kisah "sang kahin" (dukun/peramal) mencerminkan tradisi masyarakat Arab pra-Islam yang mempercayai ramalan; di sini digunakan secara naratif untuk menegaskan bahwa bahkan kalangan tradisional pun mengakui tanda-tanda kenabian Muhammad ﷺ sejak dini.</li>
+        <li>Baik ditekankan kepada santri bahwa unsur perdukunan (kahin) di sini adalah bagian dari konteks budaya cerita, bukan anjuran mempercayai ramalan — Islam melarang praktik perdukunan.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FASL 13 (akhlak) ================= -->
+  <section class="fasl" id="fasl13">
+    <h2 class="title">Fasal 13 — Akhlak Nabi ﷺ</h2>
+
+    <div class="arabic-block">
+      وَكَانَ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ أَحْسَنَ النَّاسِ خَلْقًا وَخُلُقًا، وَأَهْدَاهُمْ إِلَى الْحَقِّ طُرُقًا ﴿﴾ كَانَ خُلُقُهُ الْقُرْآنَ، وَشِيمَتُهُ الْغُفْرَانَ، يَنْصَحُ لِلْإِنْسَانِ، وَيَفْسَحُ فِي الْإِحْسَانِ، وَيَعْفُو عَنِ الذَّنْبِ إِذَا كَانَ فِي حَقِّهِ وَسَبَبِهِ، وَإِذَا ضُيِّعَ حَقُّ اللهِ لَمْ يَقُمْ أَحَدٌ لِّغَضَبِهِ ﴿﴾ مَنْ رَّآهُ بَدِيهَةً هَابَهُ، وَإِذَا دَعَاهُ الْمِسْكِينُ أَجَابَهُ، يَقُولُ الْحَقَّ وَلَوْ كَانَ مُرًّا، وَلَا يُضْمِرُ لِمُسْلِمٍ غِشًّا وَلَا ضُرًّا ﴿﴾ مَنْ نَّظَرَ فِي وَجْهِهِ عَلِمَ أَنَّهُ لَيْسَ بِوَجْهِ كَذَّابٍ، وَكَانَ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ لَيْسَ بِغَمَّازٍ وَلَا عَيَّابٍ ﴿﴾ إِذَا سُرَّ فَكَأَنَّ وَجْهَهُ قِطْعَةُ قَمَرٍ، وَإِذَا كَلَّمَ النَّاسَ فَكَأَنَّمَا يَجْنُونَ مِنْ كَلَامِهِ أَحْلَى ثَمَرٍ ﴿﴾ وَإِذَا تَبَسَّمَ تَبَسَّمَ عَنْ مِّثْلِ حَبِّ الْغَمَامِ، وَإِذَا تَكَلَّمَ فَكَأَنَّمَا الدُّرُّ يَسْقُطُ مِنْ ذَلِكَ الْكَلَامِ ﴿﴾ وَإِذَا تَحَدَّثَ فَكَأَنَّ الْمِسْكَ يَخْرُجُ مِنْ فِيهِ، وَإِذَا مَرَّ بِطَرِيقٍ عُرِفَ مِنْ طِيبِهِ أَنَّهُ قَدْ مَرَّ فِيهِ ﴿﴾ وَإِذَا جَلَسَ فِي مَجْلِسٍ بَقِيَ طِيبُهُ فِيهِ أَيَّامًا وَإِنْ تَغَيَّبَ، وَيُوجَدُ مِنْهُ أَحْسَنُ طِيبٍ وَإِنْ لَّمْ يَكُنْ قَدْ تَطَيَّبَ ﴿﴾ وَإِذَا مَشَى بَيْنَ أَصْحَابِهِ فَكَأَنَّهُ الْقَمَرُ بَيْنَ النُّجُومِ الزُّهْرِ، وَإِذَا أَقْبَلَ لَيْلًا فَكَأَنَّ النَّاسَ مِنْ نُّورِهِ فِي أَوَانِ الظُّهْرِ ﴿﴾ وَكَانَ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ أَجْوَدَ بِالْخَيْرِ مِنَ الرِّيحِ الْمُرْسَلَةِ، وَكَانَ يَرْفُقُ بِالْيَتِيمِ وَالْأَرْمَلَةِ ﴿﴾ قَالَ بَعْضُ وَاصِفِيهِ: مَا رَأَيْتُ مِنْ ذِي لِمَّةٍ سَوْدَاءَ، فِي حُلَّةٍ حَمْرَاءَ، أَحْسَنَ مِنْ رَّسُولِ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ ﴿﴾
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Beliau ﷺ adalah manusia yang paling baik bentuk fisik dan akhlaknya, dan yang paling lurus jalannya menuju kebenaran. Akhlaknya adalah Al-Qur'an, dan wataknya adalah pemaaf. Beliau menasihati manusia dan berlapang dada dalam berbuat kebaikan, memaafkan kesalahan jika itu menyangkut hak pribadinya. Namun jika hak Allah disia-siakan, tak seorang pun mampu menahan kemarahannya. Siapa yang memandangnya secara tiba-tiba akan segan kepadanya, dan jika orang miskin memintanya, beliau mengabulkannya. Beliau selalu berkata benar walaupun pahit, dan tidak pernah menyimpan tipu daya atau bahaya bagi seorang muslim pun. Siapa yang memandang wajahnya tahu bahwa itu bukan wajah seorang pendusta. Beliau ﷺ bukanlah orang yang suka mencela atau mencari-cari aib orang lain. Jika bergembira, wajahnya bagaikan sepotong bulan; jika berbicara kepada orang, seakan mereka memetik buah termanis dari perkataannya. Jika tersenyum, seakan senyumnya bagai butiran hujan yang jernih; jika berbicara, seakan mutiara berjatuhan dari kata-katanya. Jika berbincang, seakan wangi kesturi keluar dari mulutnya; jika melewati suatu jalan, orang tahu dari harumnya bahwa beliau telah melewatinya. Jika duduk dalam suatu majelis, wanginya tetap tinggal berhari-hari meski beliau telah pergi, bahkan wangi terbaik ditemukan darinya walau beliau tidak memakai wewangian. Jika berjalan di antara para sahabatnya, beliau bagai bulan di antara bintang-bintang gemerlap; jika datang di malam hari, orang-orang seolah berada dalam cahayanya seperti di waktu siang. Beliau ﷺ adalah orang yang paling dermawan dalam kebaikan, melebihi angin yang berhembus membawa kesuburan; beliau lemah lembut kepada anak yatim dan janda. Sebagian yang mensifatinya berkata: "Tidak pernah kulihat seorang berambut hitam berjubah merah yang lebih tampan dari Rasulullah ﷺ."
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Deskripsi akhlak Nabi ﷺ ini rangkuman sifat mulia beliau dalam ilmu <em>syamail nabawiyah</em> (studi perawakan dan akhlak Nabi ﷺ) — cocok jadi modul tersendiri pelajaran akhlak, memuat sifat pemaaf, jujur, dermawan, dan penyayang kepada yang lemah. Ungkapan "akhlaknya adalah Al-Qur'an" merujuk riwayat Sayyidah Aisyah radhiyallahu 'anha — hadits terkenal yang baik dihafalkan santri sebagai rangkuman induk seluruh sifat mulia Nabi ﷺ.
+    </div>
+  </section>
+
+  <!-- ================= FASL 14 (BARU: keutamaan tiada tara) ================= -->
+  <section class="fasl" id="fasl14">
+    <h2 class="title">Fasal 14 — Keutamaan yang Tiada Tara</h2>
+
+    <div class="arabic-block">
+      وَقِيلَ لِبَعْضِهِمْ: كَانَ وَجْهُهُ الْقَمَرَ؟ فَقَالَ: بَلْ أَضْوَأُ مِنَ الْقَمَرِ، إِذَا لَمْ يَحُلْ دُونَهُ الْغَمَامُ، قَدْ غَشِيَهُ جَلَالُهُ وَانْتَهَى إِلَيْهِ الْكَمَالُ ﴿﴾ قَالَ بَعْضُ وَاصِفِيهِ: مَا رَأَيْتُ قَبْلَهُ وَلَا بَعْدَهُ مِثْلَهُ، فَيَعْجِزُ لِسَانُ الْبَلِيغِ إِذَا أَرَادَ أَنْ يُّحْصِيَ فَضْلَهُ ﴿﴾ فَسُبْحَانَ مَنْ خَصَّهُ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ بِالْحُلَلِ الْأَسْنَى، وَأَسْرَى بِهِ إِلَى قَابَ قَوْسَيْنِ أَوْ أَدْنَى، وَأَيَّدَهُ بِالْمُعْجِزَاتِ الَّتِي لَا تُحْصَى، وَأَوْفَاهُ مِنْ خِصَالِ الْكَمَالِ مَا يَجِلُّ أَنْ يُّسْتَقْصَى، وَأَعْطَاهُ خَمْسًا لَّمْ يُعْطِهِنَّ أَحَدًا قَبْلَهُ، وَآتَاهُ جَوَامِعَ الْكَلِمِ فَلَمْ يُدْرِكْ أَحَدٌ فَضْلَهُ ﴿﴾ وَكَانَ لَهُ فِي كُلِّ مَقَامٍ عِنْدَهُ مَقَالٌ، وَلِكُلِّ كَمَالٍ مِّنْهُ كَمَالٌ، لَا يَحُورُ فِي سُؤَالٍ وَلَا جَوَابٍ، وَلَا يَجُو لِسَانُهُ إِلَّا فِي صَوَابٍ ﴿﴾
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="arabic-block">
+      وَمَا عَسَى أَنْ يُّقَاسَ فِيمَنْ قَدْ وَصَفَهُ الْقُرْآنُ، وَأَعْرَبَ عَنْ فَضَائِلِهِ التَّوْرَاةُ وَالْإِنْجِيلُ وَالزَّبُورُ وَالْفُرْقَانُ ﴿﴾ وَجَمَعَ اللهُ لَهُ بَيْنَ رُؤْيَتِهِ وَكَلَامِهِ، وَقَرَنَ اسْمَهُ مَعَ اسْمِهِ تَنْبِيهًا عَلَى عُلُوِّ مَقَامِهِ، وَجَعَلَهُ رَحْمَةً لِّلْعَالَمِينَ وَنُورًا، وَمَلَأَ بِمَوْلِدِهِ الْقُلُوبَ سُرُورًا ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Dikatakan kepada sebagian yang mensifatinya: "Apakah wajahnya seperti bulan?" Ia menjawab: "Bahkan lebih terang dari bulan, apabila tidak terhalang awan. Kewibawaannya telah menyelimutinya, dan kesempurnaan telah tercapai padanya." Sebagian yang mensifatinya berkata: "Tidak pernah kulihat, sebelum maupun sesudahnya, orang seperti dirinya, hingga lisan orang yang paling fasih pun tak mampu menghitung keutamaannya." Maka Maha Suci Dia yang mengkhususkan beliau ﷺ dengan pakaian-pakaian termulia, memi'rajkannya hingga jarak dua busur panah atau lebih dekat lagi, meneguhkannya dengan mukjizat-mukjizat yang tak terhitung, menyempurnakan baginya sifat-sifat kesempurnaan yang terlalu agung untuk dihabiskan, memberinya lima hal yang tak pernah diberikan kepada siapa pun sebelumnya, dan menganugerahkannya jawami'ul kalim (kata-kata ringkas namun padat makna) sehingga tak seorang pun mampu menyamai keutamaannya. Setiap kedudukan memiliki ucapan khususnya di sisinya, dan setiap kesempurnaan memiliki kesempurnaan tersendiri darinya. Ia tak pernah bingung dalam menjawab pertanyaan, dan lisannya tak pernah keliru kecuali selalu tepat pada kebenaran.<br><br>
+      Maka bagaimana mungkin dapat dibandingkan dengan orang yang telah disifati oleh Al-Qur'an, dan yang keutamaannya telah dijelaskan oleh Taurat, Injil, Zabur, dan Al-Furqan? Allah menghimpun baginya antara penglihatan dan firman-Nya, dan menyandingkan namanya dengan nama-Nya sebagai penegasan atas ketinggian kedudukannya, serta menjadikannya rahmat bagi seluruh alam dan cahaya, dan memenuhi hati-hati manusia dengan kebahagiaan berkat kelahirannya.
+    </div>
+
+    <div class="interlude">اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ</div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      "Lima hal yang tak pernah diberikan kepada siapa pun sebelumnya" merujuk pada hadits sahih tentang keistimewaan khusus Nabi Muhammad ﷺ dibanding nabi-nabi sebelumnya (di antaranya: kemenangan dengan rasa gentar musuh dari jarak jauh, bumi dijadikan tempat sujud dan suci, dihalalkan harta rampasan perang, diberi syafaat, dan diutus untuk seluruh manusia). "Jawami'ul kalim" adalah julukan bagi kefasihan Nabi ﷺ yang mampu menyampaikan makna luas dengan kalimat ringkas — baik dijadikan bahan diskusi tentang keistimewaan bahasa hadits-hadits Nabi ﷺ.
+    </div>
+  </section>
+
+  <!-- ================= QASIDAH PENUTUP ================= -->
+  <section class="fasl" id="qasidah-penutup">
+    <h2 class="title">Qasidah Penutup</h2>
+    <div class="arabic-block">
+      <span class="bait">يَا بَدْرَ تَمٍّ حَازَ كُلَّ كَمَالِ ۞ مَاذَا يُعَبِّرُ عَنْ عُلَاكَ مَقَالِي</span>
+      <span class="bait">أَنْتَ الَّذِي أَشْرَفْتَ فِي أُفُقِ الْعُلَا ۞ فَمَحَوْتَ بِالْأَنْوَارِ كُلَّ ضَلَالِ</span>
+      <span class="bait">وَبِكَ اسْتَنَارَ الْكَوْنُ يَا عَلَمَ الْهُدَى ۞ بِالنُّورِ وَالْإِنْعَامِ وَالْإِفْضَالِ</span>
+      <span class="bait">صَلَّى عَلَيْكَ اللهُ رَبِّي دَائِمًا ۞ أَبَدًا مَّعَ الْأَبْكَارِ وَالْآصَالِ</span>
+      <span class="bait">وَعَلَى جَمِيعِ الْآلِ وَالْأَصْحَابِ مَنْ ۞ قَدْ خَصَّهُمْ رَبُّ الْعُلَا بِكَمَالِ</span>
+    </div>
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      1. Wahai bulan purnama yang menghimpun segala kesempurnaan, apalah kata-kataku mampu mengungkap keluhuranmu.<br>
+      2. Engkaulah yang terbit di ufuk kemuliaan, menghapus segala kesesatan dengan cahaya-cahaya.<br>
+      3. Dengan dirimu alam semesta menjadi terang, wahai tanda petunjuk, dengan cahaya, nikmat, dan karunia.<br>
+      4. Semoga Allah, Tuhanku, senantiasa melimpahkan shalawat atasmu, selamanya, di waktu pagi dan petang.<br>
+      5. Dan atas seluruh keluarga dan para sahabat, yang telah dikhususkan oleh Tuhan Yang Maha Tinggi dengan kesempurnaan.
+    </div>
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      Qasidah pendek ini menutup rangkaian pujian sebelum doa penutup. Kata "badru tamm" (bulan purnama sempurna) adalah metafora paling umum dalam sastra pujian Nabi ﷺ — melambangkan keindahan, petunjuk, dan cahaya yang menerangi kegelapan.
+    </div>
+  </section>
+
+  <!-- ================= DOA PENUTUP ================= -->
+  <section class="fasl" id="doa">
+    <h2 class="title">Doa Penutup Maulid Ad-Diba'i</h2>
+
+    <div class="arabic-block">
+      بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ، اَلْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿﴾ اَللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى سَيِّدِنَا مُحَمَّدٍ، وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ ﴿﴾ جَعَلَنَا اللهُ وَإِيَّاكُمْ مِمَّنْ يَّسْتَوْجِبُ شَفَاعَتَهُ، وَيَرْجُو رَحْمَتَهُ وَرَأْفَتَهُ ﴿﴾ اَللَّهُمَّ بِحُرْمَةِ هَذَا النَّبِيِّ الْكَرِيمِ، وَآلِهِ وَأَصْحَابِهِ السَّالِكِينَ عَلَى مَنْهَجِهِ الْقَوِيمِ، اجْعَلْنَا مِنْ خِيَارِ أُمَّتِهِ، وَاسْتُرْنَا بِذَيْلِ حُرْمَتِهِ، وَاحْشُرْنَا غَدًا فِي زُمْرَتِهِ، وَاسْتَعْمِلْ أَلْسِنَتَنَا فِي مَدْحِهِ وَنُصْرَتِهِ، وَأَحْيِنَا مُتَمَسِّكِينَ بِسُنَّتِهِ وَطَاعَتِهِ، وَأَمِتْنَا عَلَى حُبِّهِ وَجَمَاعَتِهِ ﴿﴾ اَللَّهُمَّ أَدْخِلْنَا مَعَهُ الْجَنَّةَ فَإِنَّهُ أَوَّلُ مَنْ يَّدْخُلُهَا، وَأَنْزِلْنَا مَعَهُ فِي قُصُورِهَا فَإِنَّهُ أَوَّلُ مَنْ يَّنْزِلُهَا، وَارْحَمْنَا يَوْمَ يَشْفَعُ لِلْخَلَائِقِ فَتَرْحَمُهَا ﴿﴾ اَللَّهُمَّ ارْزُقْنَا زِيَارَتَهُ فِي كُلِّ سَنَةٍ، وَلَا تَجْعَلْنَا مِنَ الْغَافِلِينَ عَنْكَ وَلَا عَنْهُ قَدْرَ سِنَةٍ ﴿﴾ اَللَّهُمَّ لَا تَجْعَلْ فِي مَجْلِسِنَا هَذَا أَحَدًا إِلَّا غَسَلْتَ بِمَاءِ التَّوْبَةِ ذُنُوبَهُ، وَسَتَرْتَ بِرِدَاءِ الْمَغْفِرَةِ عُيُوبَهُ ﴿﴾ اَللَّهُمَّ إِنَّهُ كَانَ مَعَنَا فِي السَّنَةِ الْمَاضِيَةِ إِخْوَانٌ مَّنَعَهُمُ الْقَضَاءُ عَنِ الْوُصُولِ إِلَى مِثْلِهَا، فَلَا تَحْرِمْهُمْ مِّنْ ثَوَابِ هَذِهِ السَّاعَةِ وَفَضْلِهَا ﴿﴾ اَللَّهُمَّ ارْحَمْنَا إِذَا صِرْنَا مِنْ أَصْحَابِ الْقُبُورِ، وَوَفِّقْنَا لِعَمَلٍ صَالِحٍ يَبْقَى سَنَاهُ عَلَى مَمَرِّ الدُّهُورِ ﴿﴾ اَللَّهُمَّ اجْعَلْنَا لِآلَائِكَ ذَاكِرِينَ، وَلِنَعْمَائِكَ شَاكِرِينَ، وَلِيَوْمِ لِقَائِكَ مِنَ الذَّاكِرِينَ، وَأَحْيِنَا بِطَاعَتِكَ مَشْغُولِينَ، وَإِذَا تَوَفَّيْتَنَا فَتَوَفَّنَا غَيْرَ مَفْتُونِينَ وَلَا مَخْذُولِينَ، وَاخْتِمْ لَنَا مِنْكَ بِخَيْرٍ أَجْمَعِينَ ﴿﴾ اَللَّهُمَّ اكْفِنَا شَرَّ الظَّالِمِينَ، وَاجْعَلْنَا مِنْ فِتْنَةِ هَذِهِ الدُّنْيَا سَالِمِينَ ﴿﴾ اَللَّهُمَّ اجْعَلْ هَذَا الرَّسُولَ الْكَرِيمَ لَنَا شَفِيعًا، وَارْزُقْنَا بِهِ يَوْمَ الْقِيَامَةِ مَقَامًا رَّفِيعًا ﴿﴾ اَللَّهُمَّ اسْقِنَا مِنْ حَوْضِ نَبِيِّكَ مُحَمَّدٍ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ شَرْبَةً هَنِيئَةً لَّا نَظْمَأُ بَعْدَهَا أَبَدًا، وَاحْشُرْنَا تَحْتَ لِوَائِهِ غَدًا ﴿﴾ اَللَّهُمَّ اغْفِرْ لَنَا بِهِ، وَلِآبَائِنَا، وَلِأُمَّهَاتِنَا، وَلِمَشَايِخِنَا وَلِمُعَلِّمِينَا، وَذَوِي الْحُقُوقِ عَلَيْنَا، وَلِمَنْ أَجْرَى هَذَا الْخَيْرَ فِي هَذِهِ السَّاعَةِ، وَلِجَمِيعِ الْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ، وَالْمُسْلِمِينَ وَالْمُسْلِمَاتِ، الْأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ ﴿﴾ إِنَّكَ مُجِيبُ الدَّعَوَاتِ وَقَاضِي الْحَاجَاتِ، وَغَافِرُ الذُّنُوبِ وَالْخَطِيئَاتِ، يَا أَرْحَمَ الرَّاحِمِينَ (٣×) ﴿﴾ وَصَلَّى اللهُ عَلَى سَيِّدِنَا مُحَمَّدٍ، وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ ﴿﴾ سُبْحَانَ رَبِّكَ رَبِّ الْعِزَّةِ عَمَّا يَصِفُونَ، وَسَلَامٌ عَلَى الْمُرْسَلِينَ، وَالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿﴾
+    </div>
+
+    <div class="translation-block">
+      <span class="label">Terjemahan</span>
+      Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang. Segala puji bagi Allah, Tuhan semesta alam. Ya Allah, limpahkanlah shalawat, salam, dan berkah kepada junjungan kami Muhammad, kepada keluarga dan seluruh sahabatnya. Semoga Allah menjadikan kami dan kalian termasuk orang-orang yang berhak mendapatkan syafaatnya, serta mengharap rahmat dan kasih sayang-Nya.<br><br>
+      Ya Allah, dengan kehormatan Nabi yang mulia ini, beserta keluarga dan sahabatnya yang menempuh jalannya yang lurus, jadikanlah kami termasuk umat pilihannya, lindungilah kami dengan kemuliaannya, kumpulkanlah kami esok dalam golongannya, jadikanlah lisan kami senantiasa memuji dan membelanya, hidupkanlah kami dalam keadaan berpegang teguh pada sunnah dan ketaatan kepadanya, dan wafatkanlah kami dalam kecintaan dan kebersamaan dengannya.<br><br>
+      Ya Allah, masukkanlah kami bersamanya ke dalam surga, karena dialah orang pertama yang memasukinya; tempatkanlah kami bersamanya di istana-istananya, karena dialah orang pertama yang menempatinya; dan kasihanilah kami pada hari ia memberi syafaat kepada seluruh makhluk sehingga mereka dirahmati.<br><br>
+      Ya Allah, karuniakanlah kami untuk dapat menziarahinya setiap tahun, dan janganlah Engkau jadikan kami termasuk orang-orang yang lalai dari-Mu dan darinya walau sesaat. Ya Allah, janganlah Engkau jadikan seorang pun dalam majelis kami ini melainkan Engkau bersihkan dosa-dosanya dengan air taubat, dan Engkau tutupi aib-aibnya dengan jubah ampunan.<br><br>
+      Ya Allah, sesungguhnya dahulu bersama kami pada tahun yang lalu ada saudara-saudara kami yang kini terhalang oleh takdir untuk hadir kembali pada majelis serupa ini; maka janganlah Engkau halangi mereka dari pahala dan keutamaan waktu yang mulia ini.<br><br>
+      Ya Allah, kasihanilah kami ketika kami telah menjadi penghuni kubur, dan berilah kami taufik untuk beramal saleh yang cahayanya tetap abadi sepanjang masa. Ya Allah, jadikanlah kami senantiasa mengingat nikmat-nikmat-Mu, mensyukuri karunia-Mu, dan termasuk golongan yang selalu mengingat hari perjumpaan dengan-Mu. Hidupkanlah kami dalam kesibukan menaati-Mu, dan bila Engkau wafatkan kami, wafatkanlah kami tanpa terfitnah dan tanpa terhina, serta akhirilah hidup kami dengan sebaik-baik akhir dari-Mu untuk kami semua.<br><br>
+      Ya Allah, cukupkanlah kami dari kejahatan orang-orang zalim, dan jadikanlah kami selamat dari fitnah dunia ini. Ya Allah, jadikanlah Rasul yang mulia ini sebagai pemberi syafaat bagi kami, dan karuniakanlah kami dengannya pada hari Kiamat kedudukan yang tinggi.<br><br>
+      Ya Allah, berilah kami minum dari telaga Nabi-Mu Muhammad ﷺ, seteguk yang nikmat, yang setelahnya kami tak akan pernah haus lagi selamanya, dan kumpulkanlah kami esok di bawah panji-panjinya. Ya Allah, ampunilah kami dengan berkahnya, juga bapak-bapak kami, ibu-ibu kami, para guru kami, para pengajar kami, serta orang-orang yang memiliki hak atas kami, dan orang yang telah menyelenggarakan kebaikan ini pada saat ini, serta seluruh kaum mukminin dan mukminat, muslimin dan muslimat, yang masih hidup maupun yang telah wafat.<br><br>
+      Sesungguhnya Engkaulah Yang Maha Mengabulkan doa dan memenuhi segala kebutuhan, Yang Maha Mengampuni dosa dan kesalahan. Wahai Yang Maha Pengasih di antara para pengasih (3x). Semoga Allah melimpahkan shalawat kepada junjungan kami Muhammad, keluarga, dan sahabatnya, serta memberi salam kesejahteraan. Maha Suci Tuhanmu, Tuhan yang memiliki keperkasaan, dari apa yang mereka sifatkan; dan salam sejahtera atas para rasul; segala puji bagi Allah, Tuhan semesta alam.
+    </div>
+
+    <div class="explain-block">
+      <span class="label">Penjelasan untuk Pengajar</span>
+      <ul>
+        <li>Doa penutup ini merangkum seluruh tujuan pembacaan maulid: memohon syafaat Nabi ﷺ, husnul khatimah, ampunan dosa, dan keselamatan dunia-akhirat bagi seluruh yang hadir maupun yang berhalangan hadir.</li>
+        <li>Kalimat "orang yang telah menyelenggarakan kebaikan ini" adalah doa khusus bagi tuan rumah/penyelenggara majelis maulid — bentuk adab dan penghargaan terhadap siapa pun yang berinisiatif mengadakan majelis ilmu dan zikir.</li>
+        <li>Ayat penutup "Subhana Rabbika Rabbil 'Izzati 'amma yasifun..." (QS. Ash-Shaffat: 180–182) adalah kebiasaan universal banyak majelis untuk menutup rangkaian zikir dan doa.</li>
+        <li>Inti dari seluruh pembacaan maulid bukan sekadar melafalkan teks, melainkan menumbuhkan kecintaan (mahabbah) kepada Nabi ﷺ yang berbuah pada peneladanan akhlak dan sunnah beliau dalam kehidupan sehari-hari.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="foot-orn">۞ ۞ ۞</div>
+  <p>Disusun untuk keperluan belajar-mengajar &middot; Teks asli: Al-Imam Abdurrahman Ad-Diba'i Asy-Syaibani (w. 944 H)</p>
+  <p>&copy; 2026 by Achmad Fauzi &middot; Email: vaozeei@gmail.com</p>
+</footer>
+
+</body>
+</html>

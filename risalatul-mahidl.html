@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Risalatul Mahidl — Kajian Fiqh Haidl, Nifas &amp; Istihadhoh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF7EE;
+    --paper-alt:#F3EAD4;
+    --paper-deep:#ECE0C2;
+    --ink:#2B241D;
+    --ink-soft:#5C5142;
+    --maroon:#7C2A32;
+    --maroon-dark:#591C24;
+    --gold:#A5761F;
+    --gold-soft:#C79A3F;
+    --teal:#2E5C56;
+    --teal-dark:#1F423D;
+    --line:#DDD0AA;
+    --shadow:0 10px 30px -12px rgba(89,28,36,0.18);
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.7;
+    font-size:16px;
+  }
+  ::selection{background:var(--gold-soft);color:var(--maroon-dark);}
+
+  h1,h2,h3,h4{font-family:'Lora',serif;color:var(--maroon-dark);margin:0 0 .4em;}
+  .arabic{font-family:'Amiri',serif;direction:rtl;text-align:right;unicode-bidi:isolate;}
+  a{color:var(--maroon);}
+
+  /* ===== Top bar ===== */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:linear-gradient(180deg,var(--paper) 82%,rgba(251,247,238,0));
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    padding:.7rem 1.2rem;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  }
+  .topbar .brand{display:flex;align-items:center;gap:.7rem;}
+  .topbar .brand .mark{
+    width:38px;height:38px;border-radius:50%;
+    background:conic-gradient(from 210deg,var(--maroon),var(--gold),var(--teal),var(--maroon));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:'Amiri',serif;font-weight:700;font-size:1.15rem;
+    box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .topbar .brand .txt small{display:block;color:var(--ink-soft);font-size:.72rem;letter-spacing:.04em;}
+  .topbar .brand .txt strong{font-family:'Lora',serif;font-size:1rem;color:var(--maroon-dark);}
+  #navToggle{
+    display:none;border:1px solid var(--line);background:var(--paper-alt);
+    color:var(--maroon-dark);border-radius:8px;padding:.45rem .7rem;font-size:1.1rem;cursor:pointer;
+  }
+
+  /* ===== Layout shell ===== */
+  .shell{display:grid;grid-template-columns:280px 1fr;max-width:1280px;margin:0 auto;}
+  aside.toc{
+    border-right:1px solid var(--line);
+    padding:1.3rem 1rem 3rem;
+    position:sticky;top:64px;
+    align-self:start;
+    max-height:calc(100vh - 64px);
+    overflow-y:auto;
+  }
+  aside.toc .toc-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--gold);font-weight:600;margin:1.1rem 0 .4rem;}
+  aside.toc .toc-title:first-child{margin-top:0;}
+  aside.toc ul{list-style:none;margin:0;padding:0;}
+  aside.toc li a{
+    display:block;padding:.32rem .55rem;border-radius:8px;
+    color:var(--ink-soft);text-decoration:none;font-size:.88rem;
+    border-left:2px solid transparent;
+  }
+  aside.toc li a:hover{background:var(--paper-alt);color:var(--maroon-dark);}
+  aside.toc li a.sub{padding-left:1.2rem;font-size:.82rem;}
+
+  main{padding:1.6rem 2.2rem 5rem;min-width:0;}
+
+  /* ===== Hero ===== */
+  .hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(124,42,50,.10), transparent 45%),
+      radial-gradient(circle at 85% 0%, rgba(46,92,86,.12), transparent 40%),
+      var(--paper-alt);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:2.2rem 2rem;
+    margin:1.4rem 0 2.2rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+  .hero h1{font-size:2rem;margin:.35rem 0 .15rem;}
+  .hero .arabic-title{font-size:1.7rem;color:var(--maroon);margin:.2rem 0 .8rem;}
+  .hero p.lead{max-width:60ch;color:var(--ink-soft);margin:0 0 1rem;}
+  .hero .basmalah{
+    font-family:'Amiri',serif;direction:rtl;text-align:center;font-size:1.3rem;
+    color:var(--maroon-dark);border-top:1px dashed var(--gold-soft);border-bottom:1px dashed var(--gold-soft);
+    padding:.8rem 0;margin:1rem 0;
+  }
+  .hero .stat-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1rem;}
+  .stat-chip{
+    background:var(--paper);border:1px solid var(--line);border-radius:999px;
+    padding:.4rem .9rem;font-size:.8rem;color:var(--ink-soft);display:flex;gap:.4rem;align-items:baseline;
+  }
+  .stat-chip b{color:var(--maroon-dark);font-family:'Lora',serif;}
+
+  /* ===== Section blocks ===== */
+  section.bab-cover{
+    display:flex;align-items:center;gap:1rem;
+    padding:1.4rem 0 .6rem;margin-top:2.6rem;
+    border-bottom:3px solid var(--maroon);
+  }
+  section.bab-cover .num{
+    font-family:'Lora',serif;font-size:2.4rem;color:var(--gold);font-weight:700;line-height:1;
+  }
+  section.bab-cover h2{font-size:1.6rem;margin:0;}
+  section.bab-cover .sub{color:var(--ink-soft);font-size:.92rem;margin-top:.15rem;}
+
+  .topik{
+    margin:2rem 0;padding:1.5rem 1.6rem;
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    scroll-margin-top:80px;
+  }
+  .topik-head{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.6rem;}
+  .topik-head .tag{
+    font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+    background:var(--maroon);color:#fff;padding:.15rem .55rem;border-radius:999px;font-weight:600;
+  }
+  .topik.teal .topik-head .tag{background:var(--teal);}
+  .topik h3{font-size:1.25rem;margin:0;}
+  .topik .judul-arab{font-size:1.15rem;color:var(--maroon);margin-left:.3rem;}
+
+  .matan{
+    background:var(--paper-alt);
+    border-left:4px solid var(--gold);
+    border-radius:0 10px 10px 0;
+    padding:1rem 1.2rem;
+    margin:1rem 0;
+  }
+  .topik.teal .matan{border-left-color:var(--teal);}
+  .matan .arabic{font-size:1.3rem;line-height:2.1;color:var(--maroon-dark);}
+  .matan .terjemah{
+    margin-top:.6rem;padding-top:.6rem;border-top:1px dashed var(--line);
+    font-size:.93rem;color:var(--ink-soft);font-style:italic;
+  }
+
+  .penjelasan h4{font-size:.95rem;color:var(--teal-dark);margin:1.1rem 0 .3rem;}
+  .topik.teal .penjelasan h4{color:var(--maroon-dark);}
+  .penjelasan p{margin:.4rem 0;}
+  .penjelasan ul, .penjelasan ol{margin:.4rem 0;padding-left:1.3rem;}
+  .penjelasan li{margin:.25rem 0;}
+
+  .catatan{
+    background:#F5EFE0;border:1px dashed var(--gold-soft);border-radius:10px;
+    padding:.8rem 1rem;margin:.9rem 0;font-size:.9rem;color:var(--ink-soft);
+  }
+  .catatan b{color:var(--maroon-dark);}
+
+  .contoh{
+    background:#EEF3F1;border:1px solid #CFE0DB;border-radius:10px;
+    padding:.8rem 1rem;margin:.7rem 0;font-size:.92rem;
+  }
+  .contoh b{color:var(--teal-dark);}
+
+  table.ringkas{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.9rem;}
+  table.ringkas th, table.ringkas td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;}
+  table.ringkas th{background:var(--paper-deep);color:var(--maroon-dark);font-family:'Lora',serif;}
+  table.ringkas tr:nth-child(even){background:var(--paper-alt);}
+
+  details.rujukan{
+    margin-top:1rem;border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  }
+  details.rujukan summary{
+    cursor:pointer;padding:.6rem 1rem;background:var(--paper-deep);
+    font-size:.85rem;font-weight:600;color:var(--maroon-dark);list-style:none;
+    display:flex;align-items:center;gap:.4rem;
+  }
+  details.rujukan summary::before{content:"📜";}
+  details.rujukan summary::-webkit-details-marker{display:none;}
+  details.rujukan[open] summary{border-bottom:1px solid var(--line);}
+  details.rujukan .isi{padding:.9rem 1.1rem;}
+  details.rujukan .kitab{font-size:.78rem;color:var(--gold);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem;}
+  details.rujukan .arabic{font-size:1.05rem;line-height:1.95;}
+
+  .glosarium{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.8rem;
+  }
+  .glos-item{background:var(--paper-alt);border:1px solid var(--line);border-radius:10px;padding:.7rem .9rem;}
+  .glos-item b{color:var(--maroon-dark);font-family:'Lora',serif;}
+  .glos-item span{display:block;font-size:.85rem;color:var(--ink-soft);margin-top:.15rem;}
+
+  /* ===== Kalkulator interaktif (elemen tanda pengenal) ===== */
+  .kalkulator{
+    margin:2rem 0;padding:1.6rem 1.8rem;border-radius:18px;
+    background:linear-gradient(135deg,var(--teal-dark),var(--teal));
+    color:#F4EFDD;box-shadow:var(--shadow);
+  }
+  .kalkulator h3{color:#fff;font-size:1.2rem;}
+  .kalkulator p{color:#D9E6E2;font-size:.9rem;max-width:62ch;}
+  .kalk-form{display:flex;flex-wrap:wrap;gap:.8rem;align-items:end;margin-top:1rem;}
+  .kalk-form label{display:flex;flex-direction:column;font-size:.8rem;color:#CFE3DD;gap:.3rem;}
+  .kalk-form input{
+    padding:.5rem .6rem;border-radius:8px;border:1px solid rgba(255,255,255,.3);
+    background:rgba(255,255,255,.08);color:#fff;font-family:'Inter',sans-serif;
+  }
+  .kalk-form button{
+    padding:.55rem 1.1rem;border-radius:8px;border:none;
+    background:var(--gold-soft);color:var(--maroon-dark);font-weight:700;cursor:pointer;
+  }
+  .kalk-form button:hover{background:#E1B85C;}
+  .kalk-hasil{
+    margin-top:1rem;padding:.9rem 1rem;border-radius:10px;
+    background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);
+    font-size:.92rem;display:none;
+  }
+  .kalk-hasil.show{display:block;}
+  .kalk-hasil b{color:#F6D98A;}
+
+  /* ===== Footer ===== */
+  footer{
+    border-top:1px solid var(--line);
+    padding:2rem 1.2rem 2.4rem;text-align:center;
+    color:var(--ink-soft);font-size:.85rem;
+    background:var(--paper-alt);
+  }
+  footer .ornament{color:var(--gold);margin-bottom:.4rem;font-size:1rem;letter-spacing:.3em;}
+
+  /* ===== Mobile ===== */
+  @media (max-width:880px){
+    .shell{grid-template-columns:1fr;}
+    aside.toc{
+      position:fixed;top:58px;left:0;right:0;bottom:0;z-index:40;
+      background:var(--paper);transform:translateX(-100%);transition:transform .25s ease;
+      max-height:none;border-right:none;
+    }
+    aside.toc.open{transform:translateX(0);}
+    #navToggle{display:block;}
+    main{padding:1.2rem 1rem 4rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="mark">ح</div>
+    <div class="txt">
+      <strong>Risalatul Mahidl</strong>
+      <small>Kajian Fiqh Haidl · Nifas · Istihadhoh</small>
+    </div>
+  </div>
+  <button id="navToggle" aria-label="Buka daftar isi">☰</button>
+</div>
+
+<div class="shell">
+
+  <aside class="toc" id="tocMenu">
+    <div class="toc-title">Bab I — Haidl</div>
+    <ul>
+      <li><a href="#a-definisi">A. Definisi Haidl</a></li>
+      <li><a href="#b-usia">B. Usia Haidl</a></li>
+      <li><a href="#c-nama">C. Nama-nama Darah Haidl</a></li>
+      <li><a href="#d-makhluk">D. Makhluk yang Mengalami Haidl</a></li>
+      <li><a href="#e-warna">E. Warna &amp; Sifat Darah</a></li>
+      <li><a href="#f-minimal">F. Minimal Haidl</a></li>
+      <li><a href="#g-maksimal">G. Maksimal Haidl</a></li>
+      <li><a href="#h-tidur">H. Darah Saat Tidur</a></li>
+      <li><a href="#i-larangan">I. Larangan bagi Wanita Haidl</a></li>
+      <li><a href="#j-monopause">J. Monopause</a></li>
+      <li><a href="#k-suci">K. Batasan Masa Suci</a></li>
+      <li><a href="#l-keputihan">L. Status Keputihan</a></li>
+    </ul>
+    <div class="toc-title">Bab II — Istihadhoh</div>
+    <ul>
+      <li><a href="#a-ist-def">A. Definisi Istihadhoh</a></li>
+      <li><a href="#b-ist-tata">B. Tata Cara Shalat Mustahadhoh</a></li>
+      <li><a href="#c-ist-klas">C. Klasifikasi Mustahadhoh</a></li>
+      <li><a href="#klas1" class="sub">1. Mubtada'ah Mumayyizah</a></li>
+      <li><a href="#klas2" class="sub">2. Mubtada'ah Ghoiru Mumayyizah</a></li>
+      <li><a href="#klas3" class="sub">3. Mu'tadah Mumayyizah</a></li>
+      <li><a href="#klas4" class="sub">4. Mu'tadah Ghoiru Mumayyizah (Hafal)</a></li>
+      <li><a href="#klas5" class="sub">5. Mutahayyiroh (Lupa Total)</a></li>
+      <li><a href="#klas6" class="sub">6. Ingat Kadar, Lupa Waktu</a></li>
+      <li><a href="#klas7" class="sub">7. Ingat Waktu, Lupa Kadar</a></li>
+    </ul>
+    <div class="toc-title">Pelengkap</div>
+    <ul>
+      <li><a href="#kalkulator">Kalkulator Usia Haidl</a></li>
+      <li><a href="#ringkasan">Tabel Ringkasan Batasan</a></li>
+      <li><a href="#glosarium">Glosarium Istilah</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <div class="hero">
+      <div class="eyebrow">Materi Ajar Fiqh Wanita · Bab Thaharah</div>
+      <h1>Risalatul Mahidl</h1>
+      <div class="arabic-title">رِسَالَةُ الْمَحِيْض</div>
+      <div class="basmalah">
+        بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيْمِ. الْحَمْدُ لِلهِ الَّذِيْ أَنْزَلَ الْفُرْقَانَ عَلَى عَبْدِهِ فِيْهِ وَيَسْأَلُوْنَكَ عَنِ الْمَحِيْضِ قُلْ هُوَ أَذًى
+      </div>
+      <p class="lead">
+        Halaman ini menghimpun kajian fiqh seputar darah kewanitaan — haidl, istihadhoh, dan hal-hal
+        yang berkaitan dengannya — disusun ulang dengan tambahan penjelasan, contoh perhitungan, tabel
+        ringkasan, dan glosarium agar lebih mudah dipelajari dan diajarkan. Setiap topik memuat: teks
+        Arab (matan), terjemahan, penjelasan yang diperluas, contoh kasus, serta kutipan ibarat kitab
+        rujukan klasik yang bisa dibuka pada bagian "Rujukan Kitab".
+      </p>
+      <div class="stat-row">
+        <div class="stat-chip">Minimal haidl <b>24 jam</b></div>
+        <div class="stat-chip">Maksimal haidl <b>15 hari</b></div>
+        <div class="stat-chip">Minimal suci <b>15 hari</b></div>
+        <div class="stat-chip">Usia mulai haidl <b>≈ 9 tahun qamariyah</b></div>
+        <div class="stat-chip">Usia umum monopause <b>62 tahun</b></div>
+      </div>
+    </div>
+
+    <!-- ======================= BAB I ======================= -->
+    <section class="bab-cover" id="bab1">
+      <div class="num">I</div>
+      <div>
+        <h2>Haidl</h2>
+        <div class="sub">Definisi, usia, sifat, batasan waktu, dan hukum-hukum yang menyertainya</div>
+      </div>
+    </section>
+
+    <!-- A. Definisi -->
+    <div class="topik" id="a-definisi">
+      <div class="topik-head"><span class="tag">Bab I · A</span><h3>Definisi Haidl</h3></div>
+      <div class="matan">
+        <div class="arabic">فَالْحَيْضُ هُوَ الدَّمُ الْخَارِجُ فِيْ سِنِّ الْحَيْضِ، وَهُوَ تِسْعُ سِنِيْنَ قَمَرِيَّةٍ، مِنْ فَرْجِ الْمَرْأَةِ عَلَى سَبِيْلِ الصِّحَّةِ وَمَا دُوْنَهُ فَهُوَ دَمُ فَسَادٍ</div>
+        <div class="terjemah">"Haidl adalah darah yang keluar pada usia haidl — yaitu sembilan tahun qamariyah — dari kemaluan wanita dalam keadaan sehat (bukan karena sakit). Darah yang keluar sebelum usia tersebut disebut darah fasad (rusak)."</div>
+      </div>
+      <div class="penjelasan">
+        <h4>Penjelasan</h4>
+        <p>Secara bahasa, <em>haidl</em> berarti "mengalir". Secara istilah fiqh, haidl adalah darah yang keluar
+        dari kemaluan wanita (pangkal rahim) karena tabiat alaminya — bukan disebabkan oleh penyakit,
+        luka, atau proses melahirkan — dan keluar pada rentang usia yang memungkinkan seorang wanita
+        mengalami haidl.</p>
+        <p>Tiga syarat pokok agar darah disebut haidl secara syar'i:</p>
+        <ol>
+          <li><b>Sumbernya alami</b> — bukan darah penyakit (istihadhoh) atau darah nifas (darah pasca melahirkan).</li>
+          <li><b>Usianya cukup</b> — keluar setelah wanita memasuki usia haidl (lihat pembahasan B).</li>
+          <li><b>Memenuhi durasi</b> — tidak kurang dari batas minimal (24 jam) dan tidak melebihi batas maksimal (15 hari).</li>
+        </ol>
+        <h4>Apakah wanita hamil bisa haidl?</h4>
+        <p>Ulama berbeda pendapat mengenai darah yang keluar dari wanita hamil:</p>
+        <ul>
+          <li><b>Qaul Ashoh</b> (pendapat yang lebih shahih, dipegang mayoritas ulama Syafi'iyah &amp; Malikiyah): darah tersebut tetap dihukumi haidl selama memenuhi kriteria haidl pada umumnya.</li>
+          <li><b>Muqobilul Ashoh</b> (Hanafiyah &amp; Hanabilah): darah yang keluar saat hamil bukan haidl, karena kehamilan menjadi tanda kosongnya rahim dari kemungkinan haidl.</li>
+        </ul>
+        <div class="catatan"><b>Implikasi praktis:</b> menurut qaul ashoh, wanita hamil yang mengeluarkan darah sesuai kriteria haidl tetap wajib meninggalkan shalat dan puasa selama masa itu. Namun secara kehati-hatian (ihtiyath), banyak ulama menganjurkan wanita hamil tetap mandi setiap kali darah berhenti sebagai bentuk keluar dari khilaf.</div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Hasyiyah Al-Bajuri 'ala Ibn Al-Qasim Al-Ghazi, juz 1, hlm. 108</div>
+          <div class="arabic">فَالْحَيْضُ هُوَ الدَّمُ الْخَارِجُ فِيْ سِنِّ الْحَيْضِ وَهُوَ تِسْعُ سِنِيْنَ قَمَرِيَّةٍ مِنْ فَرْجِ الْمَرْأَةِ عَلَى سَبِيْلِ الصِّحَّةِ وَمَا دُوْنَهُ فَهُوَ دَمُ فَسَادٍ</div>
+          <br>
+          <div class="kitab">Al-Fiqh Al-Islami wa Adillatuhu, juz 1, hlm. 525</div>
+          <p style="font-size:.85rem;color:var(--ink-soft)">Membahas dua pandangan (Malikiyah–Syafi'iyah vs Hanafiyah–Hanabilah) tentang status darah wanita hamil, lengkap dengan dalil masing-masing pihak, termasuk hadis "tidak boleh menggauli wanita hamil hingga ia melahirkan, dan wanita yang tidak hamil hingga ia haidl".</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- B. Usia -->
+    <div class="topik" id="b-usia">
+      <div class="topik-head"><span class="tag">Bab I · B</span><h3>Usia Haidl</h3></div>
+      <div class="penjelasan">
+        <p>Darah baru dihukumi haidl jika keluar setelah wanita mencapai usia haidl. Jika keluar sebelum
+        usia tersebut, statusnya adalah <b>darah fasad</b> (rusak), bukan haidl maupun istihadhoh.</p>
+        <h4>Konversi tahun dalam perhitungan kitab</h4>
+        <table class="ringkas">
+          <tr><th>Satuan</th><th>Lama</th></tr>
+          <tr><td>1 tahun Qamariyah (Hijriyah)</td><td>354 hari lebih 8 jam 48 menit</td></tr>
+          <tr><td>1 tahun Syamsiyah (Masehi)</td><td>365 hari lebih 5 jam 49 menit</td></tr>
+          <tr><td>Usia mulai haidl</td><td>≈ 3.174 hari lebih 7 jam 2 menit (dihitung sejak lahir)</td></tr>
+        </table>
+        <p>Angka 3.174 hari didapat dari: 9 tahun qamariyah, dikurangi 15 hari (karena 15 hari terakhir
+        tidak cukup memuat minimal masa haidl + minimal masa suci sekaligus, sehingga secara teknis
+        fiqh usia minimal haidl "digenapkan mundur" 15 hari dari usia 9 tahun penuh).</p>
+        <div class="contoh">
+          <b>Contoh kasus darah yang terbelah dua usia:</b><br>
+          Seorang wanita mengeluarkan darah pada rentang usia 3.170–3.180 hari.
+          <ul>
+            <li>Hari ke-3170 s.d. 3174 → <b>darah istihadhoh</b> (karena masih di bawah usia haidl).</li>
+            <li>Hari ke-3174 s.d. 3180 → <b>darah haidl</b> (karena sudah memasuki usia haidl).</li>
+          </ul>
+        </div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Hasyiyah Al-Jamal 'ala Al-Manhaj, juz 1, hlm. 235–236</div>
+          <div class="arabic">أَقَلُّ سِنِّهِ تِسْعُ سِنِيْنَ (قَمَرِيَّةً) تَقْرِيْبًا، فَلَوْ رَأَتِ الدَّمَ قَبْلَ تَمَامِ التِّسْعِ بِمَا لاَ يَسَعُ حَيْضًا وَطُهْرًا فَهُوَ حَيْضٌ وَإِلاَّ فَلاَ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- C. Nama-nama -->
+    <div class="topik" id="c-nama">
+      <div class="topik-head"><span class="tag">Bab I · C</span><h3>Nama-nama Darah Haidl</h3></div>
+      <div class="matan">
+        <div class="arabic">وَلِلْحَيْضِ خَمْسَةَ عَشَرَ اسْمًا: حَيْضٌ، مَحِيْضٌ، مَخَاضٌ، طَمْثٌ، إِكْبَارٌ، طَمْسٌ، عِرَاكٌ، فِرَاكٌ، أَذًى، ضَحْكٌ، دَرْسٌ، دِرَاسٌ، نِفَاسٌ، قُرْءٌ، إِعْصَارٌ</div>
+        <div class="terjemah">Ulama menghimpun 15 nama untuk darah haidl dalam bahasa Arab dalam bentuk nazham (syair hafalan).</div>
+      </div>
+      <div class="penjelasan">
+        <p>Banyaknya penamaan ini menunjukkan betapa akrabnya topik haidl dalam khazanah bahasa dan fiqh Arab
+        klasik. Beberapa nama merujuk pada sifatnya (misalnya <i>adza</i> = gangguan/kotoran, sebagaimana
+        disebut dalam QS. Al-Baqarah: 222), dan sebagian lain adalah istilah regional/kesukuan Arab kuno.
+        Untuk keperluan belajar, santri cukup menghafal istilah yang paling umum dipakai dalam kitab fiqh:
+        <b>haidl, mahidl,</b> dan <b>qur'</b> (yang juga dipakai dalam ayat-ayat tentang iddah).</p>
+      </div>
+    </div>
+
+    <!-- D. Makhluk -->
+    <div class="topik" id="d-makhluk">
+      <div class="topik-head"><span class="tag">Bab I · D</span><h3>Makhluk yang Mengalami Haidl</h3></div>
+      <div class="matan">
+        <div class="arabic">يَحِيْضُ مِنْ ذِيْ الرُّوْحِ: ضَبُعٌ، مَرْأَةٌ، وَأَرْنَبٌ، وَنَاقَةٌ، وَكَلْبَةٌ، خُفَّاشٌ، الْوَزَغَةُ، وَالْحِجْرُ (الْفَرَسُ) — ثَمَانِيَةٌ وَهَذَا الْمُعْتَمَدُ</div>
+        <div class="terjemah">Menurut sebagian ulama, ada delapan makhluk bernyawa yang mengalami haidl: hyena (dlob'), wanita, kelinci, unta, anjing betina, kelelawar, cicak, dan kuda betina.</div>
+      </div>
+      <div class="penjelasan">
+        <p>Penyebutan hewan-hewan ini bersumber dari nazham hafalan klasik dan bersifat keterangan biologis
+        tambahan (bukan pokok pembahasan hukum), karena secara <b>syar'i</b>, haidl yang membawa konsekuensi
+        hukum fiqh (larangan shalat, puasa, dsb.) hanya berlaku bagi <b>manusia</b> dan <b>jin</b> perempuan.
+        Darah yang keluar dari hewan (anjing, kucing, dsb.) tidak dihukumi haidl secara syariat, meski
+        secara biologis mirip.</p>
+        <div class="catatan"><b>Catatan pedagogis:</b> bagian ini baik untuk menstimulasi rasa ingin tahu santri, namun perlu ditegaskan bahwa fokus hukum fiqh haidl tetap pada manusia.</div>
+      </div>
+    </div>
+
+    <!-- E. Warna -->
+    <div class="topik" id="e-warna">
+      <div class="topik-head"><span class="tag">Bab I · E</span><h3>Warna &amp; Sifat Darah</h3></div>
+      <div class="matan">
+        <div class="arabic">وَلَوْنُهُ أَسْوَدُ مُحْتَدِمٌ لَذَّاعٌ، وَالْحَاصِلُ أَنَّ الأَلْوَانَ خَمْسَةٌ: أَقْوَاهَا السَّوَادُ، ثُمَّ الْحُمْرَةُ، ثُمَّ الشُّقْرَةُ، ثُمَّ الصُّفْرَةُ، ثُمَّ الْكُدْرَةُ</div>
+        <div class="terjemah">"Warna darah haidl (yang terkuat) adalah hitam, dan terasa perih saat keluar. Kesimpulannya, warna darah ada lima: hitam (paling kuat), merah, merah kekuningan, kuning, dan keruh."</div>
+      </div>
+      <div class="penjelasan">
+        <h4>Urutan kekuatan warna (dari terkuat)</h4>
+        <table class="ringkas">
+          <tr><th>#</th><th>Warna</th><th>Keterangan</th></tr>
+          <tr><td>1</td><td>Hitam (aswad)</td><td>Paling kuat, biasanya disertai rasa perih/nyeri</td></tr>
+          <tr><td>2</td><td>Merah (ahmar)</td><td>Warna umum haidl</td></tr>
+          <tr><td>3</td><td>Merah kekuningan (asyqar)</td><td>Lebih pudar dari merah</td></tr>
+          <tr><td>4</td><td>Kuning (ashfar)</td><td>Sering keliru dianggap suci, padahal bisa haidl bila di masa mungkin haidl</td></tr>
+          <tr><td>5</td><td>Keruh (kadr)</td><td>Paling lemah, mirip air cucian daging</td></tr>
+        </table>
+        <h4>Sifat lain selain warna</h4>
+        <p>Selain warna, kekuatan darah juga dinilai dari empat sifat: <b>kental</b>, <b>berbau anyir</b>, <b>kental &amp; berbau</b>, atau <b>tidak keduanya (encer &amp; tidak berbau)</b>. Urutan kekuatannya:</p>
+        <ol>
+          <li>Kental + berbau anyir (paling kuat)</li>
+          <li>Kental saja, atau berbau saja</li>
+          <li>Tidak kental dan tidak berbau (paling lemah)</li>
+        </ol>
+        <p>Jika dua darah punya sifat yang setara kekuatannya (misalnya hitam-encer vs merah-kental),
+        maka yang dijadikan patokan hukum adalah <b>darah yang keluar lebih dulu</b>.</p>
+        <div class="catatan"><b>Fungsi praktis:</b> mengetahui kuat–lemahnya darah berguna untuk menentukan mana masa haidl dan mana masa istihadhoh, khususnya bagi wanita <i>mumayyizah</i> (dapat membedakan jenis darahnya) — lihat Bab II.</div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Hasyiyah Al-Bajuri 'ala Ibn Al-Qasim Al-Ghazi, juz 1, hlm. 108</div>
+          <div class="arabic">وَأَنَّ الصِّفَاتِ غَيْرَ الْأَلْوَانِ أَرْبَعَةٌ: الثَّخِيْنُ، أَوِ الْمُنْتِنُ، أَوْ هُمَا، أَوِ التَّجَرُّدُ عَنْهُمَا</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- F. Minimal -->
+    <div class="topik" id="f-minimal">
+      <div class="topik-head"><span class="tag">Bab I · F</span><h3>Minimal Haidl</h3></div>
+      <div class="matan">
+        <div class="arabic">وَأَقَلُّ الْحَيْضِ زَمَنًا يَوْمٌ وَلَيْلَةٌ، أَيْ مِقْدَارُ ذَلِكَ، وَهُوَ أَرْبَعَةٌ وَعِشْرُوْنَ سَاعَةً عَلَى اتِّصَالٍ مُعْتَادٍ فِيْ الْحَيْضِ</div>
+        <div class="terjemah">"Minimal masa haidl adalah satu hari satu malam, yaitu 24 jam, secara terus-menerus menurut kebiasaan haidl."</div>
+      </div>
+      <div class="penjelasan">
+        <p>Minimal haidl adalah <b>24 jam</b>. Jika darah yang keluar kurang dari itu, hukumnya adalah
+        <b>darah fasad</b>, bukan haidl. Konsep "terus-menerus" (ittishal) di sini tidak harus darah keluar
+        tanpa henti secara fisik, melainkan cukup dengan ukuran: jika kapas dimasukkan ke dalam vagina,
+        masih tampak bercak darah pada kapas tersebut.</p>
+        <h4>Tiga jenis "aqollul haidl" (minimal haidl)</h4>
+        <table class="ringkas">
+          <tr><th>Jenis</th><th>Penjelasan</th></tr>
+          <tr><td><b>Aqoll Wahdah</b><br><span style="color:var(--ink-soft)">(minimal murni)</span></td><td>Darah keluar 24 jam terus-menerus tanpa jeda, misalnya mulai subuh hingga subuh berikutnya.</td></tr>
+          <tr><td><b>Aqoll ma'al Gholib</b><br><span style="color:var(--ink-soft)">(minimal + umumnya haidl)</span></td><td>Darah keluar 24 jam secara terpisah-pisah, namun masih dalam lingkup 6–7 hari (masa umum haidl).</td></tr>
+          <tr><td><b>Aqoll ma'al Aktsar</b><br><span style="color:var(--ink-soft)">(minimal + maksimal haidl)</span></td><td>Darah keluar 24 jam secara terpisah-pisah dalam lingkup 15 hari (masa maksimal haidl).</td></tr>
+        </table>
+        <h4>Dua pendapat tentang masa jeda (naqo')</h4>
+        <ul>
+          <li><b>Qaul Sahbi</b> (pendapat muktamad/yang dipegang): masa berhentinya darah di sela-sela 15 hari tetap dihukumi haidl (ditarik/"disedot" masuk hitungan haidl), selama total tidak melebihi 15 hari dan darah efektifnya tidak kurang dari 24 jam.</li>
+          <li><b>Qaul Laqti (Talfiq)</b>: masa jeda tersebut dihukumi suci, bukan haidl.</li>
+        </ul>
+        <div class="catatan">
+          <b>Ulama pendukung qaul Sahbi:</b> Imam Ghazali, Imam Rafi'i, Imam Mutawalli, Imam Sarakhsi, dll.<br>
+          <b>Ulama pendukung qaul Laqti:</b> Imam Ruyani, Imam Abu Hamid, Imam Muslim Ar-Roziy, dll.
+        </div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Hasyiyah Syaikh Sulaiman Al-Jamal, juz 1, hlm. 237</div>
+          <div class="arabic">أَيْ لاَ يَتَقَرَّرُ الأَقَلُّ فَقَطْ إِلاَّ إِذَا رَأَتْ أَرْبَعًا وَعِشْرِيْنَ سَاعَةً عَلَى الاتِّصَالِ، وَأَمَّا لَوْ رَأَتْهَا مُتَفَرِّقَةً فِيْ أَيَّامٍ لاَ تَكُوْنُ أَقَلَّ فَقَطْ</div>
+          <br>
+          <div class="kitab">Al-Hawi Al-Kabir li Al-Mawardi, juz 1, hlm. 520–561</div>
+          <p style="font-size:.85rem;color:var(--ink-soft)">Daftar panjang ulama yang mentashih (menguatkan) qaul Sahbi maupun qaul Talfiq, sebagai rujukan sanad pendapat.</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- G. Maksimal -->
+    <div class="topik" id="g-maksimal">
+      <div class="topik-head"><span class="tag">Bab I · G</span><h3>Maksimal Haidl</h3></div>
+      <div class="matan">
+        <div class="arabic">وَأَكْثَرُهُ خَمْسَةَ عَشَرَ يَوْمًا بِلَيَالِيْهَا، فَإِنْ زَادَ عَلَيْهَا فَهُوَ اسْتِحَاضَةٌ</div>
+        <div class="terjemah">"Maksimal haidl adalah 15 hari 15 malam. Jika melebihi itu, kelebihannya dihukumi darah istihadhoh."</div>
+      </div>
+      <div class="penjelasan">
+        <p>Batas maksimal haidl adalah <b>15 hari 15 malam</b>. Bagian darah yang keluar setelah melewati
+        batas ini dihukumi <b>istihadhoh</b>, bukan haidl — sehingga wanita yang bersangkutan wajib
+        kembali menjalankan shalat, puasa, dan kewajiban lain setelah hari ke-15 (dengan tata cara
+        mustahadhoh, lihat Bab II).</p>
+        <div class="catatan"><b>Perbandingan cepat:</b> Minimal haidl 24 jam — Umumnya haidl 6–7 hari — Maksimal haidl 15 hari.</div>
+      </div>
+    </div>
+
+    <!-- H. Tidur -->
+    <div class="topik" id="h-tidur">
+      <div class="topik-head"><span class="tag">Bab I · H</span><h3>Perhitungan Darah Saat Wanita Tidur</h3></div>
+      <div class="matan">
+        <div class="arabic">لَوْ نَامَتْ طَاهِرَةً وَقَامَتْ حَائِضَةً حُكِمَ بِحَيْضِهَا مُنْذُ قَامَتْ، وَبِعَكْسِهِ مُنْذُ نَامَتْ، احْتِيَاطًا</div>
+        <div class="terjemah">"Jika wanita tidur dalam keadaan suci lalu bangun dalam keadaan haidl, maka haidlnya dihitung sejak ia bangun. Sebaliknya (jika tidur dalam keadaan haidl lalu bangun sudah suci), dihitung sejak ia tidur — sebagai bentuk kehati-hatian (ihtiyath)."</div>
+      </div>
+      <div class="penjelasan">
+        <p>Karena wanita tidak dapat memastikan kapan persisnya darah mulai/berhenti keluar saat tidur,
+        fiqh menetapkan patokan waktu yang paling aman (ihtiyath):</p>
+        <ul>
+          <li><b>Suci → Haidl:</b> waktu mulai haidl dihitung sejak <i>bangun tidur</i> (bukan sejak mulai tidur), karena sebelum bangun statusnya masih dianggap suci sampai ada bukti sebaliknya.</li>
+          <li><b>Haidl → Suci:</b> waktu berhentinya haidl (masuk masa suci) dihitung mundur sejak <i>mulai tidur</i>, sebagai langkah kehati-hatian agar tidak tergesa-gesa menganggap suci.</li>
+        </ul>
+        <div class="contoh">
+          <b>Contoh:</b> Seorang wanita mulai tidur pukul 01.00 dini hari dalam keadaan suci, lalu bangun pukul 04.00 pagi dan mendapati darah sudah keluar. Maka permulaan haidlnya dihitung mulai pukul <b>04.00</b> (saat bangun), bukan pukul 01.00.
+        </div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Raddul Muhtar, juz 2, hlm. 385</div>
+          <div class="arabic">وَفِيْ الْفَيْضِ: لَوْ نَامَتْ طَاهِرَةً وَقَامَتْ حَائِضَةً حُكِمَ بِحَيْضِهَا مُنْذُ قَامَتْ، وَبِعَكْسِهِ مُنْذُ نَامَتْ احْتِيَاطًا</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- I. Larangan -->
+    <div class="topik" id="i-larangan">
+      <div class="topik-head"><span class="tag">Bab I · I</span><h3>Hal-hal yang Diharamkan bagi Wanita Haidl</h3></div>
+      <div class="penjelasan">
+        <p>Selama masa haidl, seorang wanita diharamkan melakukan delapan hal berikut. Larangan ini
+        berlaku sama untuk masa nifas.</p>
+        <ol>
+          <li>
+            <b>Shalat</b> (fardhu maupun sunnah) — tidak wajib qadha setelah suci, karena akan sangat
+            memberatkan mengingat frekuensinya yang tinggi (lima waktu sehari). Meski meninggalkan shalat,
+            wanita haidl tetap dapat pahala bila ia meninggalkannya dengan niat mematuhi perintah syariat.
+          </li>
+          <li>
+            <b>Puasa</b> (fardhu maupun sunnah) — <i>wajib</i> di-qadha setelah suci, karena puasa fardhu
+            (Ramadhan) hanya terjadi setahun sekali sehingga qadha-nya tidak memberatkan.
+          </li>
+          <li>
+            <b>Membaca Al-Qur'an</b> — berdasarkan hadis larangan membaca Al-Qur'an bagi orang haidl dan junub.
+          </li>
+          <li>
+            <b>Menyentuh atau membawa mushaf Al-Qur'an</b> — berdasarkan QS. Al-Waqi'ah: 79, "Tidak
+            menyentuhnya kecuali orang-orang yang disucikan."
+          </li>
+          <li>
+            <b>Berdiam diri di masjid</b> — sekadar lewat diperbolehkan selama tidak dikhawatirkan
+            mengotori masjid dengan darah.
+          </li>
+          <li>
+            <b>Bersenggama (jima')</b> — hukumnya <b>dosa besar</b> jika dilakukan dengan sengaja dan
+            mengetahui keharamannya, meski tidak sampai mewajibkan kafarat. Jika terlanjur, disunnahkan
+            bersedekah 1 dinar (≈3,88 gram emas) jika darah masih deras, atau setengah dinar jika darah
+            sudah menjelang berhenti.
+          </li>
+          <li>
+            <b>Bermesraan dengan bersentuhan kulit antara pusar dan lutut</b> — karena area ini dapat
+            mendorong terjadinya jima'.
+          </li>
+          <li>
+            <b>Thawaf</b> (fardhu maupun sunnah) — berdasarkan sabda Nabi ﷺ kepada Aisyah ra.: "Lakukanlah
+            apa saja yang dilakukan orang berhaji, hanya saja jangan melakukan thawaf."
+          </li>
+        </ol>
+        <div class="catatan">
+          <b>Tips menghafal:</b> gunakan akronim <i>SP-MMB-JBT</i> — Shalat, Puasa, Membaca Qur'an,
+          Menyentuh/membawa mushaf, Berdiam di masjid, Jima', Bermesraan (pusar–lutut), Thawaf.
+        </div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Al-Mahalli bi Hasyiyah Al-Qalyubi, juz 1, hlm. 99–100</div>
+          <div class="arabic">وَيَحْرُمُ بِهِ (أَيْ بِالْحَيْضِ) مَا حَرُمَ بِالْجَنَابَةِ مِنَ الصَّلاَةِ وَغَيْرِهَا، وَعُبُوْرُ الْمَسْجِدِ إِنْ خَافَتْ تَلْوِيْثَهُ</div>
+          <br>
+          <div class="kitab">Al-Bajuri, juz 1, hlm. 115</div>
+          <div class="arabic">وَيُسَنُّ لِمَنْ وَطِئَ فِيْ إِقْبَالِ الدَّمِ التَّصَدُّقُ بِدِيْنَارٍ، وَلِمَنْ وَطِئَ فِيْ إِدْبَارِهِ التَّصَدُّقُ بِنِصْفِ دِيْنَارٍ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- J. Monopause -->
+    <div class="topik" id="j-monopause">
+      <div class="topik-head"><span class="tag">Bab I · J</span><h3>Monopause</h3></div>
+      <div class="matan">
+        <div class="arabic">وَسِنُّ الْيَأْسِ مِنَ الْحَيْضِ اثْنَانِ وَسِتُّوْنَ سَنَةً</div>
+        <div class="terjemah">"Usia umum berhentinya haidl (monopause) adalah 62 tahun."</div>
+      </div>
+      <div class="penjelasan">
+        <p>Angka 62 tahun adalah patokan <b>umum</b> (ghalib), bukan batas mutlak. Selama seorang wanita
+        masih hidup, secara teori ia masih berpotensi mengalami haidl — sehingga tidak ada batas usia
+        akhir yang pasti untuk haidl menurut madzhab Syafi'i. Jika di usia lanjut ada darah keluar yang
+        memenuhi seluruh kriteria haidl, tetap dihukumi haidl.</p>
+      </div>
+    </div>
+
+    <!-- K. Masa Suci -->
+    <div class="topik" id="k-suci">
+      <div class="topik-head"><span class="tag">Bab I · K</span><h3>Batasan Masa Suci</h3></div>
+      <table class="ringkas">
+        <tr><th>Jenis</th><th>Durasi</th></tr>
+        <tr><td>Minimal suci</td><td>15 hari 15 malam</td></tr>
+        <tr><td>Maksimal suci</td><td>Tidak ada batas (bisa bertahun-tahun)</td></tr>
+        <tr><td>Umumnya suci</td><td>23–24 hari</td></tr>
+      </table>
+      <div class="penjelasan">
+        <p>Masa suci adalah pemisah antara satu periode haidl dengan periode haidl berikutnya. Aturannya:</p>
+        <ul>
+          <li>Jika darah <b>kedua</b> keluar <b>setelah</b> masa suci mencapai 15 hari → darah kedua adalah <b>haidl baru</b> yang berdiri sendiri.</li>
+          <li>Jika darah kedua keluar <b>sebelum</b> masa suci genap 15 hari, namun keduanya (darah pertama + jeda + darah kedua) masih dalam lingkup 15 hari sejak awal → <b>semuanya dihukumi satu haidl</b>.</li>
+          <li>Jika jeda antara keduanya belum 15 hari, tetapi totalnya (darah 1 + jeda + darah 2) sudah melebihi 15 hari sejak awal keluarnya darah pertama → darah kedua dihukumi <b>darah fasad</b> (bukan haidl, bukan pula haidl kedua yang sah).</li>
+        </ul>
+        <div class="contoh">
+          <b>Contoh 1 — jeda mencapai 15 hari:</b><br>
+          Darah keluar tanggal 1–5, lalu suci, darah keluar lagi tanggal 16–26.<br>
+          → Tanggal 1–5 = haidl. Tanggal 16–20 = istihadhoh (karena darah kedua ini melebihi maksimal 15 hari yang dihitung dari awal, namun jeda sucinya sudah 15 hari sehingga...). Tanggal 21–26 dan seterusnya = haidl kedua yang berdiri sendiri.
+        </div>
+        <div class="contoh">
+          <b>Contoh 2 — jeda belum 15 hari, tapi total masih dalam 15 hari:</b><br>
+          Darah keluar tanggal 1–5, suci, darah keluar lagi tanggal 10–15.<br>
+          → Karena total (1 s.d. 15) belum melebihi 15 hari, <b>semuanya dihukumi satu haidl</b> (haidlnya genap 15 hari, masa suci di tengah "ditarik" masuk hitungan haidl menurut qaul Sahbi).
+        </div>
+      </div>
+    </div>
+
+    <!-- L. Keputihan -->
+    <div class="topik" id="l-keputihan">
+      <div class="topik-head"><span class="tag">Bab I · L</span><h3>Status Keputihan (Rothubatul Farji)</h3></div>
+      <div class="penjelasan">
+        <p>Cairan bening/putih (keputihan) yang keluar setelah darah haidl berhenti, menurut Imam Syafi'i,
+        <b>dihukumi suci</b> dan bukan darah haidl, sehingga tidak mewajibkan mandi. Namun hukum
+        kesuciannya sendiri (najis/tidaknya) tergantung dari <b>lokasi keluarnya</b>, dengan tiga rincian:</p>
+        <table class="ringkas">
+          <tr><th>Lokasi Keluar</th><th>Hukum</th><th>Keterangan</th></tr>
+          <tr><td>Dari balik bagian dalam farji (tidak terjangkau saat bersenggama)</td><td><b>Najis</b></td><td>Membatalkan wudhu, karena dianggap keluar dari dalam tubuh (seperti kencing/madzi)</td></tr>
+          <tr><td>Dari bagian farji yang tidak wajib dibasuh saat istinja', namun masih terjangkau penis saat senggama</td><td><b>Suci</b> (menurut pendapat lebih shahih)</td><td>Termasuk perselisihan ulama, namun qaul ashoh menyatakan suci</td></tr>
+          <tr><td>Dari luar lubang farji (bagian yang tampak saat jongkok)</td><td><b>Suci</b> secara pasti (qath'i)</td><td>Sama seperti area luar tubuh lainnya</td></tr>
+        </table>
+        <div class="catatan"><b>Catatan praktis santri:</b> perbedaan ini penting dalam fiqh thaharah sehari-hari karena berkaitan dengan sah/tidaknya wudhu ketika keputihan keluar di luar masa haidl.</div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">I'anatut Thalibin, juz 1, hlm. 82</div>
+          <div class="arabic">حَاصِلُ مَا ذَكَرَهُ الشَّارِحُ فِيْهَا أَنَّهَا ثَلاَثَةُ أَقْسَامٍ: طَاهِرَةٌ قَطْعًا، وَنَجِسَةٌ قَطْعًا، وَطَاهِرَةٌ عَلَى الأَصَحِّ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ======================= BAB II ======================= -->
+    <section class="bab-cover" id="bab2">
+      <div class="num">II</div>
+      <div>
+        <h2>Istihadhoh</h2>
+        <div class="sub">Darah penyakit, tata cara ibadah, dan tujuh bentuk klasifikasi mustahadhoh</div>
+      </div>
+    </section>
+
+    <!-- A. Definisi Istihadhoh -->
+    <div class="topik teal" id="a-ist-def">
+      <div class="topik-head"><span class="tag">Bab II · A</span><h3>Definisi Istihadhoh</h3></div>
+      <div class="matan">
+        <div class="arabic">الاِسْتِحَاضَةُ: الدَّمُ الْخَارِجُ فِيْ غَيْرِ أَوْقَاتِ الْحَيْضِ وَالنِّفَاسِ</div>
+        <div class="terjemah">"Istihadhoh adalah darah yang keluar di luar waktu haidl dan nifas."</div>
+      </div>
+      <div class="penjelasan">
+        <p>Istihadhoh (sering disebut "darah penyakit" atau "flek") adalah darah yang keluar dari kemaluan
+        wanita namun tidak memenuhi syarat sebagai haidl atau nifas. Termasuk kategori istihadhoh:</p>
+        <ul>
+          <li>Darah keluar sebelum wanita genap berusia haidl (± 9 tahun qamariyah dikurangi ~15 hari).</li>
+          <li>Darah yang durasinya tidak mencapai 24 jam.</li>
+          <li>Darah yang keluar melebihi 15 hari 15 malam berturut-turut.</li>
+        </ul>
+        <p>Secara hukum, istihadhoh dikategorikan sebagai <b>hadats terus-menerus</b> (hadats da-im),
+        setara dengan orang yang mengalami beser (kencing tak tertahan) atau keluar madzi terus-menerus.
+        Karena sifatnya darurat, istihadhoh <b>tidak menghalangi</b> aktivitas yang dilarang bagi wanita
+        haidl — mustahadhoh tetap wajib shalat, puasa, boleh disenggamai, dan seterusnya — meski darah
+        masih mengalir, selama ia menjalankan tata cara bersuci khusus (lihat bagian B).</p>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Hasyiyah I'anatut Thalibin, juz 1, hlm. 74</div>
+          <div class="arabic">الاِسْتِحَاضَةُ الدَّمُ الْخَارِجُ فِيْ غَيْرِ أَوْقَاتِ الْحَيْضِ وَالنِّفَاسِ... وَهِيَ حَدَثٌ دَائِمٌ فَلاَ تَمْنَعُ شَيْئًا مِمَّا تَمْنَعُ بِالْحَيْضِ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- B. Tata Cara -->
+    <div class="topik teal" id="b-ist-tata">
+      <div class="topik-head"><span class="tag">Bab II · B</span><h3>Tata Cara Mustahadhoh Sebelum Shalat</h3></div>
+      <div class="penjelasan">
+        <p>Sebelum melaksanakan shalat, seorang mustahadhoh dianjurkan/diwajibkan menempuh empat langkah berikut:</p>
+        <ol>
+          <li><b>Membersihkan kemaluan</b> dari darah yang ada.</li>
+          <li><b>Menyumbat kemaluan</b> dengan kapas atau sejenisnya (jika tidak memberatkan dan bukan
+          dalam keadaan puasa — karena menyumbat saat puasa dapat membatalkan puasa).</li>
+          <li>Jika darah tetap keluar meski sudah disumbat, <b>membalutnya</b> dengan kain seperti pembalut,
+          diikat agar tidak lepas.</li>
+          <li>Setelah itu, segera <b>bersuci</b> (wudhu atau tayamum) dan <b>segera melaksanakan shalat</b>
+          tanpa menunda-nunda (kecuali untuk kepentingan menutup aurat, menunggu jamaah, dsb).</li>
+        </ol>
+        <h4>Poin-poin penting (muhimmat)</h4>
+        <ul>
+          <li>Niat bersuci mustahadhoh <b>bukan</b> untuk menghilangkan hadats (karena hadatsnya terus
+          berlangsung), melainkan niat <i>agar diperbolehkan melaksanakan shalat</i> (li istibahatish shalah).</li>
+          <li>Jika mustahadhoh punya dugaan kuat (dzon) bahwa darahnya akan berhenti menjelang akhir
+          waktu shalat, ia dianjurkan menanti hingga saat itu sebelum bersuci.</li>
+          <li>Satu kali bersuci hanya berlaku untuk <b>satu shalat fardhu</b>. Untuk shalat sunnah, satu
+          kali bersuci boleh dipakai berulang kali.</li>
+        </ul>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Al-Bujairimi 'ala Al-Manhaj, juz 1, hlm. 134–135</div>
+          <div class="arabic">فَيَجِبُ أَنْ تَغْسِلَ مُسْتَحَاضَةٌ فَرْجَهَا فَتَحْشُوَهُ بِنَحْوِ قُطْنَةٍ فَتَعْصِبَهُ... فَتَتَطَهَّرَ لِكُلِّ فَرْضٍ وَقْتَهُ، وَتُبَادِرُ بِهِ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- C. Klasifikasi -->
+    <div class="topik teal" id="c-ist-klas">
+      <div class="topik-head"><span class="tag">Bab II · C</span><h3>Klasifikasi Mustahadhoh</h3></div>
+      <div class="penjelasan">
+        <p>Untuk menentukan berapa hari yang dihukumi haidl bagi seorang mustahadhoh, fiqh membaginya
+        menjadi dua kategori besar, yang kemudian berkembang menjadi <b>tujuh bentuk</b>:</p>
+        <table class="ringkas">
+          <tr><th>Kategori Besar</th><th>Pengertian</th></tr>
+          <tr><td><b>Mubtada'ah</b></td><td>Wanita yang baru pertama kali mengeluarkan darah — belum memiliki kebiasaan (adat) haidl sebelumnya.</td></tr>
+          <tr><td><b>Mu'tadah</b></td><td>Wanita yang sudah pernah mengalami haidl dan suci sebelumnya, sehingga memiliki kebiasaan (adat) haidl.</td></tr>
+        </table>
+        <p>Setiap kategori kemudian dibagi lagi berdasarkan kemampuannya membedakan darah kuat/lemah
+        (<b>mumayyizah</b>) atau tidak (<b>ghoiru mumayyizah</b>), serta — khusus mu'tadah — berdasarkan
+        ingatannya terhadap kadar (durasi) dan/atau waktu adat haidlnya. Berikut ketujuh bentuknya:</p>
+        <ol>
+          <li>Mubtada'ah Mumayyizah</li>
+          <li>Mubtada'ah Ghoiru Mumayyizah</li>
+          <li>Mu'tadah Mumayyizah</li>
+          <li>Mu'tadah Ghoiru Mumayyizah — ingat kadar &amp; waktu adatnya</li>
+          <li>Mu'tadah Ghoiru Mumayyizah — lupa kadar &amp; waktu adatnya (<i>mutahayyiroh</i>)</li>
+          <li>Mu'tadah Ghoiru Mumayyizah — ingat kadar saja, lupa waktu</li>
+          <li>Mu'tadah Ghoiru Mumayyizah — ingat waktu saja, lupa kadar</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Klasifikasi 1 -->
+    <div class="topik teal" id="klas1">
+      <div class="topik-head"><span class="tag">Bentuk 1</span><h3>Mubtada'ah Mumayyizah</h3></div>
+      <div class="penjelasan">
+        <p>Wanita yang <b>baru pertama kali</b> mengeluarkan darah dan <b>mampu membedakan</b> antara
+        darah kuat (misal: hitam) dan darah lemah (misal: merah). Hukumnya: darah kuat dihukumi
+        <b>haidl</b>, darah lemah dihukumi <b>istihadhoh</b> — dengan syarat berikut terpenuhi:</p>
+        <ol>
+          <li>Darah kuat tidak kurang dari 24 jam (memenuhi minimal haidl).</li>
+          <li>Darah kuat tidak melebihi 15 hari (tidak melampaui maksimal haidl).</li>
+          <li>Darah lemah di antara dua darah kuat tidak kurang dari 15 hari (memenuhi minimal suci) — <i>syarat ini hanya berlaku bila ada darah kuat kedua</i>.</li>
+          <li>Darah lemah keluar secara terus-menerus (tidak silih berganti/berselang-seling dengan darah kuat).</li>
+        </ol>
+        <div class="contoh">
+          <b>Contoh A</b> — memenuhi syarat: darah hitam tgl 1 (24 jam), darah merah tgl 2–22 (melebihi 15 hari).<br>
+          → Hitam = haidl. Merah = istihadhoh.
+        </div>
+        <div class="contoh">
+          <b>Contoh B</b> — dua darah kuat terpisah jauh: hitam tgl 1–10, merah tgl 11–25, hitam lagi tgl 26–28.<br>
+          → Tgl 1–10 = haidl pertama. Tgl 11–25 = istihadhoh (masa suci, 15 hari terpenuhi). Tgl 26–28 = haidl kedua (karena sudah dipisah minimal suci 15 hari).
+        </div>
+        <div class="catatan">
+          <b>Jika salah satu syarat tidak terpenuhi</b> (darah kuat &lt;24 jam, atau &gt;15 hari, atau
+          darah lemah penyekat &lt;15 hari, atau darah kuat-lemah berselang-seling tidak beraturan),
+          maka wanita tersebut kehilangan status "mumayyizah" dan diperlakukan sebagaimana <b>Bentuk 2</b>
+          (Mubtada'ah Ghoiru Mumayyizah) — haidlnya hanya dihukumi <b>1 hari 1 malam</b> saja, sisanya istihadhoh.
+        </div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">At-Tahdzib, juz 1, hlm. 447</div>
+          <div class="arabic">وَإِنَّمَا يُعْمَلُ بِالتَّمْيِيْزِ بِثَلاَثَةِ شَرَائِطَ: أَحَدُهَا أَنْ لاَ يَنْقُصَ الدَّمُ الْقَوِيُّ عَنْ يَوْمٍ وَلَيْلَةٍ، وَالثَّانِيْ أَنْ لاَ يَزِيْدَ عَنْ خَمْسَةَ عَشَرَ يَوْمًا، وَالثَّالِثُ أَنْ لاَ يَنْقُصَ الدَّمُ الضَّعِيْفُ بَيْنَ الدَّمَيْنِ الْقَوِيَّيْنِ عَنْ خَمْسَةَ عَشَرَ يَوْمًا</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Klasifikasi 2 -->
+    <div class="topik teal" id="klas2">
+      <div class="topik-head"><span class="tag">Bentuk 2</span><h3>Mubtada'ah Ghoiru Mumayyizah</h3></div>
+      <div class="penjelasan">
+        <p>Wanita yang baru pertama kali mengeluarkan darah, namun <b>tidak bisa membedakan</b> jenis
+        darahnya (hanya satu sifat/warna), atau kehilangan salah satu syarat tamyiz pada Bentuk 1.</p>
+        <div class="contoh">
+          <b>Hukumnya:</b> haidlnya ditetapkan <b>1 hari 1 malam</b> (24 jam) sejak awal keluarnya darah,
+          dan masa sucinya <b>29 hari</b> berikutnya (menggenapkan sebulan). Ketentuan ini berlaku jika ia
+          mengetahui kapan darah mulai keluar; jika tidak tahu, ia diperlakukan sebagai <i>mutahayyiroh</i> (Bentuk 5).
+        </div>
+        <p><b>Pendapat lain (juga kuat dipakai):</b> haidlnya dikembalikan ke <i>umumnya haidl</i>, yaitu
+        6 atau 7 hari, dengan qadha shalat untuk hari ke-7 atau ke-8 hingga hari ke-15.</p>
+        <h4>Praktik bulan pertama vs bulan berikutnya</h4>
+        <ul>
+          <li><b>Bulan/daur pertama:</b> wanita ini harus menanti (tarabbush) — meninggalkan shalat &amp; puasa — hingga genap 15 hari sejak darah pertama keluar, karena ada kemungkinan seluruh darah adalah haidl.</li>
+          <li><b>Bulan/daur kedua dan seterusnya:</b> ia langsung mandi &amp; kembali beribadah begitu masuk hari ke-2 (setelah 24 jam pertama), tanpa perlu menunggu 15 hari lagi — karena status istihadhohnya sudah "terbukti" dari bulan pertama.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Klasifikasi 3 -->
+    <div class="topik teal" id="klas3">
+      <div class="topik-head"><span class="tag">Bentuk 3</span><h3>Mu'tadah Mumayyizah</h3></div>
+      <div class="penjelasan">
+        <p>Wanita yang <b>sudah punya kebiasaan haidl</b> sebelumnya, dan <b>mampu membedakan</b> darah
+        kuat/lemah. Kaidah pokoknya: <b>tamyiz (kemampuan membedakan darah) lebih diutamakan daripada
+        adat (kebiasaan)</b>, karena tamyiz adalah tanda pada darah itu sendiri, sedangkan adat hanya
+        tanda pada riwayat orangnya.</p>
+        <div class="contoh">
+          <b>Contoh:</b> Adat bulan Januari = 5 hari. Bulan berikutnya keluar darah hitam 10 hari lalu
+          merah hingga melebihi 15 hari.<br>
+          → Haidlnya adalah <b>10 hari</b> (mengikuti tamyiz/darah kuat), <b>bukan</b> 5 hari sesuai adat lama.
+        </div>
+        <div class="catatan">
+          <b>Pengecualian:</b> jika antara adat dan tamyiz dipisah oleh minimal suci (15 hari), maka
+          masing-masing dihukumi <b>haidl tersendiri</b> — bagian yang sesuai adat dihukumi haidl karena
+          adat, dan bagian darah kuat berikutnya dihukumi haidl kedua karena tamyiz.
+        </div>
+        <p><b>Pendapat minoritas (Abu Sa'id Al-Ushthukhri &amp; Abu Ali bin Khoiron):</b> mu'tadah
+        mumayyizah tetap dikembalikan ke <b>adat</b>, bukan tamyiz — karena banyak dipahami demikian
+        oleh kalangan wanita awam.</p>
+      </div>
+    </div>
+
+    <!-- Klasifikasi 4 -->
+    <div class="topik teal" id="klas4">
+      <div class="topik-head"><span class="tag">Bentuk 4</span><h3>Mu'tadah Ghoiru Mumayyizah — Ingat Kadar &amp; Waktu</h3></div>
+      <div class="penjelasan">
+        <p>Wanita yang sudah punya adat haidl, tidak bisa membedakan darah (hanya satu sifat), namun
+        <b>ingat persis</b> adatnya — baik berapa lama (kadar) maupun kapan mulainya (waktu).</p>
+        <div class="contoh">
+          <b>Hukumnya:</b> haidlnya dikembalikan sepenuhnya ke adat lamanya. Jika adatnya "5 hari di
+          awal bulan", maka ketika mengalami istihadhoh, haidlnya tetap 5 hari di awal bulan tersebut,
+          sisanya dihukumi suci sesuai adat — meski adat itu baru terjadi satu kali (karena adat bisa
+          dijadikan acuan hukum meski baru sekali terulang, selama tidak berubah-ubah).
+        </div>
+        <h4>Sub-pembahasan: istilah Daur, Intizhom, dan Tikror</h4>
+        <p>Ketiga istilah ini penting untuk memahami klasifikasi mu'tadah ghoiru mumayyizah yang lebih rinci:</p>
+        <div class="glosarium" style="margin:.6rem 0;">
+          <div class="glos-item"><b>Daur (دَوْر)</b><span>Satu siklus yang mencakup masa haidl + masa suci. Bagi wanita dengan adat tetap, daur = jangka satu putaran haidl-suci. Bagi wanita dengan adat berubah-ubah, daur = kumpulan bulan yang mencakup adat-adat yang berbeda.</span></div>
+          <div class="glos-item"><b>Intizhom (اِنْتِظَام)</b><span>Pola: setiap bulan jumlah hari haidlnya konsisten lebih banyak atau lebih sedikit dari bulan sebelumnya (misal 5→6→7 hari, atau sebaliknya 7→6→5).</span></div>
+          <div class="glos-item"><b>Tikror (تِكْرَار)</b><span>Terulangnya pola daur — baik satu kali maupun lebih — meski urutannya tidak sama persis dengan pola semula.</span></div>
+        </div>
+        <h4>Enam sub-kasus Mu'tadah Ghoiru Mumayyizah</h4>
+        <table class="ringkas">
+          <tr><th>#</th><th>Kondisi</th><th>Hukum Haidl</th></tr>
+          <tr><td>1</td><td>Daur berulang, adat berpola (intizhom), ingat polanya</td><td>Mengikuti pola yang diingat (mis. 3, 5, 7 hari bergantian sesuai polanya)</td></tr>
+          <tr><td>2</td><td>Daur berulang, adat berpola, tapi <b>lupa</b> urutan polanya</td><td>Diambil jumlah hari <b>paling sedikit</b> dari antara pola yang pernah dialami; sisanya ihtiyath (mandi setiap akhir kemungkinan haidl)</td></tr>
+          <tr><td>3</td><td>Daur berulang, adat <b>tidak</b> berpola, lupa adat terakhir</td><td>Diambil jumlah hari paling sedikit</td></tr>
+          <tr><td>4</td><td>Daur berulang, adat tidak berpola, <b>ingat</b> adat terakhir</td><td>Mengikuti adat terakhir yang diingat (baik itu jumlah terbanyak atau tersedikit)</td></tr>
+          <tr><td>5</td><td>Daur <b>tidak</b> berulang, lupa adat terakhir</td><td>Diambil jumlah hari paling sedikit</td></tr>
+          <tr><td>6</td><td>Daur tidak berulang, <b>ingat</b> adat terakhir</td><td>Mengikuti adat terakhir yang diingat</td></tr>
+        </table>
+        <div class="contoh">
+          <b>Contoh sub-kasus 1:</b> Bulan 1–3 haidl 3, 5, 7 hari. Bulan 4–6 haidl 3, 5, 7 hari (pola terulang).
+          Bulan 7–9 mengalami istihadhoh. → Haidl bulan 7 = 3 hari, bulan 8 = 5 hari, bulan 9 = 7 hari (mengikuti pola).
+        </div>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">At-Tahrir ma'a Hasyiyah Asy-Syarqawi, juz 1, hlm. 155–156</div>
+          <div class="arabic">وَإِلاَّ فَتُرَدُّ لِعَادَتِهَا قَدْرًا وَوَقْتًا إِنْ كَانَتْ حَافِظَةً لِذَلِكَ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Klasifikasi 5 -->
+    <div class="topik teal" id="klas5">
+      <div class="topik-head"><span class="tag">Bentuk 5</span><h3>Mutahayyiroh — Lupa Total (Kadar &amp; Waktu)</h3></div>
+      <div class="penjelasan">
+        <p>Wanita yang pernah mengalami haidl dan suci, tetapi <b>sama sekali lupa</b> — baik berapa lama
+        (kadar) maupun kapan mulainya (waktu) — adatnya. Wanita seperti ini disebut <b>mutahayyiroh</b>
+        (bingung), karena setiap hari yang dilaluinya berpotensi haidl maupun suci.</p>
+        <h4>Prinsip kehati-hatian ganda</h4>
+        <p>Mutahayyiroh diperlakukan dengan status <b>ganda</b> — mengikuti sisi yang paling berhati-hati
+        (ihtiyath) di setiap aspek hukum:</p>
+        <table class="ringkas">
+          <tr><th>Aspek</th><th>Diperlakukan seperti</th><th>Alasan</th></tr>
+          <tr><td>Bersentuhan kulit pusar–lutut, membaca/menyentuh/membawa Qur'an, berdiam &amp; lewat masjid</td><td>Orang <b>haidl</b> (dilarang)</td><td>Setiap saat berpotensi sedang haidl</td></tr>
+          <tr><td>Shalat, puasa, thawaf, i'tikaf, thalaq, mandi wajib</td><td>Orang <b>suci</b> (wajib dikerjakan)</td><td>Setiap saat berpotensi sedang suci</td></tr>
+        </table>
+        <div class="catatan">
+          Sebagian ulama menghukumi hari pertama munculnya darah sebagai haidl bagi mutahayyiroh; sebagian
+          lain mengembalikannya ke umumnya haidl (6–7 hari), sebagaimana qaul dalam kasus mubtada'ah ghoiru mumayyizah.
+        </div>
+        <h4>Kasus khusus: puasa Ramadhan bagi Mutahayyiroh</h4>
+        <p>Karena statusnya yang tidak pasti, mutahayyiroh wajib berpuasa sebulan penuh Ramadhan <b>ditambah</b>
+        satu bulan qadha penuh (29–30 hari) untuk memastikan keabsahan puasanya, dengan hasil akhir sebagai berikut:</p>
+        <div class="contoh">
+          <b>Simulasi:</b> Jika Ramadhan berumur 29 hari, puasa yang sah secara yakin = 13 hari (29−16).
+          Jika bulan qadha berumur 30 hari, puasa yang sah = 14 hari (30−16). Total masih tersisa
+          <b>2 hari hutang puasa</b>, yang bisa dilunasi dengan cara puasa 6 hari tambahan: 3 hari di awal
+          dan 3 hari di akhir dari rentang 18 hari — sehingga dari kombinasi manapun kemungkinan letak
+          haidlnya, minimal 2 hari yang sah pasti akan terhitung.
+        </div>
+        <p style="font-size:.85rem;color:var(--ink-soft)">Perhitungan angka 16 di atas berasal dari: kemungkinan maksimal haidl (15 hari) + 1 hari, sebagai batas paling jauh haidl bisa "menutupi" hari-hari puasa sejak hari pertama.</p>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Raudlatuth Thalibin, juz 1, hlm. 188</div>
+          <div class="arabic">أَمَّا إِذَا أَرَادَتْ قَضَاءَ أَكْثَرَ مِنْ يَوْمٍ فَتُضَعِّفُ مَا عَلَيْهَا وَتَزِيْدُ يَوْمَيْنِ فَتَصُوْمُ نِصْفَ الْمَجْمُوْعِ مُتَوَالِيًا مَتَى شَاءَتْ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- Klasifikasi 6 -->
+    <div class="topik teal" id="klas6">
+      <div class="topik-head"><span class="tag">Bentuk 6</span><h3>Mu'tadah Ghoiru Mumayyizah — Ingat Kadar, Lupa Waktu</h3></div>
+      <div class="penjelasan">
+        <p>Wanita yang ingat <b>berapa lama</b> ia biasa haidl, namun lupa <b>kapan tepatnya</b> mulainya.</p>
+        <div class="contoh">
+          <b>Contoh:</b> "Haidl saya dulu 5 hari, dalam rentang 10 hari pertama bulan itu — tapi saya
+          tidak ingat tanggal pastinya mulai. Yang saya yakin, tanggal 1 saya suci dan tanggal 6 saya haidl."
+        </div>
+        <p>Maka pembagian hukumnya:</p>
+        <ul>
+          <li><b>Tanggal 1</b> → suci (yakin), dijalani sebagaimana orang suci.</li>
+          <li><b>Tanggal 2–5</b> → "zona keraguan" (kemungkinan haidl <i>atau</i> suci) — dijalani seperti mutahayyiroh: wudhu untuk tiap shalat, tanpa perlu mandi.</li>
+          <li><b>Tanggal 6</b> → haidl (yakin), dijalani sebagaimana orang haidl.</li>
+          <li><b>Tanggal 7–10</b> → "zona keraguan" antara haidl-suci-berhenti — mandi diwajibkan hanya pada waktu yang memungkinkan darah sudah berhenti (yaitu rentang tanggal 7 s.d. 10).</li>
+        </ul>
+        <div class="catatan">Prinsip umumnya: <b>bagian yang diyakini</b> (baik haidl maupun suci) mengikuti hukum yang diyakini; <b>bagian yang meragukan</b> diperlakukan dengan kehati-hatian penuh seperti mutahayyiroh.</div>
+      </div>
+    </div>
+
+    <!-- Klasifikasi 7 -->
+    <div class="topik teal" id="klas7">
+      <div class="topik-head"><span class="tag">Bentuk 7</span><h3>Mu'tadah Ghoiru Mumayyizah — Ingat Waktu, Lupa Kadar</h3></div>
+      <div class="penjelasan">
+        <p>Kebalikan dari Bentuk 6: wanita ini ingat <b>kapan</b> haidlnya biasa mulai, namun lupa
+        <b>berapa lama</b> durasinya.</p>
+        <div class="contoh">
+          <b>Contoh:</b> "Haidl saya dulu mulai dari awal bulan, tapi saya tidak ingat berapa lama biasanya berlangsung."
+        </div>
+        <ul>
+          <li><b>Hari ke-1</b> (awal bulan) → haidl (yakin).</li>
+          <li><b>Tanggal 16–30</b> → suci (yakin), karena maksimal haidl 15 hari sehingga di luar itu pasti sudah suci.</li>
+          <li><b>Tanggal 2–15</b> → "zona keraguan" (mungkin haidl, mungkin suci, mungkin sudah berhenti) — diperlakukan seperti mutahayyiroh pada rentang tersebut.</li>
+        </ul>
+      </div>
+      <details class="rujukan">
+        <summary>Rujukan Kitab</summary>
+        <div class="isi">
+          <div class="kitab">Hasyiyah Al-Bajuri, juz 1, hlm. 111</div>
+          <div class="arabic">وَالذَّاكِرَةُ لِعَادَتِهَا وَقْتًا لاَ قَدْرًا كَأَنْ تَقُوْلَ كَانَ حَيْضِيْ يَبْتَدِئُنِيْ أَوَّلَ الشَّهْرِ وَلاَ أَعْلَمُ قَدْرَهُ</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ======================= Kalkulator ======================= -->
+    <div class="kalkulator" id="kalkulator">
+      <h3>🕐 Kalkulator Estimasi Usia Mulai Haidl</h3>
+      <p>Kitab ini menetapkan usia minimal haidl secara sangat presisi: <b>≈ 3.174 hari lebih 7 jam 2 menit</b>
+      sejak kelahiran (setara +9 tahun qamariyah dikurangi 15 hari). Masukkan tanggal lahir (Masehi) untuk
+      melihat estimasi tanggal usia tersebut tercapai. <i>Catatan: ini estimasi kasar untuk simulasi belajar,
+      bukan fatwa penentu usia baligh — patokan syar'i sebenarnya memakai kalender qamariyah/hijriyah.</i></p>
+      <div class="kalk-form">
+        <label>Tanggal Lahir (Masehi)
+          <input type="date" id="tglLahir">
+        </label>
+        <button onclick="hitungUsiaHaidl()">Hitung Estimasi</button>
+      </div>
+      <div class="kalk-hasil" id="hasilKalk"></div>
+    </div>
+
+    <!-- ======================= Ringkasan ======================= -->
+    <section class="bab-cover" id="ringkasan" style="border-bottom-color:var(--gold);">
+      <div class="num" style="color:var(--maroon);">§</div>
+      <div>
+        <h2>Tabel Ringkasan Batasan Waktu</h2>
+        <div class="sub">Rujukan cepat untuk mengingat seluruh angka penting dalam bab haidl &amp; istihadhoh</div>
+      </div>
+    </section>
+    <div class="topik">
+      <table class="ringkas">
+        <tr><th>Istilah</th><th>Minimal</th><th>Umum</th><th>Maksimal</th></tr>
+        <tr><td>Masa Haidl</td><td>24 jam (1 hari 1 malam)</td><td>6–7 hari</td><td>15 hari 15 malam</td></tr>
+        <tr><td>Masa Suci (antar-haidl)</td><td>15 hari 15 malam</td><td>23–24 hari</td><td>Tidak terbatas</td></tr>
+        <tr><td>Usia mulai haidl</td><td>≈ 3.174 hari (≈ 9 tahun qamariyah − 15 hari)</td><td>–</td><td>–</td></tr>
+        <tr><td>Usia umum monopause</td><td>–</td><td>62 tahun</td><td>Tidak terbatas (selama masih hidup)</td></tr>
+        <tr><td>Masa Nifas (untuk perbandingan)</td><td>Tidak ada batas minimal mutlak (bisa 0)</td><td>40 hari</td><td>60 hari</td></tr>
+      </table>
+      <div class="catatan"><b>Catatan:</b> pembahasan nifas secara rinci berada di luar cakupan kitab ini,
+      namun angka pembanding dicantumkan karena hukum nifas banyak diqiyaskan (disamakan) dengan hukum haidl.</div>
+    </div>
+
+    <!-- ======================= Glosarium ======================= -->
+    <section class="bab-cover" id="glosarium" style="border-bottom-color:var(--gold);">
+      <div class="num" style="color:var(--maroon);">أ</div>
+      <div>
+        <h2>Glosarium Istilah Fiqh Haidl</h2>
+        <div class="sub">Kosakata kunci yang sering muncul dalam pembahasan bab ini</div>
+      </div>
+    </section>
+    <div class="topik">
+      <div class="glosarium">
+        <div class="glos-item"><b>Mubtada'ah</b><span>Wanita yang baru pertama kali mengalami haidl/keluar darah</span></div>
+        <div class="glos-item"><b>Mu'tadah</b><span>Wanita yang sudah memiliki kebiasaan (adat) haidl</span></div>
+        <div class="glos-item"><b>Mumayyizah</b><span>Wanita yang bisa membedakan darah kuat dan darah lemah</span></div>
+        <div class="glos-item"><b>Ghoiru Mumayyizah</b><span>Wanita yang tidak bisa membedakan jenis darahnya</span></div>
+        <div class="glos-item"><b>Mutahayyiroh</b><span>Wanita mu'tadah yang lupa total adat haidlnya (kadar &amp; waktu)</span></div>
+        <div class="glos-item"><b>Tamyiz</b><span>Kemampuan/proses membedakan darah kuat dari darah lemah</span></div>
+        <div class="glos-item"><b>Istihadhoh</b><span>Darah penyakit yang keluar di luar masa haidl/nifas</span></div>
+        <div class="glos-item"><b>Naqo'</b><span>Masa berhentinya/jeda darah di sela-sela hari haidl</span></div>
+        <div class="glos-item"><b>Qaul Sahbi</b><span>Pendapat muktamad: masa jeda (naqo') ikut dihukumi haidl</span></div>
+        <div class="glos-item"><b>Qaul Laqti (Talfiq)</b><span>Pendapat: masa jeda (naqo') dihukumi suci</span></div>
+        <div class="glos-item"><b>Daur</b><span>Satu siklus lengkap haidl + suci</span></div>
+        <div class="glos-item"><b>Intizhom</b><span>Pola konsisten kenaikan/penurunan durasi haidl antar bulan</span></div>
+        <div class="glos-item"><b>Tikror</b><span>Terulangnya pola daur, baik satu kali atau lebih</span></div>
+        <div class="glos-item"><b>Ihtiyath</b><span>Sikap kehati-hatian dalam berhukum saat status masih meragukan</span></div>
+        <div class="glos-item"><b>Rothubatul Farji</b><span>Cairan/lendir kewanitaan (keputihan) di luar darah haidl</span></div>
+        <div class="glos-item"><b>Marad (Mard/Fasad)</b><span>Darah yang tidak memenuhi syarat haidl maupun istihadhoh (di luar usia atau &lt;24 jam)</span></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <div class="ornament">۞</div>
+  <div>© 2026 by Achmad Fauzi &nbsp;·&nbsp; Email: vaozeei@gmail.com</div>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const tocMenu = document.getElementById('tocMenu');
+  navToggle.addEventListener('click', () => tocMenu.classList.toggle('open'));
+  tocMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => tocMenu.classList.remove('open')));
+
+  function hitungUsiaHaidl(){
+    const input = document.getElementById('tglLahir').value;
+    const hasil = document.getElementById('hasilKalk');
+    if(!input){
+      hasil.textContent = 'Silakan pilih tanggal lahir terlebih dahulu.';
+      hasil.classList.add('show');
+      return;
+    }
+    const lahir = new Date(input + 'T00:00:00');
+    const target = new Date(lahir.getTime());
+    target.setDate(target.getDate() + 3174);
+    target.setHours(target.getHours() + 7);
+    target.setMinutes(target.getMinutes() + 2);
+
+    const opsi = { day:'numeric', month:'long', year:'numeric' };
+    hasil.innerHTML = 'Estimasi usia haidl (± 3.174 hari 7 jam 2 menit) tercapai sekitar tanggal '
+      + '<b>' + target.toLocaleDateString('id-ID', opsi) + '</b>'
+      + ' (pukul ± ' + target.getHours() + ':' + String(target.getMinutes()).padStart(2,'0') + ').'
+      + ' <br><span style="font-size:.8rem;opacity:.85">Gunakan angka ini hanya sebagai simulasi belajar; penentuan syar\'i yang tepat memakai kalender qamariyah dan tanda-tanda baligh lainnya.</span>';
+    hasil.classList.add('show');
+  }
+</script>
+
+</body>
+</html>

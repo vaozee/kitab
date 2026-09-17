@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nahwu Lanjutan — Kitab Al-'Imrithi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Zilla+Slab:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#F7F1E1;
+    --parchment-deep:#EFE6CC;
+    --ink:#2B2417;
+    --ink-soft:#5B5140;
+    --emerald:#1E4433;
+    --emerald-deep:#122E22;
+    --gold:#B8862B;
+    --gold-soft:#D9B25E;
+    --line:#D8CCA6;
+    --maroon:#7A2B22;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--parchment);
+    color:var(--ink);
+    font-family:'Lora', serif;
+    line-height:1.7;
+  }
+  .arabic{
+    font-family:'Amiri', serif;
+    direction:rtl;
+    unicode-bidi:isolate;
+  }
+
+  /* ===== Texture / manuscript border feel ===== */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(184,134,43,0.07), transparent 60%),
+      radial-gradient(1200px 600px at 100% 110%, rgba(30,68,51,0.08), transparent 60%);
+    z-index:0;
+  }
+
+  /* ===== Header / Hero ===== */
+  header.hero{
+    position:relative;
+    background:
+      linear-gradient(180deg, var(--emerald-deep) 0%, var(--emerald) 100%);
+    color:var(--parchment);
+    padding:64px 24px 56px;
+    text-align:center;
+    border-bottom:6px solid var(--gold);
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-2px;
+    height:14px;
+    background:
+      repeating-linear-gradient(135deg, var(--gold) 0 10px, var(--gold-soft) 10px 20px);
+    opacity:.35;
+  }
+  .eyebrow{
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    font-family:'Zilla Slab', serif;
+    font-size:.72rem;
+    color:var(--gold-soft);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:'Zilla Slab', serif;
+    font-weight:700;
+    font-size:clamp(2rem, 5vw, 3.1rem);
+    margin:0 0 10px;
+    letter-spacing:.01em;
+  }
+  .hero .arabic.title{
+    font-size:clamp(1.6rem, 4vw, 2.3rem);
+    color:var(--gold-soft);
+    margin:6px 0 22px;
+  }
+  .hero p.lede{
+    max-width:640px;
+    margin:0 auto;
+    color:#E6DFC7;
+    font-size:1.02rem;
+  }
+  .hero .badge-row{
+    margin-top:26px;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .badge{
+    border:1px solid rgba(217,178,94,.5);
+    color:var(--gold-soft);
+    padding:6px 14px;
+    border-radius:999px;
+    font-family:'Zilla Slab', serif;
+    font-size:.78rem;
+    letter-spacing:.04em;
+  }
+
+  /* ===== Layout ===== */
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:1120px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:0;
+  }
+  @media (max-width:860px){
+    .wrap{grid-template-columns:1fr;}
+  }
+
+  nav.toc{
+    padding:32px 20px 60px 24px;
+    position:sticky;
+    top:0;
+    align-self:start;
+    max-height:100vh;
+    overflow-y:auto;
+  }
+  nav.toc details{ width:100%; }
+  nav.toc summary{
+    list-style:none;
+    cursor:default;
+    pointer-events:none;
+  }
+  nav.toc summary::-webkit-details-marker{ display:none; }
+  nav.toc .toc-summary-text{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Zilla Slab', serif;
+    font-size:.78rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  nav.toc .toc-icon{ display:none; }
+  nav.toc .toc-count{ display:none; }
+  nav.toc summary{
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin:0 0 14px;
+    display:block;
+  }
+  nav.toc .toc-inner{ display:block; }
+  nav.toc ol{
+    list-style:none;
+    margin:0; padding:0;
+    counter-reset:bab;
+  }
+  nav.toc li{counter-increment:bab; margin-bottom:4px;}
+  nav.toc a{
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+    text-decoration:none;
+    color:var(--ink);
+    font-size:.88rem;
+    padding:7px 8px;
+    border-radius:6px;
+    transition:background .15s ease, color .15s ease;
+  }
+  nav.toc a::before{
+    content:counter(bab, decimal-leading-zero);
+    font-family:'Zilla Slab', serif;
+    color:var(--gold);
+    font-size:.76rem;
+    flex-shrink:0;
+  }
+  nav.toc a:hover{ background:var(--parchment-deep); color:var(--maroon); }
+
+  /* ===== Mobile: sidebar jadi dropdown ringkas & melayang ===== */
+  @media (max-width:860px){
+    nav.toc{
+      position:sticky;
+      top:0;
+      z-index:40;
+      max-height:none;
+      overflow:visible;
+      padding:0;
+      background:var(--parchment);
+      border-bottom:1px solid var(--line);
+      box-shadow:0 2px 10px rgba(43,36,23,.06);
+    }
+    nav.toc details{ position:relative; }
+    nav.toc summary{
+      cursor:pointer;
+      pointer-events:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:0;
+      padding:14px 18px;
+      border-bottom:none;
+      -webkit-tap-highlight-color:transparent;
+    }
+    nav.toc summary:focus-visible{ outline:2px solid var(--gold); outline-offset:-2px; }
+    nav.toc .toc-summary-text{
+      font-size:.82rem;
+      letter-spacing:.12em;
+      color:var(--maroon);
+    }
+    nav.toc .toc-icon{ display:block; color:var(--gold); flex-shrink:0; }
+    nav.toc .toc-count{
+      display:inline-block;
+      margin-left:auto;
+      font-family:'Zilla Slab', serif;
+      font-size:.7rem;
+      color:var(--ink-soft);
+      background:var(--parchment-deep);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:3px 10px;
+      transition:transform .2s ease;
+    }
+    nav.toc details[open] .toc-count{ transform:scale(0); width:0; padding:0; border:none; margin:0; }
+    nav.toc summary::after{
+      content:"";
+      width:9px; height:9px;
+      border-right:2px solid var(--gold);
+      border-bottom:2px solid var(--gold);
+      transform:rotate(45deg);
+      transition:transform .25s ease;
+      flex-shrink:0;
+      margin-left:4px;
+    }
+    nav.toc details[open] summary::after{ transform:rotate(-135deg); }
+
+    nav.toc .toc-inner{
+      position:absolute;
+      left:12px;
+      right:12px;
+      top:100%;
+      margin-top:8px;
+      background:#fffdf8;
+      border:1px solid var(--line);
+      border-radius:12px;
+      box-shadow:0 16px 40px rgba(43,36,23,.22);
+      max-height:min(70vh, 520px);
+      overflow-y:auto;
+      padding:10px;
+      animation:toc-drop .18s ease;
+    }
+    nav.toc details:not([open]) .toc-inner{ display:none; }
+    @keyframes toc-drop{
+      from{ opacity:0; transform:translateY(-6px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+    nav.toc li{ margin-bottom:2px; }
+    nav.toc a{ padding:9px 10px; font-size:.86rem; }
+  }
+
+
+  main{
+    padding:44px 28px 100px;
+    min-width:0;
+  }
+
+  section.bab{
+    margin-bottom:64px;
+    scroll-margin-top:16px;
+  }
+  section.bab .kicker{
+    font-family:'Zilla Slab', serif;
+    font-size:.75rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  section.bab h2{
+    font-family:'Zilla Slab', serif;
+    font-size:1.7rem;
+    margin:6px 0 4px;
+    color:var(--emerald-deep);
+  }
+  section.bab h2 .arabic{
+    display:block;
+    font-size:1.35rem;
+    color:var(--maroon);
+    font-weight:400;
+    margin-top:4px;
+  }
+  .nazham{
+    background:var(--parchment-deep);
+    border-right:4px solid var(--gold);
+    border-radius:4px;
+    padding:18px 22px;
+    margin:18px 0;
+  }
+  .nazham .arabic{
+    font-size:1.35rem;
+    color:var(--emerald-deep);
+    text-align:center;
+    line-height:2.3;
+  }
+  .nazham .terj{
+    margin-top:10px;
+    font-size:.88rem;
+    color:var(--ink-soft);
+    text-align:center;
+    font-style:italic;
+  }
+
+  table.contoh{
+    width:100%;
+    border-collapse:collapse;
+    margin:16px 0 8px;
+    font-size:.92rem;
+  }
+  table.contoh th, table.contoh td{
+    border:1px solid var(--line);
+    padding:9px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.contoh th{
+    background:var(--emerald);
+    color:var(--parchment);
+    font-family:'Zilla Slab', serif;
+    font-weight:500;
+    font-size:.78rem;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+  }
+  table.contoh td.arb{
+    font-family:'Amiri', serif;
+    direction:rtl;
+    font-size:1.15rem;
+    color:var(--emerald-deep);
+    width:26%;
+  }
+  table.contoh tr:nth-child(even) td{ background:rgba(239,230,204,.5); }
+
+  .catatan{
+    border-left:3px solid var(--maroon);
+    background:#FBF3EC;
+    padding:12px 16px;
+    margin:16px 0;
+    font-size:.9rem;
+    color:var(--ink-soft);
+  }
+  .catatan strong{ color:var(--maroon); }
+
+  ul.rincian{ margin:10px 0; padding-left:20px; }
+  ul.rincian li{ margin-bottom:6px; }
+
+  details.latihan{
+    margin-top:10px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 16px;
+    background:#fff;
+  }
+  details.latihan summary{
+    cursor:pointer;
+    font-family:'Zilla Slab', serif;
+    font-weight:600;
+    color:var(--emerald-deep);
+  }
+  details.latihan .jawaban{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--line);
+    font-size:.92rem;
+  }
+
+  .divider{
+    text-align:center;
+    color:var(--gold);
+    margin:44px 0;
+    letter-spacing:.4em;
+    font-size:.8rem;
+  }
+
+  footer{
+    text-align:center;
+    padding:36px 20px 50px;
+    color:var(--ink-soft);
+    font-size:.82rem;
+    border-top:1px solid var(--line);
+  }
+  footer .arabic{ display:block; margin-top:6px; font-size:1rem; color:var(--maroon); }
+
+  /* ===== Kuis Interaktif ===== */
+  .quiz-box{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px 24px;
+    box-shadow:0 2px 10px rgba(43,36,23,.06);
+  }
+  .quiz-q{
+    margin-bottom:22px;
+    padding-bottom:20px;
+    border-bottom:1px dashed var(--line);
+  }
+  .quiz-q:last-of-type{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .quiz-q .qtext{
+    font-weight:600;
+    margin-bottom:10px;
+    color:var(--emerald-deep);
+  }
+  .quiz-q .qtext .arabic{ font-size:1.15rem; color:var(--maroon); }
+  .quiz-opts label{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    padding:8px 10px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:.92rem;
+    margin-bottom:4px;
+    transition:background .15s ease;
+  }
+  .quiz-opts label:hover{ background:var(--parchment-deep); }
+  .quiz-opts input{ margin-top:4px; }
+  .quiz-q.correct .qtext::after{
+    content:" ✓ Benar";
+    color:var(--emerald);
+    font-family:'Zilla Slab', serif;
+    font-size:.8rem;
+  }
+  .quiz-q.wrong .qtext::after{
+    content:" ✗ Belum tepat";
+    color:var(--maroon);
+    font-family:'Zilla Slab', serif;
+    font-size:.8rem;
+  }
+  .quiz-q .quiz-expl{
+    display:none;
+    margin-top:8px;
+    background:var(--parchment-deep);
+    border-left:3px solid var(--gold);
+    padding:8px 12px;
+    font-size:.86rem;
+    color:var(--ink-soft);
+  }
+  .quiz-q.checked .quiz-expl{ display:block; }
+  .quiz-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+  .quiz-btn{
+    font-family:'Zilla Slab', serif;
+    font-weight:600;
+    letter-spacing:.03em;
+    background:var(--emerald);
+    color:var(--parchment);
+    border:none;
+    padding:11px 24px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:.88rem;
+    transition:background .15s ease;
+  }
+  .quiz-btn:hover{ background:var(--emerald-deep); }
+  .quiz-btn.secondary{
+    background:transparent;
+    color:var(--maroon);
+    border:1px solid var(--maroon);
+  }
+  .quiz-btn.secondary:hover{ background:#FBF3EC; }
+  #quiz-score{
+    font-family:'Zilla Slab', serif;
+    font-weight:600;
+    color:var(--emerald-deep);
+    font-size:.95rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Pelajaran Nahwu Tingkat Lanjut</div>
+  <h1>Matan Al-'Imrithi</h1>
+  <div class="arabic title">متن العِمْرِيْطِي في علم النحو</div>
+  <p class="lede">Kelanjutan dari Al-Ajurumiyyah — nazham (syair) karya Syaikh Syarafuddin Yahya al-'Imrithi
+  yang merangkum kaidah nahwu secara lebih luas dan mendalam, disusun dalam bait-bait yang mudah dihafal.</p>
+  <div class="badge-row">
+    <span class="badge">146 Bait Nazham</span>
+    <span class="badge">Jenjang: Menengah–Lanjut</span>
+    <span class="badge">Lanjutan Jurumiyah</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="toc">
+    <details class="toc-details" open>
+      <summary class="toc-summary">
+        <span class="toc-summary-text">
+          <svg class="toc-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H20M4 12H20M4 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Daftar Bab
+        </span>
+        <span class="toc-count">22 Bab</span>
+      </summary>
+      <div class="toc-inner">
+        <ol>
+          <li><a href="#muqaddimah">Muqaddimah Kitab</a></li>
+          <li><a href="#irab">Mu'rab &amp; Mabni</a></li>
+          <li><a href="#afal-khomsah">Af'alul Khomsah</a></li>
+          <li><a href="#manshubat">Isim-Isim Manshub</a></li>
+          <li><a href="#maful-muthlaq">Maf'ul Muthlaq</a></li>
+          <li><a href="#maful-lah">Maf'ul Li Ajlih</a></li>
+          <li><a href="#maful-fih">Zharaf (Maf'ul Fih)</a></li>
+          <li><a href="#hal">Hal</a></li>
+          <li><a href="#tamyiz">Tamyiz</a></li>
+          <li><a href="#istitsna">Istitsna'</a></li>
+          <li><a href="#la-nafiyah">La Nafiyah lil Jinsi</a></li>
+          <li><a href="#munada">Munada</a></li>
+          <li><a href="#tawabi">Tawabi'</a></li>
+          <li><a href="#majrurat">Isim-Isim Majrur</a></li>
+          <li><a href="#kana">Kana wa Akhawatuha</a></li>
+          <li><a href="#inna">Inna wa Akhawatuha</a></li>
+          <li><a href="#irab-kalimat">Praktik I'rab Kalimat</a></li>
+          <li><a href="#ghair-munsharif">Isim Ghair Munsharif</a></li>
+          <li><a href="#isytighal">Bab Isytighal</a></li>
+          <li><a href="#khatimah">Khatimah</a></li>
+          <li><a href="#latihan">Latihan Mandiri</a></li>
+          <li><a href="#kuis">Kuis Interaktif</a></li>
+        </ol>
+      </div>
+    </details>
+  </nav>
+
+  <main>
+
+    <section class="bab" id="muqaddimah">
+      <div class="kicker">Bab 01</div>
+      <h2>Muqaddimah Kitab<span class="arabic">مُقَدِّمَةُ الْكِتَابِ</span></h2>
+      <p>Kitab <em>Al-'Imrithi</em> disusun oleh Syaikh Syarafuddin Yahya al-'Imrithi sebagai
+      penjabaran dan pengembangan dari kitab Al-Ajurumiyyah. Jika Jurumiyah memuat kaidah-kaidah
+      dasar nahwu secara ringkas, maka Imrithi menambahkan rincian-rincian yang belum dibahas,
+      seperti af'alul khomsah, macam-macam maf'ul, hal, tamyiz, istitsna, hingga tawabi' secara
+      lebih terperinci — semuanya disusun dalam bentuk nazham (syair) agar mudah dihafal santri.</p>
+      <div class="nazham">
+        <p class="arabic">
+          اَلْحَمْدُ لِلَّهِ الَّذِيْ قَدْ وَفَّقَا &nbsp; لِلْعِلْمِ خَيْرَ خَلْقِهِ وَلِلتُّقَى<br>
+          حَتَّى نَحَتْ قُلُوْبُهُمْ لِنَحْوِهِ &nbsp; فَمِنْ عَظِيْمِ شَأْنِهِ لَمْ تَحْوِهِ<br>
+          فَأُشْرِبَتْ مَعْنَى ضَمِيْرِ الشَّانِ &nbsp; فَأَعْرَبَتْ فِيْ أَلْحَانٍ بِالْأَلْحَانِ<br>
+          ثُمَّ الصَّلَاةُ مَعَ سَلَامٍ لَائِقِ &nbsp; عَلَى النَّبِيِّ أَفْصَحِ الْخَلَائِقِ<br>
+          مُحَمَّدٍ وَالْآلِ وَالْأَصْحَابِ &nbsp; مَنْ أَتْقَنُوا الْقُرْآنَ بِالْإِعْرَابِ
+        </p>
+        <p class="terj">"Segala puji bagi Allah yang telah memberi taufik kepada ilmu — sebaik-baik
+        makhluk-Nya — dan kepada ketakwaan, sehingga hati mereka terpahat untuk (mencintai) nahwu,
+        karena besarnya kedudukan nahwu yang tak mampu ia tampung (jika tanpa taufik-Nya). Maka
+        terserapilah makna dhamir sya'n, sehingga i'rab-nya terungkap dalam untaian kata yang
+        indah. Kemudian shalawat beserta salam yang layak, tercurah kepada Nabi yang paling fasih
+        di antara makhluk, yaitu Muhammad, beserta keluarga dan sahabatnya, orang-orang yang mahir
+        membaca Al-Qur'an dengan i'rab yang benar."</p>
+      </div>
+      <p>Nazham pembuka ini menegaskan tradisi ilmiah pesantren: mengawali setiap kitab dengan
+      basmalah dan shalawat sebagai bentuk tabarruk (mengharap keberkahan) sebelum masuk ke
+      pembahasan kaidah.</p>
+      <p>Perlu dipahami oleh santri bahwa kitab ini bukan karya yang berdiri sendiri, melainkan
+      <em>nazham</em> — yakni penuangan kembali kitab prosa (natsar) Al-Ajurumiyyah ke dalam
+      bentuk bait-bait syair ('ilmu 'arudh) agar lebih mudah dihafal di luar kepala. Tradisi
+      men-nazham-kan kitab prosa semacam ini sangat lazim dalam khazanah pesantren, karena
+      hafalan yang berbentuk syair (dengan wazan dan qafiyah yang teratur) jauh lebih melekat
+      di ingatan dibanding teks prosa biasa. Itulah sebabnya Syaikh al-'Imrithi menyebut dirinya
+      sebagai <span class="arabic">الْفَقِيرُ</span> ("yang fakir/butuh kepada Allah") — sebuah
+      bentuk tawadhu' khas ulama salaf saat membuka karya keilmuan mereka.</p>
+      <div class="catatan"><strong>Kenapa harus dihafal, bukan sekadar dibaca?</strong> Dalam
+      tradisi sanad keilmuan pesantren, nazham seperti Imrithi dihafal luar kepala terlebih
+      dahulu sebelum dipahami maknanya secara mendalam (thariqah "hafal dulu, paham kemudian").
+      Cara ini terbukti efektif karena begitu bait-baitnya sudah tertanam di hati, santri tinggal
+      "memanggil" bait yang relevan setiap kali menemui kasus i'rab dalam kitab kuning yang
+      dikaji — nazham berfungsi sebagai rumus cepat (mnemonic) kaidah nahwu.</div>
+    </section>
+
+    <section class="bab" id="irab">
+      <div class="kicker">Bab 02</div>
+      <h2>Mu'rab dan Mabni<span class="arabic">الْمُعْرَبُ وَالْمَبْنِيُّ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَسَائِرُ الْأَسْمَاءِ حَيْثُ لَا شَبَهْ &nbsp; قَرَّبَهَا مِنَ الْحُرُوْفِ مُعْرَبَهْ<br>
+          وَغَيْرُ ذِي الْأَسْمَاءِ مَبْنِيٌّ خَلَا &nbsp; مُضَارِعٍ مِنْ كُلِّ نُوْنٍ قَدْ خَلَا
+        </p>
+        <p class="terj">"Semua isim yang tidak menyerupai huruf (dari sisi kelemahan makna) maka
+        hukumnya mu'rab. Sedangkan selain isim yang mu'rab tersebut hukumnya mabni, kecuali
+        fi'il mudhari' yang bersih dari nun (taukid ataupun jama' muannats), maka ia tetap mu'rab."</p>
+      </div>
+      <p>Sebelum masuk ke bab-bab manshubat, Imrithi menegaskan kembali pembagian kalimah
+      (kata) dari sisi berubah atau tetapnya akhir kata:</p>
+      <ul class="rincian">
+        <li><strong>Mu'rab</strong> — kata yang harakat/huruf akhirnya berubah-ubah sesuai kedudukannya
+          dalam kalimat (rafa', nashab, khafadh/jazm). Contoh: <span class="arabic">مُحَمَّدٌ، يَكْتُبُ</span></li>
+        <li><strong>Mabni</strong> — kata yang harakat/huruf akhirnya tetap, tidak berubah walau
+          kedudukannya berubah. Contoh: kata tunjuk <span class="arabic">هَذَا</span>, dhamir
+          <span class="arabic">أَنَا</span>, huruf <span class="arabic">مِنْ</span>, dan fi'il madhi.</li>
+      </ul>
+      <table class="contoh">
+        <tr><th>Kalimah</th><th>Contoh</th><th>Status</th><th>Keterangan</th></tr>
+        <tr><td>Isim</td><td class="arb">الْكِتَابُ</td><td>Mu'rab</td><td>Berubah menjadi الْكِتَابَ / الْكِتَابِ sesuai kedudukan</td></tr>
+        <tr><td>Fi'il Mudhari'</td><td class="arb">يَكْتُبُ</td><td>Mu'rab</td><td>Bisa menjadi يَكْتُبَ / يَكْتُبْ</td></tr>
+        <tr><td>Fi'il Madhi</td><td class="arb">كَتَبَ</td><td>Mabni</td><td>Akhirnya selalu fathah, tidak berubah</td></tr>
+        <tr><td>Isim Isyarah</td><td class="arb">هَؤُلَاءِ</td><td>Mabni</td><td>Tetap dalam segala kedudukan</td></tr>
+      </table>
+      <p>Mengapa bab ini penting diletakkan di awal Imrithi? Karena seluruh pembahasan
+      manshubat, majrurat, dan rafa'-rafa' yang akan datang setelahnya hanya berlaku pada
+      kalimah yang berstatus <em>mu'rab</em>. Kalimah mabni — betapapun ia menempati kedudukan
+      i'rab tertentu (rafa', nashab, khafadh) secara makna/mahal — tidak pernah berubah
+      harakat akhirnya. Santri sering keliru mengira kalimah mabni "tidak punya i'rab sama
+      sekali", padahal yang benar ia tetap memiliki kedudukan i'rab, hanya saja ditunjukkan
+      secara <em>mahalli</em> (perkiraan kedudukan), bukan secara <em>lafzhi</em> (perubahan
+      lafal yang tampak). Prinsip inilah yang nanti dipakai berulang kali ketika mengi'rab
+      dhamir, isim isyarah, dan huruf dalam kalimat-kalimat kompleks.</p>
+      <div class="catatan"><strong>Kaidah kunci fi'il mudhari':</strong> fi'il mudhari' pada
+      dasarnya mu'rab (bisa rafa', nashab, jazm) — kecuali bila bersambung dengan nun taukid
+      (menjadi mabni fathah) atau nun niswah/jama' muannats (menjadi mabni sukun). Inilah makna
+      "مِنْ كُلِّ نُوْنٍ قَدْ خَلَا" pada bait di atas: selama fi'il mudhari' itu "kosong dari
+      nun-nun tersebut", ia tetap berstatus mu'rab.</div>
+    </section>
+
+    <section class="bab" id="afal-khomsah">
+      <div class="kicker">Bab 03</div>
+      <h2>Af'alul Khomsah<span class="arabic">الْأَفْعَالُ الْخَمْسَةُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَتَفْعَلِيْنَ تَرْحَمِيْنَ حَالِي &nbsp; وَاشْتُهِرَتْ بِالْخَمْسَةِ الْأَفْعَالِ<br>
+          وَالْخَمْسَةُ الْأَفْعَالُ حَيْثُ تَنْتَصِبْ &nbsp; فَحَذْفُ نُوْنِ الرَّفْعِ مُطْلَقًا يَجِبْ
+        </p>
+        <p class="terj">"(Seperti contoh) taf'aliina, tarhamiina haali — dan inilah yang masyhur
+        disebut sebagai af'alul khomsah. Dan af'alul khomsah itu, ketika ia dinashabkan (atau
+        dijazmkan), maka wajib hukumnya membuang nun rafa' pada akhirnya."</p>
+      </div>
+      <p>Af'alul khomsah adalah lima bentuk fi'il mudhari' yang bersambung dengan
+      <span class="arabic">أَلِفِ اثْنَيْنِ</span>, <span class="arabic">وَاوِ جَمَاعَةٍ</span>,
+      atau <span class="arabic">يَاءِ مُخَاطَبَةٍ</span>. Tanda i'rabnya berbeda dari fi'il mudhari' biasa:</p>
+      <ul class="rincian">
+        <li>Rafa' ditandai dengan tetapnya huruf <em>nun</em> (<span class="arabic">ثُبُوتُ النُّونِ</span>)</li>
+        <li>Nashab dan jazm ditandai dengan hilangnya huruf <em>nun</em> (<span class="arabic">حَذْفُ النُّونِ</span>)</li>
+      </ul>
+      <table class="contoh">
+        <tr><th>Keadaan</th><th>Contoh</th><th>Tanda I'rab</th></tr>
+        <tr><td>Rafa'</td><td class="arb">الطَّالِبَانِ يَكْتُبَانِ</td><td>Tetapnya nun</td></tr>
+        <tr><td>Nashab</td><td class="arb">لَنْ يَكْتُبَا</td><td>Hilangnya nun (dinashab oleh لَنْ)</td></tr>
+        <tr><td>Jazm</td><td class="arb">لَمْ يَكْتُبَا</td><td>Hilangnya nun (dijazm oleh لَمْ)</td></tr>
+      </table>
+      <p>Disebut "lima" (khomsah) karena ada lima pola pembentukannya: dua untuk dhamir tatsniyah
+      (<span class="arabic">يَفْعَلَانِ، تَفْعَلَانِ</span>), dua untuk dhamir jama' mudzakkar
+      (<span class="arabic">يَفْعَلُوْنَ، تَفْعَلُوْنَ</span>), dan satu untuk dhamir mukhathabah
+      tunggal perempuan (<span class="arabic">تَفْعَلِيْنَ</span>). Kelimanya memiliki satu
+      kesamaan penting: huruf terakhir sebelum nun selalu berupa alif, wawu, atau ya' — sehingga
+      bila nun-nya dibuang, huruf 'illat tersebut tetap terjaga (tidak ikut hilang), berbeda
+      dengan fi'il mu'tal biasa yang huruf 'illatnya justru dibuang saat jazm.</p>
+      <div class="catatan"><strong>Catatan:</strong> Af'alul khomsah hanya berlaku pada fi'il mudhari'
+      yang bersambung dengan salah satu dari tiga dhamir tersebut, bukan seluruh fi'il mudhari' bertasydid nun.
+      Santri pemula sering keliru menganggap semua fi'il mudhari' yang diakhiri nun adalah af'alul
+      khomsah — padahal fi'il seperti <span class="arabic">يَكْتُبْنَ</span> (nun niswah) justru
+      <em>mabni</em>, bukan af'alul khomsah yang mu'rab.</div>
+    </section>
+
+    <section class="bab" id="manshubat">
+      <div class="kicker">Bab 04</div>
+      <h2>Isim-Isim yang Dinashab<span class="arabic">مَنْصُوبَاتُ الْأَسْمَاءِ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          ثَلَاثَةٌ مِنْ سَائِرِ الْأَسْمَا خَلَتْ &nbsp; مَنْصُوْبَةٌ وَهَذِهِ عَشْرٌ تَلَتْ<br>
+          وَكُلُّهَا تَأْتِي عَلَى تَرْتِيْبِهِ &nbsp; أَوَّلُهَا فِي الذِّكْرِ مَفْعُوْلٌ بِهِ
+        </p>
+        <p class="terj">"Ada tiga (macam isim manshub) yang telah lewat disebutkan dari
+        keseluruhan isim-isim (yakni khabar Kana, isim Inna, dan maf'ul Dzanna) — dan berikut
+        ini menyusul sepuluh (macam) lagi. Semuanya datang sesuai urutannya, yang pertama
+        disebut adalah Maf'ul Bih."</p>
+      </div>
+      <p>Inilah inti pembahasan terbesar kitab Imrithi. Terdapat lima belas isim manshub menurut
+      penyusunan klasik, di antaranya yang paling penting dan sering muncul dalam nazham Imrithi:</p>
+      <ul class="rincian">
+        <li>Maf'ul bih <span class="arabic">(الْمَفْعُوْلُ بِهِ)</span></li>
+        <li>Maf'ul Muthlaq <span class="arabic">(الْمَفْعُوْلُ الْمُطْلَقُ)</span></li>
+        <li>Maf'ul Li Ajlih <span class="arabic">(الْمَفْعُوْلُ لِأَجْلِهِ)</span></li>
+        <li>Maf'ul Fih / Zharaf <span class="arabic">(الْمَفْعُوْلُ فِيْهِ)</span></li>
+        <li>Hal <span class="arabic">(الْحَالُ)</span></li>
+        <li>Tamyiz <span class="arabic">(التَّمْيِيْزُ)</span></li>
+        <li>Mustatsna <span class="arabic">(الْمُسْتَثْنَى)</span></li>
+        <li>Isim La Nafiyah lil Jinsi <span class="arabic">(اِسْمُ لَا)</span></li>
+        <li>Munada <span class="arabic">(الْمُنَادَى)</span></li>
+        <li>Khabar Kana dan saudara-saudaranya, Isim Inna dan saudara-saudaranya</li>
+      </ul>
+      <p>Menariknya, bait pembuka bab ini justru menegaskan bahwa tiga di antara lima belas
+      isim manshub — yaitu khabar Kana, isim Inna, dan maf'ul Dzanna — sesungguhnya sudah
+      dijelaskan lebih dulu pada bab-bab sebelumnya (dalam matan Ajurumiyyah/awal Imrithi),
+      sehingga di sini tinggal disebutkan sepuluh sisanya secara berurutan. Cara penyusunan
+      seperti ini adalah ciri khas nazham: penulis sengaja merangkai daftar panjang dalam
+      urutan tertentu agar mudah dihafal berurutan (seperti "urutan sepuluh") — bukan disusun
+      acak. Santri yang menghafal urutan ini akan lebih mudah saat kelak mengidentifikasi
+      kedudukan sebuah kata manshub dalam kitab kuning, karena tinggal mencocokkan dengan
+      "daftar rujukan" yang sudah tertata di kepala.</p>
+      <p>Bab-bab berikut merinci masing-masing satu per satu.</p>
+    </section>
+
+    <section class="bab" id="maful-muthlaq">
+      <div class="kicker">Bab 05</div>
+      <h2>Maf'ul Muthlaq<span class="arabic">الْمَفْعُوْلُ الْمُطْلَقُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَإِنْ تُرِدْ تَصْرِيْفَ نَحْوِ قَامَا &nbsp; فَقُلْ يَقُوْمُ ثُمَّ قُلْ قِيَامَا<br>
+          فَمَا يَجِيْءُ ثَالِثًا فَالْمَصْدَرُ &nbsp; وَنَصْبُهُ بِفِعْلِهِ مُقَدَّرُ
+        </p>
+        <p class="terj">"Jika engkau hendak mentashrif (menggali bentuk kata) seperti qaama, maka
+        ucapkanlah yaquumu, lalu ucapkanlah qiyaaman. Maka kata yang muncul urutan ketiga
+        (dalam tashrif) itulah masdar, dan nashab-nya dikira-kirakan sebab fi'ilnya sendiri."</p>
+      </div>
+      <p>Maf'ul muthlaq adalah masdar (kata dasar/kata benda abstrak) yang disebutkan setelah
+      fi'ilnya, berfungsi menegaskan (taukid), menerangkan jenis ('adad), atau bilangan pekerjaan.</p>
+      <table class="contoh">
+        <tr><th>Fungsi</th><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td>Taukid (penegas)</td><td class="arb">ضَرَبْتُ ضَرْبًا</td><td>Aku benar-benar memukul</td></tr>
+        <tr><td>Bayan Nau' (jenis)</td><td class="arb">جَلَسْتُ جِلْسَةَ الْمُتَوَاضِعِ</td><td>Aku duduk dengan cara duduknya orang tawadhu'</td></tr>
+        <tr><td>Bayan 'Adad (bilangan)</td><td class="arb">ضَرَبْتُهُ ضَرْبَتَيْنِ</td><td>Aku memukulnya dua kali pukulan</td></tr>
+      </table>
+      <p>Bait di atas mengajarkan cara praktis mengenali masdar: lakukan tashrif (perubahan
+      bentuk kata) dari fi'il madhi ke fi'il mudhari', lalu ke bentuk ketiga — itulah masdarnya.
+      Misalnya <span class="arabic">ضَرَبَ</span> (madhi) → <span class="arabic">يَضْرِبُ</span>
+      (mudhari') → <span class="arabic">ضَرْبًا</span> (masdar, sebagai maf'ul muthlaq). Disebut
+      "nashabnya dikira-kirakan sebab fi'ilnya sendiri" karena maf'ul muthlaq sejatinya
+      dinashabkan oleh fi'il yang seakar dengannya — bukan oleh huruf jar atau amil lain. Inilah
+      yang membedakan maf'ul muthlaq dari maf'ul-maf'ul lain: ia adalah "anak kandung" dari
+      fi'ilnya sendiri, sehingga fungsinya murni menguatkan makna fi'il tersebut.</p>
+    </section>
+
+    <section class="bab" id="maful-lah">
+      <div class="kicker">Bab 06</div>
+      <h2>Maf'ul Li Ajlih<span class="arabic">الْمَفْعُوْلُ لِأَجْلِهِ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَالْمَصْدَرَ انْصِبْ إِنْ أَتَى بَيَانَا &nbsp; لِعِلَّةِ الْفِعْلِ الَّذِي قَدْ كَانَا<br>
+          وَشَرْطُهُ اتِّحَادُهُ مَعْ عَامِلِهْ &nbsp; فِيْمَا لَهُ مِنْ وَقْتِهِ وَفَاعِلِهْ
+        </p>
+        <p class="terj">"Nashabkanlah masdar itu apabila ia datang untuk menjelaskan sebab/alasan
+        (terjadinya) suatu pekerjaan yang telah ada. Adapun syaratnya, ia harus satu waktu dan
+        satu pelaku dengan 'amil (fi'il) yang menyertainya."</p>
+      </div>
+      <p>Yaitu masdar yang disebutkan untuk menerangkan sebab/alasan terjadinya suatu pekerjaan,
+      menjawab pertanyaan "mengapa perbuatan itu dilakukan".</p>
+      <table class="contoh">
+        <tr><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td class="arb">قُمْتُ إِجْلَالًا لِلْأُسْتَاذِ</td><td>Aku berdiri karena mengagungkan sang guru</td></tr>
+        <tr><td class="arb">تَصَدَّقَ طَلَبًا لِلْأَجْرِ</td><td>Dia bersedekah demi mengharap pahala</td></tr>
+      </table>
+      <p>Syarat yang disebutkan dalam bait — "satu waktu dan satu pelaku dengan 'amil-nya" —
+      adalah kunci membedakan maf'ul li ajlih dari sekadar keterangan sebab biasa. Pada contoh
+      <span class="arabic">قُمْتُ إِجْلَالًا لِلْأُسْتَاذِ</span>, pelaku "berdiri" (aku) dan
+      pelaku "mengagungkan" (aku juga) adalah orang yang sama, dan keduanya terjadi pada waktu
+      yang sama pula. Jika salah satu syarat ini tidak terpenuhi — misalnya sebabnya terjadi di
+      waktu lampau sementara akibatnya di masa kini — maka kata tersebut tidak lagi sah disebut
+      maf'ul li ajlih, dan harus diungkapkan dengan huruf jar sebab (seperti
+      <span class="arabic">لِ</span> atau <span class="arabic">مِنْ أَجْلِ</span>).</p>
+    </section>
+
+    <section class="bab" id="maful-fih">
+      <div class="kicker">Bab 07</div>
+      <h2>Zharaf (Maf'ul Fih)<span class="arabic">الظَّرْفُ / الْمَفْعُوْلُ فِيْهِ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          هُوَ اسْمُ وَقْتٍ أَوْ مَكَانٍ انْتَصَبْ &nbsp; كُلٌّ عَلَى تَقْدِيْرِ فِيْ عِنْدَ الْعَرَبْ
+        </p>
+        <p class="terj">"Zharaf adalah isim yang menunjukkan waktu atau tempat, yang dinashabkan —
+        semuanya menurut kebiasaan orang Arab dikira-kirakan bermakna huruf <em>fii</em> (di
+        dalam/pada)."</p>
+      </div>
+      <p>Zharaf terbagi dua: zharaf zaman (keterangan waktu) dan zharaf makan (keterangan tempat),
+      keduanya dinashab karena menyimpan makna <span class="arabic">فِي</span> (di dalam/pada).</p>
+      <table class="contoh">
+        <tr><th>Jenis</th><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td>Zharaf Zaman</td><td class="arb">سَافَرْتُ لَيْلًا</td><td>Aku bepergian pada malam hari</td></tr>
+        <tr><td>Zharaf Makan</td><td class="arb">جَلَسْتُ أَمَامَ الْمَسْجِدِ</td><td>Aku duduk di depan masjid</td></tr>
+      </table>
+      <p>Poin penting yang perlu ditangkap santri: meskipun zharaf secara makna setara dengan
+      "huruf jar <span class="arabic">فِي</span> + isim majrur" (misalnya
+      <span class="arabic">لَيْلًا</span> semakna dengan <span class="arabic">فِي اللَّيْلِ</span>),
+      secara i'rab ia tetap dinashabkan, bukan dijarkan. Inilah sebabnya zharaf disebut juga
+      <em>maf'ul fih</em> — "objek yang di-<em>dalam</em>-nya" pekerjaan itu terjadi, meski
+      secara lafal ia berdiri sebagai isim manshub biasa tanpa huruf jar yang tampak.</p>
+    </section>
+
+    <section class="bab" id="hal">
+      <div class="kicker">Bab 08</div>
+      <h2>Hal<span class="arabic">الْحَالُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          اَلْحَالُ وَصْفٌ ذُو انْتِصَابٍ آتِي &nbsp; مُفَسِّرًا لِمُبْهَمِ الْهَيْآتِ<br>
+          وَإِنَّمَا يُؤْتَى بِهِ مُنَكَّرَا &nbsp; وَغَالِبًا يُؤْتَى بِهِ مُؤَخَّرَا
+        </p>
+        <p class="terj">"Hal adalah sifat yang dinashabkan, yang datang untuk menjelaskan keadaan
+        yang masih samar. Dan hal itu senantiasa berupa isim nakirah, dan umumnya diletakkan
+        di akhir kalimat."</p>
+      </div>
+      <p>Hal adalah isim nakirah manshub yang menerangkan keadaan pelaku (fa'il), objek (maf'ul),
+      saat terjadinya suatu pekerjaan. Ciri utamanya dapat dijawab dengan pertanyaan "bagaimana keadaannya?".</p>
+      <table class="contoh">
+        <tr><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td class="arb">جَاءَ زَيْدٌ رَاكِبًا</td><td>Zaid datang dalam keadaan berkendara</td></tr>
+        <tr><td class="arb">رَأَيْتُ الْهِلَالَ سَاطِعًا</td><td>Aku melihat hilal dalam keadaan bersinar terang</td></tr>
+      </table>
+      <div class="catatan"><strong>Syarat:</strong> Shahibul hal (pemilik keadaan) harus berupa
+      isim ma'rifat, sedangkan hal itu sendiri wajib isim nakirah.</div>
+      <p>Kata kunci dalam bait di atas adalah <span class="arabic">مُفَسِّرًا لِمُبْهَمِ الْهَيْآتِ</span>
+      — "menjelaskan keadaan yang masih samar". Tanpa kehadiran hal, kalimat
+      <span class="arabic">جَاءَ زَيْدٌ</span> ("Zaid telah datang") sudah sempurna secara
+      gramatikal, namun keadaan Zaid saat datang masih "samar" — apakah berjalan kaki,
+      berkendara, atau tergesa-gesa? Hal hadir justru untuk mengisi kesamaran tersebut. Inilah
+      yang membedakan hal dari na'at (sifat): na'at menyifati <em>zat</em> isim (misalnya
+      "siswa yang rajin"), sedangkan hal menyifati <em>keadaan</em> pelaku pada momen tertentu
+      saja — begitu momen itu berlalu, sifat "hal"-nya pun tidak lagi melekat pada isim tersebut.</p>
+    </section>
+
+    <section class="bab" id="tamyiz">
+      <div class="kicker">Bab 09</div>
+      <h2>Tamyiz<span class="arabic">التَّمْيِيْزُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          تَعْرِيْفُهُ اسْمٌ ذُو انْتِصَابٍ فَسَّرَا &nbsp; لِنِسْبَةٍ أَوْ ذَاتِ جِنْسٍ قَدَّرَا
+        </p>
+        <p class="terj">"Definisinya adalah: isim yang dinashabkan, yang menjelaskan suatu
+        penyandaran (nisbat) atau menjelaskan dzat/jenis yang masih samar (yang telah
+        diperkirakan sebelumnya)."</p>
+      </div>
+      <p>Tamyiz adalah isim nakirah manshub yang berfungsi menjelaskan/menghilangkan kesamaran
+      (ibham) dari zat atau bilangan yang disebutkan sebelumnya.</p>
+      <table class="contoh">
+        <tr><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td class="arb">اشْتَرَيْتُ عِشْرِيْنَ كِتَابًا</td><td>Aku membeli dua puluh (buah) kitab</td></tr>
+        <tr><td class="arb">طَابَ مُحَمَّدٌ نَفْسًا</td><td>Muhammad baik (dari sisi) jiwanya</td></tr>
+      </table>
+      <p>Bait di atas menyebut dua jenis tamyiz: tamyiz <em>dzat</em> (yang menjelaskan hitungan
+      atau ukuran suatu benda, seperti <span class="arabic">عِشْرِيْنَ كِتَابًا</span> — dua
+      puluh, dari jenis apa? "kitab") dan tamyiz <em>nisbat</em> (yang menjelaskan penyandaran
+      makna kalimat, seperti <span class="arabic">طَابَ مُحَمَّدٌ نَفْسًا</span> — baik dari sisi
+      mana? "jiwanya"). Kemiripan tamyiz dengan hal sering membuat santri tertukar: keduanya
+      sama-sama nakirah dan manshub. Bedanya, hal menjawab "bagaimana keadaannya" (bersifat
+      dinamis/berubah), sedangkan tamyiz menjawab "apa jenisnya/dari sisi mana" (bersifat
+      tetap, menjelaskan hakikat suatu dzat atau bilangan).</p>
+    </section>
+
+    <section class="bab" id="istitsna">
+      <div class="kicker">Bab 10</div>
+      <h2>Istitsna'<span class="arabic">الْاِسْتِثْنَاءُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          أَخْرِجْ بِهِ الْكَلَامَ مَا خَرَجْ &nbsp; مِنْ حُكْمِهِ وَكَانَ فِي اللَّفْظِ انْدَرَجْ
+        </p>
+        <p class="terj">"Keluarkanlah dengan huruf istitsna' itu, apa-apa yang keluar dari
+        hukum kalimat sebelumnya — padahal (secara lafal) ia tadinya termasuk di dalamnya."</p>
+      </div>
+      <p>Istitsna' adalah pengecualian suatu isim (mustatsna) dari hukum yang berlaku pada
+      kalimat sebelumnya, menggunakan salah satu huruf istitsna, yang paling utama adalah
+      <span class="arabic">إِلَّا</span>.</p>
+      <table class="contoh">
+        <tr><th>Bentuk Kalimat</th><th>Contoh</th><th>Hukum Mustatsna</th></tr>
+        <tr><td>Tam Mujab (utuh, positif)</td><td class="arb">حَضَرَ الطُّلَابُ إِلَّا زَيْدًا</td><td>Wajib nashab</td></tr>
+        <tr><td>Tam Manfi (utuh, negatif)</td><td class="arb">مَا حَضَرَ الطُّلَابُ إِلَّا زَيْدٌ / زَيْدًا</td><td>Boleh nashab atau mengikuti badal</td></tr>
+        <tr><td>Naqish (tidak utuh)</td><td class="arb">مَا حَضَرَ إِلَّا زَيْدٌ</td><td>Mengikuti kedudukan seharusnya (di sini fa'il, rafa')</td></tr>
+      </table>
+      <p>Definisi dalam bait ini menegaskan hakikat istitsna': secara lafal, mustatsna
+      (misalnya <span class="arabic">زَيْدًا</span>) sebenarnya termasuk dalam cakupan
+      <span class="arabic">الطُّلَّابُ</span> ("para siswa"), namun huruf
+      <span class="arabic">إِلَّا</span> "mengeluarkannya" dari hukum kehadiran tersebut.
+      Tiga pola hukum di atas (tam mujab, tam manfi, naqish) sesungguhnya mengikuti satu
+      prinsip sederhana: makin "lengkap" susunan kalimatnya (ada mustatsna minhu yang disebut
+      dan kalimatnya positif), makin kuat pula kewajiban nashab pada mustatsna-nya. Sebaliknya,
+      pada kalimat naqish — di mana mustatsna minhu-nya tidak disebutkan sama sekali —
+      mustatsna berperan penuh menggantikan kedudukan yang seharusnya, sebagaimana kaidah
+      populer: <em>"ma ba'da illa, i'rabuhu ka ma qablaha"</em> (kedudukan kata setelah illa
+      mengikuti kedudukan kata yang seharusnya berada sebelumnya).</p>
+    </section>
+
+    <section class="bab" id="la-nafiyah">
+      <div class="kicker">Bab 11</div>
+      <h2>La Nafiyah lil Jinsi<span class="arabic">لَا النَّافِيَةُ لِلْجِنْسِ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَحُكْمُ لَا كَحُكْمِ إِنَّ فِي الْعَمَلْ &nbsp; فَانْصِبْ بِهَا مُنَكَّرًا بِهَا اتَّصَلْ
+        </p>
+        <p class="terj">"Hukum (amal) 'laa' seperti hukum (amal) 'inna'. Maka nashabkanlah dengan
+        'laa' itu, isim nakirah yang bersambung langsung dengannya."</p>
+      </div>
+      <p><span class="arabic">لَا</span> yang meniadakan seluruh jenis isim nakirah setelahnya
+      secara mutlak (mirip fungsi <span class="arabic">إِنَّ</span>: menashabkan isimnya, merafa'kan khabarnya).</p>
+      <table class="contoh">
+        <tr><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td class="arb">لَا طَالِبَ عِلْمٍ مَذْمُوْمٌ</td><td>Tidak ada (sama sekali) penuntut ilmu yang tercela</td></tr>
+        <tr><td class="arb">لَا إِلَهَ إِلَّا اللهُ</td><td>Tidak ada Tuhan (yang berhak disembah) selain Allah</td></tr>
+      </table>
+      <p>Bait ini menyamakan amal <span class="arabic">لَا</span> nafiyah lil jinsi dengan amal
+      <span class="arabic">إِنَّ</span> — keduanya menashabkan isim dan merafa'kan khabar. Namun
+      syaratnya ketat: isim setelah <span class="arabic">لَا</span> harus <em>nakirah</em> dan
+      <em>langsung bersambung</em> dengannya tanpa jeda (tidak dipisah huruf lain), serta
+      maknanya harus meniadakan <em>seluruh</em> jenis (bukan hanya satu individu). Perhatikan
+      kalimat syahadat <span class="arabic">لَا إِلَهَ إِلَّا اللهُ</span> — di sinilah letak
+      keindahan kaidah nahwu bertemu akidah: peniadaan yang bersifat total dan mutlak (meniadakan
+      seluruh jenis "sesembahan yang berhak disembah") hanya bisa diungkapkan secara gramatikal
+      setepat ini melalui <span class="arabic">لَا</span> nafiyah lil jinsi — berbeda dengan
+      <span class="arabic">لَا</span> biasa yang hanya menafikan satu peristiwa saja.</p>
+    </section>
+
+    <section class="bab" id="munada">
+      <div class="kicker">Bab 12</div>
+      <h2>Munada<span class="arabic">الْمُنَادَى</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          خَمْسٌ تُنَادَى وَهْيَ مُفْرَدٌ عَلَمْ &nbsp; وَمُفْرَدٌ نَكِرَةً قَصْدًا يُؤَمّ<br>
+          وَمُفْرَدٌ نَكِرَةً سِوَاهُ &nbsp; كَذَا الْمُضَافُ وَالَّذِي ضَاهَاهُ
+        </p>
+        <p class="terj">"Ada lima jenis isim yang dapat diseru (munada): (1) mufrad 'alam
+        (nama tunggal), (2) mufrad nakirah maqshudah (nakirah yang dituju secara tertentu),
+        (3) mufrad nakirah ghairu maqshudah (nakirah yang tidak tertentu), (4) mudhaf, dan
+        (5) syibhul mudhaf (yang menyerupai mudhaf)."</p>
+      </div>
+      <p>Munada adalah isim yang dipanggil/diseru dengan salah satu huruf nida'
+      (<span class="arabic">يَا، أَ، أَيْ</span>, dsb). Hukumnya bervariasi tergantung jenisnya:</p>
+      <table class="contoh">
+        <tr><th>Jenis Munada</th><th>Contoh</th><th>Hukum</th></tr>
+        <tr><td>Mufrad 'Alam (nama tunggal)</td><td class="arb">يَا مُحَمَّدُ</td><td>Mabni dhammah, di posisi nashab</td></tr>
+        <tr><td>Nakirah Maqshudah</td><td class="arb">يَا رَجُلُ</td><td>Mabni dhammah</td></tr>
+        <tr><td>Mudhaf</td><td class="arb">يَا عَبْدَ اللهِ</td><td>Manshub secara lafazh</td></tr>
+      </table>
+      <p>Kelima jenis munada dalam bait ini terbagi menjadi dua kelompok besar sesuai hukumnya:
+      dua yang pertama (mufrad 'alam dan nakirah maqshudah) dihukumi <em>mabni</em> di atas
+      harakat rafa'-nya — meski kedudukannya tetap manshub secara mahal — sedangkan tiga sisanya
+      (nakirah ghairu maqshudah, mudhaf, dan syibhul mudhaf) dihukumi <em>manshub secara lafazh</em>
+      seperti isim mu'rab pada umumnya. Perbedaan mendasarnya terletak pada "ketertentuan"
+      sasaran panggilan: memanggil nama (<span class="arabic">يَا مُحَمَّدُ</span>) atau
+      memanggil seseorang yang sudah jelas di hadapan
+      (<span class="arabic">يَا رَجُلُ</span>) bersifat spesifik dan tertentu, sehingga
+      dimabnikan; sedangkan memanggil sesuatu yang masih umum, atau sudah bersandar (idhafah)
+      kepada isim lain, tetap membutuhkan tanda i'rab yang tampak.</p>
+    </section>
+
+    <section class="bab" id="tawabi">
+      <div class="kicker">Bab 13</div>
+      <h2>Tawabi'<span class="arabic">التَّوَابِعُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَقَدْ مَضَتْ أَحْكَامُ كُلِّ تَابِعِ &nbsp; مَبْسُوْطَةً فِي الْأَرْبَعِ التَّوَابِعِ
+        </p>
+        <p class="terj">"Sungguh telah lewat penjelasan hukum setiap kata pengikut (tabi'),
+        terurai secara luas dalam empat macam tawabi'."</p>
+      </div>
+      <p>Tawabi' adalah kata-kata yang i'rabnya mengikuti kata sebelumnya (man'ut). Ada empat macam:</p>
+      <ul class="rincian">
+        <li><strong>Na'at (sifat)</strong> — <span class="arabic">جَاءَ الطَّالِبُ الْمُجْتَهِدُ</span> — "telah datang siswa yang rajin"</li>
+        <li><strong>'Athaf (kata sambung)</strong> — <span class="arabic">جَاءَ زَيْدٌ وَعَمْرٌو</span> — "Zaid dan Amr telah datang"</li>
+        <li><strong>Taukid (penegas)</strong> — <span class="arabic">جَاءَ الْأَمِيْرُ نَفْسُهُ</span> — "sang amir sendiri telah datang"</li>
+        <li><strong>Badal (pengganti)</strong> — <span class="arabic">جَاءَ أَخُوْكَ خَالِدٌ</span> — "saudaramu, yaitu Khalid, telah datang"</li>
+      </ul>
+      <div class="catatan"><strong>Kaidah emas Tawabi':</strong> keempatnya selalu mengikuti
+      i'rab (rafa', nashab, atau khafadh) dari kata yang diikuti — inilah makna "tabi'" (pengikut).</div>
+      <p>Bait penutup di atas — yang dalam Matan Imrithi asli berfungsi sebagai kesimpulan
+      setelah keempat bab tawabi' dibahas satu per satu secara panjang lebar — mengingatkan
+      santri bahwa keempat jenis tawabi' ini, walau berbeda fungsi maknanya, berbagi satu
+      "prinsip i'rab" yang sama: tidak pernah beramal sendiri, melainkan sepenuhnya
+      "menumpang" pada i'rab kata sebelumnya. Karena itulah, untuk mengi'rab tawabi', langkah
+      pertama yang wajib dilakukan santri bukanlah mencari 'amil baru, melainkan menoleh ke
+      kata sebelumnya (man'ut/matbu') dan menyalin persis kedudukan i'rabnya.</p>
+    </section>
+
+    <section class="bab" id="majrurat">
+      <div class="kicker">Bab 14</div>
+      <h2>Isim-Isim yang Dikhafadhkan<span class="arabic">مَخْفُوْضَاتُ الْأَسْمَاءِ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          خَافِضُهَا ثَلَاثَةٌ أَنْوَاعُ &nbsp; الْحَرْفُ وَالْمُضَافُ وَالْإِتْبَاعُ
+        </p>
+        <p class="terj">"Yang men-jer-kan isim itu ada tiga macam: (1) huruf jar, (2) idhafah
+        (penyandaran/mudhaf), dan (3) mengikuti (isim yang mengikuti isim lain yang sudah
+        majrur)."</p>
+      </div>
+      <p>Isim di-khafadh (majrur) melalui tiga sebab: huruf jar, idhafah (penyandaran), atau
+      mengikuti (tabi') kata yang sudah majrur.</p>
+
+      <p style="margin-top:18px;"><strong>1) Sebab huruf jar</strong> — huruf jar yang paling
+      sering digunakan: <span class="arabic">مِنْ، إِلَى، عَنْ، عَلَى، فِي، رُبَّ، الْبَاءُ، الْكَافُ، اللَّامُ</span>,
+      serta huruf qasam (sumpah) <span class="arabic">وَ، بِ، تَ</span>.</p>
+      <table class="contoh">
+        <tr><th>Huruf Jar</th><th>Contoh</th><th>Terjemah</th></tr>
+        <tr><td class="arb">مِنْ</td><td class="arb">خَرَجْتُ مِنَ الْبَيْتِ</td><td>Aku keluar dari rumah</td></tr>
+        <tr><td class="arb">إِلَى</td><td class="arb">ذَهَبْتُ إِلَى الْمَدْرَسَةِ</td><td>Aku pergi ke sekolah</td></tr>
+        <tr><td class="arb">فِي</td><td class="arb">الْكِتَابُ فِي الْحَقِيْبَةِ</td><td>Buku itu di dalam tas</td></tr>
+      </table>
+
+      <p style="margin-top:18px;"><strong>2) Sebab idhafah</strong> — penyandaran satu isim
+      (mudhaf) kepada isim lain (mudhaf ilaih), setara dengan makna "milik / kepunyaan".</p>
+      <table class="contoh">
+        <tr><th>Mudhaf</th><th>Mudhaf Ilaih</th><th>Gabungan &amp; Terjemah</th></tr>
+        <tr><td class="arb">كِتَابُ</td><td class="arb">الطَّالِبِ</td><td class="arb">كِتَابُ الطَّالِبِ — "buku milik siswa"</td></tr>
+        <tr><td class="arb">بَابُ</td><td class="arb">الْمَسْجِدِ</td><td class="arb">بَابُ الْمَسْجِدِ — "pintu masjid"</td></tr>
+      </table>
+      <div class="catatan"><strong>Catatan penting:</strong> Mudhaf tidak boleh ber-<em>tanwin</em>,
+      tidak boleh ber-<em>alif lam</em>, dan tidak boleh didahului huruf jar — karena kedudukan
+      ke-ma'rifat-annya sudah "dipinjam" dari mudhaf ilaih.</div>
+      <p>Sebab ketiga — yaitu "mengikuti" (tabi') — sesungguhnya bukan sebab yang berdiri
+      sendiri, melainkan konsekuensi dari bab Tawabi' yang telah dibahas sebelumnya: bila
+      sebuah isim majrur diikuti oleh na'at, 'athaf, taukid, atau badal, maka tawabi' tersebut
+      otomatis ikut majrur pula. Dengan demikian, tiga sebab jer dalam bait ini sesungguhnya
+      saling melengkapi seluruh peta kemungkinan isim menjadi majrur dalam bahasa Arab —
+      sehingga santri yang telah menguasai bab ini idealnya sudah mampu menjelaskan alasan
+      ke-jer-an hampir setiap isim majrur yang ia temui dalam kitab kuning manapun.</p>
+    </section>
+
+    <section class="bab" id="kana">
+      <div class="kicker">Bab 15</div>
+      <h2>Kana wa Akhawatuha<span class="arabic">كَانَ وَأَخَوَاتُهَا</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          اِرْفَعْ بِكَانَ الْمُبْتَدَا اسْمًا وَالْخَبَرْ &nbsp; بِهَا انْصِبَنْ كَكَانَ زَيْدٌ ذَا بَصَرْ
+        </p>
+        <p class="terj">"Rafa'kanlah dengan 'kaana', mubtada' menjadi isimnya, dan khabarnya
+        nashabkanlah dengannya — seperti contoh: <em>kaana Zaidun dzaa bashar</em> (Zaid
+        dahulu memiliki penglihatan/wawasan)."</p>
+      </div>
+      <p><span class="arabic">كَانَ</span> dan saudara-saudaranya adalah fi'il-fi'il yang masuk
+      pada mubtada'-khabar (jumlah ismiyyah), me-rafa'-kan isimnya (dulu mubtada') dan
+      me-nashab-kan khabarnya (dulu khabar).</p>
+      <ul class="rincian">
+        <li>Saudara-saudara Kana: <span class="arabic">صَارَ، أَصْبَحَ، أَمْسَى، أَضْحَى، ظَلَّ، بَاتَ، لَيْسَ، مَا زَالَ، مَا دَامَ</span>, dst.</li>
+      </ul>
+      <table class="contoh">
+        <tr><th>Jumlah Ismiyyah</th><th>Setelah Masuk Kana</th><th>Perubahan</th></tr>
+        <tr><td class="arb">الْجَوُّ بَارِدٌ</td><td class="arb">كَانَ الْجَوُّ بَارِدًا</td><td>Khabar "بَارِدٌ" berubah dari rafa' menjadi nashab "بَارِدًا"</td></tr>
+        <tr><td class="arb">الطَّالِبُ مُجْتَهِدٌ</td><td class="arb">أَصْبَحَ الطَّالِبُ مُجْتَهِدًا</td><td>"Siswa itu menjadi rajin (di waktu pagi)"</td></tr>
+      </table>
+      <p>Penamaan "isim Kana" dan "khabar Kana" pada bait ini menunjukkan cara pandang khas
+      nahwu: begitu <span class="arabic">كَانَ</span> masuk ke jumlah ismiyyah, mubtada' dan
+      khabar tidak lagi disebut demikian, melainkan berganti nama menjadi isim dan khabarnya
+      Kana — meski peran maknawinya (subjek dan predikat) tidak berubah. Bait ini juga menjadi
+      bukti bahwa Kana bukan sekadar "kata bantu waktu lampau" seperti dipahami secara awam,
+      melainkan memiliki 'amal (fungsi tata bahasa) yang sangat spesifik: merafa'kan satu isim
+      dan menashabkan isim lainnya sekaligus dalam satu jumlah — sesuatu yang tidak dilakukan
+      oleh fi'il biasa.</p>
+    </section>
+
+    <section class="bab" id="inna">
+      <div class="kicker">Bab 16</div>
+      <h2>Inna wa Akhawatuha<span class="arabic">إِنَّ وَأَخَوَاتُهَا</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          تَنْصِبُ إِنَّ الْمُبْتَدَا اسْمًا وَالْخَبَرْ &nbsp; تَرْفَعُهُ كَإِنَّ زَيْدًا ذُوْ نَظَرْ
+        </p>
+        <p class="terj">"'Inna' menashabkan mubtada' menjadi isimnya, dan merafa'kan khabarnya —
+        seperti contoh: <em>inna Zaidan dzuu nazhar</em> (sesungguhnya Zaid memiliki wawasan)."</p>
+      </div>
+      <p>Kebalikan dari Kana: <span class="arabic">إِنَّ</span> dan saudara-saudaranya me-nashab-kan
+      isimnya (dulu mubtada') dan me-rafa'-kan khabarnya (tetap seperti semula).</p>
+      <ul class="rincian">
+        <li>Saudara-saudara Inna: <span class="arabic">أَنَّ، لَكِنَّ، كَأَنَّ، لَيْتَ، لَعَلَّ</span> —
+        masing-masing membawa makna berbeda: taukid, istidrak, tasybih, tamanni, dan tarajji.</li>
+      </ul>
+      <table class="contoh">
+        <tr><th>Huruf</th><th>Makna</th><th>Contoh</th></tr>
+        <tr><td class="arb">إِنَّ</td><td>Penegasan</td><td class="arb">إِنَّ اللهَ غَفُوْرٌ</td></tr>
+        <tr><td class="arb">لَيْتَ</td><td>Pengandaian</td><td class="arb">لَيْتَ الشَّبَابَ يَعُوْدُ</td></tr>
+        <tr><td class="arb">لَعَلَّ</td><td>Pengharapan</td><td class="arb">لَعَلَّ الْفَرَجَ قَرِيْبٌ</td></tr>
+      </table>
+      <p>Perbandingan langsung antara bait bab Kana dan bait bab Inna di atas memperlihatkan
+      pola cermin yang elegan dalam nazham Imrithi: keduanya memakai kata-kata yang nyaris
+      sama ("<em>zaidun/zaidan dzuu nazhar/bashar</em>") justru untuk menekankan bahwa 'amal
+      kedua kelompok huruf/fi'il ini saling berkebalikan. Kana merafa'kan isim & menashabkan
+      khabar; Inna menashabkan isim & merafa'kan khabar. Menghafal keduanya secara berpasangan
+      seperti ini — bukan terpisah — sangat dianjurkan oleh para masyayikh pesantren, karena
+      justru dari perbandingan itulah santri tidak mudah tertukar saat mempraktikkannya.</p>
+    </section>
+
+    <section class="bab" id="irab-kalimat">
+      <div class="kicker">Praktik</div>
+      <h2>Praktik I'rab Kalimat<span class="arabic">تَطْبِيْقُ الْإِعْرَابِ</span></h2>
+      <p>Menggabungkan seluruh kaidah di atas dalam satu contoh kalimat lengkap:</p>
+      <div class="nazham">
+        <p class="arabic">إِنَّ الطَّالِبَ الْمُجْتَهِدَ قَرَأَ الْكِتَابَ قِرَاءَةً سَرِيْعَةً فِي الْمَكْتَبَةِ صَبَاحًا</p>
+      </div>
+      <table class="contoh">
+        <tr><th>Kata</th><th>Kedudukan</th><th>Alasan Singkat</th></tr>
+        <tr><td class="arb">إِنَّ</td><td>Huruf nashab-rafa'</td><td>Menashabkan isim, merafa'kan khabar</td></tr>
+        <tr><td class="arb">الطَّالِبَ</td><td>Isim Inna, manshub</td><td>Tanda nashab: fathah</td></tr>
+        <tr><td class="arb">الْمُجْتَهِدَ</td><td>Na'at, manshub</td><td>Mengikuti man'ut-nya (الطَّالِبَ)</td></tr>
+        <tr><td class="arb">قَرَأَ الْكِتَابَ</td><td>Jumlah fi'liyah = khabar Inna</td><td>Fi'il + maf'ul bih, marfu' letaknya sebagai khabar</td></tr>
+        <tr><td class="arb">قِرَاءَةً سَرِيْعَةً</td><td>Maf'ul Muthlaq + Na'atnya</td><td>Manshub, menegaskan jenis bacaan</td></tr>
+        <tr><td class="arb">فِي الْمَكْتَبَةِ</td><td>Jar-Majrur (zharaf makan)</td><td>مَكْتَبَةِ majrur karena huruf jar فِي</td></tr>
+        <tr><td class="arb">صَبَاحًا</td><td>Zharaf zaman, manshub</td><td>Menerangkan waktu terjadinya pekerjaan</td></tr>
+      </table>
+    </section>
+
+    <section class="bab" id="ghair-munsharif">
+      <div class="kicker">Bab 17</div>
+      <h2>Isim Ghair Munsharif<span class="arabic">الاِسْمُ الَّذِيْ لَا يَنْصَرِفُ</span></h2>
+      <div class="nazham">
+        <p class="arabic">
+          وَاخْفِضْ بِفَتْحٍ كُلَّ مَا لَمْ يَنْصَرِفْ &nbsp; مِمَّا بِوَصْفِ الْفِعْلِ صَارَ يَتَّصِفْ<br>
+          بِأَنْ يَحُوْزَ الِاسْمُ عِلَّتَيْنِ &nbsp; أَوْ عِلَّةً تُغْنِي عَنِ اثْنَتَيْنِ
+        </p>
+        <p class="terj">"Jer-kanlah dengan fathah setiap isim yang tidak munsharif — yaitu isim
+        yang telah tersifati dengan sifat menyerupai fi'il, disebabkan isim tersebut memiliki
+        dua 'illat (sebab) sekaligus, atau satu 'illat yang mencukupi (senilai) dua 'illat."</p>
+      </div>
+      <p>Isim ghair munsharif adalah isim mu'rab yang tidak menerima <em>tanwin</em> dan tidak
+      pula ber-<em>kasrah</em> ketika majrur — sebagai gantinya ia di-jar-kan dengan
+      <em>fathah</em>. Ini terjadi karena isim tersebut memiliki dua 'illat (sebab) sekaligus,
+      atau satu 'illat yang menyerupai dua 'illat.</p>
+      <ul class="rincian">
+        <li><strong>'Alamiyyah + Ta'nits</strong> — nama perempuan/kota: <span class="arabic">فَاطِمَةُ، مَكَّةُ</span></li>
+        <li><strong>'Alamiyyah + Wazan Fi'il</strong> — nama menyerupai wazan fi'il: <span class="arabic">أَحْمَدُ، يَزِيْدُ</span></li>
+        <li><strong>'Alamiyyah + 'Ujmah</strong> — nama non-Arab (lebih dari 3 huruf): <span class="arabic">إِبْرَاهِيْمُ، إِسْمَاعِيْلُ</span></li>
+        <li><strong>Shighah Muntahal Jumu'</strong> — pola jamak tertentu: <span class="arabic">مَسَاجِدُ، مَدَارِسُ</span></li>
+        <li><strong>Wazan Fi'il murni</strong> tanpa 'alamiyyah: <span class="arabic">أَحْسَنُ، أَفْضَلُ</span> (isim tafdhil)</li>
+      </ul>
+      <table class="contoh">
+        <tr><th>Kedudukan</th><th>Munsharif (biasa)</th><th>Ghair Munsharif</th></tr>
+        <tr><td>Rafa'</td><td class="arb">جَاءَ مُحَمَّدٌ</td><td class="arb">جَاءَ إِبْرَاهِيْمُ</td></tr>
+        <tr><td>Nashab</td><td class="arb">رَأَيْتُ مُحَمَّدًا</td><td class="arb">رَأَيْتُ إِبْرَاهِيْمَ</td></tr>
+        <tr><td>Khafadh</td><td class="arb">مَرَرْتُ بِمُحَمَّدٍ (kasrah + tanwin)</td><td class="arb">مَرَرْتُ بِإِبْرَاهِيْمَ (fathah, tanpa tanwin)</td></tr>
+      </table>
+      <div class="catatan"><strong>Catatan:</strong> Jika isim ghair munsharif kemasukan
+      <em>alif-lam</em> atau menjadi mudhaf, ia kembali di-<em>kasrah</em>-kan seperti isim biasa.
+      Contoh: <span class="arabic">مَرَرْتُ بِالْمَسَاجِدِ</span> — bukan بِالْمَسَاجِدَ.</div>
+      <p>Ungkapan "menyerupai sifat fi'il" dalam bait di atas adalah kunci memahami mengapa
+      isim ghair munsharif kehilangan hak tanwinnya. Dalam nahwu, tanwin adalah "tanda
+      kesempurnaan" yang khas dimiliki isim — sementara fi'il tidak pernah bertanwin. Ketika
+      sebuah isim memiliki dua sifat kefi'ilan sekaligus (misalnya 'alamiyyah bertemu wazan
+      fi'il, seperti pada nama <span class="arabic">أَحْمَدُ</span> yang berwazan
+      <span class="arabic">أَفْعَلُ</span>), isim tersebut dianggap "terlalu menyerupai fi'il"
+      sehingga sebagian hak ke-isim-annya (tanwin) dicabut sebagai konsekuensinya. Prinsip
+      "isim yang menyerupai fi'il kehilangan sebagian sifat isim" ini adalah salah satu asas
+      besar dalam ilmu nahwu yang akan terus dijumpai santri hingga jenjang Alfiyah.</p>
+    </section>
+
+    <section class="bab" id="isytighal">
+      <div class="kicker">Bab 18</div>
+      <h2>Bab Isytighal<span class="arabic">بَابُ الاِشْتِغَالِ</span></h2>
+      <p>Isytighal terjadi ketika sebuah isim disebutkan di awal kalimat, kemudian setelahnya
+      ada fi'il yang "sibuk" beramal pada dhamir yang kembali kepada isim tersebut — bukan
+      beramal langsung pada isim itu sendiri. Akibatnya isim di awal boleh dii'rab dua cara.</p>
+      <div class="nazham">
+        <p class="arabic">زَيْدًا ضَرَبْتُهُ</p>
+        <p class="terj">"Zaid, aku memukulnya" — fi'il ضَرَبْتُ tidak langsung mengenai زَيْدًا,
+        melainkan mengenai dhamir هُ yang kembali kepada Zaid.</p>
+      </div>
+      <table class="contoh">
+        <tr><th>I'rab</th><th>Taqdir (perkiraan)</th><th>Penjelasan</th></tr>
+        <tr><td>Nashab: <span class="arb">زَيْدًا</span></td><td class="arb">(ضَرَبْتُ) زَيْدًا ضَرَبْتُهُ</td>
+          <td>Dianggap sebagai maf'ul bih dari fi'il yang tersimpan/diperkirakan, sama jenisnya dengan fi'il yang tampak</td></tr>
+        <tr><td>Rafa': <span class="arb">زَيْدٌ</span></td><td class="arb">زَيْدٌ ضَرَبْتُهُ</td>
+          <td>Dianggap sebagai mubtada', dan جملة ضَرَبْتُهُ menjadi khabarnya</td></tr>
+      </table>
+      <div class="catatan"><strong>Kaidah:</strong> Bila sebelum isim terdapat huruf yang khusus
+      menuntut fi'il (seperti huruf syarat atau istifham), maka nashab menjadi <em>wajib</em>.
+      Bila tidak ada penuntut khusus, nashab dan rafa' sama-sama <em>boleh</em> (jawaz).</div>
+      <p>Bab isytighal sering dianggap salah satu bab paling rumit dalam nahwu tingkat lanjut,
+      karena satu kalimat bisa memiliki dua i'rab yang sama-sama benar tergantung sudut pandang
+      taqdir (perkiraan) 'amil yang digunakan. Kuncinya adalah memahami bahwa "kesibukan"
+      (isytighal) fi'il pada dhamir-lah yang menjadi sebab munculnya dua kemungkinan ini —
+      berbeda dari kalimat biasa di mana fi'il langsung beramal pada isim yang tampak di
+      hadapannya. Menguasai bab ini melatih santri untuk berpikir lebih fleksibel dalam
+      mengi'rab, sekaligus menjadi jembatan menuju pembahasan taqdir 'amil yang lebih kompleks
+      di kitab Alfiyah Ibnu Malik kelak.</p>
+    </section>
+
+    <section class="bab" id="khatimah">
+      <div class="kicker">Penutup</div>
+      <h2>Khatimah<span class="arabic">خَاتِمَةُ النَّظْمِ</span></h2>
+      <p>Sebagaimana dibuka dengan hamdalah dan shalawat, Imam al-'Imrithi menutup nazhamnya
+      dengan pernyataan rampungnya karya ini, disertai tawadhu' menyebut dirinya sebagai
+      "si fakir yang penuh kekurangan", lalu kembali memuji Allah dan bershalawat kepada Nabi:</p>
+      <div class="nazham">
+        <p class="arabic">
+          قَدْ تَمَّ نَظْمُ هَذِهِ (الْمُقَدِّمَهْ) &nbsp; فِيْ رُبْعِ أَلْفٍ كَافِيًا مَنْ أَحْكَمَهْ<br>
+          نَظْمُ الْفَقِيْرِ الشَّرَفِ الْعِمْرِيْطِيِّ &nbsp; ذِيْ الْعَجْزِ وَالتَّقْصِيْرِ وَالتَّفْرِيْطِ<br>
+          وَالْحَمْدُ لِلَّهِ مَدَى الدَّوَامِ &nbsp; عَلَى جَزِيْلِ الْفَضْلِ وَالْإِنْعَامِ<br>
+          وَأَفْضَلُ الصَّلَاةِ وَالتَّسْلِيْمِ &nbsp; عَلَى النَّبِيِّ الْمُصْطَفَى الْكَرِيْمِ<br>
+          مُحَمَّدٍ وَصَحْبِهِ وَالْآلِ &nbsp; أَهْلِ التُّقَى وَالْعِلْمِ وَالْكَمَالِ
+        </p>
+        <p class="terj">"Sungguh telah sempurna nazham muqaddimah ini, mencukupi bagi siapa yang
+        mengokohkannya — susunan (nazham) dari si fakir, Syaraf al-'Imrithi, yang penuh
+        kelemahan, kekurangan, dan keteledoran. Segala puji bagi Allah sepanjang masa atas
+        limpahan karunia dan nikmat-Nya. Dan sebaik-baik shalawat serta salam tercurah kepada
+        Nabi yang mulia lagi terpilih, Muhammad, beserta sahabat dan keluarganya, ahli takwa,
+        ilmu, dan kesempurnaan."</p>
+      </div>
+      <p>Dengan berakhirnya nazham Al-'Imrithi, seorang santri diharapkan telah menguasai
+      kaidah-kaidah nahwu secara lebih menyeluruh dibanding saat baru menamatkan Jurumiyah —
+      mulai dari i'rab dasar, af'alul khomsah, seluruh isim manshub dan majrur, Kana-Inna
+      beserta saudara-saudaranya, hingga bab-bab pelik seperti ghair munsharif dan isytighal.
+      Jenjang berikutnya yang lazim ditempuh di pesantren adalah kitab
+      <strong>Alfiyyah Ibnu Malik</strong>, yang memuat lebih dari seribu bait dan menjadi
+      rujukan utama nahwu-shorof tingkat lanjut.</p>
+      <div class="catatan"><strong>Adab menuntut ilmu nahwu:</strong> para ulama mengingatkan
+      agar ilmu alat seperti nahwu tidak dijadikan tujuan akhir, melainkan sarana untuk memahami
+      Al-Qur'an, hadits, dan turats keilmuan Islam dengan benar.</div>
+    </section>
+
+    <div class="divider">۞ ۞ ۞</div>
+
+    <section class="bab" id="latihan">
+      <div class="kicker">Latihan</div>
+      <h2>Latihan Mandiri<span class="arabic">تَمْرِيْنَاتٌ</span></h2>
+      <p>Coba i'rab-kan kata yang bergaris bawah secara mandiri sebelum membuka jawaban.</p>
+
+      <details class="latihan">
+        <summary>1. Tentukan kedudukan kata bercetak tebal: <span class="arabic">أَكَلْتُ التُّفَّاحَةَ <strong>كَامِلَةً</strong></span></summary>
+        <div class="jawaban"><strong>Jawaban:</strong> <span class="arabic">كَامِلَةً</span> berkedudukan
+        sebagai <em>Hal</em>, manshub, menerangkan keadaan tuffahah (buah apel) saat dimakan — dalam
+        keadaan utuh/lengkap.</div>
+      </details>
+
+      <details class="latihan">
+        <summary>2. Tentukan kedudukan: <span class="arabic">قَرَأْتُ الْكِتَابَ <strong>قِرَاءَةً</strong> سَرِيْعَةً</span></summary>
+        <div class="jawaban"><strong>Jawaban:</strong> <span class="arabic">قِرَاءَةً</span> adalah
+        <em>Maf'ul Muthlaq</em>, manshub, karena berupa masdar dari fi'il قَرَأْتُ yang berfungsi menegaskan.</div>
+      </details>
+
+      <details class="latihan">
+        <summary>3. Tentukan kedudukan: <span class="arabic">حَضَرَ الطُّلَّابُ <strong>إِلَّا خَالِدًا</strong></span></summary>
+        <div class="jawaban"><strong>Jawaban:</strong> <span class="arabic">خَالِدًا</span> adalah
+        <em>Mustatsna</em> dalam kalimat istitsna' tam mujab, wajib manshub.</div>
+      </details>
+
+      <details class="latihan">
+        <summary>4. Af'alul khomsah manakah yang benar untuk "kalian berdua tidak akan menulis"?</summary>
+        <div class="jawaban"><strong>Jawaban:</strong> <span class="arabic">لَنْ تَكْتُبَا</span> —
+        nun dihilangkan karena dinashab oleh لَنْ, tanda nashabnya af'alul khomsah adalah hadzfun nun.</div>
+      </details>
+
+      <details class="latihan">
+        <summary>5. Ubah jumlah ismiyyah <span class="arabic">الطَّقْسُ جَمِيْلٌ</span> dengan memasukkan
+        <span class="arabic">كَانَ</span>, lalu tentukan kedudukan tiap kata!</summary>
+        <div class="jawaban"><strong>Jawaban:</strong> <span class="arabic">كَانَ الطَّقْسُ جَمِيْلًا</span> —
+        الطَّقْسُ menjadi <em>isim Kana</em> (tetap rafa'), جَمِيْلًا menjadi <em>khabar Kana</em>
+        (berubah dari rafa' menjadi manshub, tanda fathah).</div>
+      </details>
+
+      <details class="latihan">
+        <summary>6. Tentukan kedudukan kata bercetak tebal: <span class="arabic">إِنَّ <strong>الْعِلْمَ</strong> نُوْرٌ</span></summary>
+        <div class="jawaban"><strong>Jawaban:</strong> <span class="arabic">الْعِلْمَ</span> adalah
+        <em>Isim Inna</em>, manshub dengan tanda fathah, karena masuknya huruf إِنَّ pada jumlah
+        ismiyyah menashabkan mubtada'nya.</div>
+      </details>
+
+      <details class="latihan">
+        <summary>7. Mengapa <span class="arabic">مَرَرْتُ بِإِبْرَاهِيْمَ</span> di-jar-kan dengan
+        <em>fathah</em>, bukan <em>kasrah</em> seperti biasa?</summary>
+        <div class="jawaban"><strong>Jawaban:</strong> Karena <span class="arabic">إِبْرَاهِيْمَ</span>
+        adalah isim ghair munsharif — memiliki dua 'illat sekaligus ('alamiyyah dan 'ujmah/keasingan
+        nama non-Arab lebih dari 3 huruf) — sehingga tidak menerima tanwin dan tanda jarnya
+        diganti menjadi fathah.</div>
+      </details>
+
+      <details class="latihan">
+        <summary>8. I'rab-kan dua kemungkinan untuk kata bercetak tebal: <span class="arabic"><strong>الْكِتَابَ</strong> قَرَأْتُهُ</span></summary>
+        <div class="jawaban"><strong>Jawaban:</strong> Ini termasuk <em>bab Isytighal</em>. Kata
+        <span class="arabic">الْكِتَابَ</span> boleh di-<em>nashab</em>-kan (taqdirnya: maf'ul bih
+        dari fi'il yang diperkirakan, sejenis dengan قَرَأْتُ) atau di-<em>rafa'</em>-kan menjadi
+        الْكِتَابُ (sebagai mubtada', dengan جملة قَرَأْتُهُ sebagai khabarnya) — keduanya sama-sama
+        boleh (jawaz) karena tidak ada huruf penuntut khusus sebelumnya.</div>
+      </details>
+    </section>
+
+    <div class="divider">۞ ۞ ۞</div>
+
+    <section class="bab" id="kuis">
+      <div class="kicker">Uji Pemahaman</div>
+      <h2>Kuis Interaktif<span class="arabic">اِخْتِبَارٌ تَفَاعُلِيٌّ</span></h2>
+      <p>Pilih satu jawaban untuk setiap soal, lalu klik <em>"Periksa Jawaban"</em> untuk melihat
+      skor dan penjelasan secara langsung.</p>
+
+      <div class="quiz-box" id="quiz-box">
+
+        <div class="quiz-q" data-answer="b">
+          <div class="qtext">1. Apa tanda rafa' dari af'alul khomsah?</div>
+          <div class="quiz-opts">
+            <label><input type="radio" name="q1" value="a"> Adanya dhammah</label>
+            <label><input type="radio" name="q1" value="b"> Tetapnya huruf nun (ثُبُوتُ النُّونِ)</label>
+            <label><input type="radio" name="q1" value="c"> Hilangnya huruf nun</label>
+            <label><input type="radio" name="q1" value="d"> Adanya tanwin</label>
+          </div>
+          <div class="quiz-expl">Tanda rafa' af'alul khomsah adalah <b>tetapnya nun</b>
+          (ثُبُوتُ النُّونِ), berbeda dari fi'il mudhari' biasa yang rafa'nya ditandai dhammah.</div>
+        </div>
+
+        <div class="quiz-q" data-answer="c">
+          <div class="qtext">2. <span class="arabic">ضَرَبْتُ ضَرْبًا</span> — kata
+          <span class="arabic">ضَرْبًا</span> berkedudukan sebagai apa?</div>
+          <div class="quiz-opts">
+            <label><input type="radio" name="q2" value="a"> Maf'ul bih</label>
+            <label><input type="radio" name="q2" value="b"> Hal</label>
+            <label><input type="radio" name="q2" value="c"> Maf'ul Muthlaq</label>
+            <label><input type="radio" name="q2" value="d"> Tamyiz</label>
+          </div>
+          <div class="quiz-expl">Karena berupa masdar sejenis dari fi'ilnya sendiri
+          (ضَرَبْتُ → ضَرْبًا) dan berfungsi menegaskan, kedudukannya adalah <b>Maf'ul Muthlaq</b>.</div>
+        </div>
+
+        <div class="quiz-q" data-answer="a">
+          <div class="qtext">3. Syarat isim yang menjadi <em>Hal</em> adalah...</div>
+          <div class="quiz-opts">
+            <label><input type="radio" name="q3" value="a"> Harus isim nakirah</label>
+            <label><input type="radio" name="q3" value="b"> Harus isim ma'rifat</label>
+            <label><input type="radio" name="q3" value="c"> Harus mabni</label>
+            <label><input type="radio" name="q3" value="d"> Harus mudhaf</label>
+          </div>
+          <div class="quiz-expl">Hal wajib berupa isim <b>nakirah</b>, sedangkan shahibul hal
+          (pemiliknya) wajib berupa isim ma'rifat — ini kebalikan dari na'at–man'ut.</div>
+        </div>
+
+        <div class="quiz-q" data-answer="d">
+          <div class="qtext">4. Manakah yang <u>bukan</u> saudara dari <span class="arabic">إِنَّ</span>?</div>
+          <div class="quiz-opts">
+            <label><input type="radio" name="q4" value="a"> لَيْتَ</label>
+            <label><input type="radio" name="q4" value="b"> لَعَلَّ</label>
+            <label><input type="radio" name="q4" value="c"> كَأَنَّ</label>
+            <label><input type="radio" name="q4" value="d"> أَصْبَحَ</label>
+          </div>
+          <div class="quiz-expl"><span class="arabic">أَصْبَحَ</span> adalah saudara dari
+          <b>كَانَ</b> (fi'il nashab-khabar), bukan saudara Inna (huruf nashab-isim).</div>
+        </div>
+
+        <div class="quiz-q" data-answer="b">
+          <div class="qtext">5. Mengapa isim ghair munsharif tidak menerima tanwin?</div>
+          <div class="quiz-opts">
+            <label><input type="radio" name="q5" value="a"> Karena isim mabni</label>
+            <label><input type="radio" name="q5" value="b"> Karena memiliki dua 'illat kecabangan dari fi'il/kata asing</label>
+            <label><input type="radio" name="q5" value="c"> Karena berupa isim jamak taksir biasa</label>
+            <label><input type="radio" name="q5" value="d"> Karena selalu menjadi mudhaf</label>
+          </div>
+          <div class="quiz-expl">Isim ghair munsharif memiliki dua 'illat sekaligus (misalnya
+          'alamiyyah + 'ujmah, atau 'alamiyyah + wazan fi'il) sehingga "menyerupai" fi'il dan
+          kehilangan hak tanwinnya.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button class="quiz-btn" onclick="periksaKuis()">Periksa Jawaban</button>
+          <button class="quiz-btn secondary" onclick="ulangKuis()">Ulangi</button>
+          <span id="quiz-score"></span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+function periksaKuis(){
+  const questions = document.querySelectorAll('.quiz-q');
+  let correct = 0;
+  questions.forEach(q => {
+    const name = q.querySelector('input').name;
+    const selected = q.querySelector('input[name="'+name+'"]:checked');
+    q.classList.remove('correct','wrong');
+    q.classList.add('checked');
+    if(selected){
+      if(selected.value === q.dataset.answer){
+        q.classList.add('correct');
+        correct++;
+      } else {
+        q.classList.add('wrong');
+      }
+    } else {
+      q.classList.add('wrong');
+    }
+  });
+  const scoreEl = document.getElementById('quiz-score');
+  const total = questions.length;
+  scoreEl.textContent = 'Skor: ' + correct + ' / ' + total +
+    (correct === total ? '  — Mumtaz! 🎉' : correct >= total*0.6 ? '  — Jayyid, terus berlatih.' : '  — Coba pelajari ulang babnya.');
+}
+function ulangKuis(){
+  const questions = document.querySelectorAll('.quiz-q');
+  questions.forEach(q => {
+    q.classList.remove('correct','wrong','checked');
+    q.querySelectorAll('input').forEach(i => i.checked = false);
+  });
+  document.getElementById('quiz-score').textContent = '';
+}
+
+/* Tutup dropdown Daftar Bab otomatis setelah memilih bab (mode mobile) */
+(function(){
+  const tocDetails = document.querySelector('.toc-details');
+  if(!tocDetails) return;
+  tocDetails.querySelectorAll('a').forEach(function(link){
+    link.addEventListener('click', function(){
+      if(window.matchMedia('(max-width:860px)').matches){
+        tocDetails.removeAttribute('open');
+      }
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(window.matchMedia('(max-width:860px)').matches &&
+       tocDetails.hasAttribute('open') &&
+       !tocDetails.contains(e.target)){
+      tocDetails.removeAttribute('open');
+    }
+  });
+})();
+</script>
+
+<footer>
+  Disusun sebagai rangkuman pengantar materi Nahwu lanjutan berbasis Matan Al-'Imrithi.
+  Untuk pendalaman, disarankan mempelajari langsung bersama guru/kiai dengan merujuk pada
+  syarah-syarah kitab ini seperti Syarah Nadham al-'Imrithi.
+  <span class="arabic">وَاللهُ أَعْلَمُ بِالصَّوَابِ</span>
+  <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--line); font-size:.78rem;">
+    &copy;2026 by Achmad Fauzi &nbsp;•&nbsp; Email: vaozeei@gmail.com
+  </div>
+</footer>
+
+</body>
+</html>

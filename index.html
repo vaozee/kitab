@@ -3,10 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VAOZEE // Kumpulan Pelajaran Kitab Klasik</title>
+<title>Kumpulan Pelajaran Kitab Klasik</title>
 <meta name="description" content="Kumpulan pelajaran kitab klasik pesantren dan utilitas umum VAOZEE.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://www.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://drive.google.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -179,6 +183,18 @@ h1 .gradient{background:linear-gradient(100deg,#8a5f1f,#c9972c 45%,#e3c377 85%);
 .card:hover .corner.bl{transform:scaleY(-1) scale(1.06)}
 .card:hover .corner.br{transform:scale(-1,-1) scale(1.06)}
 
+/* tombol "buka di tab baru" pada tiap kotak modul -- solusi untuk peramban yang
+   tidak bisa/tidak mengizinkan tampilan iframe (lihat juga #iframeEscapeHint) */
+.card-newtab{position:absolute;top:12px;right:12px;z-index:3;width:28px;height:28px;border-radius:50%;
+ border:1px solid rgba(179,129,44,.32);background:rgba(253,249,238,.88);color:var(--gold-deep);
+ font-size:.82rem;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;
+ box-shadow:0 6px 16px rgba(90,64,20,.16);opacity:0;transform:translateY(-2px);
+ transition:opacity .18s ease,transform .18s ease,background .18s ease,border-color .18s ease}
+.card:hover .card-newtab,.card:focus-within .card-newtab{opacity:1;transform:translateY(0)}
+.card-newtab:hover,.card-newtab:focus-visible{background:var(--gold);color:#fdf6e6;border-color:transparent;outline:none}
+@media(hover:none){.card-newtab{opacity:1;transform:none}}
+.grid.compact .card-newtab{top:auto;bottom:8px;right:8px;width:22px;height:22px;font-size:.68rem}
+
 .divider{display:flex;align-items:center;gap:14px;margin:30px 0}
 .divider .dline{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
 .divider .gem{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 0 4px rgba(179,129,44,.1);flex:none}
@@ -258,9 +274,32 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 }
 .modal-capsule.minimized .modal-capsule-left,
 .modal-capsule.minimized #fsBtnModal,
-.modal-capsule.minimized #newTab,
+.modal-capsule.minimized #toolsDropdown,
 .modal-capsule.minimized #closeModal{display:none!important}
 .modal-capsule.minimized .modal-actions{gap:0!important}
+
+/* ---------- kompak: menu tools jadi satu droplist (bukan deretan tombol) ---------- */
+.tools-dropdown{position:relative;display:flex}
+.tools-menu{position:absolute;top:calc(100% + 9px);right:0;min-width:198px;display:none;flex-direction:column;gap:1px;
+ padding:6px;border-radius:16px;background:rgba(253,249,238,.98);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);
+ border:1px solid rgba(227,195,119,.6);box-shadow:var(--shadow);z-index:50}
+.tools-dropdown.open .tools-menu{display:flex}
+.tools-menu .menu-item{display:flex;align-items:center;gap:9px;width:100%;padding:9px 11px;border-radius:11px;border:0;background:transparent;
+ color:var(--ink);font:600 .74rem/1.2 var(--label);text-decoration:none;cursor:pointer;text-align:left;white-space:nowrap;appearance:none}
+.tools-menu .menu-item span{width:16px;text-align:center;flex:none}
+.tools-menu .menu-item:hover{background:rgba(179,129,44,.12);color:var(--gold-deep)}
+.tools-menu .menu-item.active{background:rgba(179,129,44,.16);color:var(--gold-deep)}
+.tools-menu-label{padding:6px 11px 7px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep)}
+/* "Buka di Tab Baru" sudah ada sebagai tombol ↗ langsung di header (#newTabQuick) --
+   item yang sama di dalam droplist ini disembunyikan supaya tidak dobel. Elemennya
+   tetap ada di HTML (JS masih mengisi href-nya) hanya disembunyikan dari tampilan. */
+#toolsMenu #newTab{display:none!important}
+.modal.pdf-mode .tools-menu{background:rgba(24,22,18,.95);border-color:rgba(255,255,255,.14)}
+.modal.pdf-mode .tools-menu .menu-item{color:#f3ead4}
+.modal.pdf-mode .tools-menu .menu-item:hover,.modal.pdf-mode .tools-menu .menu-item.active{background:rgba(255,255,255,.12);color:#fff}
+.modal.pdf-mode .tools-menu-label{color:var(--gold-light)}
+/* hanya item relevan mode PDF yang tampil saat sedang membaca PDF */
+.modal:not(.pdf-mode) #pdfScrollMode,.modal:not(.pdf-mode) #pdfBookMode,.modal:not(.pdf-mode) #pdfModeLabel{display:none!important}
 
 /* Module 01-09 viewer frame: same gold/classic framing, with the existing corner artwork in all 4 corners. */
 .modal-frame-wrap{
@@ -292,6 +331,22 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 .modal-frame-wrap.zoom-mode .zoom-hint{opacity:1}
 .modal.pdf-mode #zoomToggle{display:none!important}
 
+/* === Bantuan keluar saat iframe bermasalah ===
+   Sengaja dibuat sebagai pita KECIL yang tidak menutupi iframe sama sekali (bukan
+   overlay penuh) -- supaya tidak ada risiko menutupi/menyembunyikan modul yang
+   sebenarnya berhasil tampil normal. Selalu ada juga tombol ↗ permanen di header
+   modal (#newTabQuick) dan di setiap kotak modul (.card-newtab) sebagai jalan
+   keluar langsung tanpa bergantung pada deteksi otomatis apa pun. */
+.iframe-escape-hint{position:absolute;left:50%;bottom:18px;transform:translate(-50%,14px);z-index:9;
+ display:flex;align-items:center;gap:10px;max-width:min(92%,460px);
+ background:rgba(43,32,19,.92);color:#fdf6e6;padding:10px 12px 10px 16px;border-radius:999px;
+ box-shadow:0 14px 34px rgba(0,0,0,.28);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s ease}
+.iframe-escape-hint.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.iframe-escape-hint span{font-size:.72rem;font-weight:600;line-height:1.3}
+.iframe-escape-hint .btn{padding:8px 13px;font-size:.7rem;white-space:nowrap;flex:none}
+.iframe-escape-hint .ieh-close{flex:none;width:22px;height:22px;border:0;border-radius:50%;background:rgba(255,255,255,.14);
+ color:#fdf6e6;cursor:pointer;font-size:.8rem;line-height:1;display:grid;place-items:center}
+.iframe-escape-hint .ieh-close:hover{background:rgba(255,255,255,.26)}
 
 /* Module 01-09: frame visible over the full-screen page, including all 4 existing corner artworks. */
 .module-frame-overlay{position:absolute;inset:0;z-index:4;pointer-events:none}
@@ -369,15 +424,19 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   flex:none;
   max-width:calc(100vw - 92px);
 }
+/* Header modul/iframe dibuat ringkas: hanya tombol, tanpa judul halaman,
+   supaya semua tombol muat rapi dalam 1 baris. Elemen judul tetap ada di HTML
+   (JS masih mengisi teksnya) hanya disembunyikan dari tampilan. */
+.modal-capsule-left{display:none!important}
 .modal-capsule:not(.minimized) .modal-actions{
   gap:5px!important;
 }
 .modal-capsule:not(.minimized) #fsBtnModal,
-.modal-capsule:not(.minimized) #newTab,
 .modal-capsule:not(.minimized) #closeModal,
-.modal-capsule:not(.minimized) #zoomToggle{
+.modal-capsule:not(.minimized) #toolsDropdown{
   display:grid!important;
 }
+.modal-capsule:not(.minimized) #toolsDropdown{display:flex!important}
 
 /* === Chapter 03: PDF Reader === */
 .pdf-reader-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:0 0 18px}
@@ -415,8 +474,6 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 @keyframes pdfTurnBack{0%{transform:rotateY(0deg);filter:brightness(1)}45%{filter:brightness(.88)}100%{transform:rotateY(180deg);filter:brightness(.98)}}
 .pdf-book-caption{pointer-events:none;position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:.62rem;font-weight:700;color:var(--gold-deep);background:rgba(253,249,238,.86);padding:6px 12px;border-radius:999px;border:1px solid var(--line);z-index:20;white-space:nowrap}
 .pdf-book-hint{position:absolute;top:58px;left:50%;transform:translateX(-50%);font-size:.6rem;color:var(--muted);font-weight:700;background:rgba(253,249,238,.82);padding:6px 10px;border-radius:999px;z-index:20}
-.pdf-reader-modal-tools{position:fixed;top:78px;left:50%;transform:translateX(-50%);z-index:8;display:none}
-.modal.pdf-mode .pdf-reader-modal-tools{display:flex}
 .modal.pdf-mode #frame{display:none!important}
 .modal.pdf-mode.book-active #frame{display:none}
 .modal.pdf-mode.book-active .modal-frame-wrap{
@@ -455,7 +512,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 .pdf-scroll-page-wrap{position:relative;display:block;max-width:100%;min-width:220px;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.28);border-radius:2px;overflow:hidden}.pdf-scroll-page{display:block;width:100%;height:100%;background:#fff}
 .modal.pdf-mode.scroll-active #frame{display:none}
 .modal.pdf-mode.scroll-active .pdf-book-stage{display:none}
-.modal.pdf-mode.scroll-active .pdf-scroll-stage{display:block}.modal.pdf-mode.scroll-active .modal-capsule-wrap{top:8px}.modal.pdf-mode.scroll-active .pdf-reader-modal-tools{display:flex!important}
+.modal.pdf-mode.scroll-active .pdf-scroll-stage{display:block}.modal.pdf-mode.scroll-active .modal-capsule-wrap{top:8px}
 
 /* PDF reader: immersive fullscreen + floating auto-hide header */
 .modal.pdf-mode{background:#000}
@@ -468,12 +525,10 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 .modal.pdf-mode .modal-capsule{width:auto!important;max-width:none!important;min-height:0;padding:5px 7px 5px 9px!important;gap:6px!important;background:rgba(18,18,18,.22)!important;border-color:rgba(255,255,255,.12)!important;box-shadow:0 6px 24px rgba(0,0,0,.14)!important}
 .modal.pdf-mode .modal-capsule-left{display:none!important}
 .modal.pdf-mode .modal-actions{gap:5px!important}
-.modal.pdf-mode #miniModal,.modal.pdf-mode #fsBtnModal,.modal.pdf-mode #newTab{display:grid!important}
-.modal.pdf-mode .pdf-reader-modal-tools{position:static;transform:none;display:flex!important;gap:4px;padding:0;background:transparent;border:0;box-shadow:none}
-.modal.pdf-mode .pdf-mode-label{display:none!important}
-.modal.pdf-mode .pdf-reader-modal-tools .icon-btn,.modal.pdf-mode #closeModal{width:30px;height:30px;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.10);color:#fff;box-shadow:none}
+.modal.pdf-mode #miniModal,.modal.pdf-mode #fsBtnModal,.modal.pdf-mode #toolsDropdown{display:grid!important}
+.modal.pdf-mode #toolsDropdown{display:flex!important}
+.modal.pdf-mode #miniModal,.modal.pdf-mode #fsBtnModal,.modal.pdf-mode #closeModal,.modal.pdf-mode #toolsMoreBtn{width:30px;height:30px;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.10);color:#fff;box-shadow:none}
 .modal.pdf-mode.scroll-active .modal-capsule{opacity:.78}
-.modal.pdf-mode.scroll-active .pdf-reader-modal-tools{display:flex!important}
 .modal.pdf-mode.scroll-active .pdf-scroll-stage{scrollbar-width:thin}
 
 .modal.pdf-mode.book-active .modal-frame-wrap{background:transparent}
@@ -508,7 +563,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
     <div class="nav-inner">
       <a class="brand" href="#top">
         <span class="logo">V</span>
-        <span><strong>VAOZEE // KITAB</strong><small>Pesantren Digital</small></span>
+        <span><strong>KITAB</strong><small>Pesantren Digital</small></span>
       </a>
       <nav class="nav-links">
         <a href="#kitab">Kitab Klasik</a><a href="#umum">Umum &amp; Hiburan</a><a href="#pdf-reader">Pembaca PDF</a>
@@ -539,7 +594,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   <div class="stats">
     <div class="stat"><b id="statKitab">9</b><span>Pelajaran Kitab Klasik</span></div>
     <div class="stat"><b id="statUmum">6</b><span>Umum &amp; Hiburan</span></div>
-    <div class="stat"><b id="statTotal">15</b><span>Total Modul Terhubung</span></div>
+    <div class="stat"><b id="statPdf">0</b><span>Koleksi PDF</span></div>
   </div>
 </section>
 
@@ -550,7 +605,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
     <div class="filters"><button class="filter active" data-filter="all">Semua</button><button class="filter" data-filter="nahwu">Nahwu</button><button class="filter" data-filter="sharaf">Sharaf</button><button class="filter" data-filter="lain">Lainnya</button></div>
     <button class="btn" id="compactToggle" type="button" title="Ringkas/lengkapkan tampilan kotak modul">🗜 Ringkas Tampilan</button>
     <button class="btn" id="moduleManagerBtn" type="button">＋ Tambah Modul</button>
-    <span class="sync-note" id="syncNote"><span class="sdot" id="syncDot"></span><span id="syncText">Sinkron dgn Google Sheet</span></span>
+    <span class="sync-note" id="syncNote"><span class="sdot" id="syncDot"></span><span id="syncText">Daftar modul lokal</span></span>
   </div>
   <div class="grid" id="kitabGrid"></div>
   <div class="no-results" id="noResults">Tidak ada modul yang cocok dengan pencarian.</div>
@@ -566,7 +621,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 
 
 <section class="section" id="pdf-reader" data-reveal>
-  <div class="section-head"><div><div class="kicker">03 // Perpustakaan</div><h2>Pembaca PDF</h2></div><p>Folder Perangkat · Folder Sharing · Mode Buku</p></div>
+  <div class="section-head"><div><div class="kicker">03 // Perpustakaan</div><h2>Pembaca PDF</h2></div><p>Folder Perangkat · Folder Sharing · Mode Buku · <span id="pdfCountLabel">0 PDF</span></p></div>
   <div class="pdf-reader-actions">
     <button class="btn primary" type="button" id="pdfPickFiles">＋ Tambah PDF</button>
     <button class="btn" type="button" id="pdfPickFolder">▣ Buka Folder</button>
@@ -581,14 +636,14 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 <div class="divider"><span class="dline"></span><span class="gem"></span><span class="dline"></span></div>
 <footer class="footer">
   <div><strong>© 2026 by Achmad Fauzi</strong> · <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></div>
-  <div>VAOZEE // DIGITAL PESANTREN INDEX</div>
+  <div>DIGITAL PESANTREN INDEX</div>
 </footer>
 </main>
 
 <div class="module-manager-backdrop" id="moduleManagerBackdrop" aria-hidden="true">
   <div class="module-manager" role="dialog" aria-modal="true" aria-labelledby="moduleManagerTitle">
     <div class="module-manager-head">
-      <div><h3 id="moduleManagerTitle">Tambah Modul</h3><p>Tambahkan link modul; setelah disimpan ke Google Sheet, kotaknya otomatis muncul di halaman utama semua pengunjung.</p></div>
+      <div><h3 id="moduleManagerTitle">Tambah Modul</h3><p>Tambahkan link modul; modul tersimpan lokal di browser ini saja (localStorage), tanpa terhubung ke layanan luar apa pun.</p></div>
       <button class="module-manager-close" id="moduleManagerClose" type="button" aria-label="Tutup">×</button>
     </div>
     <form class="module-form" id="moduleForm">
@@ -615,7 +670,7 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
       <div class="module-form-grid">
         <label style="grid-column:1/-1">Deskripsi<input id="moduleDesc" maxlength="220" placeholder="Deskripsi singkat modul"></label>
       </div>
-      <div class="module-manager-note" id="moduleManagerNote">Nomor "MODUL XX" dibuat otomatis mengikuti urutan: 01-Kitab Klasik jadi acuan dasar, lalu 02-Umum melanjutkan nomornya — jadi kalau Kitab Klasik nambah, nomor Umum otomatis ikut bergeser. Kategori boleh dipilih dari daftar atau ketik sendiri. Setiap perubahan wajib password dan langsung tersimpan/tercatat di Google Sheet. Jika koneksi gagal, modul disimpan sementara hanya di browser ini.</div>
+      <div class="module-manager-note" id="moduleManagerNote">Nomor "MODUL XX" dibuat otomatis mengikuti urutan: 01-Kitab Klasik jadi acuan dasar, lalu 02-Umum melanjutkan nomornya — jadi kalau Kitab Klasik nambah, nomor Umum otomatis ikut bergeser. Kategori boleh dipilih dari daftar atau ketik sendiri. Setiap perubahan wajib password dan langsung tersimpan di browser ini (localStorage) -- tidak dikirim ke server/spreadsheet mana pun.</div>
       <div class="module-manager-actions"><button class="btn" type="button" id="moduleManagerCancel">Batal</button><button class="btn primary" type="submit" id="moduleSubmitBtn">Simpan Modul</button></div>
     </form>
     <div class="module-manager-list" id="moduleSavedList"></div>
@@ -631,6 +686,11 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
     <div class="mf-corner bl"></div><div class="mf-corner br"></div>
   </div>
   <iframe id="frame" title="Modul VAOZEE" referrerpolicy="no-referrer"></iframe>
+  <div class="iframe-escape-hint" id="iframeEscapeHint" aria-hidden="true">
+    <span>Modul tidak tampil dengan benar di sini?</span>
+    <a class="btn primary" id="iboOpenBtn" target="_blank" rel="noopener">Buka di Tab Baru ↗</a>
+    <button type="button" class="ieh-close" id="iehClose" aria-label="Tutup">×</button>
+  </div>
   <div class="zoom-overlay" id="zoomOverlay" aria-hidden="true"></div>
   <div class="zoom-hint">Cubit 2 jari untuk zoom · geser 1 jari untuk baca · ganda-tap / tombol 🔍 untuk keluar</div>
   <div class="pdf-scroll-stage" id="pdfScrollStage" aria-hidden="true"><div class="pdf-scroll-pages" id="pdfScrollPages"></div></div>
@@ -646,16 +706,20 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
   <div class="modal-capsule-wrap">
     <div class="modal-capsule">
       <div class="modal-capsule-left"><span class="dot"></span><div class="modal-title" id="modalTitle">Modul</div></div>
-      <div class="pdf-reader-modal-tools" id="pdfReaderTools">
-        <span class="pdf-mode-label" id="pdfModeLabel">Baca PDF</span>
-        <button class="icon-btn" id="pdfScrollMode" title="Mode scroll biasa">↕</button>
-        <button class="icon-btn" id="pdfBookMode" title="Mode buku halaman per halaman">▤</button>
-      </div>
       <div class="modal-actions">
         <button class="icon-btn header-mini-btn" id="miniModal" title="Minimalkan header modul" aria-label="Minimalkan header modul">−</button>
-        <button class="icon-btn" id="zoomToggle" title="Mode Zoom Baca (cubit 2 jari)">🔍</button>
+        <div class="tools-dropdown" id="toolsDropdown">
+          <button type="button" class="icon-btn" id="toolsMoreBtn" title="Menu tampilan" aria-haspopup="true" aria-expanded="false" aria-label="Menu tampilan">⋯</button>
+          <div class="tools-menu" id="toolsMenu" role="menu" aria-hidden="true">
+            <div class="tools-menu-label" id="pdfModeLabel">Baca PDF</div>
+            <button type="button" class="menu-item" id="pdfScrollMode" role="menuitem"><span>↕</span> Mode Scroll</button>
+            <button type="button" class="menu-item" id="pdfBookMode" role="menuitem"><span>▤</span> Mode Buku (per halaman)</button>
+            <button type="button" class="menu-item" id="zoomToggle" role="menuitem"><span>🔍</span> Mode Zoom Baca</button>
+            <a class="menu-item" id="newTab" target="_blank" rel="noopener" role="menuitem"><span>↗</span> Buka di Tab Baru</a>
+          </div>
+        </div>
         <button class="icon-btn fs-btn" id="fsBtnModal" title="Layar penuh">⛶</button>
-        <a class="icon-btn" id="newTab" target="_blank" rel="noopener" title="Buka di tab baru">↗</a>
+        <a class="icon-btn" id="newTabQuick" target="_blank" rel="noopener" title="Buka modul ini di tab baru" aria-label="Buka modul ini di tab baru">↗</a>
         <button class="icon-btn danger" id="closeModal" title="Tutup">×</button>
       </div>
     </div>
@@ -664,50 +728,55 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 
 <script>
 const kitab=[
- {n:"01",title:"Arba'un Nawawi",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Arba'un Nawawi."},
- {n:"02",title:"Nadhom Alfiyah",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nadhom Alfiyah."},
- {n:"03",title:"Ilmu Usul Fiqih",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ilmu Usul Fiqih."},
- {n:"04",title:"Qowaidul I'lal",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Qowaidul I'lal."},
- {n:"05",title:"Bulughul Marom",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Bulughul Marom."},
+ {n:"01",title:"Arba'un Nawawi",cat:"lain",icon:"كتاب",badge:"HADIST",url:"",desc:"Modul kitab klasik: Arba'un Nawawi."},
+ {n:"02",title:"Nadhom Alfiyah",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Nadhom Alfiyah."},
+ {n:"03",title:"Ilmu Usul Fiqih",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Ilmu Usul Fiqih."},
+ {n:"04",title:"Qowaidul I'lal",cat:"lain",icon:"كتاب",badge:"SHOROF",url:"",desc:"Modul kitab klasik: Qowaidul I'lal."},
+ {n:"05",title:"Bulughul Marom",cat:"lain",icon:"كتاب",badge:"HADIST",url:"",desc:"Modul kitab klasik: Bulughul Marom."},
  {n:"06",title:"Safinatun Naja",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Safinatun Naja."},
- {n:"07",title:"Mabādi' Al-Awwaliyyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Mabādi' Al-Awwaliyyah."},
- {n:"08",title:"Aqidatul Awam",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Aqidatul Awam."},
- {n:"09",title:"Risalatul Mahidl",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Risalatul Mahidl."},
- {n:"10",title:"Nashoihul 'Ibaad",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Nashoihul 'Ibaad."},
- {n:"11",title:"Ta'limul Muta'alim",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Ta'limul Muta'alim."},
+ {n:"07",title:"Mabādi' Al-Awwaliyyah",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Mabādi' Al-Awwaliyyah."},
+ {n:"08",title:"Aqidatul Awam",cat:"lain",icon:"كتاب",badge:"AQIDAH",url:"",desc:"Modul kitab klasik: Aqidatul Awam."},
+ {n:"09",title:"Risalatul Mahidl",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Risalatul Mahidl."},
+ {n:"10",title:"Nashoihul 'Ibaad",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Nashoihul 'Ibaad."},
+ {n:"11",title:"Ta'limul Muta'alim",cat:"lain",icon:"كتاب",badge:"ADAB",url:"",desc:"Modul kitab klasik: Ta'limul Muta'alim."},
  {n:"12",title:"Balaghah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Balaghah."},
- {n:"13",title:"Jawahirul Kalamiyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Jawahirul Kalamiyah."},
- {n:"14",title:"Al-Waraqāt",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Al-Waraqāt."},
- {n:"15",title:"Mukhtashar Abi Syuja'",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Mukhtashar Abi Syuja'."},
- {n:"16",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/alfiah/",desc:"Modul kitab klasik: Alfiyah Ibnu Malik."},
- {n:"17",title:"Al-'Imrithi",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/imrithi/",desc:"Modul kitab klasik: Al-'Imrithi."},
- {n:"18",title:"Al-Ajurumiyah",cat:"nahwu",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/ajurumiyah/",desc:"Modul kitab klasik: Al-Ajurumiyah."},
- {n:"19",title:"Ilmu Shorof",cat:"sharaf",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/shorof/",desc:"Modul kitab klasik: Ilmu Shorof."},
- {n:"20",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/maqsud/",desc:"Modul kitab klasik: Nazham Al-Maqshūd."},
- {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/falak1/",desc:"Modul kitab klasik: Ilmu Falak Lanjutan."},
- {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/faroid/",desc:"Modul kitab klasik: Pelajaran Farā'iḍ."},
- {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/falak/",desc:"Modul kitab klasik: Hisab Falakiyah."},
- {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"KITAB",url:"https://leezeei.github.io/waris/",desc:"Modul kitab klasik: Kalkulator Ahli Waris."},
+ {n:"13",title:"Jawahirul Kalamiyah",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Jawahirul Kalamiyah."},
+ {n:"14",title:"Al-Waraqāt",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Al-Waraqāt."},
+ {n:"15",title:"Mukhtashar Abi Syuja'",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Mukhtashar Abi Syuja'."},
+ {n:"16",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Alfiyah Ibnu Malik."},
+ {n:"17",title:"Al-'Imrithi",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Al-'Imrithi."},
+ {n:"18",title:"Al-Ajurumiyah",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Al-Ajurumiyah."},
+ {n:"19",title:"Ilmu Shorof",cat:"sharaf",icon:"كتاب",badge:"SHOROF",url:"",desc:"Modul kitab klasik: Ilmu Shorof."},
+ {n:"20",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"كتاب",badge:"SHOROF",url:"",desc:"Modul kitab klasik: Nazham Al-Maqshūd."},
+ {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Modul kitab klasik: Ilmu Falak Lanjutan."},
+ {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Modul kitab klasik: Pelajaran Farā'iḍ."},
+ {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Modul kitab klasik: Hisab Falakiyah."},
+ {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Modul kitab klasik: Kalkulator Ahli Waris."},
+ {n:"25",title:"Fathul Qorib al-Mujib",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Fathul Qorib al-Mujib."},
+ {n:"26",title:"Hayatul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Hayatul Hayawan."},
+ {n:"27",title:"Tahqiqul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Tahqiqul Hayawan."},
+ {n:"28",title:"Maulid Ad-Diba'i",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Modul kitab klasik: Maulid Ad-Diba'i."},
+ {n:"29",title:"Maulid Al-Barzanji",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Modul kitab klasik: Maulid Al-Barzanji."},
+ {n:"30",title:"Simṭud Durar",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Modul kitab klasik: Simṭud Durar."},
+ {n:"31",title:"Al-Hikam",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Al-Hikam."},
+ {n:"32",title:"Bidayatul Hidayah",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Bidayatul Hidayah."},
+ {n:"33",title:"Ushfuriyah",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Ushfuriyah."},
 ];
 const umum=[
  {n:"01",title:"POLIBUN",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: POLIBUN."},
  {n:"02",title:"Sawit Monitor",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Sawit Monitor."},
  {n:"03",title:"KopSUS",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: KopSUS."},
  {n:"04",title:"Pantau Api",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Pantau Api."},
- {n:"05",title:"ISPO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: ISPO."},
- {n:"06",title:"HR-GA",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: HR-GA."},
- {n:"07",title:"WarRoom Plantation",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: WarRoom Plantation."},
- {n:"08",title:"Test MT",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Test MT."},
- {n:"09",title:"Administrasi",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Administrasi."},
- {n:"10",title:"BPJS TK",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJS TK."},
- {n:"11",title:"BPJSKES",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJSKES."},
- {n:"12",title:"RTH",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: RTH."},
- {n:"13",title:"Kalkulator Pajak Indonesia",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/pajak/",desc:"Aplikasi dan utilitas: Kalkulator Pajak Indonesia."},
- {n:"14",title:"Jadwal Sholat",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Jadwal Sholat."},
- {n:"15",title:"Peta Potensi Air Tanah",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/air/",desc:"Aplikasi dan utilitas: Peta Potensi Air Tanah."},
- {n:"16",title:"Nadaflow",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/musik/",desc:"Aplikasi dan utilitas: Nadaflow."},
- {n:"17",title:"VAOZEE IO",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/io/",desc:"Aplikasi dan utilitas: VAOZEE IO."},
- {n:"18",title:"Suite Launcher",cat:"lain",icon:"✦",badge:"UMUM",url:"https://leezeei.github.io/promo/",desc:"Aplikasi dan utilitas: Suite Launcher."},
+  {n:"05",title:"WarRoom Plantation",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: WarRoom Plantation."},
+  {n:"06",title:"BPJS TK",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJS TK."},
+ {n:"07",title:"BPJSKES",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJSKES."},
+ {n:"08",title:"RTH",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: RTH."},
+ {n:"09",title:"Kalkulator Pajak Indonesia",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Kalkulator Pajak Indonesia."},
+ {n:"10",title:"Jadwal Sholat",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Jadwal Sholat."},
+ {n:"11",title:"Peta Potensi Air Tanah",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Peta Potensi Air Tanah."},
+ {n:"12",title:"Nadaflow",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Nadaflow."},
+ {n:"13",title:"VAOZEE IO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: VAOZEE IO."},
+ {n:"14",title:"Suite Launcher",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Suite Launcher."}, {n:"19",title:"Gold Prospectivity Engine",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Gold Prospectivity Engine."},
 ];
 function escAttr(v){
  return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -721,8 +790,8 @@ function dashboardValidUrl(url){
 const DASHBOARD_OFFLINE_FILES={
   "Arba'un Nawawi":"arba-un-nawawi.html", "Nadhom Alfiyah":"nadhom-alfiyah.html",
   "POLIBUN":"polibun.html", "Sawit Monitor":"sawit-monitor.html", "KopSUS":"kopsus.html",
-  "Pantau Api":"pantau-api.html", "ISPO":"ispo.html", "HR-GA":"hr-ga.html",
-  "WarRoom Plantation":"warroom-plantation.html", "Test MT":"test-mt.html", "Administrasi":"administrasi.html",
+  "Pantau Api":"pantau-api.html", "Al-Hikam":"alhikam.html", "Bidayatul Hidayah":"bidayatul-hidayah.html",
+  "WarRoom Plantation":"warroom-plantation.html", "Ushfuriyah":"ushfuriyah.html",
   "BPJS TK":"bpjs-tk.html", "BPJSKES":"bpjskes.html", "Ilmu Usul Fiqih":"ilmu-usul-fiqih.html",
   "Qowaidul I'lal":"qowaidul-i-lal.html", "Bulughul Marom":"bulughul-marom.html", "Safinatun Naja":"safinatun-naja.html",
   "Mabādi' Al-Awwaliyyah":"mabadi-al-awwaliyyah.html", "Aqidatul Awam":"aqidatul-awam.html",
@@ -750,25 +819,82 @@ function card(x,dispN){
  const sourceLabel=online?'ONLINE':'OFFLINE';
  return `<a href="${escAttr(href)}" class="card" data-url="${escAttr(online)}" data-local-url="${escAttr(local)}" data-title="${escAttr(x.title)}" data-cat="${escAttr(x.cat||'umum')}" data-n="${escAttr(x.n)}" data-source="${sourceLabel}">
    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+   <button type="button" class="card-newtab" data-newtab-url="${escAttr(href)}" title="Buka modul ini di tab baru" aria-label="Buka modul ini di tab baru">↗</button>
    <div class="card-top"><span class="num">MODUL ${shown}</span><span class="badge">${x.badge}</span></div>
    <div class="icon">${x.icon}</div>
    <div class="card-body"><h3>${x.title}</h3><p>${x.desc}</p></div>
    <div class="card-bottom"><span class="path">${online?(new URL(online).pathname.replaceAll('/','')||'/'):local}</span><span class="open">${online&&local?'Online / Offline →':'Buka →'}</span></div>
  </a>`;
 }
+/* Tombol ↗ di pojok kotak modul: buka URL modul langsung di tab baru peramban,
+   tanpa lewat iframe sama sekali -- jalan pintas untuk peramban yang iframe-nya
+   diblokir/dibatasi. stopPropagation dipasang di elemen tombolnya sendiri
+   (bukan lewat delegasi ke dokumen) supaya event berhenti SEBELUM sempat
+   membuka modal iframe milik kartu (anchor) yang membungkusnya. */
+function bindCardNewTabButtons(root){
+ (root||document).querySelectorAll('.card-newtab').forEach(btn=>{
+   btn.addEventListener('click',e=>{
+     e.preventDefault();e.stopPropagation();
+     const url=btn.getAttribute('data-newtab-url');
+     if(url&&url!=='#')window.open(url,'_blank','noopener');
+   });
+ });
+}
 document.getElementById('kitabGrid').innerHTML=kitab.map(card).join('');
 document.getElementById('umumGrid').innerHTML=umum.map(card).join('');
+bindCardNewTabButtons();
 
 function updateModuleCounters(){
  const kitabCount=document.querySelectorAll('#kitabGrid .card').length;
  const umumCount=document.querySelectorAll('#umumGrid .card').length;
- const sk=document.getElementById('statKitab'), su=document.getElementById('statUmum'), st=document.getElementById('statTotal');
- if(sk)sk.textContent=kitabCount; if(su)su.textContent=umumCount; if(st)st.textContent=kitabCount+umumCount;
+ const sk=document.getElementById('statKitab'), su=document.getElementById('statUmum');
+ if(sk)sk.textContent=kitabCount; if(su)su.textContent=umumCount;
 }
 updateModuleCounters();
 
 /* ---- fullscreen module viewer ---- */
-const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), loader=document.getElementById('loader');
+const modal=document.getElementById('modal'), frame=document.getElementById('frame'), modalTitle=document.getElementById('modalTitle'), newTab=document.getElementById('newTab'), newTabQuick=document.getElementById('newTabQuick'), loader=document.getElementById('loader');
+const iframeEscapeHint=document.getElementById('iframeEscapeHint'), iboOpenBtn=document.getElementById('iboOpenBtn'), iehClose=document.getElementById('iehClose');
+
+/* === Jalan keluar kalau iframe bermasalah ===
+   CATATAN PENTING (setelah dua kali dicoba dan ternyata malah merusak modul yang
+   sebenarnya berhasil tampil): membaca isi/URL dokumen di dalam iframe untuk
+   "menebak" apakah navigasinya diblokir TERNYATA TIDAK BISA diandalkan -- banyak
+   modul di sini adalah halaman berat yang kontennya baru terisi belakangan lewat
+   JS, dan cara membaca dokumen iframe lewat JS punya banyak kasus tepi yang beda
+   di tiap peramban/perangkat. Menebak salah lalu memaksa iframe pindah ke sumber
+   lain justru menyebabkan modul yang tadinya berhasil ikut rusak / muncul "page
+   not found" sungguhan.
+   Karena itu pendekatannya diubah total: TIDAK ADA lagi pemeriksaan otomatis
+   yang membaca isi iframe atau memaksa iframe pindah alamat sendiri. Sebagai
+   gantinya disediakan jalan keluar yang selalu berhasil dan tidak pernah salah
+   duga:
+   1) Tombol ↗ permanen di setiap kotak modul (.card-newtab) dan di header modal
+      (#newTabQuick) -- klik kapan saja, tidak bergantung pada deteksi apa pun.
+   2) Event 'error' bawaan iframe (dipicu peramban sendiri untuk kegagalan
+      jaringan yang nyata) tetap ditangani -- ini sinyal asli dari peramban,
+      bukan tebakan kita.
+   3) Pita kecil "Modul tidak tampil dengan benar?" muncul otomatis beberapa
+      detik setelah modul dibuka, TANPA menutupi iframe dan TANPA memindahkan
+      src iframe sama sekali -- murni ajakan, pengguna sendiri yang menilai lalu
+      klik kalau memang perlu. Kalau modulnya berhasil tampil, pita ini tidak
+      mengganggu apa pun dan bisa ditutup. */
+function hideEscapeHint(){
+ if(!iframeEscapeHint)return;
+ iframeEscapeHint.classList.remove('show');
+ iframeEscapeHint.setAttribute('aria-hidden','true');
+}
+function scheduleEscapeHint(url){
+ clearTimeout(frame._escapeHintTimer);
+ if(!iframeEscapeHint||!iboOpenBtn)return;
+ iboOpenBtn.href=url;
+ frame._escapeHintTimer=setTimeout(()=>{
+   iframeEscapeHint.classList.add('show');
+   iframeEscapeHint.setAttribute('aria-hidden','false');
+ },4500);
+}
+iehClose&&iehClose.addEventListener('click',hideEscapeHint);
+
 function openModule(url,title,fromHistory=false,localUrl=''){
  const onlineUrl=dashboardValidUrl(url);
  const offlineUrl=localUrl||'';
@@ -783,6 +909,7 @@ function openModule(url,title,fromHistory=false,localUrl=''){
     tetap berdiri sendiri, hanya "ditonton" lewat src iframe (relatif ke folder ini
     untuk file offline, atau URL penuh untuk yang online). */
  function show(target,usedOnline){
+   hideEscapeHint();
    /* Batalkan timer "kosongkan iframe" tertunda dari closeModule() sebelumnya --
       kalau tidak, modul yang baru saja dibuka bisa tiba-tiba dikosongkan lagi. */
    clearTimeout(frame._closeBlankTimer);
@@ -803,6 +930,8 @@ function openModule(url,title,fromHistory=false,localUrl=''){
    if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
    modalTitle.textContent=title;
    newTab.href=target;
+   if(newTabQuick)newTabQuick.href=target;
+   scheduleEscapeHint(target);
    modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
 
    const modalCapsule=document.querySelector('.modal-capsule'), miniModalBtn=document.getElementById('miniModal');
@@ -841,15 +970,33 @@ function closeModule(fromPopState=false){
  if(document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(()=>{});
  clearTimeout(frame._closeBlankTimer);
  frame._closeBlankTimer=setTimeout(()=>{frame.src='about:blank'},220);
+ clearTimeout(frame._escapeHintTimer);
+ hideEscapeHint();
  document.body.style.overflow='';
  if(window.vaozeeResetZoomMode)window.vaozeeResetZoomMode();
  if(!fromPopState && history.state && history.state.vaozeeModule) history.back();
 }
-frame.addEventListener('load',()=>{loader.classList.add('done');frame.dataset.loaded='1';clearTimeout(frame._fallbackTimer)});
+frame.addEventListener('load',()=>{
+  loader.classList.add('done');frame.dataset.loaded='1';clearTimeout(frame._fallbackTimer);
+});
 frame.addEventListener('error',()=>{
+  /* Sinyal asli dari peramban (bukan tebakan kita) bahwa navigasi iframe gagal
+     total -- mis. file lokal yang benar-benar tidak ada. */
   const local=frame.dataset.fallbackLocal;
-  if(local && frame.src!==new URL(local,location.href).href){
+  let resolvedLocal='';
+  try{resolvedLocal=new URL(local||'',location.href).href}catch(e){}
+  if(local && frame.src!==resolvedLocal){
+    frame.dataset.fallbackLocal='';
     frame.src=local;
+  }else{
+    /* Tidak ada sumber lain yang bisa dicoba -- segera tawarkan jalan keluar
+       (bukan menunggu 4.5 detik seperti biasanya) karena ini kegagalan nyata. */
+    clearTimeout(frame._escapeHintTimer);
+    if(iframeEscapeHint&&iboOpenBtn){
+      iboOpenBtn.href=frame.src;
+      iframeEscapeHint.classList.add('show');
+      iframeEscapeHint.setAttribute('aria-hidden','false');
+    }
   }
 });
 document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)}));
@@ -896,9 +1043,27 @@ const clock=document.getElementById('clock');
 function tick(){clock.textContent=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit'})}
 tick();setInterval(tick,1000);
 
-/* ---- scroll reveal ---- */
-const io=new IntersectionObserver(entries=>entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:.12});
-document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+/* ---- scroll reveal ----
+   Catatan perbaikan: sebagian browser mobile (terutama WebView Android) kadang
+   gagal menghitung ulang intersection dengan benar saat kombinasi
+   transform+opacity+backdrop-filter dipakai bersamaan -- akibatnya sebuah
+   section bisa "nyangkut" pada opacity:0 (tampak blank) walau sudah discroll
+   ke posisinya, dan baru muncul setelah ada reflow paksa (mis. ganti mode
+   tampilan). Supaya konten TIDAK PERNAH permanen blank, dipasang dua lapis
+   pengaman: threshold lebih rendah + rootMargin lebih longgar, DAN timer
+   cadangan yang memaksa semua section tampil walau observer gagal memicu. */
+const revealTargets=[...document.querySelectorAll('[data-reveal]')];
+function forceRevealAll(){revealTargets.forEach(el=>el.classList.add('in'))}
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver(entries=>entries.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}}),{threshold:0,rootMargin:'0px 0px 200px 0px'});
+  revealTargets.forEach(el=>io.observe(el));
+  // Jaring pengaman: kalau ada yang belum juga 'in' setelah beberapa saat, tampilkan langsung.
+  setTimeout(()=>{revealTargets.forEach(el=>{if(!el.classList.contains('in') && el.getBoundingClientRect().top<innerHeight*1.5)el.classList.add('in')})},900);
+  setTimeout(forceRevealAll,3000);
+  window.addEventListener('orientationchange',()=>setTimeout(forceRevealAll,300));
+}else{
+  forceRevealAll();
+}
 </script>
 
 <script>
@@ -970,6 +1135,23 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   new MutationObserver(init).observe(document.body,{childList:true,subtree:true});
 })();
 
+/* === Droplist kompak tombol header modul/iframe ===
+   Tombol sekunder (mode scroll/buku, zoom baca, buka tab baru) digabung jadi
+   satu droplist supaya baris header tetap ringkas dan tombol Tutup (×) selalu
+   punya ruang sendiri, tidak pernah berdesakan/ketutupan di layar mobile. */
+(function(){
+  const dd=document.getElementById('toolsDropdown'), moreBtn=document.getElementById('toolsMoreBtn'), menu=document.getElementById('toolsMenu');
+  if(!dd||!moreBtn||!menu)return;
+  function closeMenu(){dd.classList.remove('open');moreBtn.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true')}
+  function openMenu(){dd.classList.add('open');moreBtn.setAttribute('aria-expanded','true');menu.setAttribute('aria-hidden','false')}
+  moreBtn.addEventListener('click',e=>{e.stopPropagation();dd.classList.contains('open')?closeMenu():openMenu()});
+  menu.addEventListener('click',e=>{ if(e.target.closest('.menu-item')) setTimeout(closeMenu,80); });
+  document.addEventListener('click',e=>{ if(dd.classList.contains('open') && !dd.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeMenu(); });
+  document.getElementById('closeModal')&&document.getElementById('closeModal').addEventListener('click',closeMenu);
+  window.vaozeeCloseToolsMenu=closeMenu;
+})();
+
 /* === Mode Zoom Baca -- cubit 2 jari di atas iframe modul ===
    Catatan teknis: touch/pointer yang jatuh persis di atas <iframe> TIDAK PERNAH
    sampai ke dokumen induk (berlaku untuk semua iframe, apalagi yang online/beda
@@ -1038,13 +1220,9 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   overlay.addEventListener('pointercancel',endPtr);
   overlay.addEventListener('dblclick',()=>{ window.vaozeeResetZoomMode(); });
 })();
-/* === Sinkronisasi Modul otomatis dari Google Sheet (Apps Script) + Manager === */
+/* === Manajemen Modul (lokal, tanpa Google Sheet/Apps Script) === */
 (function(){
-  /* Ganti URL ini jika suatu saat Anda membuat deployment Apps Script baru dengan URL berbeda. */
-  const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbyh0yU30E9nM-h0QQ3R2ty_lHq7dit6ONWUeI7RNSJJ2FywGkooWr17ZbeJvltYYiD5/exec';
-  const SYNC_INTERVAL_MS=45000; /* cek pembaruan Google Sheet tiap 45 detik */
-  const STORAGE_KEY='vaozee_kitab_modules_v1';           /* fallback lokal jika koneksi gagal */
-  const REMOTE_CACHE_KEY='vaozee_remote_modules_cache_v1'; /* cache modul dari Sheet, untuk tampilan instan */
+  const STORAGE_KEY='vaozee_kitab_modules_v1'; /* modul tambahan tersimpan di browser ini (localStorage) */
 
   /* Password disimpan dalam format tersandi (dibalik lalu Base64), BUKAN teks polos,
      supaya tidak langsung kelihatan/terlacak lewat "view source" atau pencarian teks biasa.
@@ -1065,8 +1243,6 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 
   function readLocal(){try{const x=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
   function writeLocal(x){localStorage.setItem(STORAGE_KEY,JSON.stringify(x))}
-  function readRemoteCache(){try{const x=JSON.parse(localStorage.getItem(REMOTE_CACHE_KEY)||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
-  function writeRemoteCache(x){localStorage.setItem(REMOTE_CACHE_KEY,JSON.stringify(x))}
   function validUrl(url){try{const u=new URL(url);return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}}
 
   /*
@@ -1086,11 +1262,10 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     "Sawit Monitor":"sawit-monitor.html",
     "KopSUS":"kopsus.html",
     "Pantau Api":"pantau-api.html",
-    "ISPO":"ispo.html",
-    "HR-GA":"hr-ga.html",
+    "Al-Hikam":"alhikam.html",
+    "Bidayatul Hidayah":"bidayatul-hidayah.html",
     "WarRoom Plantation":"warroom-plantation.html",
-    "Test MT":"test-mt.html",
-    "Administrasi":"administrasi.html",
+    "Ushfuriyah":"ushfuriyah.html",
     "BPJS TK":"bpjs-tk.html",
     "BPJSKES":"bpjskes.html",
     "Ilmu Usul Fiqih":"ilmu-usul-fiqih.html",
@@ -1124,7 +1299,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     "Suite Launcher":"suite-launcher.html"
   };
 
-  let remoteItems=readRemoteCache();
+  let remoteItems=[]; /* Sinkronisasi Google Sheet dihapus -- dashboard ini murni lokal/statis */
 
   function normalizeTitle(v){
     return String(v||'')
@@ -1174,7 +1349,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 
   /*
    * Prioritas sumber:
-   * 1. Link Google Sheet/online jika nama kitab sama.
+   * 1. Link online (field url) jika diisi pada array kitab/umum.
    * 2. File lokal jika link online tidak tersedia/tidak dapat dipakai.
    *
    * Dengan cara ini file offline hanya menjadi fallback, bukan sumber utama.
@@ -1243,6 +1418,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     [...kitabGrid.querySelectorAll('.card'),...umumGrid.querySelectorAll('.card')].forEach(c=>{
       c.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button===1)return;e.preventDefault();openModule(c.dataset.url,c.dataset.title,false,c.dataset.localUrl)});
     });
+    if(window.bindCardNewTabButtons)window.bindCardNewTabButtons();
     apply();updateModuleCounters();
   }
 
@@ -1252,24 +1428,13 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     if(syncText)syncText.textContent=msg;
   }
 
-  async function syncFromSheet(silent){
-    setSyncState('ok','Menyinkronkan…');
-    try{
-      const res=await fetch(APPS_SCRIPT_URL+'?action=list',{method:'GET'});
-      const data=await res.json();
-      if(data&&data.ok&&Array.isArray(data.items)){
-        remoteItems=data.items.map(x=>({...x,n:String(x.n)}));
-        writeRemoteCache(remoteItems);
-        renderAll();
-        const now=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-        setSyncState('ok','Tersinkron pukul '+now);
-      }else{
-        setSyncState('err','Gagal membaca data Sheet');
-      }
-    }catch(err){
-      setSyncState('err','Offline / gagal sinkron');
-      if(!silent)console.warn('Sinkronisasi modul gagal:',err);
-    }
+  /* Sinkronisasi ke Google Sheet/Apps Script sudah dihapus sepenuhnya.
+     Dashboard ini murni statis: semua modul berasal dari array kitab/umum
+     di atas (mengarah langsung ke file HTML lokal), ditambah modul yang
+     Anda simpan sendiri lewat "Tambah Modul" (tersimpan di localStorage
+     browser ini saja, tidak dikirim ke server manapun). */
+  function syncFromSheet(){
+    setSyncState('ok','Daftar modul lokal');
   }
 
   function fillForm(x){
@@ -1297,17 +1462,17 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   function exitEditMode(){
     editTargetInput.value='';
     if(managerTitle)managerTitle.textContent='Tambah Modul';
-    if(managerDesc)managerDesc.textContent='Tambahkan link modul; setelah disimpan ke Google Sheet, kotaknya otomatis muncul di halaman utama semua pengunjung.';
+    if(managerDesc)managerDesc.textContent='Tambahkan link modul; modul tersimpan lokal di browser ini saja (localStorage).';
     if(submitBtn)submitBtn.textContent='Simpan Modul';
   }
 
   function listSaved(){
     const localItems=readLocal();
     const remoteEditable=remoteItems.filter(x=>!isBuiltin(x));
-    const remoteRows=remoteEditable.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.url} · dari Google Sheet</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}" data-remote="1">Edit</button><button class="module-delete" type="button" data-n="${x.n}" data-remote="1">Hapus</button></span></div>`).join('');
+    const remoteRows=''; /* tidak ada lagi sumber remote (Google Sheet) */
     const localRows=localItems.map(x=>`<div class="module-saved-item"><span><b>${x.title}</b><small>${x.localUrl||localUrlFor(x)} · tersimpan lokal</small></span><span style="display:flex;gap:6px"><button class="module-edit" type="button" data-n="${x.n}">Edit</button><button class="module-delete" type="button" data-n="${x.n}">Hapus</button></span></div>`).join('');
     const builtinCount=remoteItems.filter(isBuiltin).length;
-    const builtinNote=builtinCount?`<div class="module-manager-note">+ ${builtinCount} modul bawaan tercatat di Google Sheet untuk monitoring (tidak bisa diedit dari sini, karena sumbernya file HTML).</div>`:'';
+    const builtinNote='';
     savedList.innerHTML='<h4>Modul tambahan tersimpan</h4>'+((remoteRows+localRows)||'<div class="module-manager-note">Belum ada modul tambahan.</div>')+builtinNote;
 
     savedList.querySelectorAll('.module-edit').forEach(b=>{
@@ -1322,15 +1487,8 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
       b.onclick=async()=>{
         const p=prompt('Masukkan password untuk menghapus modul:');
         if(p!==getPassword()){if(p!==null)alert('Password salah.');return}
-        if(b.dataset.remote){
-          try{
-            await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'delete',token:getPassword(),n:b.dataset.n})});
-          }catch(e){alert('Gagal menghapus dari Google Sheet. Periksa koneksi lalu coba lagi.');return}
-          await syncFromSheet(true);
-        }else{
-          writeLocal(readLocal().filter(x=>String(x.n)!==b.dataset.n));
-          renderAll();
-        }
+        writeLocal(readLocal().filter(x=>String(x.n)!==b.dataset.n));
+        renderAll();
         listSaved();
       };
     });
@@ -1377,21 +1535,11 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
         writeLocal(items);renderAll();
         alert('Perubahan modul lokal berhasil disimpan.');
       }else{
-        const res=await fetch(APPS_SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
-        const data=await res.json();
-        if(!data.ok)throw new Error(data.error||'Gagal menyimpan ke Google Sheet.');
-        await syncFromSheet(true);
-        alert(isEdit?'Perubahan modul berhasil disimpan ke Google Sheet.':'Modul berhasil disimpan ke Google Sheet dan tampil otomatis di halaman utama.');
-      }
-    }catch(err){
-      if(isEdit){
-        alert('Gagal menyimpan perubahan ke Google Sheet.\n('+err.message+')\nCoba lagi setelah koneksi normal.');
-      }else{
         const items=readLocal();
         const localN='L'+Date.now();
         items.push({n:localN,title,cat:payload.cat,icon:payload.icon,badge:payload.badge,url,localUrl:payload.localUrl,desc:payload.desc,section});
         writeLocal(items);renderAll();
-        alert('Tidak bisa terhubung ke Google Sheet, modul disimpan sementara hanya di browser ini.\n('+err.message+')');
+        alert('Modul berhasil disimpan (tersimpan lokal di browser ini) dan langsung tampil di halaman utama.');
       }
     }finally{
       submitBtn.disabled=false;submitBtn.textContent=isEdit?'Simpan Perubahan':'Simpan Modul';
@@ -1401,9 +1549,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   });
 
   renderAll();
-  syncFromSheet(true);
-  setInterval(()=>syncFromSheet(true),SYNC_INTERVAL_MS);
-  window.vaozeeSyncModules=()=>syncFromSheet(false); /* bisa dipanggil manual dari console jika perlu */
+  syncFromSheet();
 })();
 
 /* === Tombol Ringkas Tampilan (compact view) === */
@@ -1414,7 +1560,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   if(!btn||grids.length<2)return;
   function apply(on){
     grids.forEach(g=>g.classList.toggle('compact',on));
-    btn.textContent=on?'▦ Tampilan Lengkap':'🗜 Ringkas Tampilan';
+    btn.textContent=on?'🗜 Ringkas Tampilan':'▦ Tampilan Lengkap';
     btn.classList.toggle('active',on);
   }
   apply(localStorage.getItem(KEY)==='1');
@@ -1443,8 +1589,73 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
   let pdfEntries=[];
   let activePdf=null, activeDoc=null, activeSpread=1, pdfLibPromise=null, gesture=null, suppressBookClickUntil=0;
 
+  /* === Sumber PDF dari Google Drive (folder "Kitab Klasik PDF") ===
+     Memakai Apps Script Web App yang sama dengan yang dipakai modul lain
+     (mis. Buletin di RTH Desktop) -- backend ini jalan atas akun pemilik
+     Drive sendiri, jadi folder TIDAK perlu dibagikan publik, dan tidak ada
+     API key yang perlu ditaruh di halaman ini. */
+  const PDF_SCRIPT_URL="https://script.google.com/macros/s/AKfycbxKmF2MeicmWJSUhmo6sAK4MoZujJqu4HOuJ9Mf3v3qnP0qme-NPifxidSAz-YAxDZsbA/exec";
+  const PDF_DRIVE_FOLDER_ID="1wVNHR_1hr5kG1CFluyvqBjlzdONQaR1n";
+
+  async function apiListDrivePdf(folderId){
+    const url=new URL(PDF_SCRIPT_URL);
+    url.searchParams.set('action','listAny');
+    url.searchParams.set('folderId',folderId);
+    const res=await fetch(url.toString());
+    if(!res.ok)throw new Error('Apps Script merespons status '+res.status);
+    return res.json();
+  }
+  /* === Cache daftar PDF di sessionStorage ===
+     Supaya Chapter 03 tidak selalu terasa lambat: daftar terakhir yang pernah
+     dimuat langsung ditampilkan (instan), lalu disegarkan diam-diam dari
+     jaringan. Ini "stale-while-revalidate" versi ringan, tanpa server tambahan. */
+  const PDF_LIST_CACHE_KEY='vaozee_pdf_list_cache_v1';
+  function loadCachedList(){
+    try{ const raw=sessionStorage.getItem(PDF_LIST_CACHE_KEY); return raw?JSON.parse(raw):null; }catch(e){ return null; }
+  }
+  function saveCachedList(list){
+    try{ sessionStorage.setItem(PDF_LIST_CACHE_KEY,JSON.stringify(list)); }catch(e){}
+  }
+  function upsertDriveEntry(f){
+    const id='drive:'+f.id;
+    const name=(f.name&&String(f.name).trim())||'PDF Tanpa Judul';
+    const existing=pdfEntries.find(x=>x.id===id);
+    if(existing){ existing.name=name; existing.size=Number(f.size)||existing.size||0; return; }
+    pdfEntries.push({id,name,path:'Google Drive · Kitab Klasik PDF',driveId:f.id,remote:true,size:Number(f.size)||0});
+  }
+  async function loadDriveEntries(){
+    const cached=loadCachedList();
+    if(cached&&cached.length){
+      cached.forEach(upsertDriveEntry);
+      pdfEntries.sort((a,b)=>a.name.localeCompare(b.name,'id'));
+      renderCards();
+    }
+    try{
+      const r=await apiListDrivePdf(PDF_DRIVE_FOLDER_ID);
+      if(!r||!r.ok){console.warn('Gagal memuat daftar PDF dari Google Drive:',r&&r.error);return}
+      const files=(r.files||[]).filter(f=>f.kind!=='folder'&&((f.mimeType||'').includes('pdf')||/\.pdf$/i.test(f.name||'')));
+      saveCachedList(files.map(f=>({id:f.id,name:f.name,size:f.size})));
+      const freshIds=new Set(files.map(f=>'drive:'+f.id));
+      pdfEntries=pdfEntries.filter(x=>!x.remote||freshIds.has(x.id)); // buang entri lama yg sudah dihapus di Drive
+      files.forEach(upsertDriveEntry);
+      pdfEntries.sort((a,b)=>a.name.localeCompare(b.name,'id'));
+      renderCards();
+    }catch(e){console.warn('Tidak bisa memuat PDF dari Google Drive:',e);}
+  }
+  const PDF_LARGE_THRESHOLD=95*1024*1024; // ~95MB -- di atas ini Google sering menolak pratinjau
+  function fmtSize(bytes){
+    if(!bytes)return '';
+    const mb=bytes/(1024*1024);
+    return mb>=1024?(mb/1024).toFixed(2)+' GB':mb.toFixed(1)+' MB';
+  }
+
   function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-  function updateEmpty(){empty.style.display=pdfEntries.length?'none':'block'}
+  function updateEmpty(){
+    empty.style.display=pdfEntries.length?'none':'block';
+    const label=document.getElementById('pdfCountLabel'), stat=document.getElementById('statPdf');
+    if(label)label.textContent=pdfEntries.length+' PDF';
+    if(stat)stat.textContent=pdfEntries.length;
+  }
   function saveMeta(){try{localStorage.setItem(STORAGE,JSON.stringify(pdfEntries.map(x=>({id:x.id,name:x.name,path:x.path||''}))))}catch(e){}}
   function idFor(file){return (file.webkitRelativePath||file.name)+'|'+file.size+'|'+file.lastModified}
 
@@ -1459,17 +1670,129 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
     renderCards();saveMeta();
   }
 
+  /* === Buka langsung file besar (>100MB) yang ditolak pratinjau Google ===
+     "/preview" Google Drive punya batas ukuran; di atas itu muncul pesan
+     "Sorry, we're unable to preview this file." Untuk kasus ini, PDF diambil
+     langsung lewat Drive API (pakai token dari Apps Script yang sama, bukan
+     API key baru) lalu dibuka dengan pembaca buku/scroll lokal yang sudah ada
+     di halaman ini -- tanpa batas ukuran preview Google sama sekali.
+     CATATAN: perlu tambahan SATU action di Apps Script yang sudah dipakai
+     (PDF_SCRIPT_URL), berikut kodenya untuk ditambahkan di project .gs:
+        else if(action==='driveToken'){
+          out={ok:true, token: ScriptApp.getOAuthToken()};
+        }
+     (taruh sejalan dengan percabangan action lain di fungsi doGet-nya). */
+  async function getDriveToken(){
+    const url=new URL(PDF_SCRIPT_URL);
+    url.searchParams.set('action','driveToken');
+    const res=await fetch(url.toString());
+    if(!res.ok)throw new Error('Apps Script merespons status '+res.status);
+    const j=await res.json();
+    if(!j||!j.ok||!j.token)throw new Error(j&&j.error?j.error:'Token akses Drive belum tersedia (action "driveToken" belum ditambahkan di Apps Script).');
+    return j.token;
+  }
+
+  /* === Cache byte PDF yang sudah pernah dibuka (Cache Storage) ===
+     Supaya buka ulang kitab yang sama jadi hampir instan (tidak unduh ulang),
+     ini pengganti paling ringan dari menyimpan PDF di server tambahan. */
+  const PDF_BLOB_CACHE='vaozee-pdf-blob-v1';
+  async function getCachedPdfBlob(driveId){
+    if(!('caches' in window))return null;
+    try{
+      const c=await caches.open(PDF_BLOB_CACHE);
+      const res=await c.match('https://vaozee-pdf.cache/'+driveId);
+      return res?await res.blob():null;
+    }catch(e){return null}
+  }
+  async function setCachedPdfBlob(driveId,blob){
+    if(!('caches' in window))return;
+    try{
+      const c=await caches.open(PDF_BLOB_CACHE);
+      await c.put('https://vaozee-pdf.cache/'+driveId,new Response(blob,{headers:{'Content-Type':'application/pdf'}}));
+    }catch(e){/* kuota cache penuh/gagal -- tidak fatal, cukup lewati */}
+  }
+
+  /* === Ambil PDF langsung lewat Drive API (dipakai untuk SEMUA PDF Drive) ===
+     Kenapa tidak lagi pakai iframe "/preview" Google sebagai jalur utama:
+     folder sengaja TIDAK dibagikan publik (lihat catatan di atas), jadi
+     iframe pratinjau bisa menampilkan halaman "tidak ditemukan"/butuh akses
+     padahal URL-nya valid dan koneksi baik-baik saja -- iframe lintas-origin
+     tidak bisa dideteksi gagal oleh halaman ini karena kontennya tidak bisa
+     dibaca (CORS), jadi tidak ada cara otomatis memperbaikinya selain
+     menghindari sepenuhnya. Mengambil byte lewat token Apps Script (akun
+     pemilik Drive) lalu merender dengan pdf.js lokal jauh lebih konsisten,
+     lebih ringan (tanpa UI Google Drive yang berat), dan judul selalu benar
+     karena diambil dari data folder sendiri, bukan dari halaman Google. */
+  async function fetchDrivePdfBlob(x,onProgress){
+    const cached=await getCachedPdfBlob(x.driveId);
+    if(cached)return cached;
+    const token=await getDriveToken();
+    const res=await fetch('https://www.googleapis.com/drive/v3/files/'+x.driveId+'?alt=media',{headers:{Authorization:'Bearer '+token}});
+    if(!res.ok)throw new Error('Gagal mengambil file dari Drive (status '+res.status+').');
+    const total=Number(res.headers.get('Content-Length'))||x.size||0;
+    let blob;
+    if(res.body&&res.body.getReader&&total){
+      const reader=res.body.getReader();const chunks=[];let received=0;
+      while(true){
+        const {done,value}=await reader.read();
+        if(done)break;
+        chunks.push(value);received+=value.length;
+        if(onProgress)onProgress(Math.min(99,Math.round(received/total*100)));
+      }
+      blob=new Blob(chunks,{type:'application/pdf'});
+    }else{
+      blob=await res.blob();
+    }
+    setCachedPdfBlob(x.driveId,blob);
+    return blob;
+  }
+
+  async function openDriveDirect(x,btn){
+    const isLarge=x.size>PDF_LARGE_THRESHOLD;
+    const oldLabel=btn?btn.textContent:'';
+    if(btn)btn.textContent='⏳ Memuat…';
+    try{
+      const blob=await fetchDrivePdfBlob(x,pct=>{ if(btn)btn.textContent='⏳ '+pct+'%'; });
+      const file=new File([blob],x.name,{type:'application/pdf'});
+      openPdf({...x,file});
+    }catch(e){
+      console.warn('Buka langsung gagal:',e);
+      if(isLarge){
+        alert('File ini berukuran besar dan jalur baca langsung gagal ('+(e&&e.message||e)+'). File akan diunduh ke perangkat sebagai gantinya.');
+        window.open('https://drive.google.com/uc?id='+x.driveId+'&export=download','_blank','noopener');
+      }else{
+        // Jaring pengaman terakhir: coba pratinjau Google (perlu file dibagikan/izin akun).
+        openModule('https://drive.google.com/file/d/'+x.driveId+'/preview',x.name.replace(/\.pdf$/i,''));
+      }
+    }finally{
+      if(btn)btn.textContent=oldLabel||'Baca PDF →';
+    }
+  }
+
   function renderCards(){
-    grid.innerHTML=pdfEntries.map((x,i)=>`<button class="card pdf-card" type="button" data-pdf-id="${esc(x.id)}">
+    grid.innerHTML=pdfEntries.map((x,i)=>{
+      const isLarge=x.remote&&x.size>PDF_LARGE_THRESHOLD;
+      const sizeLabel=x.remote&&x.size?fmtSize(x.size):'';
+      const title=(x.name||'PDF Tanpa Judul').replace(/\.pdf$/i,'')||'PDF Tanpa Judul';
+      return `<div class="card pdf-card" data-pdf-id="${esc(x.id)}">
       <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-      <div class="card-top"><span class="num">PDF ${String(i+1).padStart(2,'0')}</span><span class="badge">PDF</span></div>
+      <div class="card-top"><span class="num">PDF ${String(i+1).padStart(2,'0')}</span><span class="badge">${x.remote?(isLarge?'PDF · BESAR':'PDF · DRIVE'):'PDF'}</span></div>
       <div class="icon">PDF</div>
-      <div class="card-body"><h3>${esc(x.name.replace(/\.pdf$/i,''))}</h3><p>Pembaca PDF VAOZEE dengan mode scroll biasa atau mode buku halaman per halaman.</p><div class="pdf-meta">${esc(x.path||x.name)}</div></div>
-      <div class="card-bottom"><span class="path">${esc(x.name)}</span><span class="open">Buka PDF →</span></div>
-    </button>`).join('');
-    grid.querySelectorAll('.pdf-card').forEach(btn=>btn.addEventListener('click',()=>{
-      const x=pdfEntries.find(y=>y.id===btn.dataset.pdfId); if(x)openPdf(x);
-    }));
+      <div class="card-body"><h3>${esc(title)}</h3><p>${x.remote?(isLarge?'File berukuran besar ('+esc(sizeLabel)+') -- diunduh langsung lalu dibuka di pembaca VAOZEE.':'Kitab PDF dari koleksi Google Drive, dibuka di pembaca VAOZEE (mode scroll/buku).'):'Pembaca PDF VAOZEE dengan mode scroll biasa atau mode buku halaman per halaman.'}</p><div class="pdf-meta">${esc(x.path||x.name||'')}${sizeLabel?' · '+esc(sizeLabel):''}</div></div>
+      <div class="card-bottom"><span class="path">${esc(x.name||'PDF Tanpa Judul')}</span><span class="open" data-pdf-open>Baca PDF →</span></div>
+    </div>`;
+    }).join('');
+    grid.querySelectorAll('.pdf-card').forEach(card=>{
+      const x=pdfEntries.find(y=>y.id===card.dataset.pdfId); if(!x)return;
+      /* Semua PDF (lokal maupun dari Google Drive) dibuka lewat pembaca VAOZEE
+         sendiri (mode scroll/buku), BUKAN lewat iframe pratinjau Google --
+         supaya tidak lagi kena halaman "tidak ditemukan"/butuh izin, judul
+         selalu benar, dan tampilannya konsisten di semua perangkat. */
+      card.addEventListener('click',()=>{
+        if(x.remote)openDriveDirect(x,card.querySelector('[data-pdf-open]'));
+        else openPdf(x);
+      });
+    });
     updateEmpty();
   }
 
@@ -1822,6 +2145,7 @@ document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
 
   bindBookTouch();
   renderCards();
+  loadDriveEntries();
 })();
 </script>
 

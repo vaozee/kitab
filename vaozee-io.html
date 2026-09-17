@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAOZEE // SYSTEM INDEX</title>
+<meta name="description" content="Portal aplikasi Achmad Fauzi — sistem operasional perkebunan sawit & alat bantu pribadi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef1f4;
+    --panel:#ffffff;
+    --panel-hi:#f3f7f9;
+    --phos:#0072a3;
+    --phos-dim:#5b93a8;
+    --phos-faint:rgba(0,114,163,0.10);
+    --amber:#c47a00;
+    --amber-dim:#c9a15c;
+    --red:#c62828;
+    --red-dim:#e2a4a4;
+    --ink:#1a232c;
+    --ink-dim:#4d5b68;
+    --ink-dimmer:#8494a1;
+    --border:rgba(0,114,163,0.22);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; min-height:100vh;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:18px;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+    cursor:crosshair;
+  }
+  .display{font-family:'Chakra Petch', sans-serif; text-transform:uppercase;}
+  a{color:inherit;}
+
+  /* ---------- CRT / scanline / glitch atmosphere ---------- */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:85; pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
+      rgba(0,20,30,0.06) 3px, rgba(0,0,0,0) 4px
+    );
+    mix-blend-mode:multiply;
+    opacity:0.5;
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:86; pointer-events:none;
+    background:radial-gradient(120% 90% at 50% 0%, transparent 60%, rgba(0,40,60,0.10) 100%);
+  }
+  .noise-sweep{
+    position:fixed; left:0; right:0; height:140px; z-index:79; pointer-events:none;
+    background:linear-gradient(to bottom, rgba(61,255,160,0.06), transparent);
+    animation:sweepDown 6s linear infinite;
+  }
+  @keyframes sweepDown{ 0%{top:-140px;} 100%{top:100vh;} }
+
+  .static-flash{
+    position:fixed; inset:0; z-index:90; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(20,40,50,0.10) 0 1px, transparent 1px 3px);
+    opacity:0; mix-blend-mode:multiply;
+  }
+  .static-flash.hit{ animation:staticHit 220ms steps(3) 1; }
+  @keyframes staticHit{
+    0%{opacity:0; transform:translateY(0);}
+    20%{opacity:0.9; transform:translateY(-4px);}
+    40%{opacity:0.2; transform:translateY(3px);}
+    60%{opacity:0.7; transform:translateY(-2px);}
+    100%{opacity:0;}
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:2; pointer-events:none; opacity:0.06;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(61,255,160,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(61,255,160,0.05) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 20%, black 30%, transparent 75%);
+  }
+
+  /* fixed targeting reticle corners */
+  .reticle{ position:fixed; z-index:87; width:26px; height:26px; pointer-events:none; opacity:0.55; }
+  .reticle::before, .reticle::after{ content:""; position:absolute; background:var(--phos-dim); }
+  .reticle.tl{ top:14px; left:14px; }
+  .reticle.tr{ top:14px; right:14px; transform:scaleX(-1); }
+  .reticle.bl{ bottom:14px; left:14px; transform:scaleY(-1); }
+  .reticle.br{ bottom:14px; right:14px; transform:scale(-1,-1); }
+  .reticle::before{ width:100%; height:1px; top:0; left:0; }
+  .reticle::after{ width:1px; height:100%; top:0; left:0; }
+
+  .rec-indicator{
+    position:fixed; top:14px; right:52px; z-index:88;
+    font-size:0.62rem; color:var(--red); letter-spacing:0.06em;
+    display:flex; align-items:center; gap:5px;
+  }
+  .rec-indicator .dot{
+    width:6px; height:6px; border-radius:50%; background:var(--red);
+    box-shadow:0 0 8px 1px var(--red);
+    animation:blink 1s ease-in-out infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.15;}}
+
+  main, header, footer{position:relative; z-index:3; cursor:default;}
+
+  /* ---------- HUD status bar ---------- */
+  .hud-bar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 20px; font-size:0.8rem; letter-spacing:0.06em;
+    border-bottom:1px solid var(--border);
+    color:var(--ink-dim);
+    flex-wrap:wrap; gap:8px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(240,246,248,0.6));
+  }
+  .hud-bar span.on{color:var(--phos);}
+  .hud-bar .blink-dot{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--phos); margin-right:6px;
+    box-shadow:0 0 8px 1px var(--phos);
+    animation:blink 1.6s ease-in-out infinite;
+  }
+  .hud-bar .seg{display:flex; align-items:center; gap:6px;}
+  @media (max-width:700px){ .hud-bar .hide-sm{display:none;} }
+
+  /* ---------- alert ticker marquee ---------- */
+  .ticker{
+    border-bottom:1px solid var(--border);
+    background:#f4ede1;
+    overflow:hidden; white-space:nowrap;
+    padding:7px 0;
+  }
+  .ticker-track{
+    display:inline-block; padding-left:100%;
+    animation:tickerScroll 26s linear infinite;
+    font-size:0.8rem; letter-spacing:0.08em;
+  }
+  .ticker-track span{ margin-right:48px; }
+  .ticker-track .amber{ color:var(--amber); }
+  .ticker-track .red{ color:var(--red); }
+  .ticker-track .phos{ color:var(--phos); }
+  @keyframes tickerScroll{ 0%{transform:translateX(0);} 100%{transform:translateX(-100%);} }
+
+  /* ---------- header / nav (floating, transparent) ---------- */
+  header{
+    position:sticky; top:0; z-index:70;
+    display:flex; justify-content:center;
+    padding:12px 0;
+  }
+  header nav{
+    display:flex; justify-content:center; gap:2px;
+    padding:8px 8px; flex-wrap:wrap;
+    background:rgba(255,255,255,0.68);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border:1px solid var(--border);
+    border-radius:999px;
+    box-shadow:0 14px 34px -16px rgba(20,40,60,0.18);
+  }
+  header nav a{
+    font-size:0.7rem; text-decoration:none; letter-spacing:0.08em;
+    color:var(--ink-dim); padding:8px 16px;
+    border:1px solid transparent;
+    transition:all .15s ease;
+  }
+  header nav a::before{content:"[ ";}
+  header nav a::after{content:" ]";}
+  header nav a{ border-radius:999px; }
+  header nav a:hover, header nav a:focus-visible{
+    color:var(--phos); border-color:var(--border); background:var(--phos-faint);
+    outline:none;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:1000px; margin:0 auto; padding:56px 20px 30px;
+    text-align:center;
+    position:relative;
+  }
+  .hero .ghost-bg{
+    position:absolute; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hero .ghost-bg span{
+    font-family:'Chakra Petch', sans-serif; font-weight:700; font-size:11rem;
+    color:transparent; -webkit-text-stroke:1px rgba(61,255,160,0.05);
+    white-space:nowrap; letter-spacing:0.02em;
+  }
+  .hero .tagline{
+    font-size:0.72rem; color:var(--amber); letter-spacing:0.14em;
+    margin-bottom:22px;
+  }
+  .hero .tagline::before{content:"// ";}
+  .hero h1{
+    font-size:clamp(2.3rem, 7vw, 4.6rem);
+    line-height:1.02; margin:0; font-weight:700; letter-spacing:0.01em;
+    color:var(--ink);
+    position:relative;
+  }
+  .hero h1 .accent{
+    color:var(--phos);
+    text-shadow:0 0 24px rgba(61,255,160,0.45);
+  }
+  .glitch{ position:relative; display:block; }
+  .glitch::before, .glitch::after{
+    content:attr(data-text); position:absolute; top:0; left:0; width:100%;
+    overflow:hidden; background:var(--bg);
+  }
+  .glitch::before{
+    color:var(--red); z-index:-1; animation:glitchTop 5.5s infinite linear alternate-reverse;
+  }
+  .glitch::after{
+    color:#37d3ff; z-index:-1; animation:glitchBottom 6.5s infinite linear alternate-reverse;
+  }
+  @keyframes glitchTop{
+    0%,92%{ clip-path:inset(0 0 100% 0); transform:translate(0,0); opacity:0; }
+    93%{ clip-path:inset(10% 0 60% 0); transform:translate(-3px,-1px); opacity:0.8; }
+    95%{ clip-path:inset(60% 0 5% 0); transform:translate(3px,1px); opacity:0.8; }
+    97%{ clip-path:inset(30% 0 40% 0); transform:translate(-2px,0); opacity:0.8; }
+    100%{ clip-path:inset(0 0 100% 0); opacity:0; }
+  }
+  @keyframes glitchBottom{
+    0%,90%{ clip-path:inset(100% 0 0 0); transform:translate(0,0); opacity:0; }
+    91%{ clip-path:inset(70% 0 5% 0); transform:translate(3px,1px); opacity:0.8; }
+    94%{ clip-path:inset(5% 0 80% 0); transform:translate(-3px,-1px); opacity:0.8; }
+    96%{ clip-path:inset(40% 0 30% 0); transform:translate(2px,0); opacity:0.8; }
+    100%{ clip-path:inset(100% 0 0 0); opacity:0; }
+  }
+  .hero .cursor{
+    display:inline-block; width:0.5em; height:0.85em;
+    background:var(--phos); margin-left:6px; vertical-align:-0.1em;
+    animation:blink 1s steps(1) infinite;
+  }
+  .hero p.lead{
+    max-width:640px; margin:26px auto 0; color:var(--ink-dim);
+    font-size:0.92rem; line-height:1.75;
+  }
+  .hero p.lead b{color:var(--ink); font-weight:600;}
+
+  /* ---------- radar signature (now functional nav) ---------- */
+  .radar-wrap{
+    max-width:560px; margin:52px auto 6px;
+    position:relative;
+  }
+  .radar-wrap svg{width:100%; height:auto; display:block; overflow:visible;}
+  .radar-hint{
+    font-size:0.62rem; color:var(--ink-dimmer); letter-spacing:0.08em;
+    margin-top:16px; text-align:center;
+  }
+  .radar-ring{fill:none; stroke:var(--phos-dim); stroke-width:1;}
+  .radar-cross{stroke:var(--phos-dim); stroke-width:1;}
+  .radar-sweep-line{
+    stroke:var(--red); stroke-width:1.5; transform-origin:250px 250px;
+    animation:rotateSweep 4s linear infinite;
+  }
+  .radar-sweep-fill{
+    transform-origin:250px 250px;
+    animation:rotateSweep 4s linear infinite;
+  }
+  @keyframes rotateSweep{ to{ transform:rotate(360deg); } }
+
+  .blip-link{ cursor:pointer; outline:none; }
+  .blip-link .hit{ fill:transparent; }
+  .blip-link .core{
+    fill:var(--phos);
+    transform-box:fill-box; transform-origin:center;
+    animation:blipPulse 2.4s ease-in-out infinite;
+  }
+  .blip-link .ring{
+    fill:none; stroke:var(--phos); stroke-width:1; opacity:0;
+    transform-box:fill-box; transform-origin:center; transform:scale(1);
+    transition:opacity .2s ease, transform .35s ease;
+  }
+  .blip-link text{
+    font-family:'Space Grotesk', sans-serif; font-size:9.5px; fill:var(--ink-dim);
+    letter-spacing:0.04em; transition:fill .2s ease;
+  }
+  @keyframes blipPulse{ 0%,100%{opacity:0.55;} 50%{opacity:1;} }
+  .blip-link:hover .ring, .blip-link:focus-visible .ring{
+    opacity:1; transform:scale(2.4);
+  }
+  .blip-link:hover .core, .blip-link:focus-visible .core{
+    animation:none; opacity:1; filter:drop-shadow(0 0 6px var(--phos));
+  }
+  .blip-link:hover text, .blip-link:focus-visible text{
+    fill:var(--phos); font-weight:700;
+  }
+  .blip-link.alert .core{ fill:var(--red); }
+  .blip-link.alert .ring{ stroke:var(--red); }
+  .blip-link.alert:hover .core, .blip-link.alert:focus-visible .core{
+    filter:drop-shadow(0 0 6px var(--red));
+  }
+  .blip-link.alert:hover text, .blip-link.alert:focus-visible text{
+    fill:var(--red);
+  }
+
+  /* ---------- stat strip ---------- */
+  .stat-strip{
+    display:flex; justify-content:center; gap:0; flex-wrap:wrap;
+    max-width:700px; margin:20px auto 0;
+    border:1px solid var(--border);
+  }
+  .stat-strip .cell{
+    flex:1; min-width:140px; text-align:center; padding:16px 10px;
+    border-right:1px solid var(--border);
+  }
+  .stat-strip .cell:last-child{border-right:none;}
+  .stat-strip .cell b{
+    display:block; font-family:'Chakra Petch',sans-serif; font-size:1.7rem;
+    color:var(--phos); font-weight:700;
+  }
+  .stat-strip .cell span{
+    font-size:0.62rem; color:var(--ink-dimmer); letter-spacing:0.08em; text-transform:uppercase;
+  }
+
+  /* ---------- hazard divider ---------- */
+  .hazard{
+    margin:70px 0 0;
+    height:22px;
+    background:repeating-linear-gradient(45deg, var(--amber) 0 14px, #0a0503 14px 28px);
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .hazard span{
+    background:var(--bg); color:var(--amber); font-size:0.62rem; letter-spacing:0.12em;
+    padding:2px 14px; border:1px solid var(--amber-dim);
+  }
+
+  /* ---------- section headers ---------- */
+  section.group{ max-width:1180px; margin:0 auto; padding:44px 20px 10px; }
+  .group-head{
+    display:flex; align-items:center; gap:14px; margin-bottom:26px; flex-wrap:wrap;
+  }
+  .group-head .tag{
+    font-size:0.68rem; color:var(--bg); background:var(--phos);
+    padding:4px 10px; font-weight:700; letter-spacing:0.06em;
+  }
+  .group-head h2{
+    font-family:'Chakra Petch', sans-serif; font-size:1.35rem; font-weight:700;
+    letter-spacing:0.02em; margin:0; color:var(--ink);
+  }
+  .group-head .rule{flex:1; height:1px; background:repeating-linear-gradient(to right, var(--border) 0 6px, transparent 6px 11px); min-width:40px;}
+  .group-head .meta{ font-size:0.65rem; color:var(--ink-dimmer); }
+
+  /* ---------- console cards ---------- */
+  .card-grid{ display:grid; grid-template-columns:repeat(3, 1fr); gap:2px; background:var(--border); border:1px solid var(--border); }
+  @media (max-width:960px){ .card-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:620px){ .card-grid{grid-template-columns:1fr;} }
+
+  .card{
+    position:relative;
+    background:var(--panel);
+    padding:20px 18px 18px;
+    text-decoration:none;
+    display:flex; flex-direction:column; gap:10px;
+    min-height:200px;
+    transition:background .18s ease;
+    overflow:hidden;
+  }
+  .card:hover, .card:focus-visible{ background:var(--panel-hi); outline:none; }
+  .card:hover::after{ content:""; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(61,255,160,0.05) 0 1px, transparent 1px 3px);
+    animation:cardFlicker 260ms steps(2) 1;
+  }
+  @keyframes cardFlicker{ 0%{opacity:0;} 30%{opacity:1;} 100%{opacity:0;} }
+  .card .top{ display:flex; justify-content:space-between; align-items:flex-start; }
+  .card .code{ font-size:0.65rem; color:var(--amber); letter-spacing:0.08em; }
+  .card .status{ display:flex; align-items:center; gap:5px; font-size:0.6rem; letter-spacing:0.05em; color:var(--ink-dimmer); text-transform:uppercase; }
+  .card .status .led{ width:6px; height:6px; border-radius:50%; background:var(--phos-dim); }
+  .card.online .status .led{ background:var(--phos); box-shadow:0 0 6px 1px var(--phos); animation:blink 1.8s ease-in-out infinite; }
+  .card.online .status{ color:var(--phos-dim); }
+  .card.live .status .led{ background:var(--red); box-shadow:0 0 6px 1px var(--red); }
+  .card.live .status{ color:var(--red); }
+  .card.alert{ box-shadow:inset 3px 0 0 var(--red-dim); }
+  .card.alert .code{ color:var(--red); }
+  .card.alert:hover, .card.alert:focus-visible{ box-shadow:inset 3px 0 0 var(--red); }
+  .card h3{
+    font-family:'Chakra Petch', sans-serif; font-size:1.05rem; font-weight:600;
+    color:var(--ink); margin:2px 0 0; letter-spacing:0.01em; text-transform:uppercase;
+  }
+  .card p{ margin:0; color:var(--ink-dim); font-size:0.78rem; line-height:1.6; flex:1; }
+  .card .go{
+    margin-top:auto; display:flex; align-items:center; justify-content:space-between;
+    font-size:0.68rem; color:var(--phos); letter-spacing:0.05em; padding-top:6px;
+    border-top:1px dashed var(--border);
+  }
+  .card .go .arrow{ transition:transform .2s ease; }
+  .card:hover .go .arrow{ transform:translateX(5px); }
+
+  .card::before{
+    content:""; position:absolute; width:12px; height:12px; pointer-events:none;
+    border-color:var(--ink-dimmer); opacity:0; transition:opacity .2s ease;
+    top:6px; left:6px; border-top:1px solid; border-left:1px solid;
+  }
+  .card .corner-br{
+    content:""; position:absolute; width:12px; height:12px; pointer-events:none;
+    border-color:var(--ink-dimmer); opacity:0; transition:opacity .2s ease;
+    bottom:6px; right:6px; border-bottom:1px solid; border-right:1px solid;
+  }
+  .card:hover::before, .card:hover .corner-br, .card:focus-visible::before, .card:focus-visible .corner-br{
+    opacity:1; border-color:var(--phos);
+  }
+
+  /* ---------- footer terminal ---------- */
+  footer{
+    max-width:1180px; margin:60px auto 0; padding:24px 20px 40px;
+    border-top:1px solid var(--border);
+    font-size:0.72rem; color:var(--ink-dimmer);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  footer a{ color:var(--amber); text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+  .prompt::before{ content:"user@vaozee:~$ "; color:var(--phos-dim); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .noise-sweep, .radar-sweep-line, .radar-sweep-fill, .blip-link .core,
+    .hud-bar .blink-dot, .hero .cursor, .card.online .status .led,
+    .rec-indicator .dot, .ticker-track, .glitch::before, .glitch::after,
+    .static-flash, .card:hover::after{ animation:none !important; }
+  }
+
+  /* ---------- fullscreen app embed modal ---------- */
+  .app-modal{
+    position:fixed; inset:0; z-index:200;
+    background:var(--bg);
+    opacity:0; pointer-events:none;
+    transition:opacity .22s ease;
+  }
+  .app-modal.open{ opacity:1; pointer-events:auto; }
+  .app-modal iframe{
+    position:absolute; inset:0; width:100%; height:100%; border:0; background:#0a0a0a;
+  }
+
+  .app-capsule{
+    position:absolute; top:16px; left:50%; transform:translateX(-50%);
+    z-index:5;
+    display:flex; align-items:center; gap:8px;
+    padding:6px 8px;
+    background:rgba(6,14,9,0.38);
+    backdrop-filter:blur(20px) saturate(160%);
+    -webkit-backdrop-filter:blur(20px) saturate(160%);
+    border:1px solid var(--border);
+    border-radius:999px;
+    box-shadow:0 16px 40px -16px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.04);
+    max-width:calc(100vw - 24px);
+    user-select:none;
+  }
+  .app-capsule .drag-handle{
+    cursor:grab; color:var(--ink-dimmer); font-size:0.85rem; letter-spacing:-1px;
+    padding:6px 8px 6px 10px; line-height:1; touch-action:none;
+  }
+  .app-capsule .drag-handle:active{ cursor:grabbing; }
+  .app-capsule .drag-handle:hover{ color:var(--phos-dim); }
+  .app-capsule .led{
+    width:7px; height:7px; border-radius:50%; background:var(--phos); flex:none;
+    box-shadow:0 0 8px 1px var(--phos); animation:blink 1.6s ease-in-out infinite;
+  }
+  .app-capsule .name{
+    font-family:'Space Grotesk', sans-serif; font-size:0.7rem; letter-spacing:0.04em;
+    color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    max-width:38vw; padding-right:2px;
+  }
+  .app-capsule .icon-btn{
+    display:flex; align-items:center; justify-content:center; flex:none;
+    width:26px; height:26px; border-radius:50%;
+    color:var(--ink-dim); border:1px solid var(--border); background:rgba(0,0,0,0.15);
+    font-size:0.7rem; cursor:pointer; text-decoration:none;
+    transition:all .15s ease;
+  }
+  .app-capsule .icon-btn:hover, .app-capsule .icon-btn:focus-visible{
+    color:var(--phos); border-color:var(--phos-dim); background:var(--phos-faint); outline:none;
+  }
+  .app-capsule .icon-btn.close{ color:var(--red); border-color:var(--red-dim); }
+  .app-capsule .icon-btn.close:hover, .app-capsule .icon-btn.close:focus-visible{
+    color:var(--red); border-color:var(--red); background:rgba(255,59,59,0.12);
+  }
+  @media (max-width:560px){
+    .app-capsule .name{ max-width:32vw; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="noise-sweep" aria-hidden="true"></div>
+<div class="static-flash" id="staticFlash" aria-hidden="true"></div>
+<div class="reticle tl" aria-hidden="true"></div>
+<div class="reticle tr" aria-hidden="true"></div>
+<div class="reticle bl" aria-hidden="true"></div>
+<div class="reticle br" aria-hidden="true"></div>
+<div class="rec-indicator" aria-hidden="true"><span class="dot"></span>REC</div>
+
+<div class="hud-bar">
+  <div class="seg"><span class="blink-dot"></span><span class="on">SYSTEM ONLINE</span></div>
+  <div class="seg hide-sm">OFFLINE-FIRST &nbsp;· &nbsp;AUTO-SYNC AKTIF</div>
+  <div class="seg" id="clock">--:--:-- WIB</div>
+</div>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="phos">◆ 9 MODUL TERPANTAU</span>
+    <span class="amber">◆ SYS-03 PANTAU TITIK PANAS — LIVE FEED NASA FIRMS</span>
+    <span class="red">◆ PERINGATAN: SELALU VERIFIKASI DATA SEBELUM PENGAMBILAN KEPUTUSAN LAPANGAN</span>
+    <span class="phos">◆ 6 MODUL OPERASIONAL · 3 ALAT PRIBADI &amp; PUBLIK</span>
+    <span class="amber">◆ SYS-05 KOPSUS — DEMO MODE</span>
+    <span class="phos">◆ SEMUA MODUL OFFLINE-FIRST · SINKRON OTOMATIS</span>
+    <span class="red">◆ AKSES TERBATAS UNTUK PENGGUNA INTERNAL PADA MODUL TERTENTU</span>
+  </div>
+</div>
+
+<header>
+  <nav>
+    <a href="#pribadi">Alat Pribadi</a>
+    <a href="#kebun">Operasional</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="ghost-bg" aria-hidden="true"><span>SAWIT MONITOR</span></div>
+    <div class="tagline">Achmad Fauzi — index sistem</div>
+    <h1>
+      <span class="glitch" data-text="9 MODUL">9 MODUL</span>
+      <span class="glitch accent" data-text="TERPANTAU">TERPANTAU</span><span class="cursor"></span>
+    </h1>
+    <p class="lead">Dari <b>war room</b> produksi kebun sampai <b>hisab falakiyah</b> — kumpulan sistem yang dibangun langsung dari lapangan, offline-first dan siap dipakai kapan saja.</p>
+
+    <div class="radar-wrap">
+      <svg viewBox="0 0 500 260" role="img" aria-label="Radar navigasi 9 modul, dapat diklik">
+        <g clip-path="url(#clip)">
+          <circle class="radar-ring" cx="250" cy="250" r="230"></circle>
+          <circle class="radar-ring" cx="250" cy="250" r="165"></circle>
+          <circle class="radar-ring" cx="250" cy="250" r="100"></circle>
+          <circle class="radar-ring" cx="250" cy="250" r="35"></circle>
+          <line class="radar-cross" x1="20" y1="250" x2="480" y2="250"></line>
+          <line class="radar-cross" x1="250" y1="20" x2="250" y2="480"></line>
+          <g class="radar-sweep-fill">
+            <path d="M250,250 L250,20 A230,230 0 0,1 342,52 Z" fill="url(#sweepGrad)"></path>
+          </g>
+          <line class="radar-sweep-line" x1="250" y1="250" x2="250" y2="20"></line>
+        </g>
+
+        <a class="blip-link" href="https://vaozee.github.io/sawit/" data-app="SYS-01 · SAWIT MONITOR" target="_blank" rel="noopener" aria-label="Buka Sawit Monitor">
+          <circle class="hit" cx="250" cy="140" r="15"></circle>
+          <circle class="ring" cx="250" cy="140" r="6"></circle>
+          <circle class="core" cx="250" cy="140" r="4"></circle>
+          <text x="258" y="138">SAWIT</text>
+        </a>
+        <a class="blip-link" href="https://vaozee.github.io/wrp/" data-app="SYS-02 · WAR ROOM PLANTATION" target="_blank" rel="noopener" aria-label="Buka War Room Plantation" style="animation-delay:.3s">
+          <circle class="hit" cx="340" cy="180" r="15"></circle>
+          <circle class="ring" cx="340" cy="180" r="6"></circle>
+          <circle class="core" cx="340" cy="180" r="4" style="animation-delay:.3s"></circle>
+          <text x="348" y="178">WRP</text>
+        </a>
+        <a class="blip-link alert" href="https://vaozee.github.io/api/" data-app="SYS-03 · PANTAU TITIK PANAS" target="_blank" rel="noopener" aria-label="Buka Pantau Titik Panas">
+          <circle class="hit" cx="180" cy="90" r="15"></circle>
+          <circle class="ring" cx="180" cy="90" r="6"></circle>
+          <circle class="core" cx="180" cy="90" r="4" style="animation-delay:.6s"></circle>
+          <text x="188" y="88">API</text>
+        </a>
+        <a class="blip-link alert" href="https://vaozee.github.io/air/" data-app="SYS-04 · PETA POTENSI AIR TANAH" target="_blank" rel="noopener" aria-label="Buka Peta Potensi Air Tanah">
+          <circle class="hit" cx="150" cy="200" r="15"></circle>
+          <circle class="ring" cx="150" cy="200" r="6"></circle>
+          <circle class="core" cx="150" cy="200" r="4" style="animation-delay:.9s"></circle>
+          <text x="158" y="198">AIR</text>
+        </a>
+        <a class="blip-link" href="https://vaozee.github.io/sus/" data-app="SYS-05 · KOPSUS APP" target="_blank" rel="noopener" aria-label="Buka KopSUS App">
+          <circle class="hit" cx="330" cy="90" r="15"></circle>
+          <circle class="ring" cx="330" cy="90" r="6"></circle>
+          <circle class="core" cx="330" cy="90" r="4" style="animation-delay:1.2s"></circle>
+          <text x="338" y="88">SUS</text>
+        </a>
+        <a class="blip-link" href="https://vaozee.github.io/promo/" data-app="SYS-06 · SUITE LAUNCHER" target="_blank" rel="noopener" aria-label="Buka Suite Launcher">
+          <circle class="hit" cx="380" cy="260" r="15"></circle>
+          <circle class="ring" cx="380" cy="260" r="6"></circle>
+          <circle class="core" cx="380" cy="260" r="4" style="animation-delay:1.5s"></circle>
+          <text x="360" y="278">PROMO</text>
+        </a>
+        <a class="blip-link" href="https://vaozee.github.io/falak/" data-app="PRJ-07 · HISAB FALAKIYAH" target="_blank" rel="noopener" aria-label="Buka Hisab Falakiyah">
+          <circle class="hit" cx="120" cy="260" r="15"></circle>
+          <circle class="ring" cx="120" cy="260" r="6"></circle>
+          <circle class="core" cx="120" cy="260" r="4" style="animation-delay:1.8s"></circle>
+          <text x="70" y="278">FALAK</text>
+        </a>
+        <a class="blip-link" href="https://vaozee.github.io/waris/" data-app="PRJ-08 · KALKULATOR AHLI WARIS" target="_blank" rel="noopener" aria-label="Buka Kalkulator Ahli Waris">
+          <circle class="hit" cx="220" cy="230" r="15"></circle>
+          <circle class="ring" cx="220" cy="230" r="6"></circle>
+          <circle class="core" cx="220" cy="230" r="4" style="animation-delay:2.1s"></circle>
+          <text x="180" y="248">WARIS</text>
+        </a>
+        <a class="blip-link alert" href="https://vaozee.github.io/pajak/" data-app="PRJ-09 · KALKULATOR PAJAK INDONESIA" target="_blank" rel="noopener" aria-label="Buka Kalkulator Pajak Indonesia">
+          <circle class="hit" cx="290" cy="220" r="15"></circle>
+          <circle class="ring" cx="290" cy="220" r="6"></circle>
+          <circle class="core" cx="290" cy="220" r="4" style="animation-delay:2.4s"></circle>
+          <text x="298" y="238">PAJAK</text>
+        </a>
+
+        <defs>
+          <clipPath id="clip"><circle cx="250" cy="250" r="230"></circle></clipPath>
+          <radialGradient id="sweepGrad">
+            <stop offset="0%" stop-color="#ff3b3b" stop-opacity="0.35"></stop>
+            <stop offset="100%" stop-color="#ff3b3b" stop-opacity="0"></stop>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="stat-strip">
+      <div class="cell"><b>9</b><span>Modul Aktif</span></div>
+      <div class="cell"><b>6</b><span>Operasional Sawit</span></div>
+      <div class="cell"><b>3</b><span>Publik &amp; Pribadi</span></div>
+    </div>
+    <div class="radar-hint">▸ klik titik radar untuk membuka modul langsung</div>
+  </section>
+
+  <div class="hazard" aria-hidden="true"><span>⚠ ARSIP PRIBADI — PRJ 07–09 ⚠</span></div>
+
+  <section class="group" id="pribadi">
+    <div class="group-head">
+      <span class="tag">01</span>
+      <h2>Alat Pribadi &amp; Publik</h2>
+      <span class="rule"></span>
+      <span class="meta">FALAKIYAH // FARAIDH // PAJAK</span>
+    </div>
+    <div class="card-grid">
+
+      <a class="card online" href="https://vaozee.github.io/falak/" data-app="PRJ-07 · HISAB FALAKIYAH" target="_blank" rel="noopener">
+        <div class="top"><span class="code">PRJ-07</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>Hisab Falakiyah</h3>
+        <p>Kalender Hijriyah, awal bulan, imsakiyah, arah kiblat, dan simulasi orbit 3D matahari-bulan — hisab hakiki offline.</p>
+        <div class="go"><span>vaozee.github.io/falak</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card online" href="https://vaozee.github.io/waris/" data-app="PRJ-08 · KALKULATOR AHLI WARIS" target="_blank" rel="noopener">
+        <div class="top"><span class="code">PRJ-08</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>Kalkulator Ahli Waris</h3>
+        <p>Pembagian warisan Islam dengan fraksi eksak, mencakup kaidah 'Aul, Radd, Gharrawain, dan Akdariyyah.</p>
+        <div class="go"><span>vaozee.github.io/waris</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card alert" href="https://vaozee.github.io/pajak/" data-app="PRJ-09 · KALKULATOR PAJAK INDONESIA" target="_blank" rel="noopener">
+        <div class="top"><span class="code">PRJ-09</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>Kalkulator Pajak Indonesia</h3>
+        <p>PPh 21/23/25, PPN, BPHTB, cukai, bea meterai, PKB, dan lainnya — lengkap rujukan dasar hukum terkini.</p>
+        <div class="go"><span>vaozee.github.io/pajak</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="hazard" aria-hidden="true"><span>⚠ ZONA OPERASIONAL — SYS 01–06 ⚠</span></div>
+
+  <section class="group" id="kebun">
+    <div class="group-head">
+      <span class="tag">02</span>
+      <h2>Operasional Perkebunan</h2>
+      <span class="rule"></span>
+      <span class="meta">SYS-01 → SYS-06</span>
+    </div>
+    <div class="card-grid">
+
+      <a class="card online" href="https://vaozee.github.io/sawit/" data-app="SYS-01 · SAWIT MONITOR" target="_blank" rel="noopener">
+        <div class="top"><span class="code">SYS-01</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>Sawit Monitor</h3>
+        <p>Dashboard utama — menyatukan produksi kebun, pabrik, gudang, SDM, dan keuangan dalam satu ekosistem offline-first.</p>
+        <div class="go"><span>vaozee.github.io/sawit</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card online" href="https://vaozee.github.io/wrp/" data-app="SYS-02 · WAR ROOM PLANTATION" target="_blank" rel="noopener">
+        <div class="top"><span class="code">SYS-02</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>War Room Plantation</h3>
+        <p>Monitoring produksi TBS per blok/afdeling, data PKS, perawatan, dan audit trail — tersambung ke Google Sheets.</p>
+        <div class="go"><span>vaozee.github.io/wrp</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card live alert" href="https://vaozee.github.io/api/" data-app="SYS-03 · PANTAU TITIK PANAS" target="_blank" rel="noopener">
+        <div class="top"><span class="code">SYS-03</span><span class="status"><span class="led"></span>live feed</span></div>
+        <h3>Pantau Titik Panas</h3>
+        <p>Deteksi hotspot kebakaran real-time dari NASA FIRMS untuk grup perkebunan mitra, lengkap dengan peringatan suara.</p>
+        <div class="go"><span>vaozee.github.io/api</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card online alert" href="https://vaozee.github.io/air/" data-app="SYS-04 · PETA POTENSI AIR TANAH" target="_blank" rel="noopener">
+        <div class="top"><span class="code">SYS-04</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>Peta Potensi Air Tanah</h3>
+        <p>Skoring lokasi sumur bor berbasis elevasi, jarak sungai, dan curah hujan — untuk Katingan-Sampit &amp; Grobogan.</p>
+        <div class="go"><span>vaozee.github.io/air</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card" href="https://vaozee.github.io/sus/" data-app="SYS-05 · KOPSUS APP" target="_blank" rel="noopener">
+        <div class="top"><span class="code">SYS-05</span><span class="status"><span class="led"></span>demo mode</span></div>
+        <h3>KopSUS App</h3>
+        <p>Manajemen koperasi karyawan — inventory, supplier, penjualan, pembayaran, dan simpanan anggota.</p>
+        <div class="go"><span>vaozee.github.io/sus</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+      <a class="card online" href="https://vaozee.github.io/promo/" data-app="SYS-06 · SUITE LAUNCHER" target="_blank" rel="noopener">
+        <div class="top"><span class="code">SYS-06</span><span class="status"><span class="led"></span>online</span></div>
+        <h3>Suite Launcher</h3>
+        <p>Satu pintu masuk untuk tujuh aplikasi desktop internal — kebun, HR, engineering, gudang, keuangan, pabrik, audit.</p>
+        <div class="go"><span>vaozee.github.io/promo</span><span class="arrow">→</span></div>
+        <span class="corner-br"></span>
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <span class="prompt">© 2026 Achmad Fauzi · <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a></span>
+    <span>vaozee.github.io // END OF INDEX</span>
+  </footer>
+</main>
+
+<div class="app-modal" id="appModal" aria-hidden="true" role="dialog" aria-modal="true">
+  <iframe id="appModalFrame" src="about:blank" title="Modul aplikasi"></iframe>
+  <div class="app-capsule" id="appCapsule">
+    <span class="drag-handle" id="appDragHandle" title="Geser kapsul" aria-hidden="true">⠿⠿</span>
+    <span class="led" aria-hidden="true"></span>
+    <span class="name" id="appModalName">—</span>
+    <a class="icon-btn" id="appModalOpenTab" href="#" target="_blank" rel="noopener" title="Buka di tab baru" aria-label="Buka di tab baru">↗</a>
+    <button type="button" class="icon-btn close" id="appModalClose" title="Tutup (Esc)" aria-label="Tutup">✕</button>
+  </div>
+</div>
+
+<script>
+  function tick(){
+    const el = document.getElementById('clock');
+    if(!el) return;
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat('id-ID', {
+      timeZone:'Asia/Jakarta', hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false
+    }).formatToParts(now);
+    const get = t => parts.find(p=>p.type===t)?.value || '00';
+    el.textContent = `${get('hour')}:${get('minute')}:${get('second')} WIB`;
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // occasional signal-interference flash, skipped if reduced motion preferred
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){
+    const flash = document.getElementById('staticFlash');
+    setInterval(() => {
+      if(Math.random() < 0.35){
+        flash.classList.remove('hit');
+        void flash.offsetWidth;
+        flash.classList.add('hit');
+      }
+    }, 5000);
+  }
+
+  // ---- fullscreen app embed modal ----
+  const appModal = document.getElementById('appModal');
+  const appFrame = document.getElementById('appModalFrame');
+  const appName = document.getElementById('appModalName');
+  const appOpenTab = document.getElementById('appModalOpenTab');
+  const appClose = document.getElementById('appModalClose');
+  const appCapsule = document.getElementById('appCapsule');
+  const appDragHandle = document.getElementById('appDragHandle');
+  let lastFocused = null;
+
+  function resetCapsulePosition(){
+    appCapsule.style.left = '50%';
+    appCapsule.style.top = '16px';
+    appCapsule.style.transform = 'translateX(-50%)';
+  }
+
+  function openApp(url, label){
+    lastFocused = document.activeElement;
+    appFrame.src = url;
+    appName.textContent = label;
+    appName.title = url;
+    appOpenTab.href = url;
+    resetCapsulePosition();
+    appModal.classList.add('open');
+    appModal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    appClose.focus();
+  }
+  function closeApp(){
+    appModal.classList.remove('open');
+    appModal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    setTimeout(() => { appFrame.src = 'about:blank'; }, 250);
+    if(lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  appClose.addEventListener('click', closeApp);
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && appModal.classList.contains('open')) closeApp();
+  });
+
+  document.querySelectorAll('[data-app]').forEach((el) => {
+    el.addEventListener('click', function(e){
+      // allow modifier-click / middle-click to fall back to native new-tab behavior
+      if(e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      openApp(this.getAttribute('href'), this.dataset.app);
+    });
+  });
+
+  // ---- draggable capsule (mouse + touch) ----
+  (function(){
+    let dragging = false, offsetX = 0, offsetY = 0;
+
+    function start(e){
+      dragging = true;
+      const rect = appCapsule.getBoundingClientRect();
+      const p = e.touches ? e.touches[0] : e;
+      offsetX = p.clientX - rect.left;
+      offsetY = p.clientY - rect.top;
+      appCapsule.style.transform = 'none';
+      appCapsule.style.left = rect.left + 'px';
+      appCapsule.style.top = rect.top + 'px';
+      document.addEventListener('mousemove', move);
+      document.addEventListener('touchmove', move, {passive:false});
+      document.addEventListener('mouseup', stop);
+      document.addEventListener('touchend', stop);
+    }
+    function move(e){
+      if(!dragging) return;
+      if(e.cancelable) e.preventDefault();
+      const p = e.touches ? e.touches[0] : e;
+      const maxX = window.innerWidth - appCapsule.offsetWidth - 4;
+      const maxY = window.innerHeight - appCapsule.offsetHeight - 4;
+      const x = Math.min(Math.max(4, p.clientX - offsetX), maxX);
+      const y = Math.min(Math.max(4, p.clientY - offsetY), maxY);
+      appCapsule.style.left = x + 'px';
+      appCapsule.style.top = y + 'px';
+    }
+    function stop(){
+      dragging = false;
+      document.removeEventListener('mousemove', move);
+      document.removeEventListener('touchmove', move);
+      document.removeEventListener('mouseup', stop);
+      document.removeEventListener('touchend', stop);
+    }
+    appDragHandle.addEventListener('mousedown', start);
+    appDragHandle.addEventListener('touchstart', start, {passive:true});
+  })();
+</script>
+
+</body>
+</html>

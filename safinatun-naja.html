@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safinatun Naja — Panduan Belajar Fikih Syafi'i</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fbf6ec;
+    --cream-2:#f4ecd8;
+    --paper:#fffdf8;
+    --gold:#b5893a;
+    --gold-dark:#8a6423;
+    --gold-light:#e7cf9c;
+    --navy:#1f3b4d;
+    --navy-2:#2c5064;
+    --text:#2c2620;
+    --text-soft:#5a5045;
+    --green:#3f6e52;
+    --line:#e3d6b8;
+    --shadow: 0 6px 20px rgba(90,66,20,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background: linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+    color:var(--text);
+    font-family:'Lora', serif;
+    line-height:1.7;
+  }
+  .arabic{
+    font-family:'Amiri', serif;
+    direction:rtl;
+    text-align:right;
+    font-size:1.55rem;
+    line-height:2.3;
+    color:var(--navy);
+  }
+  header.hero{
+    background: radial-gradient(circle at 20% 20%, #2c5064 0%, #1f3b4d 55%, #16303f 100%);
+    color:var(--cream);
+    padding:64px 24px 56px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    border-bottom:6px solid var(--gold);
+  }
+  header.hero::before, header.hero::after{
+    content:"";
+    position:absolute;
+    width:260px;height:260px;
+    border:2px solid rgba(231,207,156,0.25);
+    border-radius:50%;
+    top:-90px;left:-90px;
+  }
+  header.hero::after{ left:auto; right:-100px; top:auto; bottom:-110px; }
+  .hero-inner{ position:relative; z-index:2; max-width:820px; margin:0 auto;}
+  .eyebrow{
+    font-family:'Poppins',sans-serif;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    font-size:.72rem;
+    color:var(--gold-light);
+    margin-bottom:14px;
+  }
+  header.hero h1.arabic-title{
+    font-family:'Amiri', serif;
+    font-size:2.6rem;
+    color:#fff;
+    margin:6px 0 10px;
+  }
+  header.hero h2{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:1.5rem;
+    margin:0 0 8px;
+    color:#fff;
+  }
+  header.hero p.sub{
+    font-family:'Poppins',sans-serif;
+    color:var(--gold-light);
+    font-size:.95rem;
+    max-width:560px;
+    margin:14px auto 0;
+  }
+  nav.toc{
+    max-width:1000px;
+    margin:-34px auto 40px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    padding:26px 30px;
+    position:relative;
+    z-index:5;
+  }
+  nav.toc h3{
+    font-family:'Poppins',sans-serif;
+    color:var(--gold-dark);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.8rem;
+    margin:0 0 14px;
+    border-bottom:1px dashed var(--line);
+    padding-bottom:10px;
+  }
+  .toc-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:6px 24px;
+  }
+  .toc-grid a{
+    display:block;
+    color:var(--navy-2);
+    text-decoration:none;
+    font-family:'Poppins',sans-serif;
+    font-size:.92rem;
+    padding:7px 10px;
+    border-radius:8px;
+    transition:.15s;
+    border-left:3px solid transparent;
+  }
+  .toc-grid a:hover{ background:var(--cream-2); border-left:3px solid var(--gold); color:var(--gold-dark); }
+
+  main{ max-width:1000px; margin:0 auto; padding:0 24px 80px; }
+
+  section.bab{
+    margin-top:56px;
+  }
+  .bab-header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:22px;
+  }
+  .bab-number{
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+    color:#fff;
+    background:linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    width:52px;height:52px;
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.1rem;
+    box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .bab-header h2{
+    font-family:'Poppins',sans-serif;
+    color:var(--navy);
+    font-size:1.5rem;
+    margin:0;
+  }
+  .bab-header h2 span.ar{
+    display:block;
+    font-family:'Amiri',serif;
+    direction:rtl;
+    color:var(--gold-dark);
+    font-size:1.3rem;
+    font-weight:400;
+    margin-top:4px;
+  }
+
+  .fasl{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 28px;
+    margin-bottom:22px;
+    box-shadow:var(--shadow);
+  }
+  .fasl h3{
+    font-family:'Poppins',sans-serif;
+    color:var(--navy);
+    font-size:1.08rem;
+    margin:0 0 14px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--gold-light);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .fasl h3::before{
+    content:"﴾";
+    color:var(--gold);
+    font-size:1.3rem;
+  }
+  .arabic-box{
+    background:var(--cream-2);
+    border:1px solid var(--gold-light);
+    border-radius:12px;
+    padding:18px 22px;
+    margin-bottom:16px;
+  }
+  .translate-box{
+    margin-bottom:14px;
+  }
+  .translate-box .label, .explain-box .label{
+    font-family:'Poppins',sans-serif;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-dark);
+    font-weight:600;
+    margin-bottom:6px;
+    display:block;
+  }
+  ol, ul{ margin:6px 0; padding-left:22px; }
+  ol li, ul li{ margin-bottom:6px; }
+  .explain-box{
+    background:linear-gradient(135deg, #eef5ef 0%, #f4ecd8 120%);
+    border-left:4px solid var(--green);
+    border-radius:10px;
+    padding:16px 20px;
+    font-size:.97rem;
+    color:var(--text-soft);
+  }
+  .explain-box p{ margin:0 0 10px; }
+  .explain-box p:last-child{ margin-bottom:0; }
+  .tip{
+    display:inline-block;
+    background:var(--gold-light);
+    color:var(--gold-dark);
+    font-family:'Poppins',sans-serif;
+    font-size:.7rem;
+    font-weight:600;
+    letter-spacing:.06em;
+    padding:3px 10px;
+    border-radius:999px;
+    margin-bottom:10px;
+  }
+  table.rincian{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    font-size:.92rem;
+  }
+  table.rincian th, table.rincian td{
+    border:1px solid var(--line);
+    padding:8px 10px;
+    text-align:left;
+  }
+  table.rincian th{
+    background:var(--cream-2);
+    color:var(--navy);
+    font-family:'Poppins',sans-serif;
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+  }
+  .quote-divider{
+    text-align:center;
+    color:var(--gold);
+    margin:60px 0 40px;
+    font-family:'Amiri',serif;
+    font-size:1.4rem;
+  }
+  .quote-divider::before, .quote-divider::after{
+    content:"— ٭ —";
+    display:block;
+    color:var(--gold-light);
+    font-size:1rem;
+  }
+  .closing{
+    background:var(--navy);
+    color:var(--cream);
+    border-radius:16px;
+    padding:34px 30px;
+    text-align:center;
+    margin-top:50px;
+  }
+  .closing .arabic{ color:#fff; margin-bottom:14px; font-size:1.3rem;}
+  .closing p{ font-family:'Poppins',sans-serif; font-size:.92rem; color:var(--gold-light); max-width:640px; margin:0 auto; }
+
+  .back-top{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    background:var(--gold);
+    color:#fff;
+    width:46px;height:46px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    text-decoration:none;
+    font-size:1.2rem;
+    box-shadow:var(--shadow);
+    opacity:.9;
+    transition:.2s;
+  }
+  .back-top:hover{ opacity:1; transform:translateY(-3px); }
+
+  footer{
+    background:#16303f;
+    color:var(--gold-light);
+    text-align:center;
+    padding:26px 20px;
+    font-family:'Poppins',sans-serif;
+    font-size:.85rem;
+    letter-spacing:.02em;
+  }
+  footer a{ color:var(--gold-light); }
+
+  @media (max-width:640px){
+    header.hero{ padding:48px 18px 44px; }
+    header.hero h1.arabic-title{ font-size:2rem; }
+    .arabic{ font-size:1.25rem; }
+    .fasl{ padding:20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Panduan Belajar &middot; Fikih Dasar Madzhab Syafi'i</div>
+    <h1 class="arabic-title">مَتْنُ سَفِيْنَةِ النَّجَاةِ</h1>
+    <h2>Safinatun Naja</h2>
+    <p class="sub">Teks Arab, terjemahan, dan penjelasan tambahan yang disusun untuk memudahkan proses belajar-mengajar dasar-dasar akidah, thaharah, shalat, jenazah, zakat, dan puasa dalam fikih Syafi'i.</p>
+  </div>
+</header>
+
+<nav class="toc">
+  <h3>Daftar Isi</h3>
+  <div class="toc-grid">
+    <a href="#bab1">Bab I — Pendahuluan (Rukun Islam &amp; Iman)</a>
+    <a href="#bab2">Bab II — Thaharah (Bersuci)</a>
+    <a href="#bab3">Bab III — Shalat</a>
+    <a href="#bab4">Bab IV — Pengurusan Jenazah</a>
+    <a href="#bab5">Bab V — Zakat</a>
+    <a href="#bab6">Bab VI — Puasa</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===================== BAB I ===================== -->
+<section class="bab" id="bab1">
+  <div class="bab-header">
+    <div class="bab-number">I</div>
+    <h2>Pendahuluan<span class="ar">الرُّكْنُ الإسلامي والإيماني</span></h2>
+  </div>
+
+  <div class="fasl">
+    <h3>Rukun Islam</h3>
+    <div class="arabic-box arabic">
+      أَرْكَانُ الْإِسْلَامِ خَمْسَةٌ:<br>
+      1- شَهَادَةُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ.<br>
+      2- إِقَامُ الصَّلَاةِ.<br>
+      3- إِيتَاءُ الزَّكَاةِ.<br>
+      4- صَوْمُ رَمَضَانَ.<br>
+      5- حَجُّ الْبَيْتِ مَنِ اسْتَطَاعَ إِلَيْهِ سَبِيلًا.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Bersaksi bahwa tiada tuhan selain Allah dan Nabi Muhammad ﷺ adalah utusan-Nya.</li>
+        <li>Mendirikan shalat (lima waktu).</li>
+        <li>Menunaikan zakat.</li>
+        <li>Berpuasa di bulan Ramadhan.</li>
+        <li>Menunaikan ibadah haji ke Baitullah bagi yang mampu.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Rukun Islam adalah lima pilar utama yang menjadi fondasi keislaman seseorang. Dua kalimat syahadat merupakan pintu masuk ke dalam Islam — tanpa syahadat, amal ibadah lain tidak dianggap sah sebagai ibadah dalam Islam.</p>
+      <p>Empat rukun berikutnya (shalat, zakat, puasa, haji) adalah konsekuensi praktis dari syahadat: shalat sebagai bentuk hubungan vertikal dengan Allah, zakat sebagai bentuk kepedulian sosial, puasa sebagai latihan pengendalian diri, dan haji sebagai puncak penghambaan yang menggabungkan seluruh dimensi ibadah (fisik, harta, dan spiritual).</p>
+      <p><strong>Tips mengajar:</strong> gunakan analogi bangunan rumah — syahadat sebagai pondasi, empat rukun lainnya sebagai tiang penyangga. Jika satu tiang runtuh, bangunan keislaman seseorang menjadi tidak sempurna, meski pondasinya (syahadat) tetap berdiri.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Rukun Iman</h3>
+    <div class="arabic-box arabic">
+      أَرْكَانُ الْإِيْمَانِ سِتَّةٌ:<br>
+      1- أَنْ تُؤْمِنَ بِاللَّهِ تَعَالَى.<br>
+      2- وَمَلَائِكَتِهِ.<br>
+      3- وَكُتُبِهِ.<br>
+      4- وَرُسُلِهِ.<br>
+      5- وَالْيَوْمِ الْآخِرِ.<br>
+      6- وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ مِنَ اللَّهِ تَعَالَى.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Beriman kepada Allah Ta'ala.</li>
+        <li>Beriman kepada para malaikat-Nya.</li>
+        <li>Beriman kepada kitab-kitab-Nya.</li>
+        <li>Beriman kepada para rasul-Nya.</li>
+        <li>Beriman kepada hari akhir.</li>
+        <li>Beriman kepada qadha dan qadar, baik dan buruknya, dari Allah Ta'ala.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Rukun iman berbicara tentang keyakinan batin (i'tiqad) yang menjadi dasar seluruh amal lahiriah. Iman bersifat meliputi tiga unsur: pembenaran dengan hati (tashdiq bil qalb), pengucapan dengan lisan (iqrar bil lisan), dan pembuktian dengan perbuatan (amal bil arkan).</p>
+      <p>Rukun keenam — beriman kepada qadha dan qadar — sering menjadi topik yang paling sulit dipahami peserta didik. Penting ditekankan bahwa beriman pada takdir tidak meniadakan usaha (ikhtiar) manusia; justru manusia tetap wajib berikhtiar sambil menyerahkan hasil akhirnya kepada Allah (tawakal).</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Makna Kalimat "Lā Ilāha Illallāh"</h3>
+    <div class="arabic-box arabic">
+      وَمَعْنَى «لَا إِلَهَ إِلَّا اللَّهُ»: لَا مَعْبُودَ بِحَقٍّ فِي الْوُجُودِ إِلَّا اللَّهُ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p>Adapun arti "Lā ilāha illallāh" adalah: Tidak ada Tuhan yang berhak disembah dalam kenyataan selain Allah.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Kalimat tauhid ini mengandung dua unsur penting: <em>nafi</em> (peniadaan) pada kata "lā ilāha" yang menolak segala bentuk sesembahan selain Allah, dan <em>itsbat</em> (penetapan) pada kata "illallāh" yang menetapkan hanya Allah sajalah yang berhak disembah. Kalimat ini menjadi dasar seluruh ajaran tauhid dan pembeda utama antara muslim dan non-muslim.</p>
+    </div>
+  </div>
+</section>
+
+<div class="quote-divider">﷽</div>
+
+<!-- ===================== BAB II ===================== -->
+<section class="bab" id="bab2">
+  <div class="bab-header">
+    <div class="bab-number">II</div>
+    <h2>Thaharah (Bersuci)<span class="ar">كِتَابُ الطَّهَارَةِ</span></h2>
+  </div>
+
+  <div class="fasl">
+    <h3>Tanda-tanda Baligh</h3>
+    <div class="arabic-box arabic">
+      عَلَامَاتُ الْبُلُوغِ ثَلَاثٌ:<br>
+      1- تَمَامُ خَمْسَ عَشْرَةَ سَنَةً فِي الذَّكَرِ وَالْأُنْثَى.<br>
+      2- وَالِاحْتِلَامُ فِي الذَّكَرِ وَالْأُنْثَى لِتِسْعِ سِنِينَ.<br>
+      3- وَالْحَيْضُ فِي الْأُنْثَى لِتِسْعِ سِنِينَ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Genap berusia 15 tahun, bagi laki-laki maupun perempuan.</li>
+        <li>Mimpi basah (ihtilam), bagi laki-laki maupun perempuan, setelah usia 9 tahun.</li>
+        <li>Keluar darah haid bagi perempuan, setelah usia 9 tahun.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Status baligh menentukan kapan seseorang mulai dibebani kewajiban syariat (taklif). Sebelum baligh, seorang anak belum terkena kewajiban shalat, puasa, dsb., namun tetap dianjurkan untuk dilatih (misalnya perintah shalat sejak usia 7 tahun dan boleh dipukul mendidik pada usia 10 tahun jika meninggalkan shalat, berdasarkan hadits Nabi ﷺ, meski hal ini di luar cakupan matan ini).</p>
+      <p>Tanda baligh mana pun yang muncul lebih dulu (usia, mimpi basah, atau haid) itulah yang menjadi patokan awal taklif seseorang.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Rukun Wudhu</h3>
+    <div class="arabic-box arabic">
+      فُرُوضُ الْوُضُوءِ سِتَّةٌ:<br>
+      الْأَوَّلُ: النِّيَّةُ. الثَّانِي: غَسْلُ الْوَجْهِ. الثَّالِثُ: غَسْلُ الْيَدَيْنِ مَعَ الْمِرْفَقَيْنِ. الرَّابِعُ: مَسْحُ شَيْءٍ مِنَ الرَّأْسِ. الْخَامِسُ: غَسْلُ الرِّجْلَيْنِ مَعَ الْكَعْبَيْنِ. السَّادِسُ: التَّرْتِيبُ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Niat.</li>
+        <li>Membasuh muka.</li>
+        <li>Membasuh kedua tangan sampai siku.</li>
+        <li>Menyapu sebagian kepala.</li>
+        <li>Membasuh kedua kaki sampai mata kaki.</li>
+        <li>Tertib (berurutan).</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Keenam rukun ini wajib dipenuhi agar wudhu sah — jika salah satu tertinggal, wudhu batal. Niat diucapkan dalam hati bersamaan dengan membasuh awal bagian wajah, boleh dilafalkan secara sunnah sebagai penguat (talaffuz bin niyyah).</p>
+      <p>Batas "muka" adalah dari tempat tumbuhnya rambut kepala (dahi) sampai bawah dagu, dan dari telinga kanan ke telinga kiri. Batas tangan adalah sampai siku (termasuk siku itu sendiri), dan batas kaki sampai mata kaki (termasuk mata kaki), berdasarkan kaidah "ilā" yang bermakna inklusif dalam konteks anggota wudhu.</p>
+      <table class="rincian">
+        <tr><th>Rukun</th><th>Batasan Praktis</th></tr>
+        <tr><td>Membasuh muka</td><td>Dari batas tumbuh rambut dahi sampai dagu, telinga kanan ke telinga kiri</td></tr>
+        <tr><td>Membasuh tangan</td><td>Ujung jari hingga siku (siku ikut dibasuh)</td></tr>
+        <tr><td>Menyapu kepala</td><td>Minimal sebagian kecil rambut/kulit kepala</td></tr>
+        <tr><td>Membasuh kaki</td><td>Ujung jari hingga mata kaki (mata kaki ikut dibasuh)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Niat dan Tertib Wudhu</h3>
+    <div class="arabic-box arabic">
+      وَالنِّيَّةُ: قَصْدُ الشَّيْءِ مُقْتَرِنًا بِفِعْلِهِ. وَمَحَلُّهَا: الْقَلْبُ. وَالتَّلَفُّظُ بِهَا سُنَّةٌ، وَوَقْتُهَا عِنْدَ غَسْلِ أَوَّلِ جُزْءٍ مِنَ الْوَجْهِ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p>Niat adalah menyengaja sesuatu (perbuatan) bersamaan dengan melakukannya. Tempatnya di dalam hati. Melafalkannya hukumnya sunnah, dan waktunya ketika membasuh bagian pertama dari wajah.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Niat adalah rukun batin yang membedakan aktivitas ibadah dari kebiasaan biasa. Membasuh muka tanpa niat (misal sekadar cuci muka biasa) tidak dihitung sebagai wudhu. Karena itu niat harus hadir tepat saat mulai membasuh bagian wajah, bukan sebelum atau sesudahnya.</p>
+      <p>Tertib berarti tidak mendahulukan satu anggota wudhu atas anggota yang lain, misalnya tidak boleh membasuh kaki sebelum membasuh tangan.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Macam-macam Air</h3>
+    <div class="arabic-box arabic">
+      اَلْمِيَاهُ قِسْمَانِ: قَلِيلٌ وَكَثِيرٌ. فَالْقَلِيلُ: مَا دُونَ الْقُلَّتَيْنِ، وَالْكَثِيرُ: مَا بَلَغَهُمَا أَوْ زَادَ عَلَيْهِمَا. فَالْمَاءُ الْقَلِيلُ يَتَنَجَّسُ بِمُلَاقَاةِ النَّجَاسَةِ وَإِنْ لَمْ يَتَغَيَّرْ، وَالْمَاءُ الْكَثِيرُ لَا يَتَنَجَّسُ إِلَّا إِذَا تَغَيَّرَ طَعْمُهُ أَوْ لَوْنُهُ أَوْ رِيحُهُ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p>Air ada dua macam: sedikit dan banyak. Air sedikit adalah air yang kurang dari dua qullah, dan air banyak adalah air yang mencapai dua qullah atau lebih. Air sedikit menjadi najis ketika bersentuhan dengan najis walaupun tidak berubah sifatnya, sedangkan air banyak tidak menjadi najis kecuali jika berubah rasa, warna, atau baunya.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Dua qullah kurang lebih setara dengan 216 liter (menurut pendapat mayoritas ulama Syafi'iyyah), atau setara bak air berukuran kira-kira 60×60×60 cm. Konsep ini penting untuk menentukan status air kolam, bak mandi, atau sumur ketika kejatuhan sesuatu yang dicurigai najis.</p>
+      <p><strong>Contoh kasus untuk didiskusikan:</strong> Seekor kucing minum dari ember kecil (air kurang dua qullah) — apakah air tersebut najis? Jawaban: air liur kucing dihukumi suci (bukan najis) menurut madzhab Syafi'i, sehingga tidak menajiskan air tersebut, berbeda dengan air liur anjing yang termasuk najis mughallazhah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Sebab-sebab yang Mewajibkan Mandi</h3>
+    <div class="arabic-box arabic">
+      مُوجِبَاتُ الْغُسْلِ سِتَّةٌ: إِيلَاجُ الْحَشَفَةِ فِي الْفَرْجِ، وَخُرُوجُ الْمَنِيِّ، وَالْحَيْضُ، وَالنِّفَاسُ، وَالْوِلَادَةُ، وَالْمَوْتُ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Memasukkan kepala kemaluan laki-laki ke dalam kemaluan perempuan (bersetubuh).</li>
+        <li>Keluarnya air mani.</li>
+        <li>Haid.</li>
+        <li>Nifas.</li>
+        <li>Melahirkan.</li>
+        <li>Meninggal dunia.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Enam sebab ini mewajibkan mandi besar (mandi janabah). Rukun mandi wajib hanya dua: niat dan meratakan air ke seluruh tubuh, namun disunnahkan mendahuluinya dengan wudhu dan membasuh secara tertib seperti tata cara Nabi ﷺ (mendahulukan bagian kanan, menggosok badan, dsb.).</p>
+      <p>Poin ke-6 (meninggal dunia) mewajibkan orang lain (bukan si mayit sendiri) untuk memandikannya sebagai kewajiban kifayah bagi kaum muslimin — dibahas lebih rinci pada Bab Jenazah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Sah Wudhu</h3>
+    <div class="arabic-box arabic">
+      شُرُوطُ الْوُضُوءِ عَشَرَةٌ: الْإِسْلَامُ، وَالتَّمْيِيزُ، وَالنَّقَاءُ عَنِ الْحَيْضِ وَالنِّفَاسِ، وَأَنْ لَا يَكُونَ عَلَى الْبَشَرَةِ مَا يَمْنَعُ وُصُولَ الْمَاءِ، وَأَنْ لَا يَكُونَ عَلَى الْعُضْوِ مَا يُغَيِّرُ الْمَاءَ، وَالْعِلْمُ بِفَرْضِيَّتِهِ، وَأَنْ لَا يَعْتَقِدَ فَرْضًا مِنْ فُرُوضِهِ سُنَّةً، وَطَهَارَةُ الْمَاءِ، وَدُخُولُ الْوَقْتِ، وَالْمُوَالَاةُ لِدَائِمِ الْحَدَثِ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Islam.</li>
+        <li>Tamyiz (cukup umur untuk membedakan baik-buruk).</li>
+        <li>Suci dari haid dan nifas.</li>
+        <li>Tidak ada penghalang yang mencegah air sampai ke kulit.</li>
+        <li>Tidak ada bahan pada anggota wudhu yang mengubah sifat air.</li>
+        <li>Mengetahui bahwa wudhu itu wajib.</li>
+        <li>Tidak meyakini salah satu fardhu wudhu sebagai sunnah.</li>
+        <li>Air yang digunakan suci.</li>
+        <li>Masuk waktu shalat.</li>
+        <li>Berturut-turut (khusus bagi orang yang selalu berhadats/da'imul hadats).</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Syarat-syarat ini merupakan prasyarat di luar rukun wudhu itu sendiri. Contoh penerapan: cat kuku atau kutek yang menutup kulit menyebabkan wudhu tidak sah karena menghalangi air sampai ke kulit (poin 4), sedangkan hena/pacar yang hanya mewarnai tanpa membentuk lapisan tidak menghalangi.</p>
+      <p>Poin ke-10 (muwalah/berturut-turut) hanya wajib bagi orang yang memiliki hadats terus-menerus (misalnya penderita beser/inkontinensia), sedangkan bagi orang normal muwalah hukumnya sunnah, bukan syarat sah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Pembatal Wudhu</h3>
+    <div class="arabic-box arabic">
+      نَوَاقِضُ الْوُضُوءِ أَرْبَعَةُ أَشْيَاءَ:<br>
+      1- الْخَارِجُ مِنْ أَحَدِ السَّبِيلَيْنِ.<br>
+      2- وَزَوَالُ الْعَقْلِ.<br>
+      3- وَالتَّقَاءُ بَشَرَتَيْ رَجُلٍ وَامْرَأَةٍ أَجْنَبِيَّيْنِ.<br>
+      4- وَمَسُّ قُبُلِ الْآدَمِيِّ أَوْ حَلْقَةِ دُبُرِهِ بِبَطْنِ الرَّاحَةِ أَوْ بُطُونِ الْأَصَابِعِ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Keluarnya sesuatu dari salah satu dua jalan (qubul/dubur), seperti angin, kecuali air mani.</li>
+        <li>Hilangnya akal, seperti tidur — kecuali tidur dengan posisi duduk yang mantap (menempelkan pinggul ke tempat duduk).</li>
+        <li>Bersentuhan kulit antara laki-laki dan perempuan dewasa yang bukan mahram, tanpa penghalang.</li>
+        <li>Menyentuh kemaluan atau lingkaran dubur manusia dengan telapak tangan atau ujung jari.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Poin ketiga (bersentuhan kulit lawan jenis bukan mahram) adalah pendapat masyhur madzhab Syafi'i berdasarkan pemahaman lafazh "لامستم" dalam Al-Qur'an surat An-Nisa. Ulama madzhab lain (mis. Hanafi) memiliki pandangan berbeda — ini baik didiskusikan sebagai contoh keragaman ijtihad fikih (khilafiyah).</p>
+      <p>Tidur dengan posisi duduk tetap (tamakkun) tidak membatalkan wudhu karena diyakini tidak memungkinkan keluarnya sesuatu dari dua jalan tanpa disadari, berbeda dengan tidur berbaring atau bersandar yang memungkinkan keluar angin tanpa terasa.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Larangan Bagi yang Berhadats</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Hadats kecil</strong> — dilarang: (1) Shalat, (2) Thawaf, (3) Menyentuh mushaf, (4) Membawa mushaf.</p>
+      <p><strong>Hadats besar (junub)</strong> — dilarang: kelima hal di atas ditambah (5) I'tikaf di masjid, (6) Membaca Al-Qur'an.</p>
+      <p><strong>Haid</strong> — dilarang sepuluh hal: keenam larangan di atas ditambah (7) Puasa, (8) Dijatuhi talak (menurut sebagian penjelasan, larangan bagi suami menjatuhkan talak saat istri haid), (9) Berjalan/berdiam di masjid jika dikhawatirkan mengotorinya, (10) Bersenang-senang dengan suami pada area antara pusar dan lutut.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Struktur berjenjang ini memudahkan santri menghafal: larangan bagi hadats besar mencakup seluruh larangan hadats kecil ditambah dua hal baru, dan larangan bagi perempuan haid mencakup seluruh larangan junub ditambah empat hal baru. Ini menunjukkan bahwa tingkat "ketidaksucian" berjenjang, dan konsekuensi hukumnya pun berjenjang.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Tayammum: Sebab, Syarat, Rukun, dan Pembatal</h3>
+    <div class="translate-box">
+      <span class="label">Ringkasan Terjemahan</span>
+      <p><strong>Sebab dibolehkan tayammum (3):</strong> tidak ada air, sakit yang tidak boleh terkena air, air hanya cukup untuk kebutuhan minum makhluk yang dihormati (muhtaram).</p>
+      <p><strong>Syarat tayammum (10)</strong> di antaranya: menggunakan debu suci yang belum terpakai, murni tanpa campuran, diniatkan, mengusap wajah dan tangan dengan dua usapan terpisah, menghilangkan najis terlebih dahulu, menghadap kiblat, dilakukan setelah masuk waktu shalat, dan satu kali tayammum untuk satu shalat fardhu.</p>
+      <p><strong>Rukun tayammum (5):</strong> memindahkan debu, niat, mengusap wajah, mengusap tangan sampai siku, tertib.</p>
+      <p><strong>Pembatal tayammum (3):</strong> semua pembatal wudhu, murtad, dan menemukan air (bagi yang bertayammum karena ketiadaan air).</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Tayammum adalah bentuk keringanan (rukhshah) dari Allah bagi hamba-Nya yang berhalangan menggunakan air. Prinsip fikihnya: "الميسور لا يسقط بالمعسور" (yang mudah tidak gugur karena yang sulit) — jika sebagian anggota bisa terkena air dan sebagian tidak, maka bagian yang bisa tetap wajib dibasuh air, dan sisanya ditayammumi.</p>
+      <p>Satu tayammum hanya berlaku untuk satu shalat fardhu (harus diulang setiap kali hendak shalat fardhu baru), namun boleh digunakan untuk shalat-shalat sunnah sebanyak yang diinginkan selama tayammum belum batal — ini poin penting yang sering keliru dipahami pemula.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Jenis-jenis Najis dan Cara Mensucikannya</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <table class="rincian">
+        <tr><th>Kategori</th><th>Contoh</th><th>Cara Mensucikan</th></tr>
+        <tr><td>Mughallazhah (berat)</td><td>Anjing, babi, atau turunannya</td><td>Dibasuh 7 kali, salah satunya dicampur debu</td></tr>
+        <tr><td>Mukhaffafah (ringan)</td><td>Air kencing bayi laki-laki yang hanya minum ASI, belum genap 2 tahun</td><td>Diperciki air secara merata</td></tr>
+        <tr><td>Mutawassithah (sedang)</td><td>Selain dua kategori di atas (darah, nanah, kotoran hewan, dll.)</td><td>'Ainiyah: hilangkan warna, bau, rasa. Hukmiyah: cukup dialiri air</td></tr>
+      </table>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Perbedaan mendasar antara najis 'ainiyah dan hukmiyah: 'ainiyah adalah najis yang bendanya masih terlihat/berbekas (warna, bau, rasa), sedangkan hukmiyah adalah bekas najis yang sudah kering dan tidak berbekas lagi namun statusnya masih najis (misalnya kain yang terkena air kencing lalu mengering).</p>
+      <p><strong>Kasus khusus air liur/kencing bayi laki-laki:</strong> keringanan ini hanya berlaku selama bayi belum mengonsumsi makanan padat selain ASI. Begitu bayi (laki-laki maupun perempuan) mulai makan makanan pendamping, kencingnya kembali menjadi najis mutawassithah biasa yang harus dibasuh, bukan sekadar diperciki.</p>
+      <p>Terdapat pula najis yang bisa berubah menjadi suci (mustahilah), yaitu: khamr yang berubah sendiri menjadi cuka, kulit bangkai yang telah disamak, dan bangkai yang berubah wujud menjadi makhluk hidup lain (misal ulat/belatung dari bangkai).</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Masa Haid, Suci, dan Nifas</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <table class="rincian">
+        <tr><th></th><th>Paling Cepat</th><th>Umumnya</th><th>Paling Lama</th></tr>
+        <tr><td>Haid</td><td>Sehari semalam</td><td>6–7 hari</td><td>15 hari</td></tr>
+        <tr><td>Masa suci antar-haid</td><td>15 hari</td><td>23–24 hari</td><td>Tidak terbatas</td></tr>
+        <tr><td>Nifas</td><td>Sekejap</td><td>40 hari</td><td>60 hari</td></tr>
+      </table>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Batasan-batasan waktu ini penting secara praktis untuk menentukan kapan seorang perempuan wajib mandi wajib dan kembali melaksanakan shalat/puasa. Jika darah keluar melebihi 15 hari, kelebihan tersebut dihukumi sebagai <em>istihadhah</em> (darah penyakit), bukan haid, sehingga perempuan tersebut tetap wajib shalat dan puasa dengan cara berwudhu setiap kali hendak shalat.</p>
+      <p>Ini menjadi materi penting dalam edukasi kesehatan reproduksi berbasis fikih bagi santriwati, agar mereka bisa membedakan antara darah haid, istihadhah, dan nifas dengan tepat.</p>
+    </div>
+  </div>
+</section>
+
+<div class="quote-divider">﷽</div>
+
+<!-- ===================== BAB III ===================== -->
+<section class="bab" id="bab3">
+  <div class="bab-header">
+    <div class="bab-number">III</div>
+    <h2>Shalat<span class="ar">كِتَابُ الصَّلَاةِ</span></h2>
+  </div>
+
+  <div class="fasl">
+    <h3>Udzur dan Syarat Sah Shalat</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Udzur shalat (2):</strong> tidur dan lupa — keduanya menggugurkan dosa keterlambatan/kelalaian shalat, namun tetap wajib mengqadha begitu ingat/terbangun.</p>
+      <p><strong>Syarat sah shalat (8):</strong> suci dari hadats besar dan kecil; suci badan, pakaian, dan tempat dari najis; menutup aurat; menghadap kiblat; masuk waktu shalat; mengetahui rukun-rukun shalat; tidak meyakini salah satu rukun sebagai sunnah; menjauhi hal-hal yang membatalkan shalat.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Syarat sah adalah hal-hal yang harus terpenuhi <em>sebelum</em> dan <em>selama</em> shalat berlangsung, berbeda dengan rukun yang merupakan bagian dari struktur gerakan shalat itu sendiri. Jika satu syarat sah tidak terpenuhi (misalnya aurat terbuka di tengah shalat dan tidak segera ditutup), maka shalat batal secara otomatis meski gerakannya benar.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Batasan Aurat dalam Shalat</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <table class="rincian">
+        <tr><th>Kategori</th><th>Batas Aurat saat Shalat</th></tr>
+        <tr><td>Laki-laki (merdeka/budak) & budak perempuan</td><td>Antara pusar dan lutut</td></tr>
+        <tr><td>Perempuan merdeka</td><td>Seluruh badan kecuali wajah dan telapak tangan</td></tr>
+        <tr><td>Perempuan (merdeka/budak) di hadapan laki-laki ajnabi (bukan mahram)</td><td>Seluruh badan</td></tr>
+        <tr><td>Perempuan di hadapan mahram/sesama perempuan</td><td>Antara pusar dan lutut</td></tr>
+      </table>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Perbedaan batas aurat "saat shalat" dan "di hadapan orang lain" (di luar shalat) adalah dua hal yang berbeda namun sering tertukar. Poin 2 mengatur aurat perempuan spesifik dalam shalat, sedangkan poin 3–4 mengatur aurat sosial sehari-hari terhadap sesama manusia. Guru perlu menjelaskan keduanya secara terpisah agar tidak rancu.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Rukun Shalat (17 Rukun)</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Niat</li>
+        <li>Takbiratul ihram</li>
+        <li>Berdiri bagi yang mampu (shalat fardhu)</li>
+        <li>Membaca surat Al-Fatihah</li>
+        <li>Ruku'</li>
+        <li>Tuma'ninah dalam ruku'</li>
+        <li>I'tidal (bangkit dari ruku')</li>
+        <li>Tuma'ninah dalam i'tidal</li>
+        <li>Sujud dua kali</li>
+        <li>Tuma'ninah dalam sujud</li>
+        <li>Duduk di antara dua sujud</li>
+        <li>Tuma'ninah dalam duduk di antara dua sujud</li>
+        <li>Tasyahud akhir</li>
+        <li>Duduk tasyahud akhir</li>
+        <li>Membaca shalawat kepada Nabi ﷺ pada tasyahud akhir</li>
+        <li>Salam</li>
+        <li>Tertib (berurutan)</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Rukun shalat terbagi tiga jenis: rukun qalbi (niat — di hati), rukun qauli (ucapan — takbir, Al-Fatihah, tasyahud, shalawat, salam), dan rukun fi'li (gerakan — berdiri, ruku', sujud, duduk, tuma'ninah). Memahami klasifikasi ini membantu santri mengenali jenis kesalahan yang bisa terjadi: kesalahan ucapan biasanya memerlukan sujud sahwi, sedangkan meninggalkan rukun sama sekali membatalkan rakaat tersebut.</p>
+      <p><strong>Tuma'ninah</strong> (rukun ke-6, 8, 10, 12) adalah diam sejenak setelah bergerak sampai seluruh anggota tubuh benar-benar berhenti, kira-kira selama mengucap "subhanallah". Ini kerap diabaikan oleh orang yang shalat terburu-buru, padahal statusnya adalah rukun, bukan sekadar sunnah — Nabi ﷺ pernah menegur seseorang yang shalat cepat dengan sabda: "Kembalilah shalat, karena engkau belum shalat!"</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Tiga Tingkatan Niat Shalat</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li><strong>Shalat fardhu:</strong> wajib memaksudkan tiga unsur — <em>qashdul fi'li</em> (menyengaja perbuatan shalat), <em>ta'yin</em> (menentukan jenis shalatnya, misal Dzuhur), dan <em>fardhiyah</em> (menyebut kefardhuannya).</li>
+        <li><strong>Shalat sunnah berwaktu/bersebab</strong> (misal rawatib): cukup <em>qashdul fi'li</em> dan <em>ta'yin</em> saja, tanpa fardhiyah.</li>
+        <li><strong>Shalat sunnah mutlak</strong> (tanpa sebab/waktu tertentu): cukup <em>qashdul fi'li</em> saja.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Contoh lafal niat Dzuhur: <span class="arabic" style="font-size:1.1rem;">أُصَلِّي فَرْضَ الظُّهْرِ</span> ("Aku niat shalat fardhu Dzuhur") — di sini "أصلي" adalah fi'il, "الظهر" adalah ta'yin, dan "فرض" adalah fardhiyah. Melafalkan niat sebelum takbir hukumnya sunnah untuk membantu menghadirkan kesengajaan di hati, bukan rukun yang wajib diucapkan.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Sah Takbiratul Ihram</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan (ringkas)</span>
+      <p>Enam belas syarat, di antaranya: dilakukan sambil berdiri (bagi shalat fardhu yang mampu), diucapkan dalam bahasa Arab, menggunakan lafal "Allah" dan "Akbar" secara berurutan, tidak memanjangkan huruf hamzah pada "Allah" atau huruf ba pada "Akbar", tidak mentasydidkan huruf ba, tidak menyisipkan huruf tambahan, terdengar oleh diri sendiri, dilakukan menghadap kiblat, dan takbir makmum harus dilakukan setelah takbir imam selesai.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Kesalahan pengucapan takbir sering luput dari perhatian, misalnya mengucap "Allaahhu Akbaar" (memanjangkan huruf) yang justru mengubah makna kalimat dan membatalkan sah-nya takbir. Karena itu, latihan pelafalan takbir yang benar (tajwid dasar) sangat penting diajarkan sejak dini, terutama bagi calon imam shalat.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Membaca Al-Fatihah</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan (ringkas)</span>
+      <p>Sepuluh syarat: tertib sesuai urutan ayat, berturut-turut tanpa jeda lama, memperhatikan makhraj huruf dan tasydid, tidak diam lama di tengah bacaan, membaca seluruh ayat termasuk basmalah, tidak menggunakan lahn yang mengubah makna, dibaca sambil berdiri pada shalat fardhu, terdengar oleh diri sendiri, dan tidak terganggu oleh bacaan/dzikir orang lain.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Basmalah (بسم الله الرحمن الرحيم) dihitung sebagai salah satu ayat Al-Fatihah menurut madzhab Syafi'i — ini adalah salah satu ciri khas madzhab ini dibanding madzhab lain (mis. Maliki dan sebagian Hanafi yang tidak menghitungnya sebagai ayat). Ketertinggalan membaca basmalah menyebabkan bacaan Al-Fatihah dianggap tidak lengkap.</p>
+      <p>Matan ini juga merinci 21 letak tasydid pada bacaan Al-Fatihah — bermanfaat sebagai alat bantu koreksi bacaan (tashih qira'ah) bagi pemula, memastikan setiap huruf bertasydid dibaca dengan penekanan ganda yang benar.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Sah Sujud & Tujuh Anggota Sujud</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Syarat sujud (7):</strong> sujud dengan tujuh anggota badan, dahi terbuka, menekankan berat kepala, tidak berniat lain selain sujud, tidak sujud di atas benda yang ikut bergerak, mengangkat pinggul lebih tinggi dari kepala, serta tuma'ninah.</p>
+      <p><strong>Tujuh anggota sujud:</strong> dahi, telapak tangan kanan, telapak tangan kiri, lutut kanan, lutut kiri, ujung jari kaki kanan, ujung jari kaki kiri.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Ketujuh anggota sujud ini harus menempel ke lantai secara bersamaan (atau berurutan tanpa jeda lama) agar sujud dianggap sah. Kesalahan umum: telapak tangan terangkat/mengepal, atau ujung kaki tidak menapak (misal karena posisi duduk yang salah) — keduanya dapat mengurangi kesempurnaan bahkan keabsahan sujud.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Waktu-waktu Shalat Fardhu</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <table class="rincian">
+        <tr><th>Shalat</th><th>Awal Waktu</th><th>Akhir Waktu</th></tr>
+        <tr><td>Dzuhur</td><td>Matahari tergelincir dari titik zenit</td><td>Bayangan benda sama panjang dengan bendanya</td></tr>
+        <tr><td>Ashar</td><td>Bayangan benda melebihi panjang bendanya sedikit</td><td>Matahari terbenam</td></tr>
+        <tr><td>Maghrib</td><td>Matahari terbenam</td><td>Hilangnya mega merah (syafaq ahmar)</td></tr>
+        <tr><td>Isya</td><td>Hilangnya mega merah</td><td>Terbit fajar shadiq</td></tr>
+        <tr><td>Shubuh</td><td>Terbit fajar shadiq</td><td>Terbit matahari</td></tr>
+      </table>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Fajar shadiq adalah cahaya putih yang membentang horizontal di ufuk timur menjelang subuh — berbeda dengan fajar kadzib (cahaya vertikal seperti ekor serigala yang muncul lebih dulu dan tidak menandai masuknya waktu shubuh maupun batas akhir sahur). Perbedaan ini penting diajarkan agar santri memahami dasar penentuan waktu imsak yang lebih hati-hati (ihtiyath) dalam praktik masyarakat.</p>
+      <p>Disunnahkan mengakhirkan Isya hingga hilangnya mega kuning dan putih, meski secara syar'i waktu Isya sudah masuk sejak hilangnya mega merah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Waktu-waktu Terlarang untuk Shalat Sunnah Mutlak</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Setelah shalat Shubuh hingga matahari terbit sempurna (± setinggi tombak).</li>
+        <li>Ketika matahari tepat di tengah langit (istiwa) hingga tergelincir, kecuali hari Jumat.</li>
+        <li>Ketika matahari menguning menjelang terbenam hingga benar-benar terbenam.</li>
+        <li>Setelah shalat Shubuh sampai matahari terbit.</li>
+        <li>Setelah shalat Ashar sampai matahari terbenam.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Larangan ini khusus untuk shalat sunnah <em>ghairu dzati sabab</em> (tanpa sebab) seperti shalat sunnah mutlak. Shalat yang memiliki sebab tertentu — misalnya shalat jenazah, shalat gerhana, shalat tahiyyatul masjid, atau shalat qadha — tetap diperbolehkan pada waktu-waktu tersebut menurut pendapat yang lebih kuat (rajih) dalam madzhab Syafi'i.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Rukun yang Wajib Tuma'ninah & Definisi Tuma'ninah</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p>Empat rukun yang wajib disertai tuma'ninah: ruku', i'tidal, sujud, dan duduk di antara dua sujud. Tuma'ninah adalah diam sejenak setelah gerakan hingga seluruh anggota tubuh benar-benar tenang, kira-kira seukuran waktu mengucap tasbih "Subhanallah".</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Ini adalah salah satu materi paling praktis untuk dikoreksi guru terhadap muridnya — banyak orang shalat dengan gerakan yang "tersambung" tanpa jeda (misal langsung sujud kedua tanpa duduk tenang di antaranya), sehingga shalatnya tidak sah menurut madzhab Syafi'i, meski tampak seperti shalat pada umumnya.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Sujud Sahwi dan Sunnah Ab'adh</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Sebab sujud sahwi (4):</strong> meninggalkan sebagian sunnah ab'adh, melakukan sesuatu yang membatalkan jika sengaja namun tidak membatalkan jika lupa, memindahkan rukun qauli ke tempat yang bukan seharusnya, dan melebihkan rukun fi'li (misalnya kelebihan rakaat) karena lupa.</p>
+      <p><strong>Sunnah Ab'adh (7):</strong> tasyahud awal, duduk tasyahud awal, shalawat Nabi pada tasyahud awal, shalawat keluarga Nabi pada tasyahud akhir, do'a qunut, berdiri saat qunut, dan shalawat-salam untuk Nabi beserta keluarga dan sahabat saat qunut.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Sunnah dalam shalat terbagi dua: <em>sunnah ab'adh</em> (jika tertinggal, disunnahkan menggantinya dengan sujud sahwi) dan <em>sunnah hai'at</em> (jika tertinggal, tidak perlu sujud sahwi, misalnya mengangkat tangan saat takbir atau membaca doa iftitah). Membedakan keduanya membantu murid memahami kapan sujud sahwi diperlukan dan kapan tidak.</p>
+      <p>Sujud sahwi dilakukan dua kali sujud sebelum salam (menurut pendapat yang lebih masyhur dalam madzhab Syafi'i), sebagai penambal kekurangan yang terjadi karena lupa, bukan karena kesengajaan.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Pembatal Shalat</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan (14 pembatal)</span>
+      <ol>
+        <li>Berhadats.</li>
+        <li>Terkena najis yang tidak langsung dihilangkan.</li>
+        <li>Terbuka aurat yang tidak segera ditutup.</li>
+        <li>Berbicara dua huruf atau satu huruf yang dapat dipahami, dengan sengaja.</li>
+        <li>Makan sedikit dengan sengaja.</li>
+        <li>Makan banyak, sekalipun lupa.</li>
+        <li>Bergerak tiga kali berturut-turut, sekalipun lupa.</li>
+        <li>Melompat yang merusak kekhusyukan shalat.</li>
+        <li>Memukul secara berlebihan.</li>
+        <li>Menambah rukun fi'li dengan sengaja.</li>
+        <li>Mendahului atau tertinggal dua rukun dari imam tanpa udzur.</li>
+        <li>Berniat menghentikan shalat.</li>
+        <li>Menggantungkan shalat pada suatu syarat.</li>
+        <li>Ragu untuk menghentikan shalat.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Poin ke-7 (bergerak tiga kali berturut-turut) sering menjadi pertanyaan: gerakan yang dimaksud adalah gerakan besar dan berurutan (bukan gerakan shalat itu sendiri), misalnya menggaruk badan tiga kali berturut-turut dalam satu tarikan gerakan yang sama. Gerakan kecil seperti menggeser jari atau menoleh sesaat tidak termasuk pembatal.</p>
+      <p>Poin ke-4 penting dibedakan dari dzikir/doa dalam bahasa Arab yang menjadi bagian shalat — berbicara di sini maksudnya kata-kata di luar konteks bacaan shalat (kalam adami), misalnya menjawab pertanyaan orang lain secara sengaja saat shalat.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Makmum Mengikuti Imam</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan (ringkas, 11 syarat)</span>
+      <p>Di antaranya: tidak mengetahui batalnya shalat imam, tidak meyakini imam wajib mengqadha shalatnya, imam bukan sedang menjadi makmum orang lain, imam bukan orang yang bacaannya buruk (ummi) jika makmum bukan ummi, posisi makmum tidak mendahului imam, mengetahui gerakan perpindahan imam, berada dalam satu tempat/masjid atau jarak maksimal ± 300 hasta, berniat berjamaah, kesesuaian jenis shalat, tidak menyelisihi imam secara mencolok dalam perkara sunnah, dan mengikuti gerakan imam.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Materi ini sangat relevan untuk pembinaan jamaah masjid/mushola, khususnya soal batas jarak dan penghalang pandangan (shaf yang terputus bangunan). Guru dapat mengaitkan ini dengan tata cara shalat jamaah yang benar, termasuk kapan makmum masbuk (tertinggal) masih dianggap sah mengikuti rakaat imam.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Model Berjamaah yang Sah dan Tidak Sah</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Sah (5):</strong> laki-laki mengikuti laki-laki; perempuan mengikuti laki-laki; banci (khuntsa) mengikuti laki-laki; perempuan mengikuti banci; perempuan mengikuti perempuan.</p>
+      <p><strong>Tidak sah (4):</strong> laki-laki mengikuti perempuan; laki-laki mengikuti banci; banci mengikuti perempuan; banci mengikuti banci.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Prinsip dasarnya: seseorang tidak boleh menjadi makmum pada orang yang status keabsahan imamahnya diragukan atau lebih rendah tingkatannya menurut kaidah fikih ini. Istilah "khuntsa" dalam kitab klasik merujuk pada kondisi kelamin ganda (interseks) yang statusnya belum jelas laki-laki atau perempuan menurut kajian fikih klasik, dipertimbangkan secara kehati-hatian dalam posisi imamah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Jamak dan Qashar</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan (ringkas)</span>
+      <p><strong>Syarat jamak taqdim (4):</strong> dimulai dari shalat yang waktunya lebih dulu, niat jamak, berturut-turut, udzur yang terus berlangsung.</p>
+      <p><strong>Syarat jamak takhir (2):</strong> niat ta'khir dilakukan selagi masih ada waktu shalat pertama, dan udzur berlangsung terus hingga shalat kedua selesai.</p>
+      <p><strong>Syarat qashar (7):</strong> jarak perjalanan minimal 2 marhalah (± 80 km), perjalanan yang mubah, mengetahui bolehnya qashar, niat qashar saat takbiratul ihram, shalat yang di-qashar adalah shalat empat rakaat (ruba'iyyah), perjalanan berlangsung terus sampai shalat selesai, dan tidak bermakmum kepada orang yang shalat sempurna (mutim).</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Jamak (menggabung dua shalat dalam satu waktu) dan qashar (meringkas shalat 4 rakaat menjadi 2) adalah dua keringanan (rukhshah) yang berbeda dan bisa dilakukan secara terpisah maupun bersamaan. Jamak boleh dilakukan karena hujan atau safar (jamak taqdim untuk kondisi hujan tanpa perlu qashar), sedangkan qashar khusus diperbolehkan karena perjalanan jauh (safar) yang mubah.</p>
+      <p>Shalat yang bisa di-qashar hanya Dzuhur, Ashar, dan Isya (shalat 4 rakaat) — Maghrib dan Shubuh tidak bisa diqashar karena bukan shalat ruba'iyyah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Sah Shalat Jumat & Rukun Khutbah</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan (ringkas)</span>
+      <p><strong>Syarat sah Jumat (6):</strong> dilaksanakan setelah masuk waktu Dzuhur, dalam batas wilayah pemukiman, berjamaah, jumlah jamaah minimal 40 laki-laki merdeka baligh penduduk asli, tidak didahului/dibarengi jumatan lain dalam satu wilayah, dan dilaksanakan setelah dua khutbah.</p>
+      <p><strong>Rukun khutbah (5):</strong> memuji Allah, bershalawat kepada Nabi, berwasiat taqwa, membaca ayat Al-Qur'an pada salah satu khutbah, dan mendoakan kaum muslimin di akhir khutbah kedua.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Angka "40 jamaah" adalah pendapat masyhur (qaul mu'tamad) madzhab Syafi'i mengenai jumlah minimal jamaah Jumat — ini menjadi salah satu ciri khas yang membedakan dengan madzhab lain yang memiliki syarat jumlah berbeda. Penting dijelaskan bahwa ini adalah hasil ijtihad ulama berdasarkan dalil yang ada, bukan angka mutlak yang disepakati seluruh madzhab.</p>
+    </div>
+  </div>
+</section>
+
+<div class="quote-divider">﷽</div>
+
+<!-- ===================== BAB IV ===================== -->
+<section class="bab" id="bab4">
+  <div class="bab-header">
+    <div class="bab-number">IV</div>
+    <h2>Pengurusan Jenazah<span class="ar">كِتَابُ الجَنَائِزِ</span></h2>
+  </div>
+
+  <div class="fasl">
+    <h3>Empat Kewajiban Kifayah terhadap Jenazah Muslim</h3>
+    <div class="arabic-box arabic">
+      اَلَّذِي يَلْزَمُ لِلْمَيِّتِ الْمُسْلِمِ أَرْبَعَةُ أَشْيَاءَ: غُسْلُهُ، وَتَكْفِيْنُهُ، وَالصَّلَاةُ عَلَيْهِ، وَدَفْنُهُ.
+    </div>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Memandikan.</li>
+        <li>Mengkafani.</li>
+        <li>Menshalatkan.</li>
+        <li>Menguburkan.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Keempat kewajiban ini berstatus <em>fardhu kifayah</em>, artinya jika sudah dilakukan oleh sebagian kaum muslimin (misal warga sekitar atau keluarga), maka gugur kewajiban bagi yang lain. Namun jika tidak ada seorang pun yang melaksanakannya, seluruh masyarakat di sekitar jenazah tersebut berdosa.</p>
+      <p>Cara memandikan jenazah minimal adalah membasahi seluruh badan dengan air; cara sempurna mencakup membersihkan kotoran, mewudhukan jenazah, menggosok dengan daun bidara, dan menyiram tiga kali. Kain kafan minimal satu lapis menutup seluruh tubuh; sempurna untuk laki-laki tiga lapis kain, dan perempuan lima lapis (baju, kerudung, sarung, dan dua lapis kain).</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Rukun Shalat Jenazah</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Niat.</li>
+        <li>Empat kali takbir.</li>
+        <li>Berdiri bagi yang mampu.</li>
+        <li>Membaca Al-Fatihah.</li>
+        <li>Membaca shalawat kepada Nabi setelah takbir kedua.</li>
+        <li>Mendoakan mayit setelah takbir ketiga.</li>
+        <li>Salam.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Ciri khas shalat jenazah adalah tanpa ruku' dan sujud — seluruhnya dilakukan sambil berdiri dengan empat takbir sebagai pemisah antar-rukun. Struktur ini unik dan sering perlu dipraktikkan langsung (simulasi) agar peserta didik hafal urutannya: takbir 1 (niat + Al-Fatihah) → takbir 2 (shalawat) → takbir 3 (doa untuk mayit) → takbir 4 (doa penutup) → salam.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Cara Menguburkan & Kondisi Boleh Membongkar Kubur</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p>Kubur minimal berupa lubang yang dapat menahan bau jenazah dan melindunginya dari binatang buas. Cara sempurna: lubang yang dalam dan luas, pipi jenazah diletakkan menyentuh tanah, dan wajib dihadapkan ke arah kiblat.</p>
+      <p><strong>Empat kondisi diperbolehkan membongkar kubur:</strong> untuk dimandikan (jika belum berubah bentuk), untuk dihadapkan ke kiblat, untuk mengambil harta yang ikut terkubur, dan untuk menyelamatkan janin yang mungkin masih hidup dalam kandungan jenazah ibu yang telah dikubur.</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Empat kondisi ini menunjukkan bahwa pembongkaran kubur pada dasarnya dilarang (demi menjaga kehormatan mayit), namun diperbolehkan dalam kondisi darurat atau untuk memperbaiki kesalahan penting yang terjadi saat penguburan.</p>
+    </div>
+  </div>
+</section>
+
+<div class="quote-divider">﷽</div>
+
+<!-- ===================== BAB V ===================== -->
+<section class="bab" id="bab5">
+  <div class="bab-header">
+    <div class="bab-number">V</div>
+    <h2>Zakat<span class="ar">كِتَابُ الزَّكَاةِ</span></h2>
+  </div>
+
+  <div class="fasl">
+    <h3>Enam Jenis Harta Wajib Zakat</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Binatang ternak (unta, sapi, kambing).</li>
+        <li>Emas dan perak.</li>
+        <li>Biji-bijian makanan pokok.</li>
+        <li>Buah-buahan (kurma dan anggur, menurut penjelasan matan asal).</li>
+        <li>Harta perdagangan — kadar zakatnya 2,5% dari nilai barang dagangan.</li>
+        <li>Harta temuan/terpendam (rikaz) dan hasil tambang (ma'dan).</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Setiap jenis harta memiliki <em>nishab</em> (batas minimal wajib zakat) dan <em>haul</em> (jangka waktu kepemilikan, umumnya satu tahun) yang berbeda-beda — misalnya emas wajib dizakati setelah mencapai 85 gram dan dimiliki genap satu tahun, sedangkan zakat pertanian (hasil bumi) dikeluarkan setiap kali panen tanpa syarat haul.</p>
+      <p>Zakat perdagangan dihitung dari total modal dan keuntungan pada akhir haul (bukan dari omzet penjualan), dikeluarkan sebesar 2,5% (4/10 dari 1/10, sebagaimana disebutkan matan sebagai "empat persepuluh dari sepersepuluh" — istilah klasik untuk menyebut 2,5%).</p>
+      <p><strong>Catatan pedagogis:</strong> pembahasan zakat dalam matan aslinya (Safinatun Naja) memang ringkas — hanya menyebutkan kategori harta wajib zakat tanpa merinci nishab dan kadar setiap jenisnya secara detail, sehingga pengajar disarankan melengkapi dengan referensi fikih zakat yang lebih rinci (misalnya kitab Fathul Qarib atau Kifayatul Akhyar) untuk pembelajaran lanjutan.</p>
+    </div>
+  </div>
+</section>
+
+<div class="quote-divider">﷽</div>
+
+<!-- ===================== BAB VI ===================== -->
+<section class="bab" id="bab6">
+  <div class="bab-header">
+    <div class="bab-number">VI</div>
+    <h2>Puasa<span class="ar">كِتَابُ الصَّوْمِ</span></h2>
+  </div>
+
+  <div class="fasl">
+    <h3>Cara Menentukan Awal Ramadhan</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Menggenapkan bulan Sya'ban menjadi 30 hari.</li>
+        <li>Melihat hilal secara langsung (rukyat), termasuk oleh orang yang fasiq sekalipun untuk keperluan pribadinya.</li>
+        <li>Penetapan berdasarkan kesaksian orang adil ('adl) bagi yang tidak melihat sendiri.</li>
+        <li>Kabar dari orang yang tepercaya (meski hanya seorang), baik dipercaya penuh atau tidak, dengan berbagai kondisi periwayatannya.</li>
+        <li>Ijtihad, bagi orang yang ragu dan tidak memiliki sarana kepastian lain.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Metode-metode ini mencerminkan fleksibilitas fikih klasik dalam menetapkan awal bulan qamariyah sebelum era teknologi modern. Di era sekarang, metode rukyat (melihat langsung) dan hisab (perhitungan astronomis) menjadi dua pendekatan utama yang digunakan oleh lembaga keagamaan resmi, dan keduanya dapat dijadikan bahan diskusi lanjutan mengenai penerapan fikih klasik dalam konteks kontemporer.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Syarat Sah, Syarat Wajib, dan Rukun Puasa</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Syarat sah (4):</strong> Islam, berakal, suci dari haid/nifas, mengetahui waktu diperbolehkannya berpuasa.</p>
+      <p><strong>Syarat wajib (5):</strong> Islam, taklif (baligh dan berakal), mampu berpuasa, sehat, muqim (tidak sedang bepergian).</p>
+      <p><strong>Rukun (3):</strong> niat setiap malam, menahan diri dari segala pembatal dalam keadaan sadar/tidak dipaksa/tidak dalam kondisi dimaafkan, dan berpuasa (menahan diri dari fajar hingga maghrib).</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Perbedaan syarat sah dan syarat wajib penting dipahami: seorang anak kecil yang belum baligh tidak wajib puasa (tidak memenuhi syarat wajib), namun jika ia tetap berpuasa, puasanya tetap sah (karena memenuhi syarat sah) — sehingga dianjurkan untuk melatih anak berpuasa sejak dini sebagai bentuk pembiasaan.</p>
+      <p>Niat puasa Ramadhan wajib dilakukan setiap malam sebelum fajar (berbeda dengan niat shalat yang cukup sekali di awal), karena setiap hari puasa dihitung sebagai ibadah yang terpisah.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Pembatal Puasa</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Murtad (keluar dari Islam).</li>
+        <li>Haid.</li>
+        <li>Nifas.</li>
+        <li>Melahirkan.</li>
+        <li>Gila, sekalipun sebentar.</li>
+        <li>Pingsan sepanjang siang hari.</li>
+        <li>Mabuk yang disengaja sepanjang siang hari.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Menariknya, pingsan dan mabuk hanya membatalkan puasa jika berlangsung sepanjang hari (dari fajar hingga maghrib) — jika seseorang pingsan sesaat namun sadar kembali sebelum maghrib meski hanya sesaat, puasanya tetap sah menurut madzhab Syafi'i.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Hal yang Tidak Membatalkan Puasa Meski Masuk Rongga Mulut</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <ol>
+        <li>Dilakukan karena lupa.</li>
+        <li>Tidak mengetahui hukumnya (jahil/baru belajar).</li>
+        <li>Dipaksa oleh orang lain.</li>
+        <li>Air liur yang tertelan secara alami di sela-sela gigi tanpa sengaja.</li>
+        <li>Debu jalanan yang tanpa sengaja masuk.</li>
+        <li>Serbuk tepung dari ayakan yang tanpa sengaja masuk.</li>
+        <li>Lalat yang terbang masuk tanpa disengaja.</li>
+      </ol>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Poin-poin ini menegaskan prinsip fikih penting: unsur <em>kesengajaan</em> (qashd) adalah penentu utama batal-tidaknya puasa dalam banyak kasus, bukan semata-mata "sesuatu masuk ke tenggorokan". Ini memberi rasa aman bagi orang yang berpuasa dari kekhawatiran berlebihan terhadap hal-hal di luar kendalinya.</p>
+      <p><strong>Diskusi kelas:</strong> bagaimana dengan menelan ludah sendiri secara sengaja? Jawabannya tetap tidak membatalkan, karena air liur berasal dari dalam tubuh sendiri dan bukan termasuk kategori "sesuatu dari luar" yang dimaksud dalam bab pembatal puasa.</p>
+    </div>
+  </div>
+
+  <div class="fasl">
+    <h3>Kategori Hukum Berbuka Puasa dan Cara Menggantinya</h3>
+    <div class="translate-box">
+      <span class="label">Terjemahan</span>
+      <p><strong>Empat kategori hukum berbuka:</strong> wajib (misalnya perempuan haid/nifas), boleh (musafir dan orang sakit), tidak wajib dan tidak boleh (orang gila), serta haram (menunda qadha tanpa alasan hingga waktunya sempit).</p>
+      <p><strong>Empat cara mengganti puasa yang batal:</strong> qadha dan fidyah (misal ibu hamil/menyusui yang khawatir akan bayinya, atau orang yang menunda qadha hingga Ramadhan berikutnya); qadha tanpa fidyah (misal orang pingsan); fidyah tanpa qadha (misal lansia yang tak mampu lagi berpuasa); serta tanpa qadha dan tanpa fidyah (misal orang gila yang bukan disengaja).</p>
+    </div>
+    <div class="explain-box">
+      <span class="tip">Penjelasan Tambahan</span>
+      <p>Materi ini sangat aplikatif untuk kehidupan sehari-hari: ibu hamil dan menyusui, misalnya, memiliki dua pertimbangan berbeda — jika khawatir pada dirinya sendiri, ia wajib qadha saja; jika khawatir pada kondisi bayinya, ia wajib qadha sekaligus membayar fidyah (memberi makan orang miskin) untuk setiap hari yang ditinggalkan.</p>
+      <p>Fidyah umumnya berupa satu <em>mud</em> (± 6 ons/675 gram) makanan pokok untuk setiap hari puasa yang ditinggalkan, diberikan kepada fakir miskin.</p>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="arabic">وَاللهُ أَعْلَمُ بِالصَّوَابِ</div>
+  <p>Semoga rangkuman dan penjelasan ini bermanfaat sebagai bahan ajar dasar fikih Syafi'i, memudahkan proses belajar-mengajar akidah dan ibadah sehari-hari, serta menjadi amal jariyah bagi semua pihak yang menyusun dan menyebarkannya. Wallāhu a'lam bish-shawāb.</p>
+</div>
+
+</main>
+
+<a href="#top" class="back-top" title="Kembali ke atas">↑</a>
+
+<footer>
+  &copy; 2026 by Achmad Fauzi &nbsp;|&nbsp; Email: <a href="mailto:vaozeei@gmail.com">vaozeei@gmail.com</a>
+</footer>
+
+</body>
+</html>

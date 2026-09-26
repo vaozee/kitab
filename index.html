@@ -104,6 +104,21 @@ h1 .gradient{background:linear-gradient(100deg,#8a5f1f,#c9972c 45%,#e3c377 85%);
 .stat span{font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;position:relative}
 @media(max-width:600px){.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
 
+
+/* PDF LIBRARY — compact default, isolated from normal module cards */
+#pdfGrid.pdf-compact{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
+#pdfGrid.pdf-compact .pdf-card{min-height:0;padding:10px 11px;display:block;}
+#pdfGrid.pdf-compact .pdf-card .corner{display:none;}
+#pdfGrid.pdf-compact .pdf-card .card-top{margin-bottom:7px;}
+#pdfGrid.pdf-compact .pdf-card .pdf-thumb{height:96px;margin-bottom:8px;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:rgba(227,195,119,.12);}
+#pdfGrid.pdf-compact .pdf-card .pdf-thumb img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+#pdfGrid.pdf-compact .pdf-card .pdf-thumb-fallback{height:100%;display:grid;place-items:center;font:700 1.1rem var(--disp);color:var(--gold-deep);}
+#pdfGrid.pdf-compact .pdf-card h3{font-size:.82rem;line-height:1.25;margin:0 0 4px;}
+#pdfGrid.pdf-compact .pdf-card .card-body p{font-family:var(--sans);font-size:.70rem;line-height:1.5;color:var(--muted);margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+#pdfGrid.pdf-compact .pdf-card .pdf-meta{font-family:var(--sans);font-size:.60rem;line-height:1.3;margin-top:4px;}
+#pdfGrid.pdf-compact .pdf-card .card-bottom{margin-top:7px;padding-top:7px;font-size:.60rem;}
+@media(max-width:620px){#pdfGrid.pdf-compact{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}#pdfGrid.pdf-compact .pdf-card{padding:8px;}#pdfGrid.pdf-compact .pdf-card .pdf-thumb{height:82px;}}
+
 /* ---------- sections ---------- */
 .section{padding:26px 0 18px;opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .section.in{opacity:1;transform:translateY(0)}
@@ -728,55 +743,55 @@ iframe{border:0;width:100%;height:100%;background:#fff;display:block}
 
 <script>
 const kitab=[
- {n:"01",title:"Arba'un Nawawi",cat:"lain",icon:"كتاب",badge:"HADIST",url:"",desc:"Modul kitab klasik: Arba'un Nawawi."},
- {n:"02",title:"Nadhom Alfiyah",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Nadhom Alfiyah."},
- {n:"03",title:"Ilmu Usul Fiqih",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Ilmu Usul Fiqih."},
- {n:"04",title:"Qowaidul I'lal",cat:"lain",icon:"كتاب",badge:"SHOROF",url:"",desc:"Modul kitab klasik: Qowaidul I'lal."},
- {n:"05",title:"Bulughul Marom",cat:"lain",icon:"كتاب",badge:"HADIST",url:"",desc:"Modul kitab klasik: Bulughul Marom."},
- {n:"06",title:"Safinatun Naja",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Safinatun Naja."},
- {n:"07",title:"Mabādi' Al-Awwaliyyah",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Mabādi' Al-Awwaliyyah."},
- {n:"08",title:"Aqidatul Awam",cat:"lain",icon:"كتاب",badge:"AQIDAH",url:"",desc:"Modul kitab klasik: Aqidatul Awam."},
- {n:"09",title:"Risalatul Mahidl",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Risalatul Mahidl."},
- {n:"10",title:"Nashoihul 'Ibaad",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Nashoihul 'Ibaad."},
- {n:"11",title:"Ta'limul Muta'alim",cat:"lain",icon:"كتاب",badge:"ADAB",url:"",desc:"Modul kitab klasik: Ta'limul Muta'alim."},
- {n:"12",title:"Balaghah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Balaghah."},
- {n:"13",title:"Jawahirul Kalamiyah",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Jawahirul Kalamiyah."},
- {n:"14",title:"Al-Waraqāt",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Al-Waraqāt."},
- {n:"15",title:"Mukhtashar Abi Syuja'",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Mukhtashar Abi Syuja'."},
- {n:"16",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Alfiyah Ibnu Malik."},
- {n:"17",title:"Al-'Imrithi",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Al-'Imrithi."},
- {n:"18",title:"Al-Ajurumiyah",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Modul kitab klasik: Al-Ajurumiyah."},
- {n:"19",title:"Ilmu Shorof",cat:"sharaf",icon:"كتاب",badge:"SHOROF",url:"",desc:"Modul kitab klasik: Ilmu Shorof."},
- {n:"20",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"كتاب",badge:"SHOROF",url:"",desc:"Modul kitab klasik: Nazham Al-Maqshūd."},
- {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Modul kitab klasik: Ilmu Falak Lanjutan."},
- {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Modul kitab klasik: Pelajaran Farā'iḍ."},
- {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Modul kitab klasik: Hisab Falakiyah."},
- {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Modul kitab klasik: Kalkulator Ahli Waris."},
- {n:"25",title:"Fathul Qorib al-Mujib",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Modul kitab klasik: Fathul Qorib al-Mujib."},
- {n:"26",title:"Hayatul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Hayatul Hayawan."},
- {n:"27",title:"Tahqiqul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Modul kitab klasik: Tahqiqul Hayawan."},
- {n:"28",title:"Maulid Ad-Diba'i",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Modul kitab klasik: Maulid Ad-Diba'i."},
- {n:"29",title:"Maulid Al-Barzanji",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Modul kitab klasik: Maulid Al-Barzanji."},
- {n:"30",title:"Simṭud Durar",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Modul kitab klasik: Simṭud Durar."},
- {n:"31",title:"Al-Hikam",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Al-Hikam."},
- {n:"32",title:"Bidayatul Hidayah",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Bidayatul Hidayah."},
- {n:"33",title:"Ushfuriyah",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Modul kitab klasik: Ushfuriyah."},
+ {n:"01",title:"Arba'un Nawawi",cat:"lain",icon:"كتاب",badge:"HADIST",url:"",desc:"Kumpulan 50 hadits pilihan — 42 hadits inti susunan Imam An-Nawawi, disempurnakan 8 hadits tambahan himpunan Al-Hafizh Ibnu Rajab Al-Hanbali, lengkap teks Arab, terjemah, dan keterangan tambahan."},
+ {n:"02",title:"Nadhom Alfiyah",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Teks lengkap 1.002 bait Alfiyah Ibnu Malik (Al-Khulashah fi an-Nahwi wa ash-Sharf) dalam bahasa Arab, tersedia utuh untuk dibaca secara offline."},
+ {n:"03",title:"Ilmu Usul Fiqih",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Disusun ulang dari resume kitab Ilmu Ushul Fikih karya Syekh Abdul Wahab Khallaf, dilengkapi istilah Arab, transliterasi, terjemah, dan penjelasan rinci per-bab."},
+ {n:"04",title:"Qowaidul I'lal",cat:"lain",icon:"كتاب",badge:"SHOROF",url:"",desc:"Qawa'idul I'lal bagi Pemula karya Syaikh Mundzir Nadzir (Sarangan) — menghimpun 19 kaidah perubahan huruf ilat dalam ilmu sharaf, lengkap terjemah dan syarah."},
+ {n:"05",title:"Bulughul Marom",cat:"lain",icon:"كتاب",badge:"HADIST",url:"",desc:"Himpunan hadits hukum karya Al-Hafizh Ibnu Hajar Al-'Asqalani — teks Arab, terjemah, dan penjelasan untuk keperluan belajar-mengajar."},
+ {n:"06",title:"Safinatun Naja",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Matan fikih dasar mazhab Syafi'i, memuat teks Arab, terjemahan, dan penjelasan tambahan untuk memudahkan belajar akidah, thaharah, shalat, jenazah, zakat, dan puasa."},
+ {n:"07",title:"Mabādi' Al-Awwaliyyah",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Prinsip-prinsip dasar memahami Ushul Fiqh dan Qawa'idul Fiqhiyyah — disusun ulang dengan teks Arab, terjemah, dan penjelasan tambahan yang lebih rinci."},
+ {n:"08",title:"Aqidatul Awam",cat:"lain",icon:"كتاب",badge:"AQIDAH",url:"",desc:"Syair dasar akidah untuk pemula karya Syaikh Ahmad Al-Marzuqi Al-Maliki — disusun ulang dengan teks Arab, terjemah, dan penjelasan tambahan."},
+ {n:"09",title:"Risalatul Mahidl",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Pembahasan fikih wanita: haidl, istihadhoh, dan nifas — definisi, hukum, dan batasannya disusun bab per bab lengkap dengan penjelasan tambahan."},
+ {n:"10",title:"Nashoihul 'Ibaad",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Nasihat-Nasihat bagi Para Hamba: kumpulan mutiara hikmah, hadits, dan atsar ulama salaf tentang kesiapan menghadapi hari akhir, disusun berjenjang dari nasihat dua kalimat hingga sepuluh kalimat."},
+ {n:"11",title:"Ta'limul Muta'alim",cat:"lain",icon:"كتاب",badge:"ADAB",url:"",desc:"Merangkum nilai-nilai klasik tentang niat, adab kepada guru, kesungguhan, dan cara-cara agar ilmu yang dipelajari membawa keberkahan."},
+ {n:"12",title:"Balaghah",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Ilmu Balaghah — Bayan, Ma'ani, dan Badi': modul belajar-mengajar keindahan bahasa Arab & sastra Al-Qur'an, disusun bertahap per bab."},
+ {n:"13",title:"Jawahirul Kalamiyah",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Disusun dalam format tanya-jawab agar mudah dipahami, dilengkapi dalil Al-Qur'an berbahasa Arab, terjemahan, dan penjelasan tambahan."},
+ {n:"14",title:"Al-Waraqāt",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Risalah ringkas pintu masuk klasik mempelajari Ushul Fiqih (metodologi pengambilan hukum Islam), lengkap teks Arab, terjemahan, penjelasan tiap pasal, dan versi nazham (syair)."},
+ {n:"15",title:"Mukhtashar Abi Syuja'",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Mukhtashar Abi Syuja' (Matnul Ghayah wat-Taqrib) — fikih ibadah & muamalah mazhab Syafi'i, memuat 15 kitab lengkap teks Arab, terjemahan, dan penjelasan dari bab Thaharah hingga Al-'Itq."},
+ {n:"16",title:"Alfiyah Ibnu Malik",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Manzhumah nahwu karya Imam Ibnu Malik al-Andalusi — sekitar 1.002 bait syair yang merangkum kaidah-kaidah ilmu nahwu dan sharaf bahasa Arab."},
+ {n:"17",title:"Al-'Imrithi",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Kelanjutan dari Al-Ajurumiyyah — nazham karya Syaikh Syarafuddin Yahya al-'Imrithi yang merangkum kaidah nahwu lebih luas dan mendalam, disusun dalam bait-bait yang mudah dihafal."},
+ {n:"18",title:"Al-Ajurumiyah",cat:"nahwu",icon:"كتاب",badge:"NAHWU",url:"",desc:"Matan Al-Ajurumiyah karya Imam Ash-Shanhaji — dasar ilmu nahwu untuk pemula, disajikan secara interaktif dari tingkat dasar hingga lanjutan."},
+ {n:"19",title:"Ilmu Shorof",cat:"sharaf",icon:"كتاب",badge:"SHOROF",url:"",desc:"Menggabungkan tiga tingkatan pembelajaran ilmu shorof: tsulasi mujarrad (6 wazan dasar fi'il tiga huruf) dan tsulasi mazid (12 wazan lanjutan hasil penambahan huruf)."},
+ {n:"20",title:"Nazham Al-Maqshūd",cat:"sharaf",icon:"كتاب",badge:"SHOROF",url:"",desc:"Susunan Ahmad bin 'Abid ar-Rahim, memuat bab ruba'i, mashdar, bina' fi'il, isim fa'il-maf'ul, tashrif lughawi, hingga i'lal fi'il mu'tal — teks Arab, terjemahan, dan penjelasan mendalam."},
+ {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Syarah Sullam an-Nayyirain, al-Khulashah al-Wafiyyah, dan Durus al-Falakiyyah — hisab waktu shalat, arah kiblat, dan rukyat hilal."},
+ {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Nazham karya Imam Sa'id bin Sa'ad bin Nabhan al-Hadrami asy-Syafi'i tentang ilmu waris (farā'iḍ), teks Arab dipadukan terjemahan lengkap."},
+ {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Kalkulator astronomi Islam offline untuk perhitungan hisab falakiyah."},
+ {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Kalkulator pembagian harta waris sesuai hukum faraidl — masukkan data ahli waris untuk menghitung bagian masing-masing secara otomatis."},
+ {n:"25",title:"Fathul Qorib al-Mujib",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Fathul Qorib al-Mujib — syarah Al-Imam Ibnu Qasim Al-Ghazzi atas matan Ghayah wa At-Taqrib karya Abu Syuja' Al-Ashfahani, kitab fikih mazhab Syafi'i."},
+ {n:"26",title:"Hayatul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Hayatu al-Hayawan al-Kubra karya Kamaluddin Muhammad bin Musa ad-Damiri, disertai lampiran 'Aja'ib al-Makhluqat wa Ghara'ib al-Mawjudat karya al-Qazwini — teks Arab, terjemahan & penjelasan."},
+ {n:"27",title:"Tahqiqul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Media belajar fikih fauna, disusun bab per bab lengkap dengan muqaddimah, pembahasan per bab, glosarium, dan khatimah."},
+ {n:"28",title:"Maulid Ad-Diba'i",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Maulid Ad-Diba'i — teks Arab lengkap, terjemahan, dan penjelasan untuk keperluan belajar-mengajar dan pembacaan maulid Nabi Muhammad ﷺ."},
+ {n:"29",title:"Maulid Al-Barzanji",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Naskah Arab, terjemahan Bahasa Indonesia, serta penjelasan/catatan pengajaran untuk keperluan belajar-mengajar, pembacaan maulid, dan kajian sirah Nabi Muhammad ﷺ."},
+ {n:"30",title:"Simṭud Durar",cat:"lain",icon:"كتاب",badge:"TARIH",url:"",desc:"Simtud Durar karya Al-Imam Al-'Allamah Al-Habib Ali bin Muhammad bin Husein Al-Habsyi (1259–1333 H) — syair pujian dan sirah Nabi Muhammad ﷺ yang biasa dibaca dalam majelis maulid."},
+ {n:"31",title:"Al-Hikam",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Kumpulan kalimat hikmah karya Ibnu Athaillah as-Sakandari yang memadukan keindahan bahasa dan kedalaman makna, bekal bagi penempuh jalan spiritual menuju Allah — lengkap teks Arab, terjemahan, dan penjelasan."},
+ {n:"32",title:"Bidayatul Hidayah",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Karya Imam Al-Ghazali — risalah tentang adab ketaatan, menjauhi maksiat, dan bergaul dengan sesama makhluk, kitab klasik tasawuf & akhlak edisi belajar bertahap."},
+ {n:"33",title:"Ushfuriyah",cat:"lain",icon:"كتاب",badge:"TASAWUF",url:"",desc:"Kumpulan 40 hadits Nabi ﷺ disertai faedah sejarah, hikayah sufi, dan mutiara adab — media pembelajaran santri & peserta didik madrasah diniyah."},
 ];
 const umum=[
- {n:"01",title:"POLIBUN",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: POLIBUN."},
- {n:"02",title:"Sawit Monitor",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Sawit Monitor."},
- {n:"03",title:"KopSUS",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: KopSUS."},
- {n:"04",title:"Pantau Api",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Pantau Api."},
-  {n:"05",title:"WarRoom Plantation",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: WarRoom Plantation."},
-  {n:"06",title:"BPJS TK",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJS TK."},
- {n:"07",title:"BPJSKES",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: BPJSKES."},
- {n:"08",title:"RTH",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: RTH."},
- {n:"09",title:"Kalkulator Pajak Indonesia",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Kalkulator Pajak Indonesia."},
- {n:"10",title:"Jadwal Sholat",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Jadwal Sholat."},
- {n:"11",title:"Peta Potensi Air Tanah",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Peta Potensi Air Tanah."},
- {n:"12",title:"Nadaflow",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Nadaflow."},
- {n:"13",title:"VAOZEE IO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: VAOZEE IO."},
- {n:"14",title:"Suite Launcher",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Suite Launcher."}, {n:"19",title:"Gold Prospectivity Engine",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi dan utilitas: Gold Prospectivity Engine."},
+ {n:"01",title:"POLIBUN",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Beranda ringkasan aktivitas poliklinik kebun hari ini."},
+ {n:"02",title:"Sawit Monitor",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Dashboard pemantauan operasional kebun sawit — login untuk mengakses data dan menghubungi tim IT bila diperlukan."},
+ {n:"03",title:"KopSUS",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Aplikasi KopSUS untuk pengelolaan operasional koperasi karyawan."},
+ {n:"04",title:"Pantau Api",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Pantau titik panas (hotspot) kebakaran lahan secara real-time di peta."},
+  {n:"05",title:"WarRoom Plantation",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Pusat koneksi dan sinkronisasi data perkebunan dengan backend Google Apps Script, lengkap panduan koneksi dan antrian backup Excel."},
+  {n:"06",title:"BPJS TK",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Monitoring iuran BPJS Ketenagakerjaan PT. Persada Sejahtera Agro Makmur (Kebun & Pabrik, Katingan/Sampit, Kalimantan Tengah) — impor Excel/CSV dan ekspor PDF."},
+ {n:"07",title:"BPJSKES",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Monitoring & rekonsiliasi tiga arah BPJS Kesehatan — antara Master Karyawan Aktif, rekap potongan internal, dan tagihan resmi BPJS Kesehatan."},
+ {n:"08",title:"RTH",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Portal informasi Rumah Tinggal Hijau (RTH) PT. Persada Sejahtera Agro Makmur — kumpulan berita, artikel, dan dokumentasi program."},
+ {n:"09",title:"Kalkulator Pajak Indonesia",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Kalkulator pajak Indonesia lengkap, mencakup 35 jenis pajak & pungutan."},
+ {n:"10",title:"Jadwal Sholat",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Jadwal sholat offline untuk Masjid Al Muhajirin, Desa Rantau Bangkiang, Kec. Sanaman Mantikei, lengkap hitung mundur menuju waktu sholat berikutnya."},
+ {n:"11",title:"Peta Potensi Air Tanah",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Peta interaktif potensi air tanah — klik lokasi untuk menandai titik calon sumur bor, sistem otomatis menghitung elevasi dan jarak ke sungai/air."},
+ {n:"12",title:"Nadaflow",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Pemutar lagu dengan sinkronisasi lirik (.lrc) — cari lirik online, unggah file, atau tempel manual, tersimpan otomatis untuk diputar ulang secara offline."},
+ {n:"13",title:"VAOZEE IO",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Halaman indeks pusat sistem dan aplikasi VAOZEE."},
+ {n:"14",title:"Suite Launcher",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"7 sistem operasional kebun sawit — dari kebun sampai keuangan — terkumpul dalam satu tempat, satu klik, satu tampilan."}, {n:"19",title:"Gold Prospectivity Engine",cat:"lain",icon:"✦",badge:"UMUM",url:"",desc:"Heatmap interaktif prospek emas (rendah/sedang/tinggi) — klik peta untuk menandai zona prospek berdasarkan data geologi, struktur/sesar, dan indikasi tambang resmi ESDM."},
 ];
 function escAttr(v){
  return String(v??'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -1410,6 +1425,10 @@ if('IntersectionObserver' in window){
     return{kitabList,umumList};
   }
 
+  /* Keterangan tiap kartu modul (field desc pada array kitab[]/umum[] di atas)
+     sudah ditulis manual berdasarkan isi <header> masing-masing file HTML kitab
+     -- statis, jadi selalu tampil walau dashboard ini dibuka langsung lewat
+     file:// (tidak bergantung fetch antar-file yang diblokir browser). */
   function renderAll(){
     const{kitabList,umumList}=computeLists();
     const base=kitabList.length;
@@ -1620,8 +1639,8 @@ if('IntersectionObserver' in window){
     const id='drive:'+f.id;
     const name=(f.name&&String(f.name).trim())||'PDF Tanpa Judul';
     const existing=pdfEntries.find(x=>x.id===id);
-    if(existing){ existing.name=name; existing.size=Number(f.size)||existing.size||0; return; }
-    pdfEntries.push({id,name,path:'Google Drive · Kitab Klasik PDF',driveId:f.id,remote:true,size:Number(f.size)||0});
+    if(existing){ existing.name=name; existing.size=Number(f.size)||existing.size||0; existing.thumbnailLink=f.thumbnailLink||existing.thumbnailLink||''; return; }
+    pdfEntries.push({id,name,path:'Google Drive · Kitab Klasik PDF',driveId:f.id,remote:true,size:Number(f.size)||0,thumbnailLink:f.thumbnailLink||''});
   }
   async function loadDriveEntries(){
     const cached=loadCachedList();
@@ -1634,7 +1653,7 @@ if('IntersectionObserver' in window){
       const r=await apiListDrivePdf(PDF_DRIVE_FOLDER_ID);
       if(!r||!r.ok){console.warn('Gagal memuat daftar PDF dari Google Drive:',r&&r.error);return}
       const files=(r.files||[]).filter(f=>f.kind!=='folder'&&((f.mimeType||'').includes('pdf')||/\.pdf$/i.test(f.name||'')));
-      saveCachedList(files.map(f=>({id:f.id,name:f.name,size:f.size})));
+      saveCachedList(files.map(f=>({id:f.id,name:f.name,size:f.size,thumbnailLink:f.thumbnailLink||''})));
       const freshIds=new Set(files.map(f=>'drive:'+f.id));
       pdfEntries=pdfEntries.filter(x=>!x.remote||freshIds.has(x.id)); // buang entri lama yg sudah dihapus di Drive
       files.forEach(upsertDriveEntry);
@@ -1769,25 +1788,31 @@ if('IntersectionObserver' in window){
     }
   }
 
+  function pdfThumbUrl(x){
+    if(x.thumbnailLink)return x.thumbnailLink;
+    if(x.driveId)return 'https://drive.google.com/thumbnail?id='+encodeURIComponent(x.driveId)+'&sz=w320';
+    return '';
+  }
   function renderCards(){
     grid.innerHTML=pdfEntries.map((x,i)=>{
       const isLarge=x.remote&&x.size>PDF_LARGE_THRESHOLD;
       const sizeLabel=x.remote&&x.size?fmtSize(x.size):'';
       const title=(x.name||'PDF Tanpa Judul').replace(/\.pdf$/i,'')||'PDF Tanpa Judul';
+      const thumb=pdfThumbUrl(x);
+      const thumbHtml=thumb
+        ? `<div class="pdf-thumb"><img src="${esc(thumb)}" alt="Thumbnail ${esc(title)}" loading="lazy" decoding="async" onerror="this.style.display='none';this.parentElement.querySelector('.pdf-thumb-fallback').style.display='grid'"><div class="pdf-thumb-fallback" style="display:none">PDF</div></div>`
+        : `<div class="pdf-thumb"><div class="pdf-thumb-fallback">PDF</div></div>`;
       return `<div class="card pdf-card" data-pdf-id="${esc(x.id)}">
       <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
       <div class="card-top"><span class="num">PDF ${String(i+1).padStart(2,'0')}</span><span class="badge">${x.remote?(isLarge?'PDF · BESAR':'PDF · DRIVE'):'PDF'}</span></div>
-      <div class="icon">PDF</div>
-      <div class="card-body"><h3>${esc(title)}</h3><p>${x.remote?(isLarge?'File berukuran besar ('+esc(sizeLabel)+') -- diunduh langsung lalu dibuka di pembaca VAOZEE.':'Kitab PDF dari koleksi Google Drive, dibuka di pembaca VAOZEE (mode scroll/buku).'):'Pembaca PDF VAOZEE dengan mode scroll biasa atau mode buku halaman per halaman.'}</p><div class="pdf-meta">${esc(x.path||x.name||'')}${sizeLabel?' · '+esc(sizeLabel):''}</div></div>
+      ${thumbHtml}
+      <div class="card-body"><h3>${esc(title)}</h3><div class="pdf-meta">${esc(x.path||x.name||'')}${sizeLabel?' · '+esc(sizeLabel):''}</div></div>
       <div class="card-bottom"><span class="path">${esc(x.name||'PDF Tanpa Judul')}</span><span class="open" data-pdf-open>Baca PDF →</span></div>
     </div>`;
     }).join('');
+    grid.classList.add('pdf-compact');
     grid.querySelectorAll('.pdf-card').forEach(card=>{
       const x=pdfEntries.find(y=>y.id===card.dataset.pdfId); if(!x)return;
-      /* Semua PDF (lokal maupun dari Google Drive) dibuka lewat pembaca VAOZEE
-         sendiri (mode scroll/buku), BUKAN lewat iframe pratinjau Google --
-         supaya tidak lagi kena halaman "tidak ditemukan"/butuh izin, judul
-         selalu benar, dan tampilannya konsisten di semua perangkat. */
       card.addEventListener('click',()=>{
         if(x.remote)openDriveDirect(x,card.querySelector('[data-pdf-open]'));
         else openPdf(x);

@@ -479,7 +479,7 @@ function fixAr(d){const root=d.body||d.documentElement,w=d.defaultView;if(!root|
   const ff=w.getComputedStyle(e).fontFamily||'serif';if(/^\s*["']?Scheherazade New/i.test(ff))continue;e.style.setProperty('font-family',"'Scheherazade New',"+ff,'important')}}
 function injectFont(f){let d=null;try{d=f.contentDocument}catch(e){}if(!d||!d.documentElement)return false;
  if(!d.getElementById('sch-font')){const s=d.createElement('style');s.id='sch-font';s.textContent=FONT_CSS;(d.head||d.documentElement).appendChild(s)}
- fixAr(d);window.KB&&window.KB.bindTTS&&window.KB.bindTTS(d);let tm;if(d.body){new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(()=>fixAr(d),120)}).observe(d.body,{childList:true,subtree:true,characterData:true})}
+ fixAr(d);window.KB&&window.KB.bindTTS&&window.KB.bindTTS(d);window.KB&&window.KB.fz&&window.KB.fz(d);let tm;if(d.body){new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(()=>fixAr(d),120)}).observe(d.body,{childList:true,subtree:true,characterData:true})}
  return true}
 async function loadFrame(f,u){let cross=false;try{const o=new URL(u,location.href);cross=/^https?:$/.test(o.protocol)&&o.origin!==location.origin}catch(e){}
  if(cross){try{const r=await fetch(u,{mode:'cors'});if(r.ok){let h=await r.text();const ins='<base href="'+u+'">';h=/<head[^>]*>/i.test(h)?h.replace(/<head[^>]*>/i,m=>m+ins):ins+h;f.srcdoc=h;return}}catch(e){}}
@@ -567,12 +567,41 @@ if(syn){try{syn.getVoices();syn.addEventListener&&syn.addEventListener('voicesch
 const arVoice=()=>{try{return syn&&syn.getVoices().find(v=>/^ar/i.test(v.lang))||null}catch(e){return null}};
 function bindTTS(d){try{if(!d||!d.documentElement||!d.defaultView||d.defaultView.__kbTTS||d.getElementById('kb-tts-standalone'))return;const s=d.createElement('script');s.id='kb-tts-standalone';s.textContent=KBTTS;(d.body||d.documentElement).appendChild(s)}catch(e){}}
 function ttsStop(){document.querySelectorAll('#wins iframe').forEach(f=>{try{f.contentWindow.__kbTTS&&f.contentWindow.__kbTTS.stop()}catch(e){}})}
+/* ---- skala ukuran font → tembus ke semua iframe / halaman embed (same-origin) ---- */
+const FZD=new WeakSet(),FZKW={'xx-small':9,'x-small':10,small:13,medium:16,large:18,'x-large':24,'xx-large':32,'xxx-large':48},FZK='var(--kz,1)';
+function fzConv(v,root){v=(v||'').trim();if(!v||v.indexOf('--kz')>-1)return null;
+ if(/^-?\d*\.?\d+(px|pt)$/i.test(v))return 'calc('+v+' * '+FZK+')';
+ if(FZKW[v])return 'calc('+FZKW[v]+'px * '+FZK+')';
+ if(root&&/^-?\d*\.?\d+(%|em)$/i.test(v))return 'calc('+v+' * '+FZK+')';
+ if(/^(calc|clamp|min|max)\(/i.test(v)&&!/var\(|%|em/i.test(v))return 'calc('+v+' * '+FZK+')';
+ return null}
+function fzDecl(st,root){if(!st||!st.getPropertyValue)return;
+ let a=fzConv(st.getPropertyValue('font-size'),root);if(a)st.setProperty('font-size',a,st.getPropertyPriority('font-size'));
+ let b=st.getPropertyValue('line-height');if(/^-?\d*\.?\d+(px|pt)$/i.test((b||'').trim())){st.setProperty('line-height','calc('+b.trim()+' * '+FZK+')',st.getPropertyPriority('line-height'))}}
+function fzRules(list){for(const r of list){try{if(r.style&&!r.name){const sel=r.selectorText||'';fzDecl(r.style,/(^|,)\s*(html|:root)\s*(,|$)/i.test(sel))}if(r.cssRules)fzRules(r.cssRules)}catch(e){}}}
+function fzSheets(d){for(const sh of d.styleSheets){let rs=null;try{rs=sh.cssRules}catch(e){}if(rs)fzRules(rs)}}
+const FZSEL='[style*="font" i],[style*="line-height" i]';
+function fzEl(e){try{if(e.style)fzDecl(e.style,e===e.ownerDocument.documentElement)}catch(x){}}
+function fzInline(root){fzEl(root);root.querySelectorAll&&root.querySelectorAll(FZSEL).forEach(fzEl)}
+function fzObserve(d){const w=d.defaultView;if(!w||!w.MutationObserver)return;let tm,sheets=false;const pend=new Set();
+ new w.MutationObserver(ms=>{for(const m of ms){if(m.type=='attributes'){pend.add(m.target);continue}
+   m.addedNodes.forEach(n=>{if(n.nodeType!=1)return;const t=n.tagName;if(t=='STYLE'||t=='LINK'||(n.querySelector&&n.querySelector('style,link')))sheets=true;pend.add(n)})}
+  clearTimeout(tm);tm=setTimeout(()=>{if(sheets){sheets=false;fzSheets(d)}pend.forEach(n=>{if(n.isConnected)fzInline(n)});pend.clear()},80)}).observe(d.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
+ d.addEventListener('load',e=>{if(e.target&&e.target.tagName=='LINK')fzSheets(d)},true)}
+function fzDoc(d){try{const r=d&&d.documentElement;if(!r)return;
+ r.style.setProperty('--kz',ST.fz);
+ if(!FZD.has(d)){if(ST.fz==1)return;                         /* ukuran normal → halaman tidak disentuh sama sekali */
+  FZD.add(d);const s=d.createElement('style');s.id='kb-fz-base';
+  s.textContent=':where(html){font-size:calc(16px * '+FZK+')}:where(button,input,select,textarea){font-size:calc(13.3333px * '+FZK+')}';
+  (d.head||r).appendChild(s);fzSheets(d);fzInline(r);fzObserve(d)}
+ d.querySelectorAll('iframe').forEach(f=>{try{f.contentDocument&&fzDoc(f.contentDocument)}catch(e){}})}catch(e){}}
+function fzFrames(){document.querySelectorAll('#wins iframe').forEach(f=>{try{f.contentDocument&&fzDoc(f.contentDocument)}catch(e){}})}
 /* ---- shell ---- */
 function applyShell(){const b=document.body.classList,t=ST.theme,r=document.documentElement;
  b.toggle('dark',t!='light');b.toggle('glass',t=='glass');b.toggle('lite',isLite());b.toggle('hc',!!ST.hc);
  r.style.setProperty('--kz',ST.fz);
  if(ST.ff=='def'){r.style.removeProperty('font-family');document.body.style.removeProperty('font-family')}else{r.style.fontFamily=FFM[ST.ff];document.body.style.fontFamily=FFM[ST.ff]}
- document.querySelectorAll('#wpp .wo').forEach(x=>x.classList.toggle('on',x.dataset.m==t))}
+ document.querySelectorAll('#wpp .wo').forEach(x=>x.classList.toggle('on',x.dataset.m==t));fzFrames()}
 function setS(p){Object.assign(ST,p);try{localStorage.setItem(SK,JSON.stringify(ST))}catch(e){}applyShell()}
 
 /* ---- picker tema (tombol Wallpaper) ---- */
@@ -642,7 +671,7 @@ addEventListener('keydown',e=>{if(e.key=='Escape')d.classList.add('ah')});
 new MutationObserver(()=>peek(2200)).observe(d,{childList:true});
 peek(2500);
 })();
-window.KB={get:()=>ST,set:setS,bindTTS,stop:ttsStop};
+window.KB={get:()=>ST,set:setS,bindTTS,stop:ttsStop,fz:fzDoc};
 applyShell();
 })();
 </script></body></html>

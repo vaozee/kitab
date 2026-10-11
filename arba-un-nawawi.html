@@ -2026,5 +2026,72 @@
   cards.forEach(c=> observer.observe(c));
 </script>
 
+<script id="kb-tts-standalone">
+(function(){
+if(window.__kbTTS)return;
+var SK='kitab_set_v3',EPK='kitab_tts_ep';
+var AR=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFC]/,ARG=new RegExp(AR.source,'g'),CL=/[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFC\s\u060C\u061B\u061F]/g;
+function cfg(){var o={};try{o=JSON.parse(localStorage.getItem(SK)||'{}')||{}}catch(e){}return{tts:o.tts||'auto',rate:o.rate||.9,set:function(p){try{for(var k in p)o[k]=p[k];localStorage.setItem(SK,JSON.stringify(o))}catch(e){}}}}
+var syn=null;try{syn=window.speechSynthesis||null}catch(e){}
+if(syn){try{syn.getVoices();syn.addEventListener&&syn.addEventListener('voiceschanged',function(){syn.getVoices()})}catch(e){}}
+function arVoice(){try{var v=syn&&syn.getVoices()||[];for(var i=0;i<v.length;i++)if(/^ar/i.test(v[i].lang))return v[i]}catch(e){}return null}
+var EP=[
+ {n:'Google',u:function(q){return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ar&total=1&idx=0&textlen='+q.length+'&q='+encodeURIComponent(q)}},
+ {n:'Polly Zeina',u:function(q){return 'https://api.streamelements.com/kappa/v2/speech?voice=Zeina&text='+encodeURIComponent(q)}},
+ {n:'Google gtx',u:function(q){return 'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=ar&q='+encodeURIComponent(q)}}];
+var tk=0,au=null,hl=null,toast=null,styled=false,tmr=null;
+function css(){if(styled)return;styled=true;var s=document.createElement('style');s.id='kb-tts-css';s.textContent='::highlight(kb-say){background:rgba(255,196,80,.5);color:inherit}.kb-say{background:rgba(255,196,80,.4)!important;border-radius:5px}#kb-tts-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483646;max-width:min(560px,92vw);padding:9px 16px;border-radius:18px;font:13px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#fff;background:rgba(40,32,62,.92);border:1px solid rgba(255,255,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.35);text-align:center;cursor:pointer;direction:ltr;display:none}';(document.head||document.documentElement).appendChild(s)}
+function note(t,ms){css();if(!toast){toast=document.createElement('div');toast.id='kb-tts-toast';toast.onclick=stop;(document.body||document.documentElement).appendChild(toast)}toast.textContent=t;toast.style.display='block';clearTimeout(tmr);if(ms){var k=tk;tmr=setTimeout(function(){if(k==tk&&toast)toast.style.display='none'},ms)}}
+function clearHL(){if(hl){try{CSS.highlights.delete('kb-say')}catch(e){}if(hl.el)hl.el.classList.remove('kb-say');hl=null}}
+function setHL(c){clearHL();if(!c)return;hl=c;var ok=false;try{if(c.rng&&window.CSS&&CSS.highlights&&window.Highlight){CSS.highlights.set('kb-say',new Highlight(c.rng));ok=true}}catch(e){}if(!ok&&c.el)c.el.classList.add('kb-say')}
+function stop(){tk++;try{syn&&syn.cancel()}catch(e){}if(au){try{au.pause()}catch(e){}au=null}clearHL();clearTimeout(tmr);if(toast)toast.style.display='none'}
+function chunks(s){var out=[],parts=s.match(/[^.!\u061F?\u06D4\u060C\u061B\n]+[.!\u061F?\u06D4\u060C\u061B\n]*/g)||[s];parts.forEach(function(p){p=p.trim();while(p.length>170){var i=p.lastIndexOf(' ',170);if(i<40)i=170;out.push(p.slice(0,i));p=p.slice(i).trim()}if(p)out.push(p)});return out}
+function speak(txt,ctx){var C=cfg();if(C.tts=='off')return;stop();var my=tk;txt=txt.replace(CL,' ').replace(/\u0640/g,'').replace(/\s+/g,' ').trim();if(!txt)return;css();setHL(ctx);
+ var log=[],rate=C.rate||.9;
+ function done(){if(my==tk)stop()}
+ function fail(){if(my!=tk)return;clearHL();note('Suara gagal ('+log.join(' · ')+'). Pasang suara Arab di sistem (Windows: Pengaturan → Waktu & bahasa → Ucapan → Tambah suara → Arab) atau coba Microsoft Edge / Chrome Android.',9000)}
+ function online(){if(my!=tk)return;if(C.tts=='dev'){log.push('perangkat: tidak ada suara Arab');return fail()}
+  var list=chunks(txt),i=0,e0=0;try{e0=+localStorage.getItem(EPK)||0}catch(e){}if(e0>=EP.length)e0=0;var tried=0,ep=e0;note('🔊 memuat suara online… (ketuk untuk berhenti)');
+  function play(){if(my!=tk)return;if(i>=list.length)return done();
+   var a=new Audio(EP[ep].u(list[i]));try{a.referrerPolicy='no-referrer'}catch(e){}try{a.playbackRate=Math.min(1.5,Math.max(.6,rate/.9))}catch(e){}au=a;var ok=false,dead=false;
+   var t=setTimeout(function(){if(!ok)bad('lambat')},7000);
+   function bad(why){if(dead||my!=tk||au!==a)return;dead=true;clearTimeout(t);try{a.pause()}catch(e){}log.push(EP[ep].n+': '+(why||'gagal'));tried++;if(tried<EP.length){ep=(ep+1)%EP.length;play()}else fail()}
+   a.onplaying=function(){if(dead||my!=tk)return;ok=true;clearTimeout(t);try{localStorage.setItem(EPK,ep)}catch(e){}note('🔊 '+list[i].slice(0,60)+' · ketuk untuk berhenti')};
+   a.onended=function(){if(my!=tk)return;i++;tried=0;play()};
+   a.onerror=function(){bad('diblokir/gagal')};
+   var p;try{p=a.play()}catch(e){bad('error');return}if(p&&p.catch)p.catch(function(){bad('ditolak')})}
+  play()}
+ var v=C.tts!='net'?arVoice():null;
+ if(v){var started=false,u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang=v.lang;u.rate=rate;u.onstart=function(){started=true};u.onend=done;
+  u.onerror=function(ev){if(my!=tk)return;if(ev&&/cancel|interrupt/.test(ev.error||''))return;log.push('perangkat: '+(ev&&ev.error||'gagal'));online()};
+  note('🔊 '+txt.slice(0,60)+(txt.length>60?'…':'')+' · ketuk untuk berhenti');syn.speak(u);
+  setTimeout(function(){if(my==tk&&!started&&!syn.speaking&&C.tts!='dev'){try{syn.cancel()}catch(e){}log.push('perangkat: tidak mulai');online()}},1800);return}
+ if(C.tts!='net')log.push('perangkat: tidak ada suara Arab');
+ online()}
+function pick(x,y){var n=null,off=0,d=document;try{if(d.caretPositionFromPoint){var p=d.caretPositionFromPoint(x,y);if(p){n=p.offsetNode;off=p.offset}}else if(d.caretRangeFromPoint){var r=d.caretRangeFromPoint(x,y);if(r){n=r.startContainer;off=r.startOffset}}}catch(e){}
+ if(!n||n.nodeType!=3)return null;var s=n.nodeValue;if(!AR.test(s)||!AR.test(s.slice(Math.max(0,off-1),off+1)))return null;
+ var el=n.parentElement;if(!el)return null;var t=(el.textContent||'').trim(),nz=t.replace(/\s/g,'').length,ac=(t.match(ARG)||[]).length,rg=null;
+ try{rg=d.createRange()}catch(e){}
+ if(nz&&nz<=320&&ac/nz>.6){try{rg&&rg.selectNodeContents(el)}catch(e){}return{txt:t,el:el,rng:rg}}
+ var a=0,seg=s,m=s.match(/[^.!\u061F?\u06D4\n]+[.!\u061F?\u06D4\n]*/g)||[s];for(var i=0;i<m.length;i++){if(off<=a+m[i].length){seg=m[i];break}a+=m[i].length}
+ try{rg&&(rg.setStart(n,a),rg.setEnd(n,a+seg.length))}catch(e){}
+ return{txt:seg,el:el,rng:rg}}
+document.addEventListener('click',function(e){
+ if(cfg().tts=='off'||e.button)return;var tg=e.target;if(tg&&tg.closest&&tg.closest('input,textarea,select,[contenteditable=true]'))return;
+ try{var sl=window.getSelection&&window.getSelection().toString().trim();if(sl)return}catch(x){}
+ var p=pick(e.clientX,e.clientY);if(p)speak(p.txt,{el:p.el,rng:p.rng})},true);
+/* tombol kecil hanya saat halaman dibuka sendiri (bukan di dalam jendela index) */
+function pill(){var top=true;try{top=window.top===window}catch(e){top=false}if(!top||!document.body)return;
+ var M=['auto','dev','net','off'],N={auto:'Otomatis',dev:'Hanya suara perangkat',net:'Hanya suara online',off:'Mati'};
+ var b=document.createElement('button');b.id='kb-tts-pill';b.type='button';
+ function ref(){var m=cfg().tts;b.textContent=m=='off'?'🔇':'🔊';b.title='Suara teks Arab: '+N[m]+' (klik untuk ganti)'}
+ b.style.cssText='position:fixed;left:12px;bottom:12px;z-index:2147483645;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(40,32,62,.82);color:#fff;font-size:17px;cursor:pointer;opacity:.7;padding:0;line-height:1';
+ b.onmouseenter=function(){b.style.opacity=1};b.onmouseleave=function(){b.style.opacity=.7};
+ b.onclick=function(ev){ev.stopPropagation();var C=cfg(),m=M[(M.indexOf(C.tts)+1)%M.length];C.set({tts:m});ref();stop();note('Suara teks Arab: '+N[m]+(m=='off'?'':' — klik teks Arab untuk mendengar'),2500)};
+ ref();document.body.appendChild(b)}
+if(document.readyState=='loading')document.addEventListener('DOMContentLoaded',pill);else pill();
+window.__kbTTS={stop:stop,speak:speak,voice:function(){var v=arVoice();return v?v.name:null}};
+})();
+</script>
 </body>
 </html>

@@ -141,8 +141,83 @@ body:not(.dark) .wg .gn{background:linear-gradient(180deg,rgba(70,52,104,.42),rg
 #lock .lt svg{height:clamp(96px,21vw,200px)}
 .wg.clk{width:400px;padding:8px 14px;align-items:center;justify-content:center}.wg.clk .tm{display:flex;align-items:center;justify-content:center;font-size:0;line-height:0}.wg.clk .tm svg{height:104px}
 body:not(.dark) .wg .gsvg{filter:drop-shadow(0 0 .6px rgba(20,70,170,.85))}
+/* ===== v3: skala font shell + dasar pengaturan ===== */
+:root{--kz:1}
+button,input{font-family:inherit}
+#menu{font-size:calc(13px*var(--kz))}
+#menu .m{cursor:pointer;padding:3px 9px;border-radius:7px;transition:background .12s;outline:0}
+#menu .m[data-menu]:hover,#menu .m.open,#menu .m[data-menu]:focus-visible{background:rgba(128,110,160,.28)}
+.app>span{font-size:calc(12px*var(--kz))}.sb{font-size:calc(13px*var(--kz))}.file{font-size:calc(11.5px*var(--kz))}
+.btn,.chip{font-size:calc(12px*var(--kz))}.sq{font-size:calc(13px*var(--kz))}.tb .tt{font-size:calc(13px*var(--kz))}
+#peek p{font-size:calc(12.5px*var(--kz))}#peek .t{font-size:calc(16px*var(--kz))}.emp,.st{font-size:calc(12px*var(--kz))}
+.bd2 iframe{background:#fff}
+/* ===== dropdown menu header ===== */
+#mdd{position:fixed;z-index:1200;top:30px;left:0;min-width:240px;max-width:calc(100vw - 16px);overflow:auto;padding:6px;border-radius:13px;color:#fff;font-size:calc(13px*var(--kz));background:linear-gradient(145deg,rgba(84,68,112,.8),rgba(36,28,58,.84));border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(34px) saturate(190%);-webkit-backdrop-filter:blur(34px) saturate(190%);box-shadow:0 20px 50px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.4);display:none;-webkit-user-select:none;user-select:none}
+#mdd.on{display:block;animation:pop .14s ease-out}
+#mdd .mi{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:8px;cursor:pointer;white-space:nowrap}
+#mdd .mi:hover{background:var(--or)}#mdd .mi.dis{opacity:.4;pointer-events:none}
+#mdd .mi i{width:18px;flex:none;font-style:normal;text-align:center}
+#mdd .mi kbd{margin-left:auto;padding-left:20px;opacity:.6;font:inherit;font-size:.88em}
+#mdd .hd{padding:7px 10px 3px;font-size:.76em;opacity:.55;letter-spacing:.09em}
+#mdd .sp{height:1px;background:rgba(255,255,255,.2);margin:5px 6px}
+#wpp{flex-wrap:wrap;max-width:calc(100vw - 20px)}
+.hlp{padding:18px 20px;overflow:auto;font-size:calc(13px*var(--kz));line-height:1.65;-webkit-user-select:text;user-select:text}
+.hlp h4{margin:14px 0 4px;font-size:1.05em}.hlp h4:first-child{margin-top:0}.hlp ul{margin:4px 0;padding-left:18px}.hlp code{background:rgba(255,255,255,.14);padding:1px 6px;border-radius:5px}
+.hlp table{border-collapse:collapse;width:100%}.hlp td{padding:3px 6px;border-bottom:1px solid rgba(255,255,255,.14)}.hlp td:first-child{opacity:.65;white-space:nowrap}
+@media(max-width:700px){#menu{gap:4px;padding:0 6px;overflow-x:auto;scrollbar-width:none}#menu b{display:none}#menu .r{gap:8px}#menu #cnt{display:none}}
+/* ===== MODE KACA · GLASSMORPHISM =====
+   frosted glass · cahaya lembut · palet muted + gradasi halus · kedalaman berlapis
+   hindari: kontras rendah, bayangan keras, tata letak ramai, warna terlalu terang */
+#bgG{position:absolute;z-index:1;inset:0;opacity:0;transition:opacity .5s;background:linear-gradient(160deg,#252c3a 0%,#313a4d 36%,#43435c 68%,#554f68 100%)}
+#bgG i{position:absolute;border-radius:50%;opacity:.5}
+#bgG .b1{width:52vmax;height:52vmax;left:-14vmax;top:-18vmax;background:radial-gradient(circle,#7f97b5,transparent 68%)}
+#bgG .b2{width:44vmax;height:44vmax;right:-12vmax;top:14vh;background:radial-gradient(circle,#a68a9e,transparent 68%);opacity:.38}
+#bgG .b3{width:56vmax;height:56vmax;left:20vw;bottom:-30vmax;background:radial-gradient(circle,#78a198,transparent 68%);opacity:.34}
+#bgG:after{content:"";position:absolute;inset:0;background:radial-gradient(90% 60% at 50% 0,rgba(255,255,255,.08),transparent 65%)}
+body.glass{--gl:rgba(255,255,255,.09);--bd:rgba(255,255,255,.2);--or:#7d9bb8;--sh:0 18px 48px rgba(8,12,22,.32);background:#252c3a;color:#e8ecf2}
+body.glass #bgG{opacity:1}body.glass #bgD{opacity:0}body.glass #bg svg,body.glass .fog{display:none}
+body.glass #menu{color:#e8ecf2;background:rgba(40,48,64,.4);backdrop-filter:blur(26px) saturate(135%);-webkit-backdrop-filter:blur(26px) saturate(135%);box-shadow:inset 0 -1px 0 rgba(255,255,255,.12)}
+body.glass #dock,body.glass .wg{background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.07) 60%,rgba(255,255,255,.12));border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(26px) saturate(135%);-webkit-backdrop-filter:blur(26px) saturate(135%);box-shadow:0 14px 40px rgba(8,12,22,.28),inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 22px rgba(255,255,255,.04)}
+body.glass .win,body.glass #peek,body.glass #wpp,body.glass #mdd{color:#e8ecf2;background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.05) 55%,rgba(36,44,60,.44));border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(30px) saturate(130%);-webkit-backdrop-filter:blur(30px) saturate(130%);box-shadow:0 20px 56px rgba(8,12,22,.34),inset 0 1px 0 rgba(255,255,255,.26)}
+body.glass #peek{background:linear-gradient(145deg,rgba(52,62,82,.9),rgba(34,40,56,.9))}
+body.glass #dock:before,body.glass .wg:before,body.glass #peek:before{opacity:.45}
+body.glass .tb{background:rgba(255,255,255,.07)}body.glass .sb{background:rgba(255,255,255,.04)}
+body.glass #lp{background:radial-gradient(110% 60% at 50% 0,rgba(150,170,200,.14),transparent 60%),rgba(30,36,50,.5)}
+body.glass #lock{background:radial-gradient(90% 70% at 50% 0,rgba(150,170,200,.14),transparent 60%),rgba(24,30,42,.52)}
+body.glass #dsk .app{color:#e8ecf2;text-shadow:0 1px 4px rgba(10,14,24,.55)}
+body.glass .ic{filter:saturate(.6) brightness(.97);box-shadow:0 8px 18px rgba(8,12,22,.28),inset 0 1px 0 rgba(255,255,255,.4)}
+body.glass .dk{filter:saturate(.62)}
+body.glass .ic:after{box-shadow:inset 0 1px 1px rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.12)}
+body.glass .chip.on,body.glass #mdd .mi:hover{background:var(--or);border-color:rgba(255,255,255,.35)}
+body.glass .file.sel{background:rgba(125,155,184,.38)}
+body.glass .tl i:nth-child(1){background:#d4786f}body.glass .tl i:nth-child(2){background:#d6b36a}body.glass .tl i:nth-child(3){background:#78b08a}
+body.glass .dt .d1{color:#d9a3a3}body.glass .ts b{color:#d9b27c}
+body.glass .wg .gsvg{filter:saturate(.35) drop-shadow(0 0 .5px rgba(210,225,245,.5))}
+body.glass #lock .lb{background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.07))}
+/* ===== MODE RINGAN (spek rendah) — matikan blur, animasi, filter berat ===== */
+body.lite *,body.lite *::before,body.lite *::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;animation:none!important;transition:none!important;text-shadow:none!important}
+body.lite #menu{background:#e6e0ee}body.lite.dark #menu{background:#1a1628}
+body.lite #dock,body.lite .wg{background:#e8e3ee;box-shadow:0 4px 12px rgba(0,0,0,.25)}body.lite.dark #dock,body.lite.dark .wg{background:#38324e}
+body.lite .win,body.lite #peek,body.lite #wpp,body.lite #mdd{background:#2c2540;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+body.lite.glass .win,body.lite.glass #peek,body.lite.glass #wpp,body.lite.glass #mdd{background:#343c4e}
+body.lite #lp{background:rgba(34,28,50,.94)}body.lite #lock{background:rgba(24,20,40,.96)}
+body.lite .ic,body.lite .dk{box-shadow:0 3px 8px rgba(0,0,0,.28)}
+body.lite .ic:before,body.lite #dock:before,body.lite .wg:before,body.lite #peek:before{display:none}
+body.lite .fog,body.lite #bg svg{display:none}
+body.lite:not(.dark) #bg{background:linear-gradient(160deg,#cdbf9f,#b8aec6 55%,#9aa4b4)}
+body.lite .gsvg g,body.lite .wg .gsvg{filter:none}
+/* ===== KONTRAS TINGGI ===== */
+body.hc{--bd:rgba(255,255,255,.8)}
+body.hc .win,body.hc #peek,body.hc #wpp,body.hc #mdd{background:rgba(20,16,34,.95)}
+body.hc.glass .win,body.hc.glass #peek,body.hc.glass #wpp,body.hc.glass #mdd{background:rgba(26,32,46,.95)}
+body.hc #menu{background:rgba(255,255,255,.88)}body.hc.dark #menu{background:rgba(12,10,22,.92)}
+body.hc .sq{background:rgba(0,0,0,.55);border-color:#fff}
+body.hc .wg,body.hc #dock{border-color:rgba(255,255,255,.9)}
+body.hc #lp .app>span,body.hc .file span{text-shadow:0 1px 3px #000,0 0 6px #000}
+#ttsb{position:fixed;z-index:1150;left:50%;bottom:96px;transform:translateX(-50%) translateY(10px);max-width:min(560px,92vw);padding:9px 16px;border-radius:999px;font-size:calc(13px*var(--kz));color:#fff;background:rgba(40,32,62,.88);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.2s;cursor:pointer;text-align:center;white-space:normal;line-height:1.4;border-radius:18px}
+#ttsb.on{opacity:1;transform:translateX(-50%);pointer-events:auto}
 </style></head><body class="nolp">
-<div id="bg"><div id="bgD"></div><svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><defs>
+<div id="bg"><div id="bgD"></div><div id="bgG"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div><svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><defs>
 <linearGradient id="g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a88d5c"/><stop offset=".5" stop-color="#74665a"/><stop offset="1" stop-color="#4c4a54"/></linearGradient>
 <radialGradient id="g1" cx=".15" cy=".35" r=".9"><stop offset="0" stop-color="#b9995a"/><stop offset=".55" stop-color="#e3d2a6"/><stop offset="1" stop-color="#f4ead2"/></radialGradient>
 <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f1e8d3"/><stop offset=".6" stop-color="#d8cbb4"/><stop offset="1" stop-color="#9c8f80"/></linearGradient>
@@ -182,7 +257,7 @@ body:not(.dark) .wg .gsvg{filter:drop-shadow(0 0 .6px rgba(20,70,170,.85))}
 <feOffset in="rim" dx="-1" dy="-.9" result="r2"/><feFlood flood-color="#ff7ad9" flood-opacity=".45"/><feComposite in2="r2" operator="in" result="dM"/>
 <feGaussianBlur in="SourceAlpha" stdDeviation="6" result="gb"/><feFlood flood-color="#bfe4ff" flood-opacity=".35"/><feComposite in2="gb" operator="in" result="glow0"/><feComposite in="glow0" in2="SourceAlpha" operator="out" result="glow"/>
 <feMerge><feMergeNode in="caus"/><feMergeNode in="shadow"/><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/><feMergeNode in="dM"/><feMergeNode in="dC"/><feMergeNode in="isd"/><feMergeNode in="cband"/><feMergeNode in="s2c"/><feMergeNode in="lnb"/><feMergeNode in="ihl"/><feMergeNode in="s1c"/><feMergeNode in="rimc"/></feMerge></filter></defs></svg>
-<div id="menu"><b>◆ Kitab</b><span class="m">Berkas</span><span class="m">Tampilan</span><span class="m">Jendela</span><span class="m">Bantuan</span><div class="r"><span class="m" id="mFs" style="cursor:pointer" title="Layar penuh">⛶</span><span class="m" id="mWp" style="cursor:pointer">🖼 Wallpaper</span><span id="cnt"></span><span id="clk"></span></div></div>
+<div id="menu"><b>◆ Kitab</b><span class="m" data-menu="berkas" role="button" tabindex="0" aria-haspopup="true">Berkas</span><span class="m" data-menu="tampilan" role="button" tabindex="0" aria-haspopup="true">Tampilan</span><span class="m" data-menu="jendela" role="button" tabindex="0" aria-haspopup="true">Jendela</span><span class="m" data-menu="bantuan" role="button" tabindex="0" aria-haspopup="true">Bantuan</span><div class="r"><span class="m" id="mFs" style="cursor:pointer" title="Layar penuh">⛶</span><span class="m" id="mWp" style="cursor:pointer">🖼 Wallpaper</span><span id="cnt"></span><span id="clk"></span></div></div>
 <div id="lp"><div id="lpHead"><input class="sq" id="q" type="search" placeholder="🔍 Cari kitab…"><span id="chips"></span></div><div id="grid"></div></div>
 <div id="dsk"></div><div id="wgs"><div class="wg clk" id="wClk"></div><div class="wg dt" id="wDate"></div></div><div id="wins"></div><div id="peek"></div>
 <div id="dock"><div class="dk" id="dkLp" style="--a:#e6e9f0;--b:#8b93a8" title="Launchpad Kitab">🚀</div><div class="dk" id="dkU" style="--a:#7fc6ff;--b:#2f7fd8" title="Pendukung">🗂</div><div class="dk" id="dkP" style="--a:#f5f5f7;--b:#b9c4d6;color:#d32f2f;font-weight:800;font-size:15px" title="Pembaca PDF">PDF</div><span class="sep" id="sepM" style="display:none"></span></div>
@@ -373,13 +448,7 @@ tickT();setInterval(tickT,1000);
 function drawDate(){const d=new Date(),L=o=>d.toLocaleDateString('id-ID',o);$('#wDate').innerHTML=`<div class="d1">${L({weekday:'long'})}</div><div class="d2">${d.getDate()}</div><div class="d3">${L({month:'long'})} ${d.getFullYear()}</div><div class="d4">Hari ini</div>`}
 drawDate();setInterval(drawDate,60000);
 
-(function(){const K='kitab_wp2';let m='light';try{m=localStorage.getItem(K)||'light'}catch(e){}
- const p=document.createElement('div');p.id='wpp';p.innerHTML='<button class="wo" data-m="dark"><i style="background-image:var(--wpd)"></i>Gelap · Indigo</button><button class="wo" data-m="light"><i style="background:linear-gradient(135deg,#c9ad73,#e9dfc9 42%,#8d86a6 78%,#dfe5ea)"></i>Terang · Krem</button>';document.body.appendChild(p);
- function set(v){m=v;document.body.classList.toggle('dark',v=='dark');try{localStorage.setItem(K,v)}catch(e){}p.querySelectorAll('.wo').forEach(b=>b.classList.toggle('on',b.dataset.m==v))}
- p.onclick=e=>{const b=e.target.closest('.wo');b&&set(b.dataset.m)};set(m);
- $('#mWp').onclick=e=>{e.stopPropagation();p.classList.toggle('on')};
- document.addEventListener('click',e=>{if(!p.contains(e.target))p.classList.remove('on')});
- addEventListener('keydown',e=>{if(e.key=='Escape')p.classList.remove('on')})})();
+
 
 /* ---- layar penuh + lock screen ---- */
 const inFS=()=>document.fullscreenElement||document.webkitFullscreenElement;
@@ -396,13 +465,158 @@ const SCHU={a:sch64(SCH4),b:sch64(SCH7)},AR=/[\u0600-\u06FF\u0750-\u077F\u08A0-\
 const FONT_CSS=`@font-face{font-family:'Scheherazade New';src:url(${SCHU.a}) format('woff2');font-weight:100 599;font-style:normal;font-display:block;unicode-range:${UR}}@font-face{font-family:'Scheherazade New';src:url(${SCHU.b}) format('woff2');font-weight:600 900;font-style:normal;font-display:block;unicode-range:${UR}}:lang(ar),[lang|=ar],[dir=rtl]{font-family:'Scheherazade New',serif!important}`;
 const SCHDONE=new WeakSet();
 function fixAr(d){const root=d.body||d.documentElement,w=d.defaultView;if(!root||!w)return;const tw=d.createTreeWalker(root,4);let n;
- while((n=tw.nextNode())){const e=n.parentElement;if(!e||SCHDONE.has(e)||!AR.test(n.nodeValue))continue;const tg=e.tagName;if(tg=='SCRIPT'||tg=='STYLE')continue;SCHDONE.add(e);
+ while((n=tw.nextNode())){const e=n.parentElement;if(!e||SCHDONE.has(e)||!AR.test(n.nodeValue))continue;const tg=e.tagName;if(tg=='SCRIPT'||tg=='STYLE')continue;SCHDONE.add(e);e.style.cursor='pointer';
   const ff=w.getComputedStyle(e).fontFamily||'serif';if(/^\s*["']?Scheherazade New/i.test(ff))continue;e.style.setProperty('font-family',"'Scheherazade New',"+ff,'important')}}
 function injectFont(f){let d=null;try{d=f.contentDocument}catch(e){}if(!d||!d.documentElement)return false;
  if(!d.getElementById('sch-font')){const s=d.createElement('style');s.id='sch-font';s.textContent=FONT_CSS;(d.head||d.documentElement).appendChild(s)}
- fixAr(d);let tm;if(d.body){new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(()=>fixAr(d),120)}).observe(d.body,{childList:true,subtree:true,characterData:true})}
+ fixAr(d);window.KB&&window.KB.bindTTS&&window.KB.bindTTS(d);let tm;if(d.body){new MutationObserver(()=>{clearTimeout(tm);tm=setTimeout(()=>fixAr(d),120)}).observe(d.body,{childList:true,subtree:true,characterData:true})}
  return true}
 async function loadFrame(f,u){let cross=false;try{const o=new URL(u,location.href);cross=/^https?:$/.test(o.protocol)&&o.origin!==location.origin}catch(e){}
  if(cross){try{const r=await fetch(u,{mode:'cors'});if(r.ok){let h=await r.text();const ins='<base href="'+u+'">';h=/<head[^>]*>/i.test(h)?h.replace(/<head[^>]*>/i,m=>m+ins):ins+h;f.srcdoc=h;return}}catch(e){}}
  f.src=u}
+/* ===== PENGATURAN GLOBAL — tema · font · tampilan · kontras · mode ringan → shell + semua iframe/embed ===== */
+(function(){
+const SK='kitab_set_v3',DEFS={theme:'light',fz:1,ff:'def',hc:0,lite:'auto',tts:'auto',rate:.9};
+const THN={light:'Terang · Krem',dark:'Gelap · Indigo',glass:'Kaca · Glassmorphism'};
+const FZL=[[.9,'Kecil'],[1,'Normal'],[1.15,'Besar'],[1.3,'Sangat Besar']];
+const FFN={def:'Bawaan halaman',sans:'Sans-serif modern',serif:'Serif klasik',round:'Rounded lembut'};
+const FFM={sans:"Inter,'SF Pro Text',-apple-system,'Segoe UI',Roboto,Arial,sans-serif",serif:"Georgia,'Times New Roman',serif",round:"ui-rounded,'SF Pro Rounded',Nunito,'Segoe UI',system-ui,sans-serif"};
+const LTN={auto:'Otomatis',on:'Hidup',off:'Mati'};const TTN={auto:'Otomatis (perangkat, lalu online)',dev:'Hanya suara perangkat',net:'Hanya suara online',off:'Mati'},RTL=[[.7,'Lambat'],[.9,'Normal'],[1.1,'Cepat']];
+let ST=Object.assign({},DEFS);
+try{const o=JSON.parse(localStorage.getItem(SK)||'null');if(o)Object.assign(ST,o);else if(localStorage.getItem('kitab_wp2')=='dark')ST.theme='dark'}catch(e){}
+const LOW=(()=>{try{const n=navigator,c=n.connection||{};return !!((n.deviceMemory&&n.deviceMemory<=2)||(n.hardwareConcurrency&&n.hardwareConcurrency<=2)||c.saveData||matchMedia('(prefers-reduced-motion:reduce)').matches)}catch(e){return false}})();
+const isLite=()=>ST.lite=='on'||(ST.lite=='auto'&&LOW);
+/* ---- suara Arab: skrip mandiri disuntikkan ke halaman kitab yang belum memilikinya ---- */
+const KBTTS=String.raw`(function(){
+if(window.__kbTTS)return;
+var SK='kitab_set_v3',EPK='kitab_tts_ep';
+var AR=/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFC]/,ARG=new RegExp(AR.source,'g'),CL=/[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFC\s\u060C\u061B\u061F]/g;
+function cfg(){var o={};try{o=JSON.parse(localStorage.getItem(SK)||'{}')||{}}catch(e){}return{tts:o.tts||'auto',rate:o.rate||.9,set:function(p){try{for(var k in p)o[k]=p[k];localStorage.setItem(SK,JSON.stringify(o))}catch(e){}}}}
+var syn=null;try{syn=window.speechSynthesis||null}catch(e){}
+if(syn){try{syn.getVoices();syn.addEventListener&&syn.addEventListener('voiceschanged',function(){syn.getVoices()})}catch(e){}}
+function arVoice(){try{var v=syn&&syn.getVoices()||[];for(var i=0;i<v.length;i++)if(/^ar/i.test(v[i].lang))return v[i]}catch(e){}return null}
+var EP=[
+ {n:'Google',u:function(q){return 'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=ar&total=1&idx=0&textlen='+q.length+'&q='+encodeURIComponent(q)}},
+ {n:'Polly Zeina',u:function(q){return 'https://api.streamelements.com/kappa/v2/speech?voice=Zeina&text='+encodeURIComponent(q)}},
+ {n:'Google gtx',u:function(q){return 'https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=ar&q='+encodeURIComponent(q)}}];
+var tk=0,au=null,hl=null,toast=null,styled=false,tmr=null;
+function css(){if(styled)return;styled=true;var s=document.createElement('style');s.id='kb-tts-css';s.textContent='::highlight(kb-say){background:rgba(255,196,80,.5);color:inherit}.kb-say{background:rgba(255,196,80,.4)!important;border-radius:5px}#kb-tts-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483646;max-width:min(560px,92vw);padding:9px 16px;border-radius:18px;font:13px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#fff;background:rgba(40,32,62,.92);border:1px solid rgba(255,255,255,.3);box-shadow:0 10px 30px rgba(0,0,0,.35);text-align:center;cursor:pointer;direction:ltr;display:none}';(document.head||document.documentElement).appendChild(s)}
+function note(t,ms){css();if(!toast){toast=document.createElement('div');toast.id='kb-tts-toast';toast.onclick=stop;(document.body||document.documentElement).appendChild(toast)}toast.textContent=t;toast.style.display='block';clearTimeout(tmr);if(ms){var k=tk;tmr=setTimeout(function(){if(k==tk&&toast)toast.style.display='none'},ms)}}
+function clearHL(){if(hl){try{CSS.highlights.delete('kb-say')}catch(e){}if(hl.el)hl.el.classList.remove('kb-say');hl=null}}
+function setHL(c){clearHL();if(!c)return;hl=c;var ok=false;try{if(c.rng&&window.CSS&&CSS.highlights&&window.Highlight){CSS.highlights.set('kb-say',new Highlight(c.rng));ok=true}}catch(e){}if(!ok&&c.el)c.el.classList.add('kb-say')}
+function stop(){tk++;try{syn&&syn.cancel()}catch(e){}if(au){try{au.pause()}catch(e){}au=null}clearHL();clearTimeout(tmr);if(toast)toast.style.display='none'}
+function chunks(s){var out=[],parts=s.match(/[^.!\u061F?\u06D4\u060C\u061B\n]+[.!\u061F?\u06D4\u060C\u061B\n]*/g)||[s];parts.forEach(function(p){p=p.trim();while(p.length>170){var i=p.lastIndexOf(' ',170);if(i<40)i=170;out.push(p.slice(0,i));p=p.slice(i).trim()}if(p)out.push(p)});return out}
+function speak(txt,ctx){var C=cfg();if(C.tts=='off')return;stop();var my=tk;txt=txt.replace(CL,' ').replace(/\u0640/g,'').replace(/\s+/g,' ').trim();if(!txt)return;css();setHL(ctx);
+ var log=[],rate=C.rate||.9;
+ function done(){if(my==tk)stop()}
+ function fail(){if(my!=tk)return;clearHL();note('Suara gagal ('+log.join(' · ')+'). Pasang suara Arab di sistem (Windows: Pengaturan → Waktu & bahasa → Ucapan → Tambah suara → Arab) atau coba Microsoft Edge / Chrome Android.',9000)}
+ function online(){if(my!=tk)return;if(C.tts=='dev'){log.push('perangkat: tidak ada suara Arab');return fail()}
+  var list=chunks(txt),i=0,e0=0;try{e0=+localStorage.getItem(EPK)||0}catch(e){}if(e0>=EP.length)e0=0;var tried=0,ep=e0;note('🔊 memuat suara online… (ketuk untuk berhenti)');
+  function play(){if(my!=tk)return;if(i>=list.length)return done();
+   var a=new Audio(EP[ep].u(list[i]));try{a.referrerPolicy='no-referrer'}catch(e){}try{a.playbackRate=Math.min(1.5,Math.max(.6,rate/.9))}catch(e){}au=a;var ok=false,dead=false;
+   var t=setTimeout(function(){if(!ok)bad('lambat')},7000);
+   function bad(why){if(dead||my!=tk||au!==a)return;dead=true;clearTimeout(t);try{a.pause()}catch(e){}log.push(EP[ep].n+': '+(why||'gagal'));tried++;if(tried<EP.length){ep=(ep+1)%EP.length;play()}else fail()}
+   a.onplaying=function(){if(dead||my!=tk)return;ok=true;clearTimeout(t);try{localStorage.setItem(EPK,ep)}catch(e){}note('🔊 '+list[i].slice(0,60)+' · ketuk untuk berhenti')};
+   a.onended=function(){if(my!=tk)return;i++;tried=0;play()};
+   a.onerror=function(){bad('diblokir/gagal')};
+   var p;try{p=a.play()}catch(e){bad('error');return}if(p&&p.catch)p.catch(function(){bad('ditolak')})}
+  play()}
+ var v=C.tts!='net'?arVoice():null;
+ if(v){var started=false,u=new SpeechSynthesisUtterance(txt);u.voice=v;u.lang=v.lang;u.rate=rate;u.onstart=function(){started=true};u.onend=done;
+  u.onerror=function(ev){if(my!=tk)return;if(ev&&/cancel|interrupt/.test(ev.error||''))return;log.push('perangkat: '+(ev&&ev.error||'gagal'));online()};
+  note('🔊 '+txt.slice(0,60)+(txt.length>60?'…':'')+' · ketuk untuk berhenti');syn.speak(u);
+  setTimeout(function(){if(my==tk&&!started&&!syn.speaking&&C.tts!='dev'){try{syn.cancel()}catch(e){}log.push('perangkat: tidak mulai');online()}},1800);return}
+ if(C.tts!='net')log.push('perangkat: tidak ada suara Arab');
+ online()}
+function pick(x,y){var n=null,off=0,d=document;try{if(d.caretPositionFromPoint){var p=d.caretPositionFromPoint(x,y);if(p){n=p.offsetNode;off=p.offset}}else if(d.caretRangeFromPoint){var r=d.caretRangeFromPoint(x,y);if(r){n=r.startContainer;off=r.startOffset}}}catch(e){}
+ if(!n||n.nodeType!=3)return null;var s=n.nodeValue;if(!AR.test(s)||!AR.test(s.slice(Math.max(0,off-1),off+1)))return null;
+ var el=n.parentElement;if(!el)return null;var t=(el.textContent||'').trim(),nz=t.replace(/\s/g,'').length,ac=(t.match(ARG)||[]).length,rg=null;
+ try{rg=d.createRange()}catch(e){}
+ if(nz&&nz<=320&&ac/nz>.6){try{rg&&rg.selectNodeContents(el)}catch(e){}return{txt:t,el:el,rng:rg}}
+ var a=0,seg=s,m=s.match(/[^.!\u061F?\u06D4\n]+[.!\u061F?\u06D4\n]*/g)||[s];for(var i=0;i<m.length;i++){if(off<=a+m[i].length){seg=m[i];break}a+=m[i].length}
+ try{rg&&(rg.setStart(n,a),rg.setEnd(n,a+seg.length))}catch(e){}
+ return{txt:seg,el:el,rng:rg}}
+document.addEventListener('click',function(e){
+ if(cfg().tts=='off'||e.button)return;var tg=e.target;if(tg&&tg.closest&&tg.closest('input,textarea,select,[contenteditable=true]'))return;
+ try{var sl=window.getSelection&&window.getSelection().toString().trim();if(sl)return}catch(x){}
+ var p=pick(e.clientX,e.clientY);if(p)speak(p.txt,{el:p.el,rng:p.rng})},true);
+/* tombol kecil hanya saat halaman dibuka sendiri (bukan di dalam jendela index) */
+function pill(){var top=true;try{top=window.top===window}catch(e){top=false}if(!top||!document.body)return;
+ var M=['auto','dev','net','off'],N={auto:'Otomatis',dev:'Hanya suara perangkat',net:'Hanya suara online',off:'Mati'};
+ var b=document.createElement('button');b.id='kb-tts-pill';b.type='button';
+ function ref(){var m=cfg().tts;b.textContent=m=='off'?'🔇':'🔊';b.title='Suara teks Arab: '+N[m]+' (klik untuk ganti)'}
+ b.style.cssText='position:fixed;left:12px;bottom:12px;z-index:2147483645;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(40,32,62,.82);color:#fff;font-size:17px;cursor:pointer;opacity:.7;padding:0;line-height:1';
+ b.onmouseenter=function(){b.style.opacity=1};b.onmouseleave=function(){b.style.opacity=.7};
+ b.onclick=function(ev){ev.stopPropagation();var C=cfg(),m=M[(M.indexOf(C.tts)+1)%M.length];C.set({tts:m});ref();stop();note('Suara teks Arab: '+N[m]+(m=='off'?'':' — klik teks Arab untuk mendengar'),2500)};
+ ref();document.body.appendChild(b)}
+if(document.readyState=='loading')document.addEventListener('DOMContentLoaded',pill);else pill();
+window.__kbTTS={stop:stop,speak:speak,voice:function(){var v=arVoice();return v?v.name:null}};
+})();`;
+const syn=('speechSynthesis' in window)?window.speechSynthesis:null;
+if(syn){try{syn.getVoices();syn.addEventListener&&syn.addEventListener('voiceschanged',()=>syn.getVoices())}catch(e){}}
+const arVoice=()=>{try{return syn&&syn.getVoices().find(v=>/^ar/i.test(v.lang))||null}catch(e){return null}};
+function bindTTS(d){try{if(!d||!d.documentElement||!d.defaultView||d.defaultView.__kbTTS||d.getElementById('kb-tts-standalone'))return;const s=d.createElement('script');s.id='kb-tts-standalone';s.textContent=KBTTS;(d.body||d.documentElement).appendChild(s)}catch(e){}}
+function ttsStop(){document.querySelectorAll('#wins iframe').forEach(f=>{try{f.contentWindow.__kbTTS&&f.contentWindow.__kbTTS.stop()}catch(e){}})}
+/* ---- shell ---- */
+function applyShell(){const b=document.body.classList,t=ST.theme,r=document.documentElement;
+ b.toggle('dark',t!='light');b.toggle('glass',t=='glass');b.toggle('lite',isLite());b.toggle('hc',!!ST.hc);
+ r.style.setProperty('--kz',ST.fz);
+ if(ST.ff=='def'){r.style.removeProperty('font-family');document.body.style.removeProperty('font-family')}else{r.style.fontFamily=FFM[ST.ff];document.body.style.fontFamily=FFM[ST.ff]}
+ document.querySelectorAll('#wpp .wo').forEach(x=>x.classList.toggle('on',x.dataset.m==t))}
+function setS(p){Object.assign(ST,p);try{localStorage.setItem(SK,JSON.stringify(ST))}catch(e){}applyShell()}
+
+/* ---- picker tema (tombol Wallpaper) ---- */
+const wp=document.createElement('div');wp.id='wpp';
+wp.innerHTML='<button class="wo" data-m="dark"><i style="background-image:var(--wpd)"></i>Gelap · Indigo</button><button class="wo" data-m="light"><i style="background:linear-gradient(135deg,#c9ad73,#e9dfc9 42%,#8d86a6 78%,#dfe5ea)"></i>Terang · Krem</button><button class="wo" data-m="glass"><i style="background:radial-gradient(circle at 20% 20%,#7f97b5,transparent 55%),radial-gradient(circle at 80% 60%,#a68a9e,transparent 55%),linear-gradient(160deg,#252c3a,#43435c)"></i>Kaca · Glassmorphism</button>';
+document.body.appendChild(wp);
+wp.onclick=e=>{const b=e.target.closest('.wo');b&&setS({theme:b.dataset.m})};
+$('#mWp').onclick=e=>{e.stopPropagation();closeMenu();wp.classList.toggle('on')};
+document.addEventListener('click',e=>{if(!wp.contains(e.target))wp.classList.remove('on')});
+/* ---- jendela helper ---- */
+function closeAll(){Object.keys(W).forEach(id=>{W[id].remove();delete W[id];dockChip(id)})}
+function minAll(){Object.keys(W).forEach(id=>{const w=W[id];if(!w.classList.contains('hid')){w.classList.add('hid');dockChip(id,w)}})}
+function showAll(){Object.values(W).forEach(w=>show(w))}
+function cascade(){let n=0;Object.values(W).forEach(w=>{w.classList.remove('max','hid');w.style.left=(40+n*28)+'px';w.style.top=(50+n*28)+'px';w.style.zIndex=++z;n++});document.querySelectorAll('.dk.mn').forEach(c=>c.remove());chk()}
+function topWin(){let t=null;Object.values(W).forEach(w=>{if(!w.classList.contains('hid')&&(!t||+w.style.zIndex>+t.style.zIndex))t=w});return t}
+function info(id,title,html,o){if(W[id]){W[id].remove();delete W[id];dockChip(id)}win(id,title,`<div class="hlp">${html}</div>`,o||{w:540,h:480})}
+function status(){info('status','Status Pengaturan',`<h4>Pengaturan aktif</h4><table><tr><td>Tema</td><td>${THN[ST.theme]}</td></tr><tr><td>Ukuran font</td><td>${(FZL.find(a=>a[0]==ST.fz)||[0,ST.fz])[1]}</td></tr><tr><td>Jenis font</td><td>${FFN[ST.ff]}</td></tr><tr><td>Kontras</td><td>${ST.hc?'Tinggi':'Normal'}</td></tr><tr><td>Mode ringan</td><td>${LTN[ST.lite]} → ${isLite()?'<b>aktif</b>':'nonaktif'}</td></tr><tr><td>Deteksi perangkat</td><td>${LOW?'spek rendah / hemat daya':'normal'} · ${navigator.hardwareConcurrency||'?'} core${navigator.deviceMemory?' · ≥'+navigator.deviceMemory+' GB RAM':''}</td></tr><tr><td>Suara Arab</td><td>${TTN[ST.tts]} · ${arVoice()?'suara Arab perangkat tersedia ('+arVoice().name+')':'suara Arab perangkat tidak ditemukan'}</td></tr></table><p>Tema, font, kontras, dan mode ringan berlaku untuk tampilan macOS (menu, dock, widget, jendela). Isi halaman kitab di dalam jendela dibiarkan apa adanya.</p>`,{w:520,h:420})}
+function help(){info('help','Bantuan — Kitab Klasik',`<h4>Menu header</h4><ul><li><b>Berkas</b> — Launchpad, PDF, layar penuh, kunci layar, tutup jendela</li><li><b>Tampilan</b> — tema (Terang / Gelap / Kaca), ukuran &amp; jenis font, kontras, mode ringan, suara Arab</li><li><b>Jendela</b> — kelola, susun, minimalkan, dan pilih jendela terbuka</li><li><b>Bantuan</b> — panduan ini, status pengaturan</li></ul><h4>Suara teks Arab</h4><p>Klik teks Arab di dalam kitab untuk mendengarnya. Dipakai suara Arab bawaan perangkat; bila tidak ada, otomatis memakai suara online. Ketuk pemberitahuan di bawah layar untuk berhenti. Atur di Tampilan → Suara Arab.</p><h4>Mode ringan</h4><p>Mematikan blur kaca, animasi, bayangan &amp; filter berat pada tampilan macOS. Pilih <i>Otomatis</i> agar aktif sendiri di perangkat spek rendah.</p><h4>Pintasan</h4><table><tr><td>Esc</td><td>Tutup Launchpad / menu</td></tr><tr><td>Enter / Spasi</td><td>Masuk dari layar kunci</td></tr><tr><td>Klik ganda bilah judul</td><td>Maksimalkan jendela</td></tr><tr><td>Hover ikon</td><td>Kartu info singkat</td></tr></table>`)}
+function about(){info('about','Tentang',`<h4>Kitab Klasik · macOS</h4><p>Peluncur kitab bergaya macOS dengan tiga tema (Terang · Krem, Gelap · Indigo, Kaca · Glassmorphism), pengaturan global, dan mode ringan.</p><p>By Achmad Fauzi · vaozeei@gmail.com</p>`,{w:420,h:300})}
+/* ---- dropdown menu header ---- */
+const radio=(map,key,fn)=>Object.keys(map).map(k=>({t:map[k],chk:ST[key]==k,keep:1,f:()=>fn(k)}));
+const MENUS={
+berkas:()=>[
+ {ic:'🚀',t:'Buka Launchpad',f:()=>lp(1)},{ic:'📄',t:'Pembaca PDF (Finder)',f:()=>openFinder()},{ic:'📁',t:'Pendukung',f:()=>openFolder()},'-',
+ {ic:'＋',t:'Tambah PDF…',f:()=>$('#fi').click()},{ic:'▣',t:'Buka Folder PDF…',f:()=>$('#fo').click()},'-',
+ {ic:'⛶',t:inFS()?'Keluar Layar Penuh':'Layar Penuh',f:fs},{ic:'🔒',t:'Kunci Layar',f:()=>$('#lock').classList.remove('off')},'-',
+ {ic:'✕',t:'Tutup Semua Jendela',f:closeAll,dis:!Object.keys(W).length}],
+tampilan:()=>[
+ {h:'TEMA'},...radio(THN,'theme',k=>setS({theme:k})),'-',
+ {h:'UKURAN FONT'},...FZL.map(a=>({t:a[1],chk:ST.fz==a[0],keep:1,f:()=>setS({fz:a[0]})})),'-',
+ {h:'JENIS FONT'},...radio(FFN,'ff',k=>setS({ff:k})),'-',
+ {h:'KONTRAS'},{t:'Normal',chk:!ST.hc,keep:1,f:()=>setS({hc:0})},{t:'Tinggi',chk:!!ST.hc,keep:1,f:()=>setS({hc:1})},'-',
+ {h:'MODE RINGAN · SPEK RENDAH'},...['auto','on','off'].map(k=>({t:LTN[k]+(k=='auto'?(LOW?' — terdeteksi spek rendah':' — perangkat normal'):''),chk:ST.lite==k,keep:1,f:()=>setS({lite:k})})),'-',{h:'SUARA ARAB · KLIK TEKS'},...radio(TTN,'tts',k=>{ttsStop();setS({tts:k})}),...RTL.map(a=>({t:'Kecepatan: '+a[1],chk:ST.rate==a[0],keep:1,f:()=>setS({rate:a[0]})})),
+'-',
+ {ic:'↺',t:'Reset Semua Pengaturan',f:()=>setS(DEFS),keep:1}],
+jendela:()=>{const ids=Object.keys(W);return [
+ {ic:'▁',t:'Minimalkan Semua',f:minAll,dis:!ids.length},{ic:'▣',t:'Tampilkan Semua',f:showAll,dis:!ids.length},{ic:'❐',t:'Susun Kaskade',f:cascade,dis:!ids.length},
+ {ic:'⤢',t:'Maksimalkan Jendela Aktif',f:()=>{const w=topWin();w&&w.classList.toggle('max')},dis:!ids.length},{ic:'✕',t:'Tutup Semua',f:closeAll,dis:!ids.length},'-',
+ {h:'JENDELA TERBUKA'},...(ids.length?ids.map(id=>({ic:W[id].classList.contains('hid')?'▫':'▪',t:W[id].dataset.t||id,f:()=>{show(W[id]);W[id].style.zIndex=++z}})):[{t:'(Tidak ada jendela terbuka)',dis:1}])]},
+bantuan:()=>[
+ {ic:'❓',t:'Panduan & Pintasan',f:help},{ic:'📊',t:'Status Pengaturan',f:status},'-',{ic:'ℹ️',t:'Tentang',f:about}]};
+const dd=document.createElement('div');dd.id='mdd';document.body.appendChild(dd);let om=null,cur=[];
+function drawMenu(){cur=MENUS[om]();dd.innerHTML=cur.map((x,i)=>x==='-'?'<div class="sp"></div>':x.h?`<div class="hd">${esc(x.h)}</div>`:`<div class="mi${x.dis?' dis':''}" data-i="${i}"><i>${x.chk!==undefined?(x.chk?'✓':''):(x.ic||'')}</i><span>${esc(x.t)}</span></div>`).join('')}
+function openMenu(k,el){om=k;drawMenu();dd.classList.add('on');const r=el.getBoundingClientRect();dd.style.left=Math.max(8,Math.min(r.left,innerWidth-dd.offsetWidth-8))+'px';dd.style.maxHeight=(innerHeight-44)+'px';document.querySelectorAll('#menu .m').forEach(m=>m.classList.toggle('open',m==el));wp.classList.remove('on')}
+function closeMenu(){om=null;dd.classList.remove('on');document.querySelectorAll('#menu .m.open').forEach(m=>m.classList.remove('open'))}
+document.querySelectorAll('#menu .m[data-menu]').forEach(el=>{
+ el.onclick=e=>{e.stopPropagation();om==el.dataset.menu?closeMenu():openMenu(el.dataset.menu,el)};
+ el.onmouseenter=()=>{if(om&&om!=el.dataset.menu)openMenu(el.dataset.menu,el)};
+ el.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();el.click()}}});
+dd.onclick=e=>{e.stopPropagation();const r=e.target.closest('.mi');if(!r)return;const x=cur[+r.dataset.i];if(!x||!x.f)return;x.f();x.keep?drawMenu():closeMenu()};
+document.addEventListener('click',e=>{if(om&&!dd.contains(e.target))closeMenu()});
+addEventListener('blur',closeMenu);
+addEventListener('keydown',e=>{if(e.key=='Escape'){closeMenu();wp.classList.remove('on')}});
+window.KB={get:()=>ST,set:setS,bindTTS,stop:ttsStop};
+applyShell();
+})();
 </script></body></html>

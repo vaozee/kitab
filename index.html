@@ -217,7 +217,16 @@ body.hc .wg,body.hc #dock{border-color:rgba(255,255,255,.9)}
 body.hc #lp .app>span,body.hc .file span{text-shadow:0 1px 3px #000,0 0 6px #000}
 #ttsb{position:fixed;z-index:1150;left:50%;bottom:96px;transform:translateX(-50%) translateY(10px);max-width:min(560px,92vw);padding:9px 16px;border-radius:999px;font-size:calc(13px*var(--kz));color:#fff;background:rgba(40,32,62,.88);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:.2s;cursor:pointer;text-align:center;white-space:normal;line-height:1.4;border-radius:18px}
 #ttsb.on{opacity:1;transform:translateX(-50%);pointer-events:auto}
-</style></head><body class="nolp">
+</style>
+<style id="dock-autohide-css">
+#dock{transition:transform .32s cubic-bezier(.3,1,.4,1),opacity .25s}
+#dock.ah{transform:translateX(-50%) translateY(calc(100% + 20px));opacity:0;pointer-events:none}
+#dockTrig{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(320px,70vw);height:16px;z-index:899;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#dockTrig i{display:block;width:54px;height:5px;border-radius:5px;background:rgba(255,255,255,.7);box-shadow:0 1px 4px rgba(0,0,0,.45);transition:opacity .2s,width .2s}
+#dockTrig:hover i{width:74px}
+#dock:not(.ah)~#dockTrig i{opacity:0}
+</style>
+</head><body class="nolp">
 <div id="bg"><div id="bgD"></div><div id="bgG"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div><svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><defs>
 <linearGradient id="g0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a88d5c"/><stop offset=".5" stop-color="#74665a"/><stop offset="1" stop-color="#4c4a54"/></linearGradient>
 <radialGradient id="g1" cx=".15" cy=".35" r=".9"><stop offset="0" stop-color="#b9995a"/><stop offset=".55" stop-color="#e3d2a6"/><stop offset="1" stop-color="#f4ead2"/></radialGradient>
@@ -261,7 +270,7 @@ body.hc #lp .app>span,body.hc .file span{text-shadow:0 1px 3px #000,0 0 6px #000
 <div id="menu"><b>◆ Kitab</b><span class="m" data-menu="berkas" role="button" tabindex="0" aria-haspopup="true">Berkas</span><span class="m" data-menu="tampilan" role="button" tabindex="0" aria-haspopup="true">Tampilan</span><span class="m" data-menu="jendela" role="button" tabindex="0" aria-haspopup="true">Jendela</span><span class="m" data-menu="bantuan" role="button" tabindex="0" aria-haspopup="true">Bantuan</span><div class="r"><span class="m" id="mFs" style="cursor:pointer" title="Layar penuh">⛶</span><span class="m" id="mWp" style="cursor:pointer">🖼 Wallpaper</span><span id="cnt"></span><span id="clk"></span></div></div>
 <div id="lp"><div id="lpHead"><input class="sq" id="q" type="search" placeholder="🔍 Cari kitab…"><span id="chips"></span></div><div id="grid"></div></div>
 <div id="dsk"></div><div id="wgs"><div class="wg clk" id="wClk"></div><div class="wg dt" id="wDate"></div></div><div id="wins"></div><div id="peek"></div>
-<div id="dock"><div class="dk" id="dkLp" style="--a:#e6e9f0;--b:#8b93a8" title="Launchpad Kitab">🚀</div><div class="dk" id="dkU" style="--a:#7fc6ff;--b:#2f7fd8" title="Pendukung">🗂</div><div class="dk" id="dkP" style="--a:#f5f5f7;--b:#b9c4d6;color:#d32f2f;font-weight:800;font-size:15px" title="Pembaca PDF">PDF</div><span class="sep" id="sepM" style="display:none"></span></div>
+<div id="dock"><div class="dk" id="dkLp" style="--a:#e6e9f0;--b:#8b93a8" title="Launchpad Kitab">🚀</div><div class="dk" id="dkU" style="--a:#7fc6ff;--b:#2f7fd8" title="Pendukung">🗂</div><div class="dk" id="dkP" style="--a:#f5f5f7;--b:#b9c4d6;color:#d32f2f;font-weight:800;font-size:15px" title="Pembaca PDF">PDF</div><span class="sep" id="sepM" style="display:none"></span></div><div id="dockTrig" title="Tampilkan dock"><i></i></div>
 <div id="lock"><div class="ld" id="ld"></div><div class="lt" id="lt"></div><div class="av">📖</div><div class="ln">Kitab Klasik Pesantren</div><div class="lb">Klik untuk masuk · layar penuh</div><small>By Achmad Fauzi<br>vaozeei@gmail.com</small></div>
 <input type="file" id="fi" accept="application/pdf,.pdf" multiple hidden><input type="file" id="fo" accept="application/pdf,.pdf" webkitdirectory directory multiple hidden>
 <script>
@@ -289,7 +298,7 @@ const K=[
  {n:"21",title:"Ilmu Falak Lanjutan",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Syarah Sullam an-Nayyirain, al-Khulashah al-Wafiyyah, dan Durus al-Falakiyyah — hisab waktu shalat, arah kiblat, dan rukyat hilal."},
  {n:"22",title:"Pelajaran Farā'iḍ",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Nazham karya Imam Sa'id bin Sa'ad bin Nabhan al-Hadrami asy-Syafi'i tentang ilmu waris (farā'iḍ), teks Arab dipadukan terjemahan lengkap."},
  {n:"23",title:"Hisab Falakiyah",cat:"lain",icon:"كتاب",badge:"ASTRONOMI",url:"",desc:"Kalkulator astronomi Islam offline untuk perhitungan hisab falakiyah."},
- {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Kalkulator pembagian harta waris sesuai hukum faraidl — masukkan data ahli waris untuk menghitung bagian masing-masing secara otomatis."},
+ {n:"24",title:"Kalkulator Ahli Waris",cat:"lain",icon:"كتاب",badge:"FAROIDL",url:"",desc:"Kalkulator pembagian harta waris sesuai hukum faraidl beserta 9 jenis zakat lengkap dengan dalil — masukkan data untuk menghitung secara otomatis."},
  {n:"25",title:"Fathul Qorib al-Mujib",cat:"lain",icon:"كتاب",badge:"FIQIH",url:"",desc:"Fathul Qorib al-Mujib — syarah Al-Imam Ibnu Qasim Al-Ghazzi atas matan Ghayah wa At-Taqrib karya Abu Syuja' Al-Ashfahani, kitab fikih mazhab Syafi'i."},
  {n:"26",title:"Hayatul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Hayatu al-Hayawan al-Kubra karya Kamaluddin Muhammad bin Musa ad-Damiri, disertai lampiran 'Aja'ib al-Makhluqat wa Ghara'ib al-Mawjudat karya al-Qazwini — teks Arab, terjemahan & penjelasan."},
  {n:"27",title:"Tahqiqul Hayawan",cat:"lain",icon:"كتاب",badge:"KITAB",url:"",desc:"Media belajar fikih fauna, disusun bab per bab lengkap dengan muqaddimah, pembahasan per bab, glosarium, dan khatimah."},
@@ -617,6 +626,22 @@ dd.onclick=e=>{e.stopPropagation();const r=e.target.closest('.mi');if(!r)return;
 document.addEventListener('click',e=>{if(om&&!dd.contains(e.target))closeMenu()});
 addEventListener('blur',closeMenu);
 addEventListener('keydown',e=>{if(e.key=='Escape'){closeMenu();wp.classList.remove('on')}});
+
+/* ---- dock auto-hide ---- */
+(function(){const d=document.getElementById('dock'),tg=document.getElementById('dockTrig');if(!d||!tg)return;
+let t=null;const hov=()=>d.matches(':hover')||tg.matches(':hover');
+const showD=()=>{clearTimeout(t);d.classList.remove('ah')};
+const hideD=ms=>{clearTimeout(t);t=setTimeout(()=>{if(hov()&&!matchMedia('(hover:none)').matches){hideD(600);return}d.classList.add('ah')},ms==null?700:ms)};
+const peek=ms=>{showD();hideD(ms)};
+tg.addEventListener('mouseenter',showD);tg.addEventListener('mouseleave',()=>hideD(700));
+d.addEventListener('mouseenter',showD);d.addEventListener('mouseleave',()=>hideD(700));
+tg.addEventListener('click',()=>{d.classList.contains('ah')?peek(4000):d.classList.add('ah')});
+d.addEventListener('click',()=>{if(matchMedia('(hover:none)').matches)peek(2500)});
+document.addEventListener('pointerdown',e=>{if(!d.contains(e.target)&&!tg.contains(e.target)&&!d.classList.contains('ah'))hideD(250)},true);
+addEventListener('keydown',e=>{if(e.key=='Escape')d.classList.add('ah')});
+new MutationObserver(()=>peek(2200)).observe(d,{childList:true});
+peek(2500);
+})();
 window.KB={get:()=>ST,set:setS,bindTTS,stop:ttsStop};
 applyShell();
 })();
